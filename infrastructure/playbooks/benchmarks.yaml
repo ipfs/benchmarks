@@ -1,0 +1,36 @@
+---
+- hosts: all
+  # become: yes
+  vars:
+    node_version: 10.13.0
+  tasks:
+    - name: Install nvm
+      shell: |
+        curl https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh | sh
+      args:
+        creates: /home/{{ ansible_user_id }}/.nvm/nvm.sh
+    - name: Install node and set version
+      shell: |
+        /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ node_version }} && nvm alias default {{ node_version }}"
+      args:
+        creates: /home/{{ ansible_user_id }}/.nvm/versions/node/v{{ node_version }}
+    - name: Install clinic
+      shell: >
+        /bin/bash -c "source ~/.nvm/nvm.sh && npm i clinic -g"
+      args:
+        creates: /home/{{ ansible_user_id }}/.nvm/versions/node/v{{ node_version }}/bin/clinic
+    - file:
+        path: ~/ipfs
+        state: directory
+        mode: 0755
+    - name: copy tests
+      synchronize:
+        src: ../../tests
+        dest: ~/ipfs/
+        rsync_opts:
+          - "--exclude=node_modules"
+    - name: Install packages
+      shell: >
+        /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm install"
+      tags:
+        - always
