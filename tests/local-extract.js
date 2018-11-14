@@ -3,6 +3,8 @@
 
 const fs = require('fs')
 const prettyHrtime = require('pretty-hrtime')
+
+// TODO: point this to the branch code
 const IPFS = require('ipfs')
 const ora = require('ora')
 const handler = "local extract"
@@ -34,23 +36,23 @@ const node = new Promise((resolve) => {
   })
 })
 
-const run = async () => {
+async function localExtract() {
   const spinner = ora(`Started ${handler}`).start()
   spinner.color = 'magenta'
   spinner.text = "testing"
   const node1 = await node
-  const fileStream = fs.createReadStream("fixtures/200Bytes.txt")
+  const fileStream = fs.createReadStream("tests/fixtures/200Bytes.txt")
   const inserted = await node1.files.add(fileStream)
   console.log('vmx: inserted:', inserted)
   const validCID = inserted[0].hash
   node1.files.get(validCID, function (err, files) {
     files.forEach((file) => {
       console.log(file.path)
-      console.log(file.content.toString('utf8'))
       spinner.succeed()
-      process.exit(1)
+      node1.stop()
     })
   })
 
 }
-run()
+
+module.exports = localExtract
