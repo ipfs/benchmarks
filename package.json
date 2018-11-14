@@ -1,0 +1,28 @@
+{
+  "name": "ipfs-benchmarks",
+  "version": "0.1.0",
+  "description": "Benchmarks for js-ifps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "contributors": [
+    "Matteo Collina <matteo.collina@nearform.com>",
+    "Alex Knol <alex.knol@nearform.com>",
+    "Ron Litzenberegr <ron.litzenberger@nearform.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "aegir": "^17.0.0"
+  },
+  "dependencies": {
+    "ipfs": "^0.33.1",
+    "ipfs-block-service": "^0.15.2",
+    "ipfs-unixfs-engine": "^0.34.0",
+    "ipld": "^0.20.0",
+    "ora": "^3.0.0",
+    "pretty-hrtime": "^1.0.3",
+    "pull-stream": "^3.6.9",
+    "standard": "^12.0.1"
+  }
+}
