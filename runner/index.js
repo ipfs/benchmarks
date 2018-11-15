@@ -1,26 +1,27 @@
 'use strict'
 
-// const remoteExec = require('ssh-exec')
+const remoteExec = require('ssh-exec')
 const { exec } = require('child_process')
 const _ = require('lodash')
 const config = require('./config')
 
-// const runRemote = (shell, host, user) => {
-//   return new Promise((resolve, reject) => {
-//     remoteExec(shell, {
-//       user: user,
-//       host: host
-//     }).pipe(output => {
-//       resolve(output)
-//     })
-//   })
-// }
+const runRemote = (shell, host, user) => {
+  return new Promise((resolve, reject) => {
+    remoteExec(shell, {
+      user: user,
+      host: host
+    }).pipe(output => {
+      resolve(output)
+    })
+  })
+}
 
 const runLocal = shell => {
   return new Promise((resolve, reject) => {
     exec(shell, (err, stdout, stderr) => {
       if (err) {
         reject(new Error(stderr))
+        return
       }
       resolve(stdout)
     })
