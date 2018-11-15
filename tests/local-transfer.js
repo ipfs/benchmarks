@@ -97,7 +97,6 @@ const main = async () => {
         seconds: end[0],
         milliseconds: end[1] / 1000000
       },
-      operation: inserted,
       cpu: os.cpus(),
       loadAvg: os.loadavg()
     }))
