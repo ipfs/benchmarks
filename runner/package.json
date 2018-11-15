@@ -11,6 +11,8 @@
   "dependencies": {
     "influx": "^5.0.7",
     "lodash": "^4.17.11",
-    "luxon": "^1.6.2"
+    "luxon": "^1.6.2",
+    "ssh-exec": "^2.0.0",
+    "yaml": "^1.0.2"
   }
 }
