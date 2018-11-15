@@ -9,6 +9,7 @@
   "author": "alex knol",
   "license": "ISC",
   "dependencies": {
+    "folder-hash": "^2.1.2",
     "influx": "^5.0.7",
     "lodash": "^4.17.11",
     "luxon": "^1.6.2",

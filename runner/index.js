@@ -1,45 +1,17 @@
 'use strict'
 
-const remoteExec = require('ssh-exec-plus')
-const { exec } = require('child_process')
 const _ = require('lodash')
 const config = require('./config')
+const remote = require('./remote.js')
+const local = require('./local.js')
+const provision = require('./provision')
 
 const runCommand = (test) => {
   if (config.stage === 'local') {
-    return runLocal(test.localShell)
+    return local.run(test.localShell)
   } else {
-    return runRemote(test.shell)
+    return remote.run(test.shell)
   }
-}
-
-const runRemote = (shell) => {
-  config.log.info(`Running [${shell}] on host [${config.benchmarks.host}]`)
-  return new Promise((resolve, reject) => {
-    remoteExec(shell, {
-      user: config.benchmarks.user,
-      host: config.benchmarks.host
-    }, (err, stdout, stderr) => {
-      if (err) {
-        reject(Error(err, stderr))
-        return
-      }
-      resolve(stdout)
-    })
-  })
-}
-
-const runLocal = shell => {
-  config.log.info(`Running [${shell}] locally`)
-  return new Promise((resolve, reject) => {
-    exec(shell, (err, stdout, stderr) => {
-      if (err) {
-        reject(new Error(stderr))
-        return
-      }
-      resolve(stdout)
-    })
-  })
 }
 
 const parseResults = rawOutput => {
@@ -64,7 +36,10 @@ const parseResults = rawOutput => {
   }
 }
 
-const main = () => {
+const main = async () => {
+  if (config.stage !== 'local') {
+    await provision.ensure()
+  }
   _.each(config.benchmarks.tests, async (test) => {
     try {
       let output = await runCommand(test)
