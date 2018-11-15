@@ -1,23 +1,18 @@
 version: "3"
 services:
-  prom:
-    image: quay.io/prometheus/prometheus:v2.0.0
+  influxdb:
+    image: influxdb:1.7-alpine
     volumes:
-     - ./monitor/prometheus.yml:/etc/prometheus/prometheus.yml
-    command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
+      - ../../data/influxdb:/var/lib/influxdb
     ports:
-     - 9090:9090
-#    network_mode: host
-    depends_on:
-     - exporter
-  exporter:
-    image: prom/node-exporter:latest
-    ports:
-     - "9100:9100"
+      - "8086:8086"
+    environment:
+      INFLUXDB_DB: benchmarks
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:latest
     ports:
      - "3000:3000"
     depends_on:
-      - prom
-#    network_mode: host
+      - influxdb
+    links:
+      - influxdb
