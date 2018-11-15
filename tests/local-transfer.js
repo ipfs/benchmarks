@@ -1,6 +1,7 @@
 'use strict'
 
 const fs = require('fs')
+const os = require('os')
 const IPFS = require('ipfs')
 const verbose = process.env.VERBOSE || false
 
@@ -89,18 +90,23 @@ const main = async () => {
 
     console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
     console.log(JSON.stringify({
+      name: 'LocalFs:local-transfer:smallfile',
+      date: new Date().toISOString(),
+      file: '/tmp/100m.bin',
       duration: {
         seconds: end[0],
         milliseconds: end[1] / 1000000
       },
-      operation: inserted
+      operation: inserted,
+      cpu: os.cpus(),
+      loadAvg: os.loadavg()
     }))
     console.log('-*-*-*-*-*- END RESULTS -*-*-*-*-*-')
 
     peerA.stop()
     peerB.stop()
   } catch (err) {
-    error(err)
+    throw Error(err)
     process.exit(1)
   }
 }
