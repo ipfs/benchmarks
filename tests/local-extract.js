@@ -9,7 +9,7 @@ const node = require('../lib/create-node.js')
 const ora = require('ora')
 const handler = "local extract"
 
-function localExtract(logger, cb) {
+function localExtract(logger) {
   return new Promise(async (resolve) => {
     const spinner = ora(`Started ${handler}`).start()
     spinner.color = 'magenta'
