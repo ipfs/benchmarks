@@ -1,94 +1,59 @@
-const Influx = require('influx')
-const http = require('http')
-const os = require('os')
-const { DateTime } = require("luxon")
+const remoteExec = require('ssh-exec')
+const { exec } = require('child_process')
 const _ = require('lodash')
-const db = 'benchmarks'
-const measurement =  'local_transfer'
+const config = require('./config')
 
-const influx = new Influx.InfluxDB({
-  host: 'localhost',
-  database: db,
-  schema: [
-    {
-      measurement: measurement,
-      fields: {
-        filesize: Influx.FieldType.FLOAT,
-        duration: Influx.FieldType.INTEGER
-      },
-      tags: [
-        'commit',
-        'project'
-      ]
-    }
-  ]
-})
-
-const getRandom = () => {
-  return parseFloat((Math.random() * (20.0200 - 5.100) + 0.0200).toFixed(2))
-}
-
-const data = [
-  {
-    project: 'js-ipfs',
-    commit: '8g76fsd8',
-    duration: getRandom(),
-    fileSize: 10000,
-    timestamp: DateTime.local().toJSDate()
-  },{
-    project: 'js-ipfs',
-    commit: '87f6gsd',
-    duration: getRandom(),
-    fileSize: 10000,
-    timestamp: DateTime.local().minus({ days: 1}).toJSDate()
-  },{
-    project: 'js-ipfs',
-    commit: '98hgj7s',
-    duration: getRandom(),
-    fileSize: 10000,
-    timestamp: DateTime.local().minus({ days: 2}).toJSDate()
-  }
-]
-
-const writePoints = (data) => {
-  let payload = []
-  _.each(data, (point) => {
-    payload.push({
-      measurement: measurement,
-      tags: { commit: point.commit, project: point.project },
-      fields: { duration: point.duration, filesize: point.fileSize },
-      timestamp: point.timestamp
+const runRemote = (shell, host, user) => {
+  return new Promise((resolve, reject) => {
+    remoteExec(shell, {
+      user: user,
+      host: host
+    }).pipe((output) => {
+      resolve(output)
     })
   })
-  console.log(payload)
-  return influx.writePoints(payload).catch(err => {
-    console.error(`Error saving data to InfluxDB! ${err.stack}`)
+}
+
+const runLocal = (shell) => {
+  return new Promise((resolve,reject) => {
+    exec(shell, (err, stdout, stderr) => {
+      if (err) {
+        reject(new Error(stderr))
+      }
+      resolve(stdout)
+    })
   })
 }
 
-const report = () => {
-  influx.query(`
-    select * from ${db}..${measurement}
-    order by time desc
-    limit 10
-  `).then(result => {
-    console.log(JSON.stringify(result, null, 4))
-  }).catch(err => {
-    console.error(err.stack)
-  })
-}
-
-influx.getDatabaseNames()
-  .then(names => {
-    if (!names.includes('benchmarks')) {
-      return influx.createDatabase('benchmarks');
+const parseResults = (rawOutput) =>{
+  let arrResults = []
+  let objReturn = {}
+  let addLine = false
+  arrOutput = rawOutput.split(/[\n\r]/g)
+  for(let i=0; i<arrOutput.length;i++) {
+    if (addLine) arrResults.push(arrOutput[i])
+    if (arrOutput[i].includes('BEGIN RESULTS')) {
+      addLine = true
     }
-  })
-  .then(() => {
-    writePoints(data). then( () => {report()})
+    if (arrOutput[i].includes('END RESULTS')) {
+      addLine = false
+      arrResults.pop()
+    }
+  }
+  let strResult = arrResults.join('')
+  try {
+    return JSON.parse(strResult)
+  } catch (e) {
+    throw e
+  }
+}
 
+const main = () => {
+  _.each(config.benchmarks.tests, async (test) => {
+    let output = await runLocal(test.localShell)
+    let results = parseResults(output)
+    console.log(results)
   })
-  .catch(err => {
-    console.error(err);
-    console.error(`Error creating Influx database!`);
-  })
+}
+
+main()
