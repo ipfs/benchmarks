@@ -1,8 +1,14 @@
 'use strict'
 
 const fs = require('fs')
-const prettyHrtime = require('pretty-hrtime')
 const IPFS = require('ipfs')
+const verbose = process.env.VERBOSE || false
+
+const log = (msg) => {
+  if (verbose) {
+    console.log(msg)
+  }
+}
 
 const peerAPromise = new Promise((resolve) => {
   const config = {
@@ -24,7 +30,7 @@ const peerAPromise = new Promise((resolve) => {
     }
   })
   peer.on('ready', () => {
-    console.log('peerA ready')
+    log('peerA ready')
     resolve(peer)
   })
 })
@@ -49,7 +55,7 @@ const peerBPromise = new Promise((resolve) => {
     }
   })
   peer.on('ready', () => {
-    console.log('peerB ready')
+    log('peerB ready')
     resolve(peer)
   })
 })
@@ -59,7 +65,7 @@ const connectPeers = async (peerA, peerB) => {
     const peerAId = await peerA.id()
     return peerB.swarm.connect(peerAId.addresses[0])
   } catch (err) {
-    console.error(err)
+    error(err)
   }
 }
 
@@ -69,23 +75,32 @@ const main = async () => {
     const peerB = await peerBPromise
 
     await connectPeers(peerA, peerB)
-    console.log('vmx: connected')
+    log('vmx: connected')
 
     // Insert into peerA
     const fileStream = fs.createReadStream('/tmp/100m.bin')
     const inserted = await peerA.files.add(fileStream)
-    console.log('vmx: inserted:', inserted)
+    log('vmx: inserted:', inserted)
 
     // peerB doesn't any data cached, get all from peerA
     const start = process.hrtime();
     await peerB.files.cat(inserted[0].hash)
     const end = process.hrtime(start);
-    console.log('It took:', prettyHrtime(end))
+
+    console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
+    console.log(JSON.stringify({
+      duration: {
+        seconds: end[0],
+        milliseconds: end[1] / 1000000
+      },
+      operation: inserted
+    }))
+    console.log('-*-*-*-*-*- END RESULTS -*-*-*-*-*-')
 
     peerA.stop()
     peerB.stop()
   } catch (err) {
-    console.error(err)
+    error(err)
     process.exit(1)
   }
 }
