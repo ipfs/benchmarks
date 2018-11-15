@@ -6,26 +6,10 @@ const { DateTime } = require("luxon")
 const _ = require('lodash')
 const config = require('./config')
 
-const db = 'benchmarks'
-const measurement =  'local_transfer'
-
-
 const influx = new Influx.InfluxDB({
-  host: 'localhost',
-  database: db,
-  schema: [
-    {
-      measurement: measurement,
-      fields: {
-        filesize: Influx.FieldType.FLOAT,
-        duration: Influx.FieldType.INTEGER
-      },
-      tags: [
-        'commit',
-        'project'
-      ]
-    }
-  ]
+  host: config.influxdb.host,
+  database: config.influxdb.db,
+  schems: config.influxdb.schema
 })
 
 const writePoints = (data) => {
@@ -44,17 +28,17 @@ const writePoints = (data) => {
   })
 }
 
-const report = () => {
-  influx.query(`
-    select * from ${db}..${measurement}
-    order by time desc
-    limit 10
-  `).then(result => {
-    console.log(JSON.stringify(result, null, 4))
-  }).catch(err => {
-    console.error(err.stack)
-  })
-}
+// const report = (test) => {
+//   influx.query(`
+//     select * from ${config.influxdb.db}..${test.measurement}
+//     order by time desc
+//     limit 10
+//   `).then(result => {
+//     console.log(JSON.stringify(result, null, 4))
+//   }).catch(err => {
+//     console.error(err.stack)
+//   })
+// }
 
 const influx.getDatabaseNames()
   .then(names => {
