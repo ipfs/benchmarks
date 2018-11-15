@@ -4,6 +4,7 @@
 const fs = require('fs')
 const ora = require('ora')
 const ipfsNode = require('../lib/create-node.js')
+
 async function localExtract(node, name, file) {
 
   try {
@@ -31,16 +32,17 @@ async function localExtract(node, name, file) {
 }
 const results = []
 
-async function benchmark() {
+// mock runner until the other one is working.
+async function runner() {
 
   const spinner = ora(`Started `).start()
   spinner.color = 'magenta'
   spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
   try {
     const node = await ipfsNode
-    //results.push(await localExtract(node, "unixFS:extract:smallfile", "tests/fixtures/200Bytes.txt"))
-    //results[0].cpu = os.cpus()
-    //results[0].loadAvg = os.loadavg()
+    results.push(await localExtract(node, "unixFS:extract:smallfile", "tests/fixtures/200Bytes.txt"))
+    results[0].cpu = os.cpus()
+    results[0].loadAvg = os.loadavg()
 
     spinner.text = "Starting unixFS:extract:largefile Benchamrk"
     const r = await localExtract(node, "unixFS:extract:largefile", "./fixtures/1.2MiB.txt")
@@ -61,5 +63,5 @@ async function benchmark() {
 
   }
 }
-benchmark()
+runner()
 module.exports = localExtract
