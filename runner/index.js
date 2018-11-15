@@ -1,21 +1,23 @@
-const remoteExec = require('ssh-exec')
+'use strict'
+
+// const remoteExec = require('ssh-exec')
 const { exec } = require('child_process')
 const _ = require('lodash')
 const config = require('./config')
 
-const runRemote = (shell, host, user) => {
-  return new Promise((resolve, reject) => {
-    remoteExec(shell, {
-      user: user,
-      host: host
-    }).pipe((output) => {
-      resolve(output)
-    })
-  })
-}
+// const runRemote = (shell, host, user) => {
+//   return new Promise((resolve, reject) => {
+//     remoteExec(shell, {
+//       user: user,
+//       host: host
+//     }).pipe(output => {
+//       resolve(output)
+//     })
+//   })
+// }
 
-const runLocal = (shell) => {
-  return new Promise((resolve,reject) => {
+const runLocal = shell => {
+  return new Promise((resolve, reject) => {
     exec(shell, (err, stdout, stderr) => {
       if (err) {
         reject(new Error(stderr))
@@ -25,12 +27,11 @@ const runLocal = (shell) => {
   })
 }
 
-const parseResults = (rawOutput) =>{
+const parseResults = rawOutput => {
   let arrResults = []
-  let objReturn = {}
   let addLine = false
-  arrOutput = rawOutput.split(/[\n\r]/g)
-  for(let i=0; i<arrOutput.length;i++) {
+  let arrOutput = rawOutput.split(/[\n\r]/g)
+  for (let i = 0; i < arrOutput.length; i++) {
     if (addLine) arrResults.push(arrOutput[i])
     if (arrOutput[i].includes('BEGIN RESULTS')) {
       addLine = true

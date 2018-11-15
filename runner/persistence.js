@@ -1,3 +1,5 @@
+'use strict'
+
 const Influx = require('influx')
 const http = require('http')
 const exec = require('ssh-exec')

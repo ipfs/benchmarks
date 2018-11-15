@@ -11,5 +11,8 @@
   "dependencies": {
     "ipfs": "^0.33.1",
     "pretty-hrtime": "^1.0.3"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
   }
 }

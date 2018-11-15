@@ -13,15 +13,15 @@ const log = (msg) => {
 
 const peerAPromise = new Promise((resolve) => {
   const config = {
-    "Addresses": {
-      "API": "/ip4/127.0.0.1/tcp/5012",
-      "Gateway": "/ip4/127.0.0.1/tcp/9091",
-      "Swarm": [
-        "/ip4/0.0.0.0/tcp/4012",
-        "/ip4/127.0.0.1/tcp/4013/ws"
+    'Addresses': {
+      'API': '/ip4/127.0.0.1/tcp/5012',
+      'Gateway': '/ip4/127.0.0.1/tcp/9091',
+      'Swarm': [
+        '/ip4/0.0.0.0/tcp/4012',
+        '/ip4/127.0.0.1/tcp/4013/ws'
       ]
     },
-    "Bootstrap": []
+    'Bootstrap': []
   }
   const peer = new IPFS({
     repo: '/tmp/peera',
@@ -38,15 +38,15 @@ const peerAPromise = new Promise((resolve) => {
 
 const peerBPromise = new Promise((resolve) => {
   const config = {
-    "Addresses": {
-      "API": "/ip4/127.0.0.1/tcp/5022",
-      "Gateway": "/ip4/127.0.0.1/tcp/9092",
-      "Swarm": [
-        "/ip4/0.0.0.0/tcp/4022",
-        "/ip4/127.0.0.1/tcp/4023/ws"
+    'Addresses': {
+      'API': '/ip4/127.0.0.1/tcp/5022',
+      'Gateway': '/ip4/127.0.0.1/tcp/9092',
+      'Swarm': [
+        '/ip4/0.0.0.0/tcp/4022',
+        '/ip4/127.0.0.1/tcp/4023/ws'
       ]
     },
-    "Bootstrap": []
+    'Bootstrap': []
   }
   const peer = new IPFS({
     repo: '/tmp/peerb',
@@ -66,7 +66,7 @@ const connectPeers = async (peerA, peerB) => {
     const peerAId = await peerA.id()
     return peerB.swarm.connect(peerAId.addresses[0])
   } catch (err) {
-    error(err)
+    throw Error(err)
   }
 }
 
@@ -84,9 +84,9 @@ const main = async () => {
     log('vmx: inserted:', inserted)
 
     // peerB doesn't any data cached, get all from peerA
-    const start = process.hrtime();
+    const start = process.hrtime()
     await peerB.files.cat(inserted[0].hash)
-    const end = process.hrtime(start);
+    const end = process.hrtime(start)
 
     console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
     console.log(JSON.stringify({
@@ -106,7 +106,6 @@ const main = async () => {
     peerB.stop()
   } catch (err) {
     throw Error(err)
-    process.exit(1)
   }
 }
 
