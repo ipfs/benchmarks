@@ -2,25 +2,64 @@
 'use strict'
 
 const fs = require('fs')
+const ora = require('ora')
+const ipfsNode = require('../lib/create-node.js')
 async function localExtract(node, name, file) {
 
-  const fileStream = fs.createReadStream(file)
-  const inserted = await node.files.add(fileStream)
-  const start = process.hrtime();
-  const validCID = inserted[0].hash
-  const files = await node.files.get(validCID)
-  const end = process.hrtime(start);
-  const d = new Date()
-  return (
-    {
-      name: name,
-      file: file,
-      date: d.toISOString(),
-      s: end[0],
-      ms: end[1] / 1000000
-    }
-  )
+  try {
+    const fileStream = fs.createReadStream(file)
+    const inserted = await node.files.add(fileStream)
+    const start = process.hrtime();
+    const validCID = inserted[0].hash
+    const files = await node.files.get(validCID)
+    const end = process.hrtime(start);
+    const d = new Date()
+    return (
+      {
+        name: name,
+        file: file,
+        date: d.toISOString(),
+        s: end[0],
+        ms: end[1] / 1000000
+      }
+    )
+  }
+  catch (err) {
+    throw Error(err)
+  }
 
 }
+const results = []
 
+async function benchmark() {
+
+  const spinner = ora(`Started `).start()
+  spinner.color = 'magenta'
+  spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
+  try {
+    const node = await ipfsNode
+    //results.push(await localExtract(node, "unixFS:extract:smallfile", "tests/fixtures/200Bytes.txt"))
+    //results[0].cpu = os.cpus()
+    //results[0].loadAvg = os.loadavg()
+
+    spinner.text = "Starting unixFS:extract:largefile Benchamrk"
+    const r = await localExtract(node, "unixFS:extract:largefile", "./fixtures/1.2MiB.txt")
+    results.push(r)
+    results[0].cpu = os.cpus()
+    results[0].loadAvg = os.loadavg()
+
+
+
+    console.log(JSON.stringify(results))
+
+    node.stop()
+    spinner.succeed()
+  }
+  catch (err) {
+    spinner.fail()
+    throw Error(err)
+
+  }
+}
+benchmark()
 module.exports = localExtract
