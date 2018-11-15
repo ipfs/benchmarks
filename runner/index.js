@@ -1,22 +1,36 @@
 'use strict'
 
-const remoteExec = require('ssh-exec')
+const remoteExec = require('ssh-exec-plus')
 const { exec } = require('child_process')
 const _ = require('lodash')
 const config = require('./config')
 
-const runRemote = (shell, host, user) => {
+const runCommand = (test) => {
+  if (config.stage === 'local') {
+    return runLocal(test.localShell)
+  } else {
+    return runRemote(test.shell)
+  }
+}
+
+const runRemote = (shell) => {
+  config.log.info(`Running [${shell}] on host [${config.benchmarks.host}]`)
   return new Promise((resolve, reject) => {
     remoteExec(shell, {
-      user: user,
-      host: host
-    }).pipe(output => {
-      resolve(output)
+      user: config.benchmarks.user,
+      host: config.benchmarks.host
+    }, (err, stdout, stderr) => {
+      if (err) {
+        reject(Error(err, stderr))
+        return
+      }
+      resolve(stdout)
     })
   })
 }
 
 const runLocal = shell => {
+  config.log.info(`Running [${shell}] locally`)
   return new Promise((resolve, reject) => {
     exec(shell, (err, stdout, stderr) => {
       if (err) {
@@ -52,9 +66,13 @@ const parseResults = rawOutput => {
 
 const main = () => {
   _.each(config.benchmarks.tests, async (test) => {
-    let output = await runLocal(test.localShell)
-    let results = parseResults(output)
-    console.log(results)
+    try {
+      let output = await runCommand(test)
+      let results = parseResults(output)
+      config.log.info({ results: results })
+    } catch (e) {
+      config.log.error(e)
+    }
   })
 }
 
