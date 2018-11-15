@@ -3,7 +3,7 @@ services:
   influxdb:
     image: influxdb:1.7-alpine
     volumes:
-      - ../../data/influxdb:/var/lib/influxdb
+      - ../../../data/influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
     environment:
