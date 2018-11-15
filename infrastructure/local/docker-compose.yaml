@@ -1,0 +1,18 @@
+version: "3"
+services:
+  influxdb:
+    image: influxdb:1.7-alpine
+    volumes:
+      - ../../../data/influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      INFLUXDB_DB: benchmarks
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+     - "3000:3000"
+    depends_on:
+      - influxdb
+    links:
+      - influxdb
