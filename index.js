@@ -16,7 +16,8 @@ async function benchmark() {
   results.push(await localExtract(logger, "unixFS:extract:largefile", "tests/fixtures/1.2MiB.txt"))
   results[1].cpu = os.cpus(),
     results[1].loadAvg = os.loadavg()
-  console.log(results)
+
+  console.log(JSON.stringify(results))
 
 }
 benchmark()
