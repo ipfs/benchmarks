@@ -14,7 +14,7 @@ async function localExtract(node, name, file) {
     const validCID = inserted[0].hash
     const files = await node.files.get(validCID)
     const end = process.hrtime(start);
-    const d = new Date()
+    const d = new Date().toISOString()
     return (
       {
         name: name,
