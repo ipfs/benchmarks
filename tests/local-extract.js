@@ -33,8 +33,8 @@ async function localExtract(node, name, file) {
 }
 const results = []
 
-// mock runner until the other one is working.
-async function runner() {
+// mock scenerios until the other one is working.
+async function scenarios() {
 
   const spinner = ora(`Started `).start()
   spinner.color = 'magenta'
@@ -65,7 +65,7 @@ async function runner() {
     results[2].cpu = os.cpus()
     results[2].loadAvg = os.loadavg()
 
-    results.push(await localExtract(node, "unixFS:extract:largefile:emptyRepo", "./fixtures/1.2MiB.txt"))
+    results.push(await localExtract(node, "unixFS:extract:largefile", "./fixtures/1.2MiB.txt"))
     results[3].cpu = os.cpus()
     results[3].loadAvg = os.loadavg()
 
@@ -81,5 +81,5 @@ async function runner() {
 
   }
 }
-runner()
+scenarios()
 module.exports = localExtract
