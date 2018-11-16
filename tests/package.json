@@ -16,7 +16,6 @@
   "dependencies": {
     "ipfs": "^0.33.1",
     "pretty-hrtime": "^1.0.3",
-    "ora": "^3.0.0",
     "os": "^0.1.1"
   },
   "devDependencies": {

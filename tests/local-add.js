@@ -2,7 +2,6 @@
 'use strict'
 
 const fs = require('fs')
-const ora = require('ora')
 const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
 
@@ -31,11 +30,7 @@ async function localAdd (node, name, file) {
 }
 const results = []
 
-// mock scenerios until the other one is working.
 async function scenarios () {
-  const spinner = ora(`Started `).start()
-  spinner.color = 'magenta'
-  spinner.text = 'Starting unixFS:extract:smallfile Benchamrk'
   try {
     const node = await ipfsNode()
     results.push(await localAdd(node, 'unixFS:add:smallfile:emptyRepo', './fixtures/200Bytes.txt'))
@@ -50,7 +45,7 @@ async function scenarios () {
       },
       'Bootstrap': []
     })
-    spinner.text = 'Starting unixFS:extract:largefile Benchamrk'
+
     const r = await localAdd(node1, 'unixFS:add:largefile:emptyRepo', './fixtures/1.2MiB.txt')
     results.push(r)
 
@@ -62,9 +57,7 @@ async function scenarios () {
 
     node.stop()
     node1.stop()
-    spinner.succeed()
   } catch (err) {
-    spinner.fail()
     throw Error(err)
   }
 }
