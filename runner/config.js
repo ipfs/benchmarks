@@ -51,12 +51,12 @@ const config = {
       {
         measurement: tests[0].measurement,
         fields: {
-          filesize: Influx.FieldType.FLOAT,
           duration: Influx.FieldType.INTEGER
         },
         tags: [
           'commit',
-          'project'
+          'project',
+          'testClass'
         ]
       }
     ]

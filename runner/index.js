@@ -5,6 +5,7 @@ const config = require('./config')
 const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
+const persistence = require('./persistence')
 
 const runCommand = (test) => {
   if (config.stage === 'local') {
@@ -14,6 +15,7 @@ const runCommand = (test) => {
   }
 }
 
+// should be replaced by reading a remote jso file that holds the test output
 const parseResults = rawOutput => {
   let arrResults = []
   let addLine = false
@@ -43,8 +45,8 @@ const main = async () => {
   _.each(config.benchmarks.tests, async (test) => {
     try {
       let output = await runCommand(test)
-      let results = parseResults(output)
-      config.log.info({ results: results })
+      let result = parseResults(output)
+      persistence.store(result)
     } catch (e) {
       config.log.error(e)
     }

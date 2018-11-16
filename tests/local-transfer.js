@@ -87,12 +87,18 @@ const main = async () => {
     const start = process.hrtime()
     await peerB.files.cat(inserted[0].hash)
     const end = process.hrtime(start)
+    const date = new Date()
 
     console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
     console.log(JSON.stringify({
-      name: 'LocalFs:local-transfer:smallfile',
-      date: new Date().toISOString(),
+      name: 'local-transfer',
+      testClass: 'smallfile',
+      date: date.toISOString(),
       file: '/tmp/100m.bin',
+      meta: {
+        project: 'js-ipfs',
+        commit: 'TBD'
+      },
       duration: {
         seconds: end[0],
         milliseconds: end[1] / 1000000
