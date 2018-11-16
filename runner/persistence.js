@@ -12,13 +12,11 @@ const influx = new Influx.InfluxDB({
 })
 
 const parseDuration = (objDuration) => {
-  // let durationString = `${objDuration.milliseconds}`
   let ms = ((objDuration.seconds * 1000) + objDuration.milliseconds)
   return parseFloat(ms)
 }
 
 const writePoints = (data) => {
-  // console.log(data)
   if (!_.isArray(data)) {
     data = [data]
   }
@@ -32,9 +30,7 @@ const writePoints = (data) => {
     })
   })
   config.log.info(payload)
-  return influx.writePoints(payload).catch(err => {
-    console.error(`Error saving data to InfluxDB! ${err.stack}`)
-  })
+  return influx.writePoints(payload)
 }
 
 const ensureDb = async (db) => {
@@ -47,13 +43,17 @@ const ensureDb = async (db) => {
 }
 
 const store = async (result) => {
-  await ensureDb('benchmarks')
+  try {
+    await ensureDb('benchmarks')
+  } catch (e) {
+    config.log.error(`Error creating Influx database!`)
+  }
   try {
     await writePoints(result)
   } catch (err) {
-    console.error(err)
-    console.error(`Error creating Influx database!`)
+    config.log.error(err)
   }
+  return true
 }
 
 module.exports = {
