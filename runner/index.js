@@ -1,31 +1,17 @@
 'use strict'
 
-const remoteExec = require('ssh-exec')
-const { exec } = require('child_process')
 const _ = require('lodash')
 const config = require('./config')
+const remote = require('./remote.js')
+const local = require('./local.js')
+const provision = require('./provision')
 
-const runRemote = (shell, host, user) => {
-  return new Promise((resolve, reject) => {
-    remoteExec(shell, {
-      user: user,
-      host: host
-    }).pipe(output => {
-      resolve(output)
-    })
-  })
-}
-
-const runLocal = shell => {
-  return new Promise((resolve, reject) => {
-    exec(shell, (err, stdout, stderr) => {
-      if (err) {
-        reject(new Error(stderr))
-        return
-      }
-      resolve(stdout)
-    })
-  })
+const runCommand = (test) => {
+  if (config.stage === 'local') {
+    return local.run(test.localShell)
+  } else {
+    return remote.run(test.shell)
+  }
 }
 
 const parseResults = rawOutput => {
@@ -50,11 +36,18 @@ const parseResults = rawOutput => {
   }
 }
 
-const main = () => {
+const main = async () => {
+  if (config.stage !== 'local') {
+    await provision.ensure()
+  }
   _.each(config.benchmarks.tests, async (test) => {
-    let output = await runLocal(test.localShell)
-    let results = parseResults(output)
-    console.log(results)
+    try {
+      let output = await runCommand(test)
+      let results = parseResults(output)
+      config.log.info({ results: results })
+    } catch (e) {
+      config.log.error(e)
+    }
   })
 }
 
