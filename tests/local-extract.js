@@ -41,21 +41,38 @@ async function runner() {
   spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
   try {
     const node = await ipfsNode()
-    results.push(await localExtract(node, "unixFS:extract:smallfile", "./fixtures/200Bytes.txt"))
+    results.push(await localExtract(node, "unixFS:extract:smallfile:emptyRepo", "./fixtures/200Bytes.txt"))
     results[0].cpu = os.cpus()
     results[0].loadAvg = os.loadavg()
-
+    const node1 = await ipfsNode({
+      "Addresses": {
+        "API": "/ip4/127.0.0.1/tcp/5013",
+        "Gateway": "/ip4/127.0.0.1/tcp/9092",
+        "Swarm": [
+          "/ip4/0.0.0.0/tcp/4013",
+          "/ip4/127.0.0.1/tcp/4015/ws"
+        ]
+      },
+      "Bootstrap": []
+    })
     spinner.text = "Starting unixFS:extract:largefile Benchamrk"
-    const r = await localExtract(node, "unixFS:extract:largefile", "./fixtures/1.2MiB.txt")
+    const r = await localExtract(node1, "unixFS:extract:largefile:emptyRepo", "./fixtures/1.2MiB.txt")
     results.push(r)
     results[1].cpu = os.cpus()
     results[1].loadAvg = os.loadavg()
 
+    results.push(await localExtract(node1, "unixFS:extract:smallfile", "./fixtures/200Bytes.txt"))
+    results[2].cpu = os.cpus()
+    results[2].loadAvg = os.loadavg()
 
+    results.push(await localExtract(node, "unixFS:extract:largefile:emptyRepo", "./fixtures/1.2MiB.txt"))
+    results[3].cpu = os.cpus()
+    results[3].loadAvg = os.loadavg()
 
     console.log(JSON.stringify(results))
 
     node.stop()
+    node1.stop()
     spinner.succeed()
   }
   catch (err) {
