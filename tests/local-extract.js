@@ -2,7 +2,6 @@
 'use strict'
 
 const fs = require('fs')
-const ora = require('ora')
 const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
 
@@ -33,9 +32,6 @@ async function localExtract (node, name, file) {
 const results = []
 
 async function scenarios () {
-  const spinner = ora(`Started `).start()
-  spinner.color = 'magenta'
-  spinner.text = 'Starting unixFS:extract:smallfile Benchamrk'
   try {
     const node = await ipfsNode()
     results.push(await localExtract(node, 'unixFS:extract:smallfile:emptyRepo', './fixtures/200Bytes.txt'))
@@ -50,7 +46,7 @@ async function scenarios () {
       },
       'Bootstrap': []
     })
-    spinner.text = 'Starting unixFS:extract:largefile Benchamrk'
+
     const r = await localExtract(node1, 'unixFS:extract:largefile:emptyRepo', './fixtures/1.2MiB.txt')
     results.push(r)
 
@@ -62,9 +58,7 @@ async function scenarios () {
 
     node.stop()
     node1.stop()
-    spinner.succeed()
   } catch (err) {
-    spinner.fail()
     throw Error(err)
   }
 }
