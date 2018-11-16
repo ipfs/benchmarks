@@ -7,14 +7,13 @@ const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
 
 
-async function localExtract(node, name, file) {
+async function localAdd(node, name, file) {
 
   try {
     const fileStream = fs.createReadStream(file)
-    const inserted = await node.files.add(fileStream)
+
     const start = process.hrtime();
-    const validCID = inserted[0].hash
-    const files = await node.files.get(validCID)
+    const inserted = await node.files.add(fileStream)
     const end = process.hrtime(start);
     return (
       {
@@ -41,7 +40,7 @@ async function scenarios() {
   spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
   try {
     const node = await ipfsNode()
-    results.push(await localExtract(node, "unixFS:extract:smallfile:emptyRepo", "./fixtures/200Bytes.txt"))
+    results.push(await localAdd(node, "unixFS:add:smallfile:emptyRepo", "./fixtures/200Bytes.txt"))
     results[0].cpu = os.cpus()
     results[0].loadAvg = os.loadavg()
     const node1 = await ipfsNode({
@@ -56,16 +55,16 @@ async function scenarios() {
       "Bootstrap": []
     })
     spinner.text = "Starting unixFS:extract:largefile Benchamrk"
-    const r = await localExtract(node1, "unixFS:extract:largefile:emptyRepo", "./fixtures/1.2MiB.txt")
+    const r = await localAdd(node1, "unixFS:add:largefile:emptyRepo", "./fixtures/1.2MiB.txt")
     results.push(r)
     results[1].cpu = os.cpus()
     results[1].loadAvg = os.loadavg()
 
-    results.push(await localExtract(node1, "unixFS:extract:smallfile", "./fixtures/200Bytes.txt"))
+    results.push(await localAdd(node1, "unixFS:add:smallfile", "./fixtures/200Bytes.txt"))
     results[2].cpu = os.cpus()
     results[2].loadAvg = os.loadavg()
 
-    results.push(await localExtract(node, "unixFS:extract:largefile", "./fixtures/1.2MiB.txt"))
+    results.push(await localAdd(node, "unixFS:add:largefile", "./fixtures/1.2MiB.txt"))
     results[3].cpu = os.cpus()
     results[3].loadAvg = os.loadavg()
 
@@ -81,7 +80,56 @@ async function scenarios() {
 
   }
 }
+async function smallFile() {
+
+  const spinner = ora(`Started `).start()
+  spinner.color = 'magenta'
+  spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
+  try {
+    const node = await ipfsNode()
+    results.push(await localAdd(node, "unixFS:add:smallfile:emptyRepo", "./fixtures/200Bytes.txt"))
+    results[0].cpu = os.cpus()
+    results[0].loadAvg = os.loadavg()
+
+
+    console.log(JSON.stringify(results))
+
+    node.stop()
+
+    spinner.succeed()
+  }
+  catch (err) {
+    spinner.fail()
+    throw Error(err)
+
+  }
+}
+async function largeFile() {
+
+  const spinner = ora(`Started `).start()
+  spinner.color = 'magenta'
+  spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
+  try {
+    const node = await ipfsNode()
+    results.push(await localAdd(node, "unixFS:add:largefile:emptyRepo", "./fixtures/1.2MiB.txt"))
+    results[0].cpu = os.cpus()
+    results[0].loadAvg = os.loadavg()
+
+
+    console.log(JSON.stringify(results))
+
+    node.stop()
+
+    spinner.succeed()
+  }
+  catch (err) {
+    spinner.fail()
+    throw Error(err)
+
+  }
+}
 //scenarios()
+//smallFile()
+largeFile()
 
-
-module.exports = localExtract
+module.exports = localAdd

@@ -1,0 +1,410 @@
+[
+  {
+    "name": "unixFS:add:smallfile:emptyRepo",
+    "file": "./fixtures/200Bytes.txt",
+    "date": "2018-11-16T09:41:48.338Z",
+    "s": 0,
+    "ms": 72.863078,
+    "cpu": [
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 9153860,
+          "nice": 0,
+          "sys": 6250300,
+          "idle": 49365940,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 789330,
+          "nice": 0,
+          "sys": 711780,
+          "idle": 63264920,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 7336640,
+          "nice": 0,
+          "sys": 4514540,
+          "idle": 52915650,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 825300,
+          "nice": 0,
+          "sys": 582910,
+          "idle": 63357660,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 6370680,
+          "nice": 0,
+          "sys": 3589690,
+          "idle": 54806120,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 841690,
+          "nice": 0,
+          "sys": 518160,
+          "idle": 63405860,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 5555840,
+          "nice": 0,
+          "sys": 2935280,
+          "idle": 56275070,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 877740,
+          "nice": 0,
+          "sys": 468600,
+          "idle": 63419220,
+          "irq": 0
+        }
+      }
+    ],
+    "loadAvg": [
+      2.62109375,
+      2.8203125,
+      2.70751953125
+    ]
+  },
+  {
+    "name": "unixFS:add:largefile:emptyRepo",
+    "file": "./fixtures/1.2MiB.txt",
+    "date": "2018-11-16T09:41:50.306Z",
+    "s": 0,
+    "ms": 106.957672,
+    "cpu": [
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 9154360,
+          "nice": 0,
+          "sys": 6250400,
+          "idle": 49367310,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 789340,
+          "nice": 0,
+          "sys": 711790,
+          "idle": 63266860,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU@ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 7337120,
+          "nice": 0,
+          "sys": 4514610,
+          "idle": 52917070,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 825320,
+          "nice": 0,
+          "sys": 582920,
+          "idle": 63359600,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 6371230,
+          "nice": 0,
+          "sys": 3589740,
+          "idle": 54807480,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 841700,
+          "nice": 0,
+          "sys": 518170,
+          "idle": 63407800,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 5556570,
+          "nice": 0,
+          "sys": 2935320,
+          "idle": 56276260,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 877760,
+          "nice": 0,
+          "sys": 468610,
+          "idle": 63421160,
+          "irq": 0
+        }
+      }
+    ],
+    "loadAvg": [
+      2.62109375,
+      2.8203125,
+      2.70751953125
+    ]
+  },
+  {
+    "name": "unixFS:add:smallfile",
+    "file": "./fixtures/200Bytes.txt",
+    "date": "2018-11-16T09:41:50.345Z",
+    "s": 0,
+    "ms": 39.576883,
+    "cpu": [
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 9154370,
+          "nice": 0,
+          "sys": 6250410,
+          "idle": 49367330,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 789340,
+          "nice": 0,
+          "sys": 711790,
+          "idle": 63266900,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 7337130,
+          "nice": 0,
+          "sys": 4514620,
+          "idle": 52917080,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 825320,
+          "nice": 0,
+          "sys": 582920,
+          "idle": 63359640,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 6371240,
+          "nice": 0,
+          "sys": 3589740,
+          "idle": 54807510,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 841700,
+          "nice": 0,
+          "sys": 518170,
+          "idle": 63407840,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 5556580,
+          "nice": 0,
+          "sys": 2935330,
+          "idle": 56276290,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 877760,
+          "nice": 0,
+          "sys": 468610,
+          "idle": 63421190,
+          "irq": 0
+        }
+      }
+    ],
+    "loadAvg": [
+      2.62109375,
+      2.8203125,
+      2.70751953125
+    ]
+  },
+  {
+    "name": "unixFS:add:largefile",
+    "file": "./fixtures/1.2MiB.txt",
+    "date": "2018-11-16T09:41:50.433Z",
+    "s": 0,
+    "ms": 87.313972,
+    "cpu": [
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 9154400,
+          "nice": 0,
+          "sys": 6250430,
+          "idle": 49367370,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 789340,
+          "nice": 0,
+          "sys": 711790,
+          "idle": 63266990,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R)Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 7337150,
+          "nice": 0,
+          "sys": 4514630,
+          "idle": 52917140,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 825320,
+          "nice": 0,
+          "sys": 582920,
+          "idle": 63359720,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 6371250,
+          "nice": 0,
+          "sys": 3589750,
+          "idle": 54807580,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 841700,
+          "nice": 0,
+          "sys": 518180,
+          "idle": 63407930,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 5556580,
+          "nice": 0,
+          "sys": 2935330,
+          "idle": 56276370,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 877760,
+          "nice": 0,
+          "sys": 468610,
+          "idle": 63421280,
+          "irq": 0
+        }
+      }
+    ],
+    "loadAvg": [
+      2.62109375,
+      2.8203125,
+      2.70751953125
+    ]
+  }
+]

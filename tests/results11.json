@@ -1,0 +1,104 @@
+[
+  {
+    "name": "unixFS:add:smallfile:emptyRepo",
+    "file": "./fixtures/200Bytes.txt",
+    "date": "2018-11-16T09:44:11.489Z",
+    "s": 0,
+    "ms": 82.826481,
+    "cpu": [
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 9182920,
+          "nice": 0,
+          "sys": 6270030,
+          "idle": 49460300,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 791580,
+          "nice": 0,
+          "sys": 714110,
+          "idle": 63403490,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 7361630,
+          "nice": 0,
+          "sys": 4529740,
+          "idle": 53018620,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 827610,
+          "nice": 0,
+          "sys": 584910,
+          "idle": 63496510,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 6392770,
+          "nice": 0,
+          "sys": 3601230,
+          "idle": 54915640,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 844090,
+          "nice": 0,
+          "sys": 519990,
+          "idle": 63544780,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 5575520,
+          "nice": 0,
+          "sys": 2944510,
+          "idle": 56389320,
+          "irq": 0
+        }
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-4850HQ CPU @ 2.30GHz",
+        "speed": 2300,
+        "times": {
+          "user": 880280,
+          "nice": 0,
+          "sys": 470100,
+          "idle": 63558330,
+          "irq": 0
+        }
+      }
+    ],
+    "loadAvg": [
+      2.412109375,
+      2.60498046875,
+      2.63037109375
+    ]
+  }
+]
