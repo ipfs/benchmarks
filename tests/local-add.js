@@ -80,56 +80,8 @@ async function scenarios() {
 
   }
 }
-async function smallFile() {
-
-  const spinner = ora(`Started `).start()
-  spinner.color = 'magenta'
-  spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
-  try {
-    const node = await ipfsNode()
-    results.push(await localAdd(node, "unixFS:add:smallfile:emptyRepo", "./fixtures/200Bytes.txt"))
-    results[0].cpu = os.cpus()
-    results[0].loadAvg = os.loadavg()
 
 
-    console.log(JSON.stringify(results))
-
-    node.stop()
-
-    spinner.succeed()
-  }
-  catch (err) {
-    spinner.fail()
-    throw Error(err)
-
-  }
-}
-async function largeFile() {
-
-  const spinner = ora(`Started `).start()
-  spinner.color = 'magenta'
-  spinner.text = "Starting unixFS:extract:smallfile Benchamrk"
-  try {
-    const node = await ipfsNode()
-    results.push(await localAdd(node, "unixFS:add:largefile:emptyRepo", "./fixtures/1.2MiB.txt"))
-    results[0].cpu = os.cpus()
-    results[0].loadAvg = os.loadavg()
-
-
-    console.log(JSON.stringify(results))
-
-    node.stop()
-
-    spinner.succeed()
-  }
-  catch (err) {
-    spinner.fail()
-    throw Error(err)
-
-  }
-}
-//scenarios()
-//smallFile()
-largeFile()
+scenarios()
 
 module.exports = localAdd

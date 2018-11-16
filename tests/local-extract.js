@@ -22,7 +22,10 @@ async function localExtract(node, name, file) {
         file: file,
         date: new Date().toISOString(),
         s: end[0],
-        ms: end[1] / 1000000
+        ms: end[1] / 1000000,
+        cpu: os.cpus(),
+        loadAvg: os.loadavg(),
+        memory: os.totalmem() - os.freemem()
       }
     )
   }
@@ -42,8 +45,6 @@ async function scenarios() {
   try {
     const node = await ipfsNode()
     results.push(await localExtract(node, "unixFS:extract:smallfile:emptyRepo", "./fixtures/200Bytes.txt"))
-    results[0].cpu = os.cpus()
-    results[0].loadAvg = os.loadavg()
     const node1 = await ipfsNode({
       "Addresses": {
         "API": "/ip4/127.0.0.1/tcp/5013",
@@ -58,16 +59,10 @@ async function scenarios() {
     spinner.text = "Starting unixFS:extract:largefile Benchamrk"
     const r = await localExtract(node1, "unixFS:extract:largefile:emptyRepo", "./fixtures/1.2MiB.txt")
     results.push(r)
-    results[1].cpu = os.cpus()
-    results[1].loadAvg = os.loadavg()
 
     results.push(await localExtract(node1, "unixFS:extract:smallfile", "./fixtures/200Bytes.txt"))
-    results[2].cpu = os.cpus()
-    results[2].loadAvg = os.loadavg()
 
     results.push(await localExtract(node, "unixFS:extract:largefile", "./fixtures/1.2MiB.txt"))
-    results[3].cpu = os.cpus()
-    results[3].loadAvg = os.loadavg()
 
     console.log(JSON.stringify(results))
 
@@ -81,7 +76,7 @@ async function scenarios() {
 
   }
 }
-//scenarios()
+scenarios()
 
 
 module.exports = localExtract
