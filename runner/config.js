@@ -56,7 +56,7 @@ const config = {
         tags: [
           'commit',
           'project',
-          'testClass'
+
         ]
       }
     ]
