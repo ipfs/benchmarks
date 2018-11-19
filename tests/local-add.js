@@ -53,7 +53,9 @@ async function scenarios () {
 
     results.push(await localAdd(node, 'unixFS:add:largefile', './fixtures/1.2MiB.txt'))
 
+    console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
     console.log(JSON.stringify(results))
+    console.log('-*-*-*-*-*- END RESULTS -*-*-*-*-*-')
 
     node.stop()
     node1.stop()

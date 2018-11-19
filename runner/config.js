@@ -38,6 +38,12 @@ const tests = [
     shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && node ${remoteTestsPath}/local-transfer.js`,
     localShell: 'node ' + path.join(__dirname, '/../tests/local-transfer.js')
   }
+  // , {
+  //   name: 'Local add',
+  //   measurement: 'local_add',
+  //   shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && node ${remoteTestsPath}/local-add.js`,
+  //   localShell: 'node ' + path.join(__dirname, '/../tests/local-add.js')
+  // }
 ]
 
 const config = {
