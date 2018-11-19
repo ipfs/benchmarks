@@ -5,7 +5,7 @@ const path = require('path')
 const YAML = require('yaml')
 const Influx = require('influx')
 const Pino = require('pino')
-let pino = Pino()
+let pino = {}
 
 const inventoryPath = path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
@@ -19,6 +19,8 @@ if (process.env.LOG_PRETTY === 'true') {
     },
     prettifier: require('pino-pretty')
   })
+} else {
+  pino = Pino()
 }
 
 const getInventory = () => {
