@@ -1,62 +1,56 @@
 'use strict'
 
 const Influx = require('influx')
-const http = require('http')
-const exec = require('ssh-exec')
-const os = require('os')
-const { DateTime } = require("luxon")
-const _ = require('lodash')
+const moment = require('moment')
 const config = require('./config')
 
 const influx = new Influx.InfluxDB({
   host: config.influxdb.host,
   database: config.influxdb.db,
-  schems: config.influxdb.schema
+  schema: config.influxdb.schema
 })
 
-const writePoints = (data) => {
-  let payload = []
-  _.each(data, (point) => {
-    payload.push({
-      measurement: measurement,
-      tags: { commit: point.commit, project: point.project },
-      fields: { duration: point.duration, filesize: point.fileSize },
-      timestamp: point.timestamp
-    })
-  })
-  console.log(payload)
-  return influx.writePoints(payload).catch(err => {
-    console.error(`Error saving data to InfluxDB! ${err.stack}`)
-  })
+const parseDuration = (objDuration) => {
+  let ms = ((objDuration.seconds * 1000) + objDuration.milliseconds)
+  return parseFloat(ms)
 }
 
-// const report = (test) => {
-//   influx.query(`
-//     select * from ${config.influxdb.db}..${test.measurement}
-//     order by time desc
-//     limit 10
-//   `).then(result => {
-//     console.log(JSON.stringify(result, null, 4))
-//   }).catch(err => {
-//     console.error(err.stack)
-//   })
-// }
-
-const influx.getDatabaseNames()
-  .then(names => {
-    if (!names.includes('benchmarks')) {
-      return influx.createDatabase('benchmarks');
-    }
-  })
-  .then(() => {
-
-    writePoints(data). then( () => {report()})
-  })
-  .catch(err => {
-    console.error(err);
-    console.error(`Error creating Influx database!`);
-  })
-
-  module.exports = {
-
+const writePoints = (data) => {
+  if (!Array.isArray(data)) {
+    data = [data]
   }
+  let payload = []
+  for (let point of data) {
+    payload.push({
+      measurement: point.name,
+      tags: { commit: point.meta.commit, project: point.meta.project, testClass: point.testClass },
+      fields: { duration: parseDuration(point.duration) },
+      timestamp: moment(point.date).toDate()
+    })
+  }
+  config.log.info(payload)
+  return influx.writePoints(payload)
+}
+
+const ensureDb = async (db) => {
+  let names = await influx.getDatabaseNames()
+  if (!names.includes(db)) {
+    return influx.createDatabase(db)
+  } else {
+    return influx
+  }
+}
+
+const store = async (result) => {
+  try {
+    await ensureDb('benchmarks')
+    await writePoints(result)
+  } catch (err) {
+    config.log.error(err)
+  }
+  return true
+}
+
+module.exports = {
+  store: store
+}
