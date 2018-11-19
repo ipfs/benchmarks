@@ -57,7 +57,7 @@ const ensure = async () => {
       config.log.info(`Tests on ${config.benchmarks.host} are up to date.`)
     }
   } catch (e) {
-    config.log.error(e)
+    throw Error(e)
   }
 }
 
