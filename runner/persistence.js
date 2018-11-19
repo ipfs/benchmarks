@@ -45,10 +45,6 @@ const ensureDb = async (db) => {
 const store = async (result) => {
   try {
     await ensureDb('benchmarks')
-  } catch (e) {
-    config.log.error(`Error creating Influx database!`)
-  }
-  try {
     await writePoints(result)
   } catch (err) {
     config.log.error(err)
