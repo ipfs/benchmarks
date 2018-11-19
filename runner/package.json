@@ -13,6 +13,7 @@
     "influx": "^5.0.7",
     "lodash": "^4.17.11",
     "luxon": "^1.6.2",
+    "make-promises-safe": "^3.0.0",
     "pino": "^5.8.1",
     "pino-pretty": "^2.2.3",
     "ssh-exec-plus": "^2.0.1",
