@@ -6,11 +6,9 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 
-const runCommand = async test => {
+const runCommand = (test) => {
   if (config.stage === 'local') {
-    let command = await local.run(test.localShell)
-    if (command.stderr) throw Error(command.stderr)
-    return command.stdout
+    return local.run(test.localShell)
   } else {
     return remote.run(test.shell)
   }
@@ -42,7 +40,7 @@ const main = async () => {
   if (config.stage !== 'local') {
     await provision.ensure()
   }
-  _.each(config.benchmarks.tests, async test => {
+  _.each(config.benchmarks.tests, async (test) => {
     try {
       let output = await runCommand(test)
       let results = parseResults(output)
@@ -51,6 +49,6 @@ const main = async () => {
       config.log.error(e)
     }
   })
-};
+}
 
 main()
