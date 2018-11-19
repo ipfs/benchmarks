@@ -8,10 +8,9 @@ const provision = require('./provision')
 
 const runCommand = async test => {
   if (config.stage === 'local') {
-    let j = await local.run(test.localShell)
-    if (j.stderr) throw Error(j.stderr)
-    // console.log(j)
-    return j.stdout
+    let command = await local.run(test.localShell)
+    if (command.stderr) throw Error(command.stderr)
+    return command.stdout
   } else {
     return remote.run(test.shell)
   }
