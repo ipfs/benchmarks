@@ -14,33 +14,23 @@ const options = {
 }
 
 const dirHash = (dir) => {
-  return new Promise((resolve, reject) => {
-    config.log.info('Creating a hash over the [../tests] folder:')
-    hashElement(dir, options)
-      .then(hash => {
-        resolve(hash.hash)
-      })
-      .catch(error => {
-        return config.log.error('hashing failed:', error)
-      })
-  })
+  config.log.info('Creating a hash over the [../tests] folder:')
+  return hashElement(dir, options)
 }
 
 const writeHash = (hash, dir) => {
-  return new Promise((resolve, reject) => {
-    let hashPath = path.join(dir, hashFile)
-    fs.writeFile(hashPath, hash, (err) => {
-      if (err) {
-        reject(err)
-        return
-      }
-      resolve({ success: true, file: path })
-    })
-  })
+  let hashPath = path.join(dir, hashFile)
+  try {
+    fs.writeFileSync(hashPath, hash.hash)
+    config.log.info(`Written local hash: [${hash.hash}]`)
+  } catch (e) {
+    throw Error(e)
+  }
 }
 
 const checkHash = async (hashPath) => {
   let hash = await remote.run(`cat ${hashPath}`)
+  config.log.info(`Remote hash is: [${hash}]`)
   return hash
 }
 
@@ -49,7 +39,7 @@ const ensure = async () => {
     let hash = await dirHash(config.benchmarks.path)
     await writeHash(hash, config.benchmarks.path)
     let remotehash = await checkHash(path.join(config.benchmarks.remotePath, hashFile))
-    if (remotehash !== hash) {
+    if (remotehash !== hash.hash) {
       config.log.info(`Tests on ${config.benchmarks.host} are out of sync, updating...`)
       let ansible = await local.run(config.provison.command)
       config.log.info(ansible)
