@@ -2,7 +2,6 @@
 
 const Influx = require('influx')
 const moment = require('moment')
-const _ = require('lodash')
 const config = require('./config')
 
 const influx = new Influx.InfluxDB({
@@ -17,18 +16,18 @@ const parseDuration = (objDuration) => {
 }
 
 const writePoints = (data) => {
-  if (!_.isArray(data)) {
+  if (!Array.isArray(data)) {
     data = [data]
   }
   let payload = []
-  _.each(data, (point) => {
+  for (let point of data) {
     payload.push({
       measurement: point.name,
       tags: { commit: point.meta.commit, project: point.meta.project, testClass: point.testClass },
       fields: { duration: parseDuration(point.duration) },
       timestamp: moment(point.date).toDate()
     })
-  })
+  }
   config.log.info(payload)
   return influx.writePoints(payload)
 }
