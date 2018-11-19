@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const _ = require('lodash')
 const config = require('./config')
@@ -6,9 +6,12 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 
-const runCommand = (test) => {
+const runCommand = async test => {
   if (config.stage === 'local') {
-    return local.run(test.localShell)
+    let j = await local.run(test.localShell)
+    if (j.stderr) throw Error(j.stderr)
+    // console.log(j)
+    return j.stdout
   } else {
     return remote.run(test.shell)
   }
@@ -40,7 +43,7 @@ const main = async () => {
   if (config.stage !== 'local') {
     await provision.ensure()
   }
-  _.each(config.benchmarks.tests, async (test) => {
+  _.each(config.benchmarks.tests, async test => {
     try {
       let output = await runCommand(test)
       let results = parseResults(output)
@@ -49,6 +52,6 @@ const main = async () => {
       config.log.error(e)
     }
   })
-}
+};
 
 main()
