@@ -9,7 +9,7 @@ let pino = {}
 
 const inventoryPath = path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
-const remoteTestsPath = '~/ipfs/tests/'
+const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 
 // pretty logs in local
 if (process.env.LOG_PRETTY === 'true') {
