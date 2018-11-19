@@ -1,5 +1,6 @@
 'use strict'
 
+require('make-promises-safe') // installs an 'unhandledRejection' handler
 const _ = require('lodash')
 const config = require('./config')
 const remote = require('./remote.js')

@@ -1,19 +1,26 @@
 {
   "name": "runner",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "runner for benchmark tests",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard --verbose",
+    "start": "node index.js"
   },
   "author": "alex knol",
-  "license": "ISC",
+  "contributors": [
+    "Matteo Collina <matteo.collina@nearform.com>",
+    "Ron Litzenberegr <ron.litzenberger@nearform.com>"
+  ],
+  "license": "MIT",
   "dependencies": {
     "folder-hash": "^2.1.2",
     "influx": "^5.0.7",
     "lodash": "^4.17.11",
     "luxon": "^1.6.2",
     "moment": "^2.22.2",
+    "make-promises-safe": "^3.0.0",
     "pino": "^5.8.1",
     "pino-pretty": "^2.2.3",
     "ssh-exec-plus": "^2.0.1",

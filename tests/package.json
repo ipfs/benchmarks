@@ -1,16 +1,22 @@
 {
-  "name": "local-transfer",
-  "version": "1.0.0",
-  "description": "",
+  "name": "ipfs-benchmarks",
+  "version": "0.1.0",
+  "description": "Benchmarks for js-ifps",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard --verbose"
   },
-  "author": "",
+  "contributors": [
+    "Matteo Collina <matteo.collina@nearform.com>",
+    "Alex Knol <alex.knol@nearform.com>",
+    "Ron Litzenberegr <ron.litzenberger@nearform.com>"
+  ],
   "license": "ISC",
   "dependencies": {
     "ipfs": "^0.33.1",
-    "pretty-hrtime": "^1.0.3"
+    "pretty-hrtime": "^1.0.3",
+    "os": "^0.1.1"
   },
   "devDependencies": {
     "standard": "^12.0.1"
