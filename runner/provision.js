@@ -1,6 +1,5 @@
 'use strict'
 
-// const _ = require('lodash')
 const path = require('path')
 const config = require('./config')
 const { hashElement } = require('folder-hash')
@@ -19,7 +18,6 @@ const dirHash = (dir) => {
     config.log.info('Creating a hash over the [../tests] folder:')
     hashElement(dir, options)
       .then(hash => {
-        // config.log.info(hash.toString())
         resolve(hash.hash)
       })
       .catch(error => {
@@ -32,7 +30,6 @@ const writeHash = (hash, dir) => {
   return new Promise((resolve, reject) => {
     let hashPath = path.join(dir, hashFile)
     fs.writeFile(hashPath, hash, (err) => {
-      // throws an error, you could also catch it here
       if (err) {
         reject(err)
         return
@@ -48,7 +45,6 @@ const checkHash = async (hashPath) => {
 }
 
 const ensure = async () => {
-  // get remote hash for tests folder
   try {
     let hash = await dirHash(config.benchmarks.path)
     await writeHash(hash, config.benchmarks.path)
@@ -62,7 +58,6 @@ const ensure = async () => {
     }
   } catch (e) {
     config.log.error(e)
-    return
   }
 }
 
