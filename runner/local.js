@@ -4,7 +4,7 @@ const { exec } = require('child_process')
 
 const config = require('./config')
 
-const run = async shell => {
+const run = shell => {
   config.log.info(`Running [${shell}] locally`)
   return new Promise((resolve, reject) => {
     exec(shell, (err, stdout, stderr) => {
