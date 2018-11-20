@@ -18,7 +18,7 @@ const schema = FluentSchema()
     'description',
     FluentSchema()
       .asString()
-      .default("Description of test"))
+      .default('Description of test'))
   .prop(
     'testClass',
     FluentSchema()
@@ -61,7 +61,7 @@ const schema = FluentSchema()
 
 const model = {
   name: 'test name',
-  description: "Description of benchamrk",
+  description: 'Description of benchamrk',
   testClass: 'smallfile or largefile',
   date: new Date().toISOString(),
   file: 'file name',
@@ -79,7 +79,7 @@ const model = {
   memory: 'memory'
 }
 
-function resultModel() {
+function resultModel () {
   let user = {}
   const ajv = new Ajv({ useDefaults: true })
   const validate = ajv.compile(schema.valueOf())
