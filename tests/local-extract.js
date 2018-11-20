@@ -3,7 +3,7 @@
 const fs = require('fs')
 const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
-const { resultsDTO } = require('./schema/results')
+const { build } = require('./schema/results')
 const { write } = require('./lib/output')
 
 async function localExtract (node, name, subtest, file, testClass) {
@@ -14,19 +14,19 @@ async function localExtract (node, name, subtest, file, testClass) {
     const validCID = inserted[0].hash
     await node.files.get(validCID)
     const end = process.hrtime(start)
-    let model = resultsDTO
-    model.name = name
-    model.subtest = subtest
-    model.file = file
-    model.date = new Date().toISOString()
-    model.description = 'Get file to local repo'
-    model.testClass = testClass
-    model.duration.s = end[0]
-    model.duration.ms = end[1] / 1000000
-    model.cpu = os.cpus()
-    model.loadAvg = os.loadavg()
-    model.memory = os.totalmem() - os.freemem()
-    return model
+    return build({
+      name: name,
+      subtest: subtest,
+      file: file,
+      date: new Date().toISOString(),
+      description: 'Get file to local repo',
+      testClass: testClass,
+      duration: { s: end[0],
+        ms: end[1] / 1000000 },
+      cpu: os.cpus(),
+      loadAvg: os.loadavg(),
+      memory: os.totalmem() - os.freemem()
+    })
   } catch (err) {
     throw Error(err)
   }

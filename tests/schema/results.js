@@ -84,5 +84,7 @@ const resultsDTO = {
   'loadAvg': 'load average',
   'memory': 'memory'
 }
-
-module.exports = { schema, resultsDTO }
+function build (props) {
+  return { ...resultsDTO, ...props }
+}
+module.exports = { schema, resultsDTO, build }
