@@ -2,7 +2,7 @@
 'use strict'
 
 const t = require('tap')
-const { validate, createFilename, write, } = require('../lib/output')
+const { validate, createFilename, write } = require('../lib/output')
 const { resultModel, generateModel } = require('../schema/results')
 const test = t.test
 

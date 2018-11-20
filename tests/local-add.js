@@ -4,10 +4,10 @@
 const fs = require('fs')
 const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
-const { generateModel } = require("./schema/results")
-const { write } = require("./lib/output")
+const { generateModel } = require('./schema/results')
+const { write } = require('./lib/output')
 
-async function localAdd(node, name, file, testClass) {
+async function localAdd (node, name, file, testClass) {
   try {
     const fileStream = fs.createReadStream(file)
     const start = process.hrtime()
@@ -16,8 +16,8 @@ async function localAdd(node, name, file, testClass) {
     let model = generateModel()
     model.name = name
     model.file = file
-    model.date = new Date().toISOString(),
-      model.description = "Add file to local repo"
+    model.date = new Date().toISOString()
+    model.description = 'Add file to local repo'
     model.testClass = testClass
     model.duration.s = end[0]
     model.duration.ms = end[1] / 1000000
@@ -29,12 +29,11 @@ async function localAdd(node, name, file, testClass) {
     throw Error(err)
   }
 }
-const results = []
 
-async function scenarios() {
+async function scenarios () {
   try {
     const node = await ipfsNode()
-    write(await localAdd(node, 'unixFS:add-emptyRepo', './fixtures/200Bytes.txt', "largefile"))
+    write(await localAdd(node, 'unixFS:add-emptyRepo', './fixtures/200Bytes.txt', 'largefile'))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -47,13 +46,12 @@ async function scenarios() {
       'Bootstrap': []
     })
 
-    const r = await localAdd(node1, 'unixFS:add-empty-repo', './fixtures/1.2MiB.txt', "largefile")
+    const r = await localAdd(node1, 'unixFS:add-empty-repo', './fixtures/1.2MiB.txt', 'largefile')
     write(r)
-    results.push(r)
 
-    write(await localAdd(node1, 'unixFS:add-populated-repo', './fixtures/200Bytes.txt', "smallfile"))
+    write(await localAdd(node1, 'unixFS:add-populated-repo', './fixtures/200Bytes.txt', 'smallfile'))
 
-    write(await localAdd(node, 'unixFS:add-populated-repo', './fixtures/1.2MiB.txt', "largefile"))
+    write(await localAdd(node, 'unixFS:add-populated-repo', './fixtures/1.2MiB.txt', 'largefile'))
 
     node.stop()
     node1.stop()

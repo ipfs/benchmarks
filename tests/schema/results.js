@@ -60,26 +60,26 @@ const schema = FluentSchema()
   .ref('#definitions/meta')
 
 const model = {
-  "name": "test name",
-  "description": "Description of benchamrk",
-  "testClass": "smallfile or largefile",
-  "date": "date",
-  "file": "file name",
-  "meta": {
-    "project": "js-ipfs",
-    "commit": "TBD",
-    "version": "version of js-ifps"
+  'name': 'test name',
+  'description': 'Description of benchamrk',
+  'testClass': 'smallfile or largefile',
+  'date': 'date',
+  'file': 'file name',
+  'meta': {
+    'project': 'js-ipfs',
+    'commit': 'TBD',
+    'version': 'version of js-ifps'
   },
-  "duration": {
-    "seconds": 0,
-    "milliseconds": 0
+  'duration': {
+    'seconds': 0,
+    'milliseconds': 0
   },
-  "cpu": "cpu",
-  "loadAvg": "load average",
-  "memory": "memory"
+  'cpu': 'cpu',
+  'loadAvg': 'load average',
+  'memory': 'memory'
 }
 
-function resultModel() {
+function resultModel () {
   let user = {}
   const ajv = new Ajv({ useDefaults: true })
   const validate = ajv.compile(schema.valueOf())
@@ -87,7 +87,7 @@ function resultModel() {
   return user
 }
 
-function generateModel() {
+function generateModel () {
   return model
 }
 
