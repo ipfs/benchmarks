@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 'use strict'
 
 const t = require('tap')
@@ -8,48 +7,28 @@ const test = t.test
 
 test('validate - results ', t => {
   t.plan(2)
-  try {
-    const e = validate(resultModel())
-    t.equal(e, true)
-    t.pass()
-  } catch (e) {
-    console.log(e)
-    t.fail()
-  }
+  const e = validate(resultModel())
+  t.equal(e, true)
+  t.pass()
 })
 
 test('validate - create filename ', t => {
   t.plan(1)
-  try {
-    const e = createFilename(resultModel())
-    console.log(e)
-    t.pass()
-  } catch (e) {
-    console.log(e)
-    t.fail()
-  }
+  const e = createFilename(resultModel())
+  console.log(e)
+  t.pass()
 })
 
 test('validate - write flename ', t => {
   t.plan(1)
-  try {
-    const e = write(resultModel())
-    console.log(e)
-    t.pass()
-  } catch (e) {
-    console.log(e)
-    t.fail()
-  }
+  const e = write(resultModel())
+  console.log(e)
+  t.pass()
 })
 
 test('validate - generate model ', t => {
   t.plan(1)
-  try {
-    const e = resultsDTO
-    console.log(e)
-    t.pass()
-  } catch (e) {
-    console.log(e)
-    t.fail()
-  }
+  const e = resultsDTO
+  console.log(e)
+  t.pass()
 })
