@@ -45,7 +45,7 @@ test('validate - write flename ', t => {
 test('validate - generate model ', t => {
   t.plan(1)
   try {
-    const e = resultsDTO()
+    const e = resultsDTO
     console.log(e)
     t.pass()
   } catch (e) {
