@@ -15,6 +15,12 @@ const schema = FluentSchema()
       .default('Benchmark Test Name'))
   .required()
   .prop(
+    'subtest',
+    FluentSchema()
+      .asString()
+      .default('sub test name'))
+  .required()
+  .prop(
     'description',
     FluentSchema()
       .asString()
@@ -60,6 +66,7 @@ const schema = FluentSchema()
 // TODO: use this until we get AJV to generate all defaults
 const resultsDTO = {
   'name': 'test name',
+  'subtest': 'sub test',
   'description': 'Description of benchamrk',
   'testClass': 'smallfile or largefile',
   'date': 'date',

@@ -6,7 +6,7 @@ const ipfsNode = require('../lib/create-node.js')
 const { resultsDTO } = require('./schema/results')
 const { write } = require('./lib/output')
 
-async function localExtract (node, name, file, testClass) {
+async function localExtract (node, name, subtest, file, testClass) {
   try {
     const fileStream = fs.createReadStream(file)
     const inserted = await node.files.add(fileStream)
@@ -14,8 +14,9 @@ async function localExtract (node, name, file, testClass) {
     const validCID = inserted[0].hash
     await node.files.get(validCID)
     const end = process.hrtime(start)
-    let model = resultsDTO()
+    let model = resultsDTO
     model.name = name
+    model.subtest = subtest
     model.file = file
     model.date = new Date().toISOString()
     model.description = 'Get file to local repo'
@@ -35,7 +36,7 @@ const results = []
 async function scenarios () {
   try {
     const node = await ipfsNode()
-    write(await localExtract(node, 'unixFS:extract-emptyRepo', './fixtures/200Bytes.txt', 'smallfile'))
+    write(await localExtract(node, 'unixFS', 'extract-emptyRepo', './fixtures/200Bytes.txt', 'smallfile'))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -48,13 +49,13 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    const r = await localExtract(node1, 'unixFS:extract-emptyRepo', './fixtures/1.2MiB.txt', 'largefile')
+    const r = await localExtract(node1, 'unixFS', 'extract-emptyRepo', './fixtures/1.2MiB.txt', 'largefile')
     write(r)
     results.push(r)
 
-    write(await localExtract(node1, 'unixFS:extract', './fixtures/200Bytes.txt', 'smallfile'))
+    write(await localExtract(node1, 'unixFS', 'extract', './fixtures/200Bytes.txt', 'smallfile'))
 
-    write(await localExtract(node, 'unixFS:extract', './fixtures/1.2MiB.txt', 'largefile'))
+    write(await localExtract(node, 'unixFS', 'extract', './fixtures/1.2MiB.txt', 'largefile'))
 
     node.stop()
     node1.stop()

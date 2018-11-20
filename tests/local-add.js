@@ -6,14 +6,15 @@ const ipfsNode = require('../lib/create-node.js')
 const { resultsDTO } = require('./schema/results')
 const { write } = require('./lib/output')
 
-async function localAdd (node, name, file, testClass) {
+async function localAdd (node, name, subtest, file, testClass) {
   try {
     const fileStream = fs.createReadStream(file)
     const start = process.hrtime()
     await node.files.add(fileStream)
     const end = process.hrtime(start)
-    let model = resultsDTO()
+    let model = resultsDTO
     model.name = name
+    model.subtest = subtest
     model.file = file
     model.date = new Date().toISOString()
     model.description = 'Add file to local repo'
@@ -32,7 +33,7 @@ async function localAdd (node, name, file, testClass) {
 async function scenarios () {
   try {
     const node = await ipfsNode()
-    write(await localAdd(node, 'unixFS:add-emptyRepo', './fixtures/200Bytes.txt', 'largefile'))
+    write(await localAdd(node, 'unixFS', 'add-emptyRepo', './fixtures/200Bytes.txt', 'largefile'))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -45,12 +46,12 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    const r = await localAdd(node1, 'unixFS:add-empty-repo', './fixtures/1.2MiB.txt', 'largefile')
+    const r = await localAdd(node1, 'unixFS', 'add-empty-repo', './fixtures/1.2MiB.txt', 'largefile')
     write(r)
 
-    write(await localAdd(node1, 'unixFS:add-populated-repo', './fixtures/200Bytes.txt', 'smallfile'))
+    write(await localAdd(node1, 'unixFS', 'add-populated-repo', './fixtures/200Bytes.txt', 'smallfile'))
 
-    write(await localAdd(node, 'unixFS:add-populated-repo', './fixtures/1.2MiB.txt', 'largefile'))
+    write(await localAdd(node, 'unixFS', 'add-populated-repo', './fixtures/1.2MiB.txt', 'largefile'))
 
     node.stop()
     node1.stop()
