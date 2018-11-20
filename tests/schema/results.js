@@ -1,7 +1,5 @@
 'use strict'
 
-const Ajv = require('ajv')
-const ajv = new Ajv({ useDefaults: true })
 const { FluentSchema } = require('fluent-schema')
 
 const schema = FluentSchema()
@@ -36,7 +34,6 @@ const schema = FluentSchema()
     'date',
     FluentSchema()
       .asString()
-      .format('date')
       .default(new Date().toISOString())
   )
   .required()
@@ -44,10 +41,13 @@ const schema = FluentSchema()
     'duration',
     FluentSchema()
       .prop('s', FluentSchema()
+        .asInteger()
         .default(0))
       .required()
       .prop('ms', FluentSchema()
+        .asNumber()
         .default(0))
+      .required()
   )
   .prop('duration')
   .ref('#definitions/duration')
@@ -55,6 +55,7 @@ const schema = FluentSchema()
     'meta',
     FluentSchema()
       .prop('project', FluentSchema()
+        .asString()
         .default('js-ipfs'))
       .prop('commit')
       .prop('version')
@@ -68,7 +69,7 @@ const resultsDTO = {
   'name': 'test name',
   'subtest': 'sub test',
   'description': 'Description of benchamrk',
-  'testClass': 'smallfile or largefile',
+  'testClass': 'smallfile',
   'date': 'date',
   'file': 'file name',
   'meta': {
@@ -77,8 +78,8 @@ const resultsDTO = {
     'version': 'version of js-ifps'
   },
   'duration': {
-    'seconds': 0,
-    'milliseconds': 0
+    's': 0,
+    'ms': 0
   },
   'cpu': 'cpu',
   'loadAvg': 'load average',

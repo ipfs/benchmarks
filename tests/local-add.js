@@ -3,7 +3,7 @@
 const fs = require('fs')
 const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
-const { resultsDTO, build } = require('./schema/results')
+const { build } = require('./schema/results')
 const { write } = require('./lib/output')
 
 async function localAdd (node, name, subtest, file, testClass) {
