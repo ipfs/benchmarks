@@ -23,16 +23,16 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": [
-        "#299c46",
+        "#d44a3a",
         "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
+        "#299c46"
       ],
       "datasource": null,
-      "format": "none",
+      "format": "ms",
       "gauge": {
-        "maxValue": 100,
+        "maxValue": 500,
         "minValue": 0,
-        "show": false,
+        "show": true,
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
@@ -117,12 +117,18 @@
               "key": "project",
               "operator": "=",
               "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "smallFile"
             }
           ]
         }
       ],
-      "thresholds": "",
-      "title": "local-transfer Last Value",
+      "thresholds": "500, 350, 250",
+      "title": "smallFile",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -133,6 +139,150 @@
         }
       ],
       "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#299c46"
+      ],
+      "datasource": null,
+      "format": "ms",
+      "gauge": {
+        "maxValue": 1000,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 0
+      },
+      "id": 6,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "largeFile",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "local-transfer",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "testClass",
+              "operator": "=",
+              "value": "largeFile"
+            },
+            {
+              "condition": "AND",
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            }
+          ]
+        }
+      ],
+      "thresholds": "1000, 750, 400",
+      "title": "LargeFile",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "content": "Transfers a file between two local nodes and reports the duration.\n[Test file](https://github.com/ipfs/benchmarks/blob/master/tests/local-transfer.js)",
+      "description": "Transfers a file between two local nodes and reports the duration.",
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 6,
+        "y": 0
+      },
+      "id": 8,
+      "links": [
+        {
+          "title": "local-transfer.js",
+          "type": "absolute",
+          "url": "https://github.com/ipfs/benchmarks/blob/master/tests/local-transfer.js"
+        }
+      ],
+      "mode": "markdown",
+      "title": "Local Transfer",
+      "type": "text"
     },
     {
       "alert": {
@@ -176,7 +326,7 @@
       "fill": 1,
       "gridPos": {
         "h": 7,
-        "w": 12,
+        "w": 11,
         "x": 0,
         "y": 3
       },
@@ -204,6 +354,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "smallFile",
           "groupBy": [
             {
               "params": [
@@ -213,7 +364,7 @@
             },
             {
               "params": [
-                "none"
+                "linear"
               ],
               "type": "fill"
             }
@@ -242,6 +393,61 @@
               "key": "project",
               "operator": "=",
               "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "smallFile"
+            }
+          ]
+        },
+        {
+          "alias": "largeFile",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "local-transfer",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "largeFile"
             }
           ]
         }
@@ -306,7 +512,7 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -337,5 +543,5 @@
   "timezone": "",
   "title": "IPFS performance",
   "uid": "nxBZpJBmk",
-  "version": 6
+  "version": 15
 }
