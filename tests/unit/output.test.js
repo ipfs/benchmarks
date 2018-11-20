@@ -14,7 +14,14 @@ test('validate - results ', t => {
 
 test('validate - create filename ', t => {
   t.plan(1)
-  const e = createFilename(resultsDTO)
+  const e = createFilename('out', resultsDTO)
+  console.log(e)
+  t.pass()
+})
+
+test('validate - create error dir filename ', t => {
+  t.plan(1)
+  const e = createFilename('out/error', { invalidefile: 'yes' })
   console.log(e)
   t.pass()
 })
@@ -29,6 +36,12 @@ test('validate - write flename ', t => {
 test('validate - generate model ', t => {
   t.plan(1)
   const e = resultsDTO
+  console.log(e)
+  t.pass()
+})
+test('validate - write file to error directory ', t => {
+  t.plan(1)
+  const e = write({ invalidefile: 'yes' })
   console.log(e)
   t.pass()
 })

@@ -10,24 +10,28 @@ const schema = require('../schema/results.js')
 
 const folder = 'out'
 async function write (data) {
-  const name = await createFilename(data)
-
+  console.log('test data')
+  console.log(data)
+  const name = await createFilename(folder, data)
   if (validate(data)) {
     await fsWriteFile(`${name}.json`, JSON.stringify(data))
     console.log(data)
+  } else {
+    const name = await createFilename(`${folder}/error`, data)
+    await fsWriteFile(`${name}.json`, JSON.stringify(data))
   }
 }
 
-async function createFilename (data) {
+async function createFilename (folder, data) {
   try {
     await fsExists(folder)
-    return `${folder}/${data.name}-${new Date().toISOString()}`
+    return `${folder}/${data.name || 'undefined'}-${new Date().toISOString()}`
   } catch (err) {
     try {
       await fsMakeDir(folder)
-      return `${folder}/${data.name}-${new Date().toISOString()}`
+      return `${folder}/${data.name || 'undefined'}-${new Date().toISOString()}`
     } catch (err) {
-      return `${folder}/${data.name}-${new Date().toISOString()}`
+      return `${folder}/${data.name || 'undefined'}-${new Date().toISOString()}`
     }
   }
 }
