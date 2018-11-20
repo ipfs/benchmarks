@@ -16,6 +16,7 @@ const parseDuration = (objDuration) => {
 }
 
 const writePoints = (data) => {
+  console.log(data)
   if (!Array.isArray(data)) {
     data = [data]
   }
