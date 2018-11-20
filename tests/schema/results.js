@@ -1,6 +1,7 @@
 'use strict'
 
 const Ajv = require('ajv')
+const ajv = new Ajv({ useDefaults: true })
 const { FluentSchema } = require('fluent-schema')
 
 const schema = FluentSchema()
@@ -41,7 +42,6 @@ const schema = FluentSchema()
       .required()
       .prop('ms', FluentSchema()
         .default(0))
-    // .required()
   )
   .prop('duration')
   .ref('#definitions/duration')
@@ -52,13 +52,12 @@ const schema = FluentSchema()
         .default('js-ipfs'))
       .prop('commit')
       .prop('version')
-    // .required()
   )
   .prop('meta', FluentSchema()
     .default('js-ipfs'))
   .ref('#definitions/meta')
 
-// TODO: use this until we get AJV to generate all defualts
+// TODO: use this until we get AJV to generate all defaults
 const resultsDTO = {
   'name': 'test name',
   'description': 'Description of benchamrk',
@@ -79,10 +78,10 @@ const resultsDTO = {
   'memory': 'memory'
 }
 
+const validate = ajv.compile(schema.valueOf())
+
 function resultModel () {
   let user = {}
-  const ajv = new Ajv({ useDefaults: true })
-  const validate = ajv.compile(schema.valueOf())
   validate(user)
   return user
 }
