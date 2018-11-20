@@ -3,7 +3,8 @@
 
 const fs = require('fs')
 const os = require('os')
-const ipfsNode = require('../lib/create-node.js')
+const ipfsNode = require('./lib/create-node.js')
+const fixtures = require('./lib/fixtures.js')
 
 async function localAdd (node, name, file) {
   try {
@@ -30,10 +31,12 @@ async function localAdd (node, name, file) {
 }
 const results = []
 
+console.log(fixtures.smallFile)
+
 async function scenarios () {
   try {
     const node = await ipfsNode()
-    results.push(await localAdd(node, 'unixFS:add:smallfile:emptyRepo', './fixtures/200Bytes.txt'))
+    results.push(await localAdd(node, 'unixFS:add:smallfile:emptyRepo', fixtures.smallFile))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -46,12 +49,12 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    const r = await localAdd(node1, 'unixFS:add:largefile:emptyRepo', './fixtures/1.2MiB.txt')
+    const r = await localAdd(node1, 'unixFS:add:largefile:emptyRepo', fixtures.largeFile)
     results.push(r)
 
-    results.push(await localAdd(node1, 'unixFS:add:smallfile', './fixtures/200Bytes.txt'))
+    results.push(await localAdd(node1, 'unixFS:add:smallfile', fixtures.smallFile))
 
-    results.push(await localAdd(node, 'unixFS:add:largefile', './fixtures/1.2MiB.txt'))
+    results.push(await localAdd(node, 'unixFS:add:largefile', fixtures.smallFile))
 
     console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
     console.log(JSON.stringify(results))
