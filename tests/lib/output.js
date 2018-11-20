@@ -22,11 +22,13 @@ async function createFilename (data) {
   try {
     await fsExists(folder)
     return `${folder}/${data.name}-${new Date().toISOString()}`
-  }
-  catch (err) {
-    console.log(err)
-    await fsMakeDir(folder)
-    return `${folder}/${data.name}-${new Date().toISOString()}`
+  } catch (err) {
+    try {
+      await fsMakeDir(folder)
+      return `${folder}/${data.name}-${new Date().toISOString()}`
+    } catch (err) {
+      return `${folder}/${data.name}-${new Date().toISOString()}`
+    }
   }
 }
 
