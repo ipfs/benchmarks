@@ -2,9 +2,14 @@
 
 const fs = require('fs')
 const os = require('os')
+<<<<<<< HEAD
 const ipfsNode = require('../lib/create-node.js')
 const { build } = require('./schema/results')
 const { write } = require('./lib/output')
+=======
+const ipfsNode = require('./lib/create-node.js')
+const fixtures = require('./lib/fixtures.js')
+>>>>>>> abstract fixture use and move all into tests folder
 
 async function localAdd (node, name, subtest, file, testClass) {
   try {
@@ -31,6 +36,8 @@ async function localAdd (node, name, subtest, file, testClass) {
     throw Error(err)
   }
 }
+
+console.log(fixtures.smallFile)
 
 async function scenarios () {
   try {
