@@ -58,7 +58,8 @@ const schema = FluentSchema()
     .default('js-ipfs'))
   .ref('#definitions/meta')
 
-const model = {
+// TODO: use this until we get AJV to generate all defualts
+const resultsDTO = {
   'name': 'test name',
   'description': 'Description of benchamrk',
   'testClass': 'smallfile or largefile',
@@ -86,8 +87,4 @@ function resultModel () {
   return user
 }
 
-function generateModel () {
-  return model
-}
-
-module.exports = { schema, resultModel, generateModel }
+module.exports = { schema, resultModel, resultsDTO }

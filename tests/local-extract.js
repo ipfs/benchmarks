@@ -3,7 +3,7 @@
 const fs = require('fs')
 const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
-const { generateModel } = require('./schema/results')
+const { resultsDTO } = require('./schema/results')
 const { write } = require('./lib/output')
 
 async function localExtract (node, name, file, testClass) {
@@ -14,7 +14,7 @@ async function localExtract (node, name, file, testClass) {
     const validCID = inserted[0].hash
     await node.files.get(validCID)
     const end = process.hrtime(start)
-    let model = generateModel()
+    let model = resultsDTO()
     model.name = name
     model.file = file
     model.date = new Date().toISOString()
