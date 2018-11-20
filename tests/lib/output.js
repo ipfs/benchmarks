@@ -14,6 +14,7 @@ async function write(data) {
   if (validate(data)) {
     try {
       fs.writeFileSync(`${name}.json`, JSON.stringify(data))
+      console.log(data)
     }
     catch (e) {
       throw new Error(e)

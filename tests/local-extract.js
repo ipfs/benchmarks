@@ -4,8 +4,10 @@
 const fs = require('fs')
 const os = require('os')
 const ipfsNode = require('../lib/create-node.js')
+const { generateModel } = require("./schema/results")
+const { write } = require("./lib/output")
 
-async function localExtract (node, name, file) {
+async function localExtract(node, name, file, testClass) {
   try {
     const fileStream = fs.createReadStream(file)
     const inserted = await node.files.add(fileStream)
@@ -13,28 +15,28 @@ async function localExtract (node, name, file) {
     const validCID = inserted[0].hash
     await node.files.get(validCID)
     const end = process.hrtime(start)
-    return (
-      {
-        name: name,
-        file: file,
-        date: new Date().toISOString(),
-        s: end[0],
-        ms: end[1] / 1000000,
-        cpu: os.cpus(),
-        loadAvg: os.loadavg(),
-        memory: os.totalmem() - os.freemem()
-      }
-    )
+    let model = generateModel()
+    model.name = name
+    model.file = file
+    model.date = new Date().toISOString(),
+      model.description = "Get file to local repo"
+    model.testClass = testClass
+    model.duration.s = end[0]
+    model.duration.ms = end[1] / 1000000
+    model.cpu = os.cpus()
+    model.loadAvg = os.loadavg()
+    model.memory = os.totalmem() - os.freemem()
+    return model
   } catch (err) {
     throw Error(err)
   }
 }
 const results = []
 
-async function scenarios () {
+async function scenarios() {
   try {
     const node = await ipfsNode()
-    results.push(await localExtract(node, 'unixFS:extract:smallfile:emptyRepo', './fixtures/200Bytes.txt'))
+    write(await localExtract(node, 'unixFS:extract-emptyRepo', './fixtures/200Bytes.txt', "smallfile"))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -47,14 +49,14 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    const r = await localExtract(node1, 'unixFS:extract:largefile:emptyRepo', './fixtures/1.2MiB.txt')
+    const r = await localExtract(node1, 'unixFS:extract-emptyRepo', './fixtures/1.2MiB.txt', "largefile")
+    write(r)
     results.push(r)
 
-    results.push(await localExtract(node1, 'unixFS:extract:smallfile', './fixtures/200Bytes.txt'))
+    write(await localExtract(node1, 'unixFS:extract', './fixtures/200Bytes.txt', "smallfile"))
 
-    results.push(await localExtract(node, 'unixFS:extract:largefile', './fixtures/1.2MiB.txt'))
+    write(await localExtract(node, 'unixFS:extract', './fixtures/1.2MiB.txt', "largefile"))
 
-    console.log(JSON.stringify(results))
 
     node.stop()
     node1.stop()

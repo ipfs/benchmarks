@@ -2,8 +2,8 @@
 'use strict'
 
 const t = require('tap')
-const { validate, createFilename, write } = require('../lib/output')
-const { resultModel } = require('../schema/results')
+const { validate, createFilename, write, } = require('../lib/output')
+const { resultModel, generateModel } = require('../schema/results')
 const test = t.test
 
 test('validate - results ', t => {
@@ -30,10 +30,22 @@ test('validate - create filename ', t => {
   }
 })
 
-test('validate - create filename ', t => {
+test('validate - write flename ', t => {
   t.plan(1)
   try {
     const e = write(resultModel())
+    console.log(e)
+    t.pass()
+  } catch (e) {
+    console.log(e)
+    t.fail()
+  }
+})
+
+test('validate - generate model ', t => {
+  t.plan(1)
+  try {
+    const e = generateModel()
     console.log(e)
     t.pass()
   } catch (e) {
