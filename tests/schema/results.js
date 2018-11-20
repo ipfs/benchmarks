@@ -85,12 +85,4 @@ const resultsDTO = {
   'memory': 'memory'
 }
 
-const validate = ajv.compile(schema.valueOf())
-
-function resultModel () {
-  let user = {}
-  validate(user)
-  return user
-}
-
-module.exports = { schema, resultModel, resultsDTO }
+module.exports = { schema, resultsDTO }
