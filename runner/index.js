@@ -1,7 +1,6 @@
 'use strict'
 
 require('make-promises-safe') // installs an 'unhandledRejection' handler
-const _ = require('lodash')
 const config = require('./config')
 const remote = require('./remote.js')
 const local = require('./local.js')
@@ -43,7 +42,7 @@ const main = async () => {
   if (config.stage !== 'local') {
     await provision.ensure()
   }
-  _.each(config.benchmarks.tests, async (test) => {
+  for (let test of config.benchmarks.tests) {
     try {
       let output = await runCommand(test)
       let result = parseResults(output)
@@ -51,7 +50,7 @@ const main = async () => {
     } catch (e) {
       config.log.error(e)
     }
-  })
+  }
 }
 
 main()
