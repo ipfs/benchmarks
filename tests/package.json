@@ -20,6 +20,7 @@
     "ipfs": "^0.33.1",
     "os": "^0.1.1",
     "pretty-hrtime": "^1.0.3",
+    "proper-lockfile": "^3.2.0",
     "rimraf": "^2.6.2"
   },
   "devDependencies": {
