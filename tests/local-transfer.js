@@ -5,6 +5,7 @@ const os = require('os')
 const verbose = process.env.VERBOSE || false
 const ipfsNode = require('./lib/create-node.js')
 const fixtures = require('./lib/fixtures.js')
+const { write } = require('./lib/output')
 
 const log = (msg) => {
   if (verbose) {
@@ -60,13 +61,8 @@ const main = async () => {
     peerB.swarm.connect(peerAId.addresses[0])
     log('vmx: connected')
 
-    let arrResults = []
-    arrResults.push(await getDuration(peerA, peerB, 'smallFile'))
-    arrResults.push(await getDuration(peerA, peerB, 'largeFile'))
-
-    console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
-    console.log(JSON.stringify(arrResults))
-    console.log('-*-*-*-*-*- END RESULTS -*-*-*-*-*-')
+    write(await getDuration(peerA, peerB, 'smallFile'))
+    write(await getDuration(peerA, peerB, 'largeFile'))
 
     peerA.stop()
     peerB.stop()

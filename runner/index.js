@@ -9,32 +9,9 @@ const persistence = require('./persistence')
 
 const runCommand = (test) => {
   if (config.stage === 'local') {
-    return local.run(test.localShell)
+    return local.run(test.localShell, test.name)
   } else {
-    return remote.run(test.shell)
-  }
-}
-
-// should be replaced by reading a remote jso file that holds the test output
-const parseResults = rawOutput => {
-  let arrResults = []
-  let addLine = false
-  let arrOutput = rawOutput.split(/[\n\r]/g)
-  for (let i = 0; i < arrOutput.length; i++) {
-    if (addLine) arrResults.push(arrOutput[i])
-    if (arrOutput[i].includes('BEGIN RESULTS')) {
-      addLine = true
-    }
-    if (arrOutput[i].includes('END RESULTS')) {
-      addLine = false
-      arrResults.pop()
-    }
-  }
-  let strResult = arrResults.join('')
-  try {
-    return JSON.parse(strResult)
-  } catch (e) {
-    throw e
+    return remote.run(test.shell, test.name)
   }
 }
 
@@ -44,8 +21,8 @@ const main = async () => {
   }
   for (let test of config.benchmarks.tests) {
     try {
-      let output = await runCommand(test)
-      let result = parseResults(output)
+      let result = await runCommand(test)
+      // config.log.info(result)
       persistence.store(result)
     } catch (e) {
       config.log.error(e)

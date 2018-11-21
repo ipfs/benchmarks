@@ -32,18 +32,18 @@ const getBenchmarkHostname = () => {
 }
 
 const tests = [
-  {
-    name: 'Local transfer',
-    measurement: 'local_transfer',
-    shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && node ${remoteTestsPath}/local-transfer.js`,
-    localShell: 'node ' + path.join(__dirname, '/../tests/local-transfer.js')
-  }
   // {
-  //   name: 'Local add',
-  //   measurement: 'local_add',
-  //   shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && node ${remoteTestsPath}/local-add.js`,
-  //   localShell: 'node ' + path.join(__dirname, '/../tests/local-add.js')
+  //   name: 'Local transfer',
+  //   measurement: 'local_transfer',
+  //   shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && node ${remoteTestsPath}/local-transfer.js`,
+  //   localShell: 'node ' + path.join(__dirname, '/../tests/local-transfer.js')
   // }
+  {
+    name: 'unixFS',
+    measurement: 'local_add',
+    shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-add.js`,
+    localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-add.js')
+  }
 ]
 
 const config = {
@@ -52,6 +52,7 @@ const config = {
   },
   log: pino,
   stage: process.env.STAGE || 'local',
+  outFolder: process.env.OUT_FOLDER || '/tmp/out',
   influxdb: {
     host: process.env.INFLUX_HOST || 'localhost',
     db: 'benchmarks',
@@ -62,6 +63,7 @@ const config = {
           duration: Influx.FieldType.INTEGER
         },
         tags: [
+          'subTest',
           'commit',
           'project',
           'testClass'

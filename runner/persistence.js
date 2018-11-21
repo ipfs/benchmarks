@@ -11,25 +11,26 @@ const influx = new Influx.InfluxDB({
 })
 
 const parseDuration = (objDuration) => {
-  let ms = ((objDuration.seconds * 1000) + objDuration.milliseconds)
+  let ms = ((objDuration.s * 1000) + objDuration.ms)
   return parseFloat(ms)
 }
 
 const writePoints = (data) => {
-  console.log(data)
   if (!Array.isArray(data)) {
+    console.log('not an array')
     data = [data]
   }
+  console.log(data)
   let payload = []
   for (let point of data) {
     payload.push({
       measurement: point.name,
-      tags: { commit: point.meta.commit, project: point.meta.project, testClass: point.testClass },
+      tags: { subTest: point.subtest, commit: point.meta.commit, project: point.meta.project, testClass: point.testClass },
       fields: { duration: parseDuration(point.duration) },
       timestamp: moment(point.date).toDate()
     })
   }
-  config.log.info(payload)
+  // config.log.info(payload)
   return influx.writePoints(payload)
 }
 
