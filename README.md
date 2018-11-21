@@ -4,13 +4,13 @@ A set of benchmark tests to track IPFS performance.
 
 ## Local Setup
 
-    Clone Benchmark tests:
+Clone Benchmark tests and install:
 
-    ```
-    git clone https://github.com/ipfs/benchmarks.git
-    cd benchmarks/tests
-    npm install
-   ```
+```bash
+>  git clone https://github.com/ipfs/benchmarks.git
+>  cd benchmarks/tests
+>  npm install
+```
 
 ## Run tests locally
 
