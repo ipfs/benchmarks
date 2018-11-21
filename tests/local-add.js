@@ -2,20 +2,24 @@
 
 const fs = require('fs')
 const os = require('os')
-const ipfsNode = require('../lib/create-node.js')
+const ipfsNode = require('./lib/create-node')
 const { build } = require('./schema/results')
-const { write } = require('./lib/output')
+const { store } = require('./lib/output')
+const fixtures = require('./lib/fixtures')
+const clean = require('./lib/clean')
 
-async function localAdd (node, name, subtest, file, testClass) {
+const testName = 'unixFS'
+
+async function localAdd (node, name, subtest, testClass) {
   try {
-    const fileStream = fs.createReadStream(file)
+    const fileStream = fs.createReadStream(fixtures[testClass])
     const start = process.hrtime()
     await node.files.add(fileStream)
     const end = process.hrtime(start)
     return build({
       name: name,
-      subtest: subtest,
-      file: file,
+      subTest: subtest,
+      file: fixtures[testClass],
       date: new Date().toISOString(),
       description: 'Add file to local repo using unixFS engine',
       testClass: testClass,
@@ -35,7 +39,8 @@ async function localAdd (node, name, subtest, file, testClass) {
 async function scenarios () {
   try {
     const node = await ipfsNode()
-    write(await localAdd(node, 'unixFS', 'add-emptyRepo', './fixtures/200Bytes.txt', 'largefile'))
+    let arrResults = []
+    arrResults.push(await localAdd(node, testName, 'add-empty-repo', 'largefile'))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -48,15 +53,17 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    const r = await localAdd(node1, 'unixFS', 'add-empty-repo', './fixtures/1.2MiB.txt', 'largefile')
-    write(r)
+    arrResults.push(await localAdd(node1, testName, 'add-empty-repo', 'smallfile'))
 
-    write(await localAdd(node1, 'unixFS', 'add-populated-repo', './fixtures/200Bytes.txt', 'smallfile'))
+    arrResults.push(await localAdd(node1, testName, 'add-populated-repo', 'smallfile'))
 
-    write(await localAdd(node, 'unixFS', 'add-populated-repo', './fixtures/1.2MiB.txt', 'largefile'))
+    arrResults.push(await localAdd(node, testName, 'add-populated-repo', 'largefile'))
+
+    store(arrResults)
 
     node.stop()
     node1.stop()
+    clean.peerRepos()
   } catch (err) {
     throw Error(err)
   }

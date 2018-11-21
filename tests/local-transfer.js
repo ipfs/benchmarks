@@ -2,8 +2,12 @@
 
 const fs = require('fs')
 const os = require('os')
-const IPFS = require('ipfs')
 const verbose = process.env.VERBOSE || false
+const ipfsNode = require('./lib/create-node.js')
+const fixtures = require('./lib/fixtures.js')
+const { store } = require('./lib/output')
+const clean = require('./lib/clean')
+const testName = 'localTransfer'
 
 const log = (msg) => {
   if (verbose) {
@@ -11,105 +15,70 @@ const log = (msg) => {
   }
 }
 
-const peerAPromise = new Promise((resolve) => {
-  const config = {
-    'Addresses': {
-      'API': '/ip4/127.0.0.1/tcp/5012',
-      'Gateway': '/ip4/127.0.0.1/tcp/9091',
-      'Swarm': [
-        '/ip4/0.0.0.0/tcp/4012',
-        '/ip4/127.0.0.1/tcp/4013/ws'
-      ]
-    },
-    'Bootstrap': []
-  }
-  const peer = new IPFS({
-    repo: '/tmp/peera',
-    config: config,
-    init: {
-      emptyRepo: true
-    }
-  })
-  peer.on('ready', () => {
-    log('peerA ready')
-    resolve(peer)
-  })
-})
+const getDuration = async (peerA, peerB, subTest, testClass) => {
+  // Insert into peerA
+  const fileStream = fs.createReadStream(fixtures[testClass])
+  const inserted = await peerA.files.add(fileStream)
+  log('vmx: inserted:', inserted)
 
-const peerBPromise = new Promise((resolve) => {
-  const config = {
-    'Addresses': {
-      'API': '/ip4/127.0.0.1/tcp/5022',
-      'Gateway': '/ip4/127.0.0.1/tcp/9092',
-      'Swarm': [
-        '/ip4/0.0.0.0/tcp/4022',
-        '/ip4/127.0.0.1/tcp/4023/ws'
-      ]
-    },
-    'Bootstrap': []
-  }
-  const peer = new IPFS({
-    repo: '/tmp/peerb',
-    config: config,
-    init: {
-      emptyRepo: true
-    }
-  })
-  peer.on('ready', () => {
-    log('peerB ready')
-    resolve(peer)
-  })
-})
+  // peerB doesn't have any data cached, get all from peerA
+  const start = process.hrtime()
+  await peerB.files.cat(inserted[0].hash)
+  const end = process.hrtime(start)
+  const date = new Date()
 
-const connectPeers = async (peerA, peerB) => {
-  try {
-    const peerAId = await peerA.id()
-    return peerB.swarm.connect(peerAId.addresses[0])
-  } catch (err) {
-    throw Error(err)
+  return {
+    name: testName,
+    subTest: subTest,
+    testClass: testClass,
+    date: date.toISOString(),
+    file: fixtures[testClass],
+    meta: {
+      project: 'js-ipfs',
+      commit: 'TBD'
+    },
+    duration: {
+      s: end[0],
+      ms: end[1] / 1000000
+    },
+    cpu: os.cpus(),
+    loadAvg: os.loadavg()
   }
 }
 
 const main = async () => {
   try {
-    const peerA = await peerAPromise
-    const peerB = await peerBPromise
-
-    await connectPeers(peerA, peerB)
+    const peerA = await ipfsNode()
+    const peerB = await ipfsNode({
+      'Addresses': {
+        'API': '/ip4/127.0.0.1/tcp/5022',
+        'Gateway': '/ip4/127.0.0.1/tcp/9092',
+        'Swarm': [
+          '/ip4/0.0.0.0/tcp/4022',
+          '/ip4/127.0.0.1/tcp/4023/ws'
+        ]
+      },
+      'Bootstrap': []
+    })
+    const peerAId = await peerA.id()
+    peerB.swarm.connect(peerAId.addresses[0])
     log('vmx: connected')
 
-    // Insert into peerA
-    const fileStream = fs.createReadStream('/tmp/100m.bin')
-    const inserted = await peerA.files.add(fileStream)
-    log('vmx: inserted:', inserted)
+    let arrResults = []
 
-    // peerB doesn't any data cached, get all from peerA
-    const start = process.hrtime()
-    await peerB.files.cat(inserted[0].hash)
-    const end = process.hrtime(start)
-    const date = new Date()
+    clean.peerRepos()
+    arrResults.push(await getDuration(peerA, peerB, 'empty-repo', 'smallfile'))
+    clean.peerRepos()
+    arrResults.push(await getDuration(peerA, peerB, 'empty-repo', 'largefile'))
 
-    console.log('-*-*-*-*-*- BEGIN RESULTS -*-*-*-*-*-')
-    console.log(JSON.stringify({
-      name: 'local-transfer',
-      testClass: 'smallfile',
-      date: date.toISOString(),
-      file: '/tmp/100m.bin',
-      meta: {
-        project: 'js-ipfs',
-        commit: 'TBD'
-      },
-      duration: {
-        seconds: end[0],
-        milliseconds: end[1] / 1000000
-      },
-      cpu: os.cpus(),
-      loadAvg: os.loadavg()
-    }))
-    console.log('-*-*-*-*-*- END RESULTS -*-*-*-*-*-')
+    arrResults.push(await getDuration(peerA, peerB, 'populated-repo', 'smallfile'))
+    arrResults.push(await getDuration(peerA, peerB, 'populated-repo', 'largefile'))
+
+    store(arrResults)
 
     peerA.stop()
     peerB.stop()
+    clean.peerRepos()
   } catch (err) {
     throw Error(err)
   }
