@@ -15,13 +15,16 @@ A set of benchmark tests to track IPFS performance.
 ## Run tests locally
 
     From the benchmark/tests directory:
-      - node local-add
-      - node loca-extract
-      - node local-transfer
-
+    ```
+    node local-add
+    node loca-extract
+    node local-transfer
+    ```
+    
     Run all benchamrks:
-      - npm run benchmark
-
+    ```
+    npm run benchmark
+    ```
 ## Run sub tests
     TODO:
 
