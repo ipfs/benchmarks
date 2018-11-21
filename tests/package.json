@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "tap -J unit/*.test.js",
-    "lint": "standard --verbose"
+    "lint": "standard --verbose",
+    "benchmark": " node tests/local-add.js  && node tests/local-extract.js"
   },
   "contributors": [
     "Matteo Collina <matteo.collina@nearform.com>",
