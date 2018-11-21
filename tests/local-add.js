@@ -18,7 +18,7 @@ async function localAdd (node, name, subtest, testClass) {
     const end = process.hrtime(start)
     return build({
       name: name,
-      subtest: subtest,
+      subTest: subtest,
       file: fixtures[testClass],
       date: new Date().toISOString(),
       description: 'Add file to local repo using unixFS engine',
