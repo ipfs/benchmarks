@@ -15,9 +15,10 @@ const folder = process.env.OUT_FOLDER || path.join(__dirname, '/../out')
 async function store (data) {
   if (Array.isArray(data)) {
     if (process.env.REMOTE === 'true') {
-      console.log('one file')
+      console.log('Writing output in a single file')
       write(data)
     } else {
+      console.log('Writing output in a multiple files')
       for (let testResult of data) {
         write(testResult)
       }

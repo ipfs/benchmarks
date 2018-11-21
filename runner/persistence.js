@@ -17,15 +17,13 @@ const parseDuration = (objDuration) => {
 
 const writePoints = (data) => {
   if (!Array.isArray(data)) {
-    console.log('not an array')
     data = [data]
   }
-  console.log(data)
   let payload = []
   for (let point of data) {
     payload.push({
       measurement: point.name,
-      tags: { subTest: point.subtest, commit: point.meta.commit, project: point.meta.project, testClass: point.testClass },
+      tags: { subTest: point.subTest, commit: point.meta.commit, project: point.meta.project, testClass: point.testClass },
       fields: { duration: parseDuration(point.duration) },
       timestamp: moment(point.date).toDate()
     })

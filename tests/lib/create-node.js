@@ -6,8 +6,9 @@ const defaultConfig = require('../config/default-config.json')
 
 module.exports = (config) => {
   return new Promise((resolve, reject) => {
+    console.log('Creating a node..')
     const node = new IPFS({
-      repo: '/tmp/.ipfs-' + Math.random()
+      repo: '/tmp/.ipfs/' + Math.random()
         .toString()
         .substring(2, 8),
       config: config || defaultConfig,

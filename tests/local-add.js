@@ -2,15 +2,15 @@
 
 const fs = require('fs')
 const os = require('os')
-const ipfsNode = require('./lib/create-node.js')
+const ipfsNode = require('./lib/create-node')
 const { build } = require('./schema/results')
 const { store } = require('./lib/output')
-const fixtures = require('./lib/fixtures.js')
+const fixtures = require('./lib/fixtures')
+const clean = require('./lib/clean')
 
 const testName = 'unixFS'
 
 async function localAdd (node, name, subtest, testClass) {
-  console.log(fixtures[testClass])
   try {
     const fileStream = fs.createReadStream(fixtures[testClass])
     const start = process.hrtime()
@@ -40,7 +40,7 @@ async function scenarios () {
   try {
     const node = await ipfsNode()
     let arrResults = []
-    arrResults.push(await localAdd(node, testName, 'add-emptyRepo', 'largefile'))
+    arrResults.push(await localAdd(node, testName, 'add-empty-repo', 'largefile'))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -53,7 +53,7 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    arrResults.push(await localAdd(node1, testName, 'add-empty-repo', 'largefile'))
+    arrResults.push(await localAdd(node1, testName, 'add-empty-repo', 'smallfile'))
 
     arrResults.push(await localAdd(node1, testName, 'add-populated-repo', 'smallfile'))
 
@@ -63,6 +63,7 @@ async function scenarios () {
 
     node.stop()
     node1.stop()
+    clean.peerRepos()
   } catch (err) {
     throw Error(err)
   }

@@ -32,15 +32,13 @@ const getBenchmarkHostname = () => {
 }
 
 const tests = [
-  // {
-  //   name: 'Local transfer',
-  //   measurement: 'local_transfer',
-  //   shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && node ${remoteTestsPath}/local-transfer.js`,
-  //   localShell: 'node ' + path.join(__dirname, '/../tests/local-transfer.js')
-  // }
+  {
+    name: 'localTransfer',
+    shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
+    localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-transfer.js')
+  },
   {
     name: 'unixFS',
-    measurement: 'local_add',
     shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-add.js`,
     localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-add.js')
   }

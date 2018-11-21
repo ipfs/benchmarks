@@ -5,7 +5,9 @@ const os = require('os')
 const verbose = process.env.VERBOSE || false
 const ipfsNode = require('./lib/create-node.js')
 const fixtures = require('./lib/fixtures.js')
-const { write } = require('./lib/output')
+const { store } = require('./lib/output')
+const clean = require('./lib/clean')
+const testName = 'localTransfer'
 
 const log = (msg) => {
   if (verbose) {
@@ -13,7 +15,7 @@ const log = (msg) => {
   }
 }
 
-const getDuration = async (peerA, peerB, testClass) => {
+const getDuration = async (peerA, peerB, subTest, testClass) => {
   // Insert into peerA
   const fileStream = fs.createReadStream(fixtures[testClass])
   const inserted = await peerA.files.add(fileStream)
@@ -26,7 +28,8 @@ const getDuration = async (peerA, peerB, testClass) => {
   const date = new Date()
 
   return {
-    name: 'local-transfer',
+    name: testName,
+    subTest: subTest,
     testClass: testClass,
     date: date.toISOString(),
     file: fixtures[testClass],
@@ -35,8 +38,8 @@ const getDuration = async (peerA, peerB, testClass) => {
       commit: 'TBD'
     },
     duration: {
-      seconds: end[0],
-      milliseconds: end[1] / 1000000
+      s: end[0],
+      ms: end[1] / 1000000
     },
     cpu: os.cpus(),
     loadAvg: os.loadavg()
@@ -61,11 +64,21 @@ const main = async () => {
     peerB.swarm.connect(peerAId.addresses[0])
     log('vmx: connected')
 
-    write(await getDuration(peerA, peerB, 'smallFile'))
-    write(await getDuration(peerA, peerB, 'largeFile'))
+    let arrResults = []
+
+    clean.peerRepos()
+    arrResults.push(await getDuration(peerA, peerB, 'empty-repo', 'smallfile'))
+    clean.peerRepos()
+    arrResults.push(await getDuration(peerA, peerB, 'empty-repo', 'largefile'))
+
+    arrResults.push(await getDuration(peerA, peerB, 'populated-repo', 'smallfile'))
+    arrResults.push(await getDuration(peerA, peerB, 'populated-repo', 'largefile'))
+
+    store(arrResults)
 
     peerA.stop()
     peerB.stop()
+    clean.peerRepos()
   } catch (err) {
     throw Error(err)
   }
