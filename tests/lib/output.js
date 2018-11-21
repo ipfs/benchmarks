@@ -9,7 +9,8 @@ const Ajv = require('ajv')
 const { schema } = require('../schema/results.js')
 const ajv = new Ajv({ allErrors: true, useDefaults: true, removeAdditional: true })
 
-const folder = 'out'
+const folder = process.env.OUT_FOLDER || 'out'
+
 async function write (data) {
   const name = await createFilename(folder, data)
   if (validate(data)) {
