@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const os = require('os')
-const ipfsNode = require('../lib/create-node.js')
+const ipfsNode = require('./lib/create-node.js')
 const { build } = require('./schema/results')
 const { write } = require('./lib/output')
 

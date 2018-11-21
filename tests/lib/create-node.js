@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 // TODO: point this to the branch code
-const IPFS = require('../../../js-ipfs')
+const IPFS = require('ipfs')
 const defaultConfig = require('../config/default-config.json')
 
 module.exports = (config) => {
