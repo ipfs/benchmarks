@@ -33,14 +33,27 @@ TODO:
 
 Results will be writen to out directory under /tests
 
-## See results in Grafana
-  
-Coming soon....
+## Setup Grafana and send results to InfluxDB
+
+```bash
+> docker-compose -f infrastructure/local/docker-compose.yaml up
+```
+
+Keep docker running and in another tab run:
+```bash
+> STAGE=local LOG_PRETTY=true node runner/index.js
+```
+
+To view the Grafan dashboard: http://localhost:3000/
+
+Use the default account admin/admin to login
 
 ## Test description
 
+Each test uses a small file ( 200 bytes ) and large file ( 1.2 MB ) and actions on empty repo vs populated repo.
+
 ### local-add:
-We want to know the time it takes to add a file using unixFS.
+The time it takes to add a file using unixFS.
 ```
 repo.files.add(fileStream)
 ```
