@@ -20,7 +20,7 @@ From the benchmark/tests directory:
 > node loca-extract
 > node local-transfer
 ```
-    
+
 Run all benchamrks:
 ```bash
 > npm run benchmark
@@ -33,8 +33,19 @@ TODO:
 
 Results will be writen to out directory under /tests
 
-## Setup Grafana and send results to InfluxDB
+## Initial Setup Grafana InfluxDB
+```bash
+> docker-compose -f infrastructure/local/docker-compose.yaml up
+```
+Open http://localhost:3000/ in a browser. The default username/password combination is admin/admin. You will be asked to change that password after initial login. Setup the datasource with type `influxDB`and use `http://influxdb:8086` as the URL. Next import the dashboard from `infrastructure/grafana/dashboard.json` by hovering over the `+` icon on the left of your screen.
 
+![Grafana import dashboard](./docs/images/import-hover.png)
+
+All of the configuration will be stored in the Grafana docker image. The data for influxDB is stored outside of the InfluxDB docker image and resides in a folder adjacent to the `benchmarks` folder named `/data/influxdb`.
+
+## Run dashboard locally and send results to InfluxDB
+
+If you're not running it yet:
 ```bash
 > docker-compose -f infrastructure/local/docker-compose.yaml up
 ```
@@ -44,7 +55,7 @@ Keep docker running and in another tab run:
 > STAGE=local LOG_PRETTY=true node runner/index.js
 ```
 
-To view the Grafan dashboard: http://localhost:3000/
+To view the Grafana dashboard: http://localhost:3000/
 
 Use the default account admin/admin to login
 
