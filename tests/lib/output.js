@@ -6,9 +6,8 @@ const path = require('path')
 const fsWriteFile = util.promisify(fs.writeFile)
 const fsMakeDir = util.promisify(fs.mkdir)
 const fsExists = util.promisify(fs.access)
-const Ajv = require('ajv')
-const { schema } = require('../schema/results.js')
-const ajv = new Ajv({ allErrors: true, useDefaults: true, removeAdditional: true })
+const { validate } = require('../schema/results.js')
+
 
 const folder = process.env.OUT_FOLDER || path.join(__dirname, '/../out')
 
@@ -60,13 +59,9 @@ async function createFilename (folder, data) {
   }
 }
 
-function validate (data) {
-  const valid = ajv.validate(schema.valueOf(), data)
-  return valid
-}
+
 
 module.exports = {
-  validate,
   createFilename,
   write,
   store
