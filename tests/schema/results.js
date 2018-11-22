@@ -1,6 +1,7 @@
 'use strict'
 
 const { FluentSchema } = require('fluent-schema')
+const os = require('os')
 
 const schema = FluentSchema()
   .id('ipfs')
@@ -86,6 +87,11 @@ const resultsDTO = {
   'memory': 'memory'
 }
 function build (props) {
-  return { ...resultsDTO, ...props }
+  const results = { ...resultsDTO, ...props }
+  results.cpu = os.cpus()
+  results.loadAvg = os.loadavg()
+  results.memory = os.totalmem() - os.freemem()
+  results.date = new Date().toISOString()
+  return results
 }
 module.exports = { schema, resultsDTO, build }

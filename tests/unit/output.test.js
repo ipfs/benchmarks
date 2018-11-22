@@ -5,7 +5,6 @@ const { validate, createFilename, write } = require('../lib/output')
 const { resultsDTO, build } = require('../schema/results')
 const test = t.test
 
-
 test('validate - results ', t => {
   t.plan(2)
   const e = validate(resultsDTO)

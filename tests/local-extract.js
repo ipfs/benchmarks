@@ -1,7 +1,6 @@
 'use strict'
 
 const fs = require('fs')
-const os = require('os')
 const ipfsNode = require('./lib/create-node.js')
 const { build } = require('./schema/results')
 const { write } = require('./lib/output')
@@ -18,14 +17,10 @@ async function localExtract (node, name, subtest, file, testClass) {
       name: name,
       subtest: subtest,
       file: file,
-      date: new Date().toISOString(),
       description: 'Get file to local repo',
       testClass: testClass,
       duration: { s: end[0],
-        ms: end[1] / 1000000 },
-      cpu: os.cpus(),
-      loadAvg: os.loadavg(),
-      memory: os.totalmem() - os.freemem()
+        ms: end[1] / 1000000 }
     })
   } catch (err) {
     throw Error(err)

@@ -1,7 +1,6 @@
 'use strict'
 
 const fs = require('fs')
-const os = require('os')
 const ipfsNode = require('./lib/create-node')
 const { build } = require('./schema/results')
 const { store } = require('./lib/output')
@@ -18,18 +17,14 @@ async function localAdd (node, name, subtest, testClass) {
     const end = process.hrtime(start)
     return build({
       name: name,
-      subTest: subtest,
+      subtest: subtest,
       file: fixtures[testClass],
-      date: new Date().toISOString(),
       description: 'Add file to local repo using unixFS engine',
       testClass: testClass,
       duration: {
         s: end[0],
         ms: end[1] / 1000000
-      },
-      cpu: os.cpus(),
-      loadAvg: os.loadavg(),
-      memory: os.totalmem() - os.freemem()
+      }
     })
   } catch (err) {
     throw Error(err)

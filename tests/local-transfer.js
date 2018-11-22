@@ -1,11 +1,11 @@
 'use strict'
 
 const fs = require('fs')
-const os = require('os')
 const verbose = process.env.VERBOSE || false
 const ipfsNode = require('./lib/create-node.js')
 const fixtures = require('./lib/fixtures.js')
 const { store } = require('./lib/output')
+const { build } = require('./schema/results')
 const clean = require('./lib/clean')
 const testName = 'localTransfer'
 
@@ -25,25 +25,17 @@ const getDuration = async (peerA, peerB, subTest, testClass) => {
   const start = process.hrtime()
   await peerB.files.cat(inserted[0].hash)
   const end = process.hrtime(start)
-  const date = new Date()
 
-  return {
+  return build({
     name: testName,
-    subTest: subTest,
+    subtest: subTest,
     testClass: testClass,
-    date: date.toISOString(),
     file: fixtures[testClass],
-    meta: {
-      project: 'js-ipfs',
-      commit: 'TBD'
-    },
     duration: {
       s: end[0],
       ms: end[1] / 1000000
-    },
-    cpu: os.cpus(),
-    loadAvg: os.loadavg()
-  }
+    }
+  })
 }
 
 const main = async () => {
