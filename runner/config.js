@@ -34,13 +34,18 @@ const getBenchmarkHostname = () => {
 const tests = [
   {
     name: 'localTransfer',
-    shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
+    shell: `source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
     localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-transfer.js')
   },
   {
-    name: 'unixFS',
-    shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-add.js`,
+    name: 'unixFS-add',
+    shell: `source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-add.js`,
     localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-add.js')
+  },
+  {
+    name: 'unixFS-extract',
+    shell: `source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-extract.js`,
+    localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-extract.js')
   }
 ]
 

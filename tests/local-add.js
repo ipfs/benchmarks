@@ -7,7 +7,7 @@ const { store } = require('./lib/output')
 const fixtures = require('./lib/fixtures')
 const clean = require('./lib/clean')
 
-const testName = 'unixFS'
+const testName = 'unixFS-add'
 
 async function localAdd (node, name, subtest, testClass) {
   try {
@@ -35,7 +35,7 @@ async function scenarios () {
   try {
     const node = await ipfsNode()
     let arrResults = []
-    arrResults.push(await localAdd(node, testName, 'add-empty-repo', 'largefile'))
+    arrResults.push(await localAdd(node, testName, 'empty-repo', 'largefile'))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -48,11 +48,11 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    arrResults.push(await localAdd(node1, testName, 'add-empty-repo', 'smallfile'))
+    arrResults.push(await localAdd(node1, testName, 'empty-repo', 'smallfile'))
 
-    arrResults.push(await localAdd(node1, testName, 'add-populated-repo', 'smallfile'))
+    arrResults.push(await localAdd(node1, testName, 'populated-repo', 'smallfile'))
 
-    arrResults.push(await localAdd(node, testName, 'add-populated-repo', 'largefile'))
+    arrResults.push(await localAdd(node, testName, 'populated-repo', 'largefile'))
 
     store(arrResults)
 

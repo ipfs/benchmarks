@@ -7,6 +7,7 @@ const fixtures = require('./lib/fixtures.js')
 const { store } = require('./lib/output')
 const { build } = require('./schema/results')
 const clean = require('./lib/clean')
+
 const testName = 'localTransfer'
 
 const log = (msg) => {

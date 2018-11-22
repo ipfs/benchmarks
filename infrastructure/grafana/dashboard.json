@@ -30,7 +30,7 @@
       "datasource": null,
       "format": "ms",
       "gauge": {
-        "maxValue": 500,
+        "maxValue": 1000,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -42,135 +42,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 4,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "localTransfer",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "duration"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "project",
-              "operator": "=",
-              "value": "js-ipfs"
-            },
-            {
-              "condition": "AND",
-              "key": "testClass",
-              "operator": "=",
-              "value": "smallfile"
-            },
-            {
-              "condition": "AND",
-              "key": "subTest",
-              "operator": "=",
-              "value": "empty-repo"
-            }
-          ]
-        }
-      ],
-      "thresholds": "500, 350, 250",
-      "title": "empty/small",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#d44a3a",
-        "rgba(237, 129, 40, 0.89)",
-        "#299c46"
-      ],
-      "datasource": null,
-      "format": "ms",
-      "gauge": {
-        "maxValue": 1000,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 3,
-        "y": 0
-      },
-      "id": 6,
+      "id": 25,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -264,6 +136,134 @@
       ],
       "thresholds": "1000, 750, 400",
       "title": "empty / large",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#299c46"
+      ],
+      "datasource": null,
+      "format": "ms",
+      "gauge": {
+        "maxValue": 500,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 0
+      },
+      "id": 23,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "localTransfer",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "smallfile"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "empty-repo"
+            }
+          ]
+        }
+      ],
+      "thresholds": "500, 350, 250",
+      "title": "empty/small",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -606,7 +606,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -635,7 +635,7 @@
               "condition": "AND",
               "key": "subTest",
               "operator": "=",
-              "value": "add-empty-repo"
+              "value": "empty-repo"
             },
             {
               "condition": "AND",
@@ -734,7 +734,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -763,7 +763,7 @@
               "condition": "AND",
               "key": "subTest",
               "operator": "=",
-              "value": "add-empty-repo"
+              "value": "empty-repo"
             },
             {
               "condition": "AND",
@@ -862,7 +862,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -891,7 +891,7 @@
               "condition": "AND",
               "key": "subTest",
               "operator": "=",
-              "value": "add-populated-repo"
+              "value": "populated-repo"
             },
             {
               "condition": "AND",
@@ -990,7 +990,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1019,7 +1019,7 @@
               "condition": "AND",
               "key": "subTest",
               "operator": "=",
-              "value": "add-populated-repo"
+              "value": "populated-repo"
             },
             {
               "condition": "AND",
@@ -1124,7 +1124,7 @@
               "condition": "AND",
               "key": "testClass",
               "operator": "=",
-              "value": "largefile"
+              "value": "smallfile"
             },
             {
               "condition": "AND",
@@ -1179,7 +1179,7 @@
               "condition": "AND",
               "key": "testClass",
               "operator": "=",
-              "value": "smallfile"
+              "value": "largefile"
             },
             {
               "condition": "AND",
@@ -1234,7 +1234,7 @@
               "condition": "AND",
               "key": "testClass",
               "operator": "=",
-              "value": "smallfile"
+              "value": "largefile"
             },
             {
               "condition": "AND",
@@ -1289,7 +1289,7 @@
               "condition": "AND",
               "key": "testClass",
               "operator": "=",
-              "value": "largefile"
+              "value": "smallfile"
             },
             {
               "condition": "AND",
@@ -1394,7 +1394,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1417,7 +1417,7 @@
             {
               "key": "subTest",
               "operator": "=",
-              "value": "add-empty-repo"
+              "value": "empty-repo"
             },
             {
               "condition": "AND",
@@ -1443,7 +1443,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -1466,7 +1466,7 @@
             {
               "key": "subTest",
               "operator": "=",
-              "value": "add-empty-repo"
+              "value": "empty-repo"
             },
             {
               "condition": "AND",
@@ -1492,7 +1492,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "D",
@@ -1515,7 +1515,7 @@
             {
               "key": "subTest",
               "operator": "=",
-              "value": "add-populated-repo"
+              "value": "populated-repo"
             },
             {
               "condition": "AND",
@@ -1541,7 +1541,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "unixFS",
+          "measurement": "unixFS-add",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1564,7 +1564,7 @@
             {
               "key": "subTest",
               "operator": "=",
-              "value": "add-populated-repo"
+              "value": "populated-repo"
             },
             {
               "condition": "AND",
@@ -1614,6 +1614,818 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#299c46"
+      ],
+      "datasource": null,
+      "format": "ms",
+      "gauge": {
+        "maxValue": 500,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 10
+      },
+      "id": 4,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "smallfile"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "empty-repo"
+            }
+          ]
+        }
+      ],
+      "thresholds": "500, 350, 250",
+      "title": "empty/small",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#299c46"
+      ],
+      "datasource": null,
+      "format": "ms",
+      "gauge": {
+        "maxValue": 1000,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 10
+      },
+      "id": 6,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "largeFile",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "testClass",
+              "operator": "=",
+              "value": "largefile"
+            },
+            {
+              "condition": "AND",
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "empty-repo"
+            }
+          ]
+        }
+      ],
+      "thresholds": "1000, 750, 400",
+      "title": "empty / large",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "format": "ms",
+      "gauge": {
+        "maxValue": 10,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 6,
+        "y": 10
+      },
+      "id": 26,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "populated-repo"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "smallfile"
+            }
+          ]
+        }
+      ],
+      "thresholds": "3,5,7",
+      "title": "populated / small",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "format": "ms",
+      "gauge": {
+        "maxValue": 50,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 9,
+        "y": 10
+      },
+      "id": 27,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "populated-repo"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "largefile"
+            }
+          ]
+        }
+      ],
+      "thresholds": "20,30,40",
+      "title": "populated / large",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 28,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "small file - empty repo",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "smallfile"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "empty-repo"
+            }
+          ]
+        },
+        {
+          "alias": "large file - empty repo",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "largefile"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "empty-repo"
+            }
+          ]
+        },
+        {
+          "alias": "large file - populated repo",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "largefile"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "populated-repo"
+            }
+          ]
+        },
+        {
+          "alias": "small file - populated repo",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "unixFS-extract",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "project",
+              "operator": "=",
+              "value": "js-ipfs"
+            },
+            {
+              "condition": "AND",
+              "key": "testClass",
+              "operator": "=",
+              "value": "smallfile"
+            },
+            {
+              "condition": "AND",
+              "key": "subTest",
+              "operator": "=",
+              "value": "populated-repo"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Local Extract",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": false,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": "milliseconds",
+          "logBase": 10,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "10s",
@@ -1624,7 +2436,7 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1655,5 +2467,5 @@
   "timezone": "",
   "title": "IPFS performance",
   "uid": "nxBZpJBmk",
-  "version": 5
+  "version": 19
 }
