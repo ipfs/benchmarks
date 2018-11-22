@@ -10,6 +10,8 @@ let pino
 const inventoryPath = path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
+const params = 'OUT_FOLDER=/tmp/out REMOTE=true'
+const remotePreCommand = `source ~/.nvm/nvm.sh && ${params}`
 
 // pretty logs in local
 if (process.env.LOG_PRETTY === 'true') {
@@ -34,13 +36,18 @@ const getBenchmarkHostname = () => {
 const tests = [
   {
     name: 'localTransfer',
-    shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
-    localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-transfer.js')
+    shell: `${remotePreCommand} REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
+    localShell: `${params} node ${path.join(__dirname, '/../tests/local-transfer.js')}`
   },
   {
-    name: 'unixFS',
-    shell: `rm -Rf /tmp/peerb && source ~/.nvm/nvm.sh && OUT_FOLDER=/tmp/out REMOTE=true node ${remoteTestsPath}/local-add.js`,
-    localShell: 'OUT_FOLDER=/tmp/out REMOTE=true node ' + path.join(__dirname, '/../tests/local-add.js')
+    name: 'unixFS-add',
+    shell: `${remotePreCommand} REMOTE=true node ${remoteTestsPath}/local-add.js`,
+    localShell: `${params} node ${path.join(__dirname, '/../tests/local-add.js')}`
+  },
+  {
+    name: 'unixFS-extract',
+    shell: `${remotePreCommand} REMOTE=true node ${remoteTestsPath}/local-extract.js`,
+    localShell: `${params} node ${path.join(__dirname, '/../tests/local-extract.js')}`
   }
 ]
 

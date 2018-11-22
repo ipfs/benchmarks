@@ -3,11 +3,15 @@
 const fs = require('fs')
 const ipfsNode = require('./lib/create-node.js')
 const { build } = require('./schema/results')
-const { write } = require('./lib/output')
+const { store } = require('./lib/output')
+const fixtures = require('./lib/fixtures')
+const clean = require('./lib/clean')
 
-async function localExtract (node, name, subtest, file, testClass) {
+const testName = 'unixFS-extract'
+
+async function localExtract (node, name, subtest, testClass) {
   try {
-    const fileStream = fs.createReadStream(file)
+    const fileStream = fs.createReadStream(fixtures[testClass])
     const inserted = await node.files.add(fileStream)
     const start = process.hrtime()
     const validCID = inserted[0].hash
@@ -16,7 +20,7 @@ async function localExtract (node, name, subtest, file, testClass) {
     return build({
       name: name,
       subtest: subtest,
-      file: file,
+      file: fixtures[testClass],
       description: 'Get file to local repo',
       testClass: testClass,
       duration: { s: end[0],
@@ -26,12 +30,12 @@ async function localExtract (node, name, subtest, file, testClass) {
     throw Error(err)
   }
 }
-const results = []
 
 async function scenarios () {
   try {
+    let arrResults = []
     const node = await ipfsNode()
-    write(await localExtract(node, 'unixFS', 'extract-emptyRepo', './fixtures/200Bytes.txt', 'smallfile'))
+    arrResults.push(await localExtract(node, testName, 'empty-repo', 'smallfile'))
     const node1 = await ipfsNode({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -44,16 +48,18 @@ async function scenarios () {
       'Bootstrap': []
     })
 
-    const r = await localExtract(node1, 'unixFS', 'extract-emptyRepo', './fixtures/1.2MiB.txt', 'largefile')
-    write(r)
-    results.push(r)
+    const r = await localExtract(node1, testName, 'empty-repo', 'largefile')
+    arrResults.push(r)
 
-    write(await localExtract(node1, 'unixFS', 'extract', './fixtures/200Bytes.txt', 'smallfile'))
+    arrResults.push(await localExtract(node1, testName, 'populated-repo', 'smallfile'))
 
-    write(await localExtract(node, 'unixFS', 'extract', './fixtures/1.2MiB.txt', 'largefile'))
+    arrResults.push(await localExtract(node, testName, 'populated-repo', 'largefile'))
+
+    store(arrResults)
 
     node.stop()
     node1.stop()
+    clean.peerRepos()
   } catch (err) {
     throw Error(err)
   }
