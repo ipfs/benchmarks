@@ -31,10 +31,10 @@ async function store (data) {
 async function write (data) {
   const name = await createFilename(folder, data)
   if (validate(data)) {
-    await fsWriteFile(`${name}.json`, JSON.stringify(data))
+    await fsWriteFile(`${name}.json`, JSON.stringify(data, null, 4))
   } else {
     const name = await createFilename(`${folder}/error`, data)
-    await fsWriteFile(`${name}.json`, JSON.stringify(data))
+    await fsWriteFile(`${name}.json`, JSON.stringify(data, null, 4))
   }
 }
 
