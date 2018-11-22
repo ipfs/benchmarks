@@ -41,7 +41,8 @@ Open http://localhost:3000/ in a browser. The default username/password combinat
 
 ![Grafana import dashboard](./docs/images/import-hover.png)
 
-All of the configuration will be stored in the Grafana docker image. The data for influxDB is stored outside of the InfluxDB docker image and resides in a folder adjacent to the `benchmarks` folder named `/data/influxdb`.
+* All of the Grafana configuration is stored in a folder adjacent to the this project's folder named `/data/grafana`.
+* The data for influxDB is stored in a folder adjacent to the this project's folder named `/data/influxdb`.
 
 ## Run dashboard locally and send results to InfluxDB
 
