@@ -60,6 +60,12 @@ To view the Grafana dashboard: http://localhost:3000/
 
 Use the default account admin/admin to login
 
+## Production architecture
+
+The diagram below describes the production setup.
+
+![Production diagram](./docs/images/prod-infrastructure.png)
+
 ## Test description
 
 Each test uses a small file ( 200 bytes ) and large file ( 1.2 MB ) and actions on empty repo vs populated repo.
