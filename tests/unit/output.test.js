@@ -1,8 +1,8 @@
 'use strict'
 
 const t = require('tap')
-const { validate, createFilename, write } = require('../lib/output')
-const { resultsDTO, build } = require('../schema/results')
+const { createFilename, write } = require('../lib/output')
+const { resultsDTO, build, validate } = require('../schema/results')
 const test = t.test
 
 test('validate - results ', t => {
@@ -40,6 +40,6 @@ test('validate - write flename ', t => {
 
 test('validate - write file to error directory ', t => {
   t.plan(1)
-  write(build({ name:  0 }))
+  write(build({ name: 0 }))
   t.pass()
 })

@@ -2,7 +2,8 @@
 
 const { FluentSchema } = require('fluent-schema')
 const os = require('os')
-
+const Ajv = require('ajv')
+const ajv = new Ajv({ allErrors: true, useDefaults: true, removeAdditional: true })
 const schema = FluentSchema()
   .id('ipfs')
   .title('IPFS Benchmarks')
@@ -94,4 +95,10 @@ function build (props) {
   results.date = new Date().toISOString()
   return results
 }
-module.exports = { schema, resultsDTO, build }
+
+function validate (data) {
+  const valid = ajv.validate(schema.valueOf(), data)
+  return valid
+}
+
+module.exports = { schema, resultsDTO, build, validate }
