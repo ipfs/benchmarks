@@ -12,6 +12,8 @@ services:
     image: grafana/grafana:latest
     ports:
      - "3000:3000"
+    volumes:
+      - ../../../data/grafana:/var/lib/grafana
     depends_on:
       - influxdb
     links:
