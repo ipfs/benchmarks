@@ -8,7 +8,6 @@ const test = t.test
 test('validate - results ', t => {
   t.plan(2)
   const e = validate(resultsDTO)
-  console.log(e)
   t.equal(e, true)
   t.pass()
 })

@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs')
-const ipfsNode = require('./lib/create-node')
+const NodeFactory = require('./lib/node-factory')
 const { build } = require('./schema/results')
 const { store } = require('./lib/output')
 const fixtures = require('./lib/fixtures')
@@ -33,10 +33,11 @@ async function localAdd (node, name, subtest, testClass) {
 
 async function scenarios () {
   try {
-    const node = await ipfsNode()
+    const nodeFactory = new NodeFactory()
+    const node = await nodeFactory.createIPFS()
     let arrResults = []
-    arrResults.push(await localAdd(node, testName, 'empty-repo', 'largefile'))
-    const node1 = await ipfsNode({
+    arrResults.push(await localAdd(node, testName, 'add-empty-repo', 'largefile'))
+    const node1 = await nodeFactory.createIPFS({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
         'Gateway': '/ip4/127.0.0.1/tcp/9092',
@@ -56,8 +57,7 @@ async function scenarios () {
 
     store(arrResults)
 
-    node.stop()
-    node1.stop()
+    nodeFactory.stopIPFS()
     clean.peerRepos()
   } catch (err) {
     throw Error(err)

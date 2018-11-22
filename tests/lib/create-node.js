@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 'use strict'
-// TODO: point this to the branch code
-const IPFS = require('ipfs')
+
 const defaultConfig = require('../config/default-config.json')
 
-module.exports = (config) => {
+module.exports = (config, IPFS) => {
   return new Promise((resolve, reject) => {
     console.log('Creating a node..')
     const node = new IPFS({
