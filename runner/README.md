@@ -7,7 +7,7 @@ The [runner](../runner/) is the component that kicks off the tests and stores th
 ```
 Open http://localhost:3000/ in a browser. The default username/password combination is `admin/admin`. You will be asked to change that password after initial login. Setup the datasource with type `influxDB`and use `http://influxdb:8086` as the URL. Next import the dashboard from `infrastructure/grafana/dashboard.json` by hovering over the `+` icon on the left of your screen.
 
-![Grafana import dashboard](images/import-hover.png)
+![Grafana import dashboard](import-hover.png)
 
 * All of the Grafana configuration is stored in a folder adjacent to the this project's folder named `/data/grafana`.
 * The data for influxDB is stored in a folder adjacent to the this project's folder named `/data/influxdb`.

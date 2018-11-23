@@ -2,7 +2,7 @@
 
 The diagram below describes the production setup.
 
-![Production diagram](images/prod-infrastructure.png)
+![Production diagram](prod-infrastructure.png)
 
 Production is comprised of two hosts:
 * The `controller` is a Virtual Machine with the `runner`, `datastore` and `dashboard`
