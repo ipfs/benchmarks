@@ -38,7 +38,7 @@ From the benchmark/tests directory:
 > node local-transfer
 ```
 
-Run all benchamrks:
+Run all benchmarks:
 ```bash
 > npm run benchmark
 ```
