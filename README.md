@@ -1,6 +1,6 @@
 # IPFS Benchmarks
 
-This A set of benchmark tests to track IPFS performance.
+This is a set of benchmarks tests to track IPFS performance.
 
 ## Purpose
 The IPFS team needs a historical view of various performance metrics around `js-ipfs` and how it compares to the reference implementation written in `go`. This project implements benchmark tests for `js-ipfs` and publishes the results in a dashboard. The artifacts are also made available on the IPFS network. Over time the historical view will expose how `js-ipfs` is hopefully approaching the `go` implementation and which areas need improvement.
