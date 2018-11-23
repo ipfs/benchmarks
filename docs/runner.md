@@ -35,8 +35,8 @@ The diagram below describes the production setup.
 ![Production diagram](images/prod-infrastructure.png)
 
 Production is comprised of two hosts:
-* The `controller`; a Virtual Machine with the `runner`, `datastore` and `dashboard`
-* The `minion`; a Bare metal machine to run the benchmarks.
+* The `controller` is a Virtual Machine with the `runner`, `datastore` and `dashboard`
+* The `minion` is a Bare metal machine to run the benchmarks.
 
 ### controller
 The controller runs the [runner](../runner/) as a daemon in a docker container and exposes an endpoint to be able to trigger a benchmark run with parameters.
