@@ -7,7 +7,7 @@ The IPFS team needs a historical view of various performance metrics around `js-
 
 ![Architecture](docs/images/architecture.png)
 
-The goal is to provide feedback around performance to developers and the community with an extremely low barrier. The CI system integrating code changes will trigger benchmark runs as well a scheduled run every night. Each run will provide a URL to the CI system where the results will be visible.
+The goal is to provide feedback around performance to developers and the community with an extremely low barrier. The CI system integrating code changes will trigger benchmark runs as well a scheduled run every night. Each run will provide a URL where the results will be visible.
 
 This project also provides a possibility to run tests locally on a development version of `js-ipfs`. Developers can then examine individual output files before submitting code to the community.
 
