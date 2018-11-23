@@ -17,3 +17,6 @@ The total time it takes to transfer a fie from repo A to repo B
 ```
 repoB.files.cat(inserted[0].hash)
 ```
+
+## Adding new tests
+TBD
