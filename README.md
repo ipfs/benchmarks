@@ -1,8 +1,33 @@
 # IPFS Benchmarks
 
-A set of benchmark tests to track IPFS performance.
+This is a set of benchmarks tests to track IPFS performance.
 
-## Local Setup
+## Purpose
+The IPFS team needs a historical view of various performance metrics around `js-ipfs`
+and how it compares to the reference implementation written in `go`. This project
+implements benchmark tests for `js-ipfs` and publishes the results in a dashboard.
+The artifacts are also made available on the IPFS network. Over time the historical
+view will expose how `js-ipfs` is hopefully approaching the `go` implementation
+and which areas need improvement.
+
+![Architecture](architecture.png)
+
+The goal is to provide immediate feedback and long-term tracking around performance
+to developers and the community with an extremely low barrier.
+The CI system integrating code changes will trigger benchmark runs as well a scheduled
+run every night. Each run will provide a URL where the results will be visible.
+
+This project also provides a possibility to run tests locally on a development
+version of `js-ipfs`. Developers can then examine individual output files before
+submitting code to the community.
+
+## Links
+* [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
+* Reference on how this [Repository](REPOSITORY.md) is organized
+* Using the [Runner](runner/README.md) to manage benchmark runs remotely
+* Description of [tests](tests/README.md)
+
+## Quickstart
 
 Clone Benchmark tests and install:
 
@@ -10,9 +35,11 @@ Clone Benchmark tests and install:
 >  git clone https://github.com/ipfs/benchmarks.git
 >  cd benchmarks/tests
 >  npm install
+>  cd ../benchmarks/runner
+>  npm install
 ```
 
-## Run tests locally
+### Run tests locally
 
 From the benchmark/tests directory:
 ```bash
@@ -21,67 +48,14 @@ From the benchmark/tests directory:
 > node local-transfer
 ```
 
-Run all benchamrks:
+Run all benchmarks:
 ```bash
 > npm run benchmark
 ```
 
-## Run sub tests
+### Run sub tests
 TODO:
 
-##  Results
+###  Results
 
-Results will be writen to out directory under /tests
-
-## Initial Setup Grafana InfluxDB
-```bash
-> docker-compose -f infrastructure/local/docker-compose.yaml up
-```
-Open http://localhost:3000/ in a browser. The default username/password combination is admin/admin. You will be asked to change that password after initial login. Setup the datasource with type `influxDB`and use `http://influxdb:8086` as the URL. Next import the dashboard from `infrastructure/grafana/dashboard.json` by hovering over the `+` icon on the left of your screen.
-
-![Grafana import dashboard](./docs/images/import-hover.png)
-
-* All of the Grafana configuration is stored in a folder adjacent to the this project's folder named `/data/grafana`.
-* The data for influxDB is stored in a folder adjacent to the this project's folder named `/data/influxdb`.
-
-## Run dashboard locally and send results to InfluxDB
-
-If you're not running it yet:
-```bash
-> docker-compose -f infrastructure/local/docker-compose.yaml up
-```
-
-Keep docker running and in another tab run:
-```bash
-> STAGE=local LOG_PRETTY=true node runner/index.js
-```
-
-To view the Grafana dashboard: http://localhost:3000/
-
-Use the default account admin/admin to login
-
-## Production architecture
-
-The diagram below describes the production setup.
-
-![Production diagram](./docs/images/prod-infrastructure.png)
-
-## Test description
-
-Each test uses a small file ( 200 bytes ) and large file ( 1.2 MB ) and actions on empty repo vs populated repo.
-
-### local-add:
-The time it takes to add a file using unixFS.
-```
-repo.files.add(fileStream)
-```
-### local-extract
-The total time to get a file from a repo.
-```
-repo.files.get(validCID)
-```
-### local-transfer
-The total time it takes to transfer a fie from repo A to repo B
-```
-repoB.files.cat(inserted[0].hash)
-```
+Results will be written to out directory under /tests
