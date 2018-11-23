@@ -12,6 +12,7 @@ The goal is to provide feedback around performance to developers and the communi
 This project also provides a possibility to run tests locally on a development version of `js-ipfs`. Developers can then examine individual output files before submitting code to the community.
 
 ## Links
+* [Architecture](docs/architecture.md) of the `js-ipfs` benchmark system
 * Reference on how this [Repository](docs/repo.md) is organized
 * Using the [Runner](docs/runner.md) to manage benchmark runs remotely
 * Description of [tests](docs/tests.md)
