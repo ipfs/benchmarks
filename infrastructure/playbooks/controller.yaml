@@ -1,0 +1,38 @@
+---
+- hosts: controllers
+  remote_user: "{{remote_user}}"
+  become: yes
+  become_method: sudo
+  serial: 1
+  gather_facts: False
+  pre_tasks:
+  - name: Install python for Ansible
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    register: test
+    changed_when: test.stdout
+  - setup:
+  tasks:
+  - import_role:
+      name: common
+  - import_role:
+      name: "nickjj.docker"
+    tags: ["docker"]
+  - import_role:
+      name: geerlingguy.nodejs
+  - file:
+      path: ~/ipfs-benchmarks
+      state: directory
+      mode: 0755
+  - name: copy code
+    become: no
+    synchronize:
+      src: ../../../
+      dest: ~/ipfs-benchmarks/
+      checksum: yes
+      rsync_opts:
+        - "--exclude=runner/node_modules"
+        - "--exclude=tests"
+  - name: Install packages based on package.json.
+    become: no
+    npm:
+      path: ~/ipfs-benchmarks/runner
