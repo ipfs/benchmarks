@@ -3,27 +3,17 @@ services:
   influxdb:
     image: influxdb:1.7-alpine
     volumes:
-      - ../../../data/influxdb:/var/lib/influxdb:Z
+      - ../../../data/influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
     environment:
       INFLUXDB_DB: benchmarks
-  runner:
-    build:
-      context: ../../
-      dockerfile: Dockerfile-runner
-    depends_on:
-      - influxdb
-    links:
-      - influxdb
-    environment:
-      INFLUX_HOST: influxdb
   grafana:
     image: grafana/grafana:latest
     ports:
      - "3000:3000"
     volumes:
-      - ../../../data/grafana:/var/lib/grafana:Z
+      - ../../../data/grafana:/var/lib/grafana
     depends_on:
       - influxdb
     links:
