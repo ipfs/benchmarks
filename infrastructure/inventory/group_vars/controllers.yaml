@@ -5,4 +5,4 @@ ansible_ssh_private_key_file: "~/.ssh/id_rsa_ipfs"
 # non-sudo user to be created for running process
 action_user: runner
 nodejs_version: "10.x"
-docker__users: ["ubuntu"]
+docker__users: ["ubuntu", "runner"]
