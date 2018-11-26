@@ -16,13 +16,13 @@ function NodeFactory () {
     nodes.push(node)
     return node
   }
-  this.stopIPFS = () => {
+  this.stop = () => {
     nodes.forEach((node) => {
       node.stop()
     })
   }
-  this.getIPFS = (node) => {
-    return node[nodes]
+  this.get = () => {
+    return nodes
   }
 }
 

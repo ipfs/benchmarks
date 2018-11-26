@@ -57,7 +57,7 @@ async function scenarios () {
 
     store(arrResults)
 
-    nodeFactory.stopIPFS()
+    nodeFactory.stop()
     clean.peerRepos()
   } catch (err) {
     throw Error(err)

@@ -3,7 +3,7 @@
 const fs = require('fs')
 const NodeFactory = require('./lib/node-factory')
 const { build } = require('./schema/results')
-const { store } = require('./lib/output')
+const { store, write } = require('./lib/output')
 const fixtures = require('./lib/fixtures')
 const clean = require('./lib/clean')
 
@@ -35,7 +35,8 @@ async function scenarios () {
   try {
     const nodeFactory = new NodeFactory()
     const node = await nodeFactory.createIPFS()
-    write(await localExtract(node, 'unixFS', 'extract-emptyRepo', './fixtures/200Bytes.txt', 'smallfile'))
+    let arrResults = []
+    arrResults.push(await localExtract(node, 'unixFS', 'extract-emptyRepo', './fixtures/200Bytes.txt', 'smallfile'))
     const node1 = await nodeFactory.createIPFS({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5013',
@@ -56,8 +57,8 @@ async function scenarios () {
     arrResults.push(await localExtract(node, testName, 'populated-repo', 'largefile'))
 
     store(arrResults)
-
-    nodeFactory.stopIPFS()
+    clean.peerRepos()
+    nodeFactory.stop()
   } catch (err) {
     throw Error(err)
   }
