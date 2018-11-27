@@ -1,7 +1,9 @@
 'use strict'
-
 require('make-promises-safe') // installs an 'unhandledRejection' handler
 const schedule = require('node-schedule')
+const fastify = require('fastify')({
+  logger: true
+})
 const config = require('./config')
 const remote = require('./remote.js')
 const local = require('./local.js')
@@ -35,3 +37,20 @@ const main = async () => {
 schedule.scheduleJob('0 0 * * *', function () {
   main()
 })
+
+// Declare a route
+fastify.get('/runner', async (request, reply) => {
+  return { hello: 'world' }
+})
+
+// Run the server!
+const start = async () => {
+  try {
+    await fastify.listen(9000)
+    fastify.log.info(`server listening on ${fastify.server.address().port}`)
+  } catch (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+}
+start()
