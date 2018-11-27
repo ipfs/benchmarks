@@ -1,3 +1,21 @@
+### provisioning
+Ansible is used as a provisioning tool for the host running as controller. The playbook for that is located in `playbooks/controller.yaml`. The playbook targets the hosts under `controllers` in the `ìnventory/inventory.yaml`. To access the host it uses the ssh key referenced in `ìnventory/group_vars/controller` named `ansible_ssh_private_key_file`. The playbook also requires you to provide a password for the grafana (action) user.
+
+#### prerequisites
+To install the required packages for your OS:
+```
+python3
+ansible
+ansible roles:
+* geerlingguy.nodejs
+* nickjj.docker
+```
+
+A typical way to run the playbook would be:
+```
+ansible-playbook -i infrastructure/inventory/inventory.yaml infrastructure/playbooks/controller.yaml --extra-vars "action_user_pw=test"
+```
+
 ### Architecture
 
 The diagram below describes the production setup.

@@ -1,6 +1,7 @@
 'use strict'
 
 require('make-promises-safe') // installs an 'unhandledRejection' handler
+const schedule = require('node-schedule')
 const config = require('./config')
 const remote = require('./remote.js')
 const local = require('./local.js')
@@ -30,4 +31,7 @@ const main = async () => {
   }
 }
 
-main()
+// run this every day at midnight, at least
+schedule.scheduleJob('0 0 * * *', function () {
+  main()
+})

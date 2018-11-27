@@ -1,0 +1,9 @@
+---
+# user account used to ssh the hosts
+remote_user: ubuntu
+ansible_ssh_private_key_file: "~/.ssh/id_rsa_ipfs"
+# non-sudo user to be created for running process
+action_user: grafana
+action_user_group: docker
+nodejs_version: "10.x"
+docker__users: ["ubuntu", "runner"]

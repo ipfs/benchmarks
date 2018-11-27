@@ -1,0 +1,59 @@
+---
+- hosts: controllers
+  remote_user: "{{remote_user}}"
+  become_method: sudo
+  serial: 1
+  gather_facts: False
+  pre_tasks:
+  - name: Install python for Ansible
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    register: test
+    become: yes
+    changed_when: test.stdout
+  - setup:
+  tasks:
+  - import_role:
+      name: security
+    become: yes
+    tags: ["security"]
+  - import_role:
+      name: "nickjj.docker"
+    tags: ["docker"]
+    become: yes
+  - import_role:
+      name: geerlingguy.nodejs
+    become: yes
+    tags: ["node"]
+  - import_role:
+      name: common
+    become: yes
+    tags: ["common"]
+  - name: create ~/ipfs-benchmarks
+    file:
+      path: ~/ipfs-benchmarks
+      state: directory
+      mode: 0755
+  - name: create influxdb and grafana data dirs
+    become: yes
+    file:
+      path: "{{ item.path }}"
+      owner: "{{ uid | default('ubuntu') }}"
+      group: "{{ guid | default('docker') }}"
+      state: directory
+      mode: 0755
+    with_items:
+    - { path: '/data/influxdb' }
+    - { path: '/data/grafana', uid: 472, guid: 472 }
+  - name: copy code
+    become: no
+    synchronize:
+      src: ../../../
+      dest: ~/ipfs-benchmarks/
+      checksum: yes
+      rsync_opts:
+        - "--exclude=runner/node_modules"
+        - "--exclude=tests/node_modules"
+  - name: Install packages based on package.json.
+    become: no
+    npm:
+      path: ~/ipfs-benchmarks/runner

@@ -1,0 +1,34 @@
+---
+- name: Allow SSH in UFW
+  ufw:
+    rule: allow
+    port: ssh
+    proto: tcp
+    comment: Allow ssh access
+
+- name: limit ssh brute force
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+    comment: Limit ssh access
+
+- name: Allow access to http port 80 and include a comment
+  ufw:
+    rule: allow
+    proto: tcp
+    port: http
+    comment: Allow http access
+
+- name: Allow access to https port 443 and include a comment
+  ufw:
+    rule: allow
+    proto: tcp
+    port: https
+    comment: Allow https access
+
+- name: Set firewall default policy
+  ufw:
+    state: enabled
+    policy: reject
+  become: yes
