@@ -4,4 +4,5 @@
     generate_ssh_key: yes
     name: "{{ action_user }}"
     password: "{{ action_user_pw | password_hash('sha512') }}"
+    group: "{{ action_user_group }}"
     shell: /bin/bash
