@@ -2,7 +2,13 @@
   "name": "ipfs-benchmarks",
   "version": "0.1.0",
   "description": "Benchmarks for js-ifps",
+  "engines": {
+    "node": "~10.4.1"
+  },
   "main": "index.js",
+  "config": {
+    "repoPath": "./var/ipfs/data"
+  },
   "scripts": {
     "test": "tap -J unit/*.test.js",
     "lint": "standard --verbose",

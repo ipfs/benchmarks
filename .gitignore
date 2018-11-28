@@ -3,3 +3,4 @@ runner/node_modules
 local/data
 tests/dirHash.txt
 tests/out
+tests/var

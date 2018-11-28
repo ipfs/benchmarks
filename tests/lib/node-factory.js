@@ -3,26 +3,29 @@
 const createNode = require(`./create-node`)
 const IPFS = require('ipfs')
 
-function NodeFactory () {
-  if (!(this instanceof NodeFactory)) {
-    return new NodeFactory()
+class NodeFactory {
+  constructor (ipfs) {
+    this._ipfs = typeof ipfs !== 'undefined' ? ipfs : IPFS
+    this._nodes = []
   }
 
-  const nodes = []
-
-  this.createIPFS = async (config, ipfsModule) => {
-    ipfsModule = typeof ipfsModule !== 'undefined' ? ipfsModule : IPFS
-    const node = await createNode(config, ipfsModule)
-    nodes.push(node)
+  async add (config, init) {
+    const node = await createNode(config, init, this._ipfs)
+    this._nodes.push(node)
     return node
   }
-  this.stop = () => {
-    nodes.forEach((node) => {
-      node.stop()
+  stop () {
+    this._nodes.forEach(async (node) => {
+      try {
+        await node.stop()
+      } catch (e) {
+        console.log(`Error stopping node: ${e}`)
+      }
     })
+    this._nodes.length = 0
   }
-  this.get = () => {
-    return nodes
+  get () {
+    return this._nodes
   }
 }
 

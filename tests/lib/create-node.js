@@ -1,27 +1,26 @@
-#!/usr/bin/env node
 'use strict'
 
 const defaultConfig = require('../config/default-config.json')
-const privateKey = 'CAASqAkwggSkAgEAAoIBAQChVmiObYo6pkKrMSd3OzW1cTL+RDmX1rkETYGKWV9TPXMNgElFTYoYHqT9QZomj5RI8iUmHccjzqr4J0mV+E0NpvHHOLlmDZ82lAw2Zx7saUkeQWvC0S9Z0o3aTx2sSubZV53rSomkZgQH4fYTs4RERejV4ltzLFdzQQBwWrBvlagpPHUCxKDUCnE5oIzdbD26ltWViPBWr7TfotzC8Lyi/tceqCpHMUJGMbsVgypnlgpey07MBvs71dVh5LcRen/ztsQO6Yju4D3QgWoyD0SIUdJFvBzEwL9bSiA3QjUc/fkGd7EcdN5bebYOqAi4ZIiAMLp3i4+B8Tzq/acull43AgMBAAECggEBAIDgZE75o4SsEO9tKWht7L5OeXxxBUyMImkUfJkGQUZd/MzZIC5y/Q+9UvBW+gs5gCsw+onTGaM50Iq/32Ej4nE4XURVxIuH8BmJ86N1hlc010qK2cjajqeCsPulXT+m6XbOLYCpnv+q2idt0cL1EH/1FEPeOEztK8ION4qIdw36SoykfTx/RqtkKHtS01AwN82EOPbWk7huyQT5R5MsCZmRJXBFkpNtiL+8619BH2aVlghHO4NouF9wQjdz/ysVuyYg+3rX2cpGjuHDTZ6hVQiJD1lF6D+dua7UPyHYAG2iRQiKZmCjitt9ywzPxiRaYF/aZ02FEMWckZulR09axskCgYEAzjl6ER8WwxYHn4tHse+CrIIF2z5cscdrh7KSwd3Rse9hIIBDJ/0KkvoYd1IcWrS8ywLrRfSLIjEU9u7IN1m+IRVWJ61fXNqOHm9clAu6qNhCN6W2+JfxDkUygTwmsq0v3huO+qkiMQz+a4nAXJe8Utd36ywgPhVGxFa/7x1v1N0CgYEAyEdiYRFf1aQZcO7+B2FH+tkGJsB30VIBhcpG9EukuQUUulLHhScc/KRj+EFAACLdkTqlVI0xVYIWaaCXwoQCWKixjZ5mYPC+bBLgn4IoDS6XTdHtR7Vn3UUvGTKsM0/z4e8/0eSzGNCHoYez9IoBlPNic0sQuST4jzgS2RYnFCMCgYASWSzSLyjwTJp7CIJlg4Dl5l+tBRxsOOkJVssV8q2AnmLO6HqRKUNylkvs+eJJ88DEc0sJm1txvFo4KkCoJBT1jpduyk8szMlOTew3w99kvHEP0G+6KJKrCV8X/okW5q/WnC8ZgEjpglV0rfnugxWfbUpfIzrvKydzuqAzHzRfBQKBgQDANtKSeoxRjEbmfljLWHAure8bbgkQmfXgI7xpZdfXwqqcECpw/pLxXgycDHOSLeQcJ/7Y4RGCEXHVOk2sX+mokW6mjmmPjD4VlyCBtfcef6KzC1EBS3c9g9KqCln+fTOBmY7UsPu6SxiAzK7HeVP/Un8gS+Dm8DalrZlZQ8uJpQKBgF6mL/Xo/XUOiz2jAD18l8Y6s49bA9H2CoLpBGTV1LfY5yTFxRy4R3qnX/IzsKy567sbtkEFKJxplc/RzCQfrgbdj7k26SbKtHR3yERaFGRYq8UeAHeYC1/N19LF5BMQL4y5R4PJ1SFPeJCL/wXiMqs1maTqvKqtc4bbegNdwlxn'
-
-module.exports = (config, IPFS) => {
+const privateKey = 'CAASqAkwggSkAgEAAoIBAQDANawZ3qi0iU6I7Iw8JKCeNGgyQO7Ij2eHOSEZ4M5qX2hpECaQ5srS9tEhxhXly7yTv9q9CONizb4pJ6Q2ZWVEFSx5brkehCKw7gQlPFPGGZNRFKpvkjytVoh+TcECU8h+FzTmF0T99Ph2Uw1fOsJD/hlU3JJ6vzV1fQ5LzV+LH58KasDedNbolk/urvIkMlNYG2XQVC0HN2WNtVNe7sLoDGGapQeyj13hYEIRp1PzCPW7doQurzntRmKCM6i3J0+4cgaWcLX+KPtQHvCErarXH1TTmDOMBL1CwcNLuKamkQnvJA3HHcACPB/eRITssP9tti5IKRrjlzeH/gODWFzBAgMBAAECggEAWYKlOwbuGeU3pZxDUl7cTdCqFX0Xtl7SH68DM0H13qO/w+25iBFysvwuOEQ/Ply63TOjchUJj6GwxQmo94wQtLwHkiV2IDf4z9yIIa8OdFrEuCWfmYXIrBB4UBl1oNfTrqSwBdcgUgQbET9sIsUCYxeaRGLT9EXHZ4dteO+TZv3sFp0UnIWGV4r4f2+gPQRLI+b+OiDvZW8jUrWKYFfzikNteDRChjz6v/zEy+xhcDGxtD3zhO/98t7RQv0qSuhUAd8aS+vBw4F331kqD37wy/ayz0LGVGNHxo6StCldsLx5lJWL1D1vzFWxnhy9BZTkiEMT0A6LpQIfclHN4Hme4QKBgQDmvLRXYQ3h483vW9yfJ9FDJfZfJSa6mBuyjs5IP1/tuyNi6t5wJEjqS0qLxkfho4nfkiMZ1oWzPucdrlPq7cEgYyJZIQUl6MhmS5uo8i4k4WW9sRjYUZGh0WBXcQTR90GHC2nfU/ZpsWQTIHWr5OAehzkvLrI+Ug89Mg0pq6UaNwKBgQDVQRZX1APSN29Um+EoIoXm28O1Qz29iVukfGD+uhPu/eEUMkcSiRzFnLtq7mywJEFnCdtvsD1dUkQf1qNwJbYucURvsrO38v4/QKD+oAtuhDCkcDlA3RhZKakk+FP9zTh5r/9tx9PkwwIS4g7FarXimg+ENOPOg5ekikVmVpjkxwKBgQC6xTsRk91B4T1cKDawmfF48iy4nYD4/5FD+vadYrdK3vVo54dArQ5coK9p7wlWayN6VneVPaGiEyPPUcJZ4zQ1/Cjcjq71HbXBoCgTHF4fule5sbXTvEsu+iWLAlANiaCAKMv9W6CVs2K3XMoDZ1PHQlwWhiz/5zqwpWgkN+2ABwKBgGooLGcsM3rB/bmwnzTLeryhSZtCDcn8RpJrGB21o5ak6xaSsK6ZcqksjF9+sLw+UBBq58GBigqamS8AOfvpyfb0i4zO+IfpfoceNQaLxSUOyOgStW2EokpAYuL0e1ssfaCV7CFKCEEoki+0OIYtyL000+SML5ruBt7xtfprwVChAoGBAMUSUaxTAOf2A/xxY3KMwxNHUnAKbSGKJbyBvPdpcnzmXO3VqJrJaKj3LKXmEkfZKnYgtG1yPMVKdWaUdJJWEFjBwWVsSJVoz0TmVOA+PWUmRUnOEEvAQ96Cfgns5fr/10Q+neN1sSXquUiF6zV7LdxWtacq4bTM4dXij4/hQQNp"'
+const { repoPath } = require('../package.json').config
+const defaultInit = {
+  empty: true,
+  privateKey
+}
+module.exports = (config, init, IPFS) => {
   return new Promise((resolve, reject) => {
-    console.log('Creating a node..')
     const node = new IPFS({
-      repo: '/tmp/.ipfs/' + Math.random()
+      repo: `${repoPath}${Math.random()
         .toString()
-        .substring(2, 8),
+        .substring(2, 8)}`,
       config: config || defaultConfig,
-      init: {
-        emptyRepo: true,
-        privateKey
-      }
+      init: init || defaultInit
     })
     node.on('ready', () => {
       resolve(node)
     })
-    node.on('error', () => {
-      reject(node)
+    node.on('error', (e) => {
+      reject(e)
     })
   })
 }
