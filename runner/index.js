@@ -9,6 +9,8 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
+const schema = require('./schema')
+const baseUrl = 'https://some.url.com'
 
 const runCommand = (test) => {
   if (config.stage === 'local') {
@@ -18,7 +20,7 @@ const runCommand = (test) => {
   }
 }
 
-const main = async () => {
+const run = async () => {
   if (config.stage !== 'local') {
     await provision.ensure()
   }
@@ -35,12 +37,16 @@ const main = async () => {
 
 // run this every day at midnight, at least
 schedule.scheduleJob('0 0 * * *', function () {
-  main()
+  run()
 })
 
 // Declare a route
-fastify.get('/runner', async (request, reply) => {
-  return { hello: 'world' }
+fastify.post('/', { schema }, async (request, reply) => {
+  let resultsHash = await run(request.body.commit)
+  return {
+    commit: request.body.commit,
+    url: `${baseUrl}/${resultsHash}`
+  }
 })
 
 // Run the server!

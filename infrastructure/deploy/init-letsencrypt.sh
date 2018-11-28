@@ -1,9 +1,9 @@
 #!/bin/bash
 
-domains=( "ipfs-benchmarks.nearform.net" )
+domains=( "clarabella.nearform.net" )
 rsa_key_size=4096
 data_path="./data/certbot"
-email="" #Adding a valid address is strongly recommended
+email="alex.knol@nearform.com" #Adding a valid address is strongly recommended
 staging=0 #Set to 1 if you're just testing your setup to avoid hitting request limits
 
 echo "### Preparing directories in $data_path ..."

@@ -14,6 +14,8 @@ services:
       dockerfile: Dockerfile-runner
     depends_on:
       - influxdb
+    ports:
+      - "9000:9000"
     links:
       - influxdb
     environment:
@@ -46,3 +48,4 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
