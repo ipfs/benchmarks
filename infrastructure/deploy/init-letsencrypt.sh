@@ -1,6 +1,6 @@
 #!/bin/bash
 
-domains=( "clarabella.nearform.net" )
+domains=( "hortensia.nearform.net" )
 rsa_key_size=4096
 data_path="./data/certbot"
 email="alex.knol@nearform.com" #Adding a valid address is strongly recommended
