@@ -20,6 +20,7 @@ services:
       - influxdb
     environment:
       INFLUX_HOST: influxdb
+    command: "npm start"
   grafana:
     image: grafana/grafana:latest
     ports:
@@ -30,6 +31,8 @@ services:
       - influxdb
     links:
       - influxdb
+    environment:
+      GF_SERVER_ROOT_URL: http://grafana.server.name
   nginx:
     image: nginx:1.15-alpine
     ports:
