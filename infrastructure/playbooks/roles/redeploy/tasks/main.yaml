@@ -7,7 +7,7 @@
   pip:
     name: docker-compose
 - name: rebuild / restart
-  docker_service:
-    project_src: /home/ubuntu/ipfs-benchmarks/infrastructure/deploy
-    build: yes
-    restarted: true
+  shell: runProd.sh restart
+  args:
+    chdir: /home/ubuntu/ipfs-benchmarks/scripts
+    command:
