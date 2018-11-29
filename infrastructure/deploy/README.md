@@ -1,6 +1,6 @@
 ## Deploying the Controller IPFS benchmarks
 
-The runner and it's supporting applications are deployed using `docker-compose`. To support a local development setup you need the following  parts:
+The runner and it's supporting applications are deployed using [docker-compose](https://docs.docker.com/compose/reference/overview/#command-options-overview-and-help). To support a local development setup you need the following  parts:
 1. The runner
 2. InfluxDB
 3. Grafana
