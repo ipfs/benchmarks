@@ -8,19 +8,6 @@ services:
       - "8086:8086"
     environment:
       INFLUXDB_DB: benchmarks
-  runner:
-    build:
-      context: ../../
-      dockerfile: Dockerfile-runner
-    depends_on:
-      - influxdb
-    ports:
-      - "9000:9000"
-    links:
-      - influxdb
-    environment:
-      INFLUX_HOST: influxdb
-    command: "npm start"
   grafana:
     image: grafana/grafana:latest
     ports:

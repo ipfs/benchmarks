@@ -3,7 +3,7 @@ The [runner](../runner/) is the component that kicks off the tests and stores th
 
 ### Initial Setup Grafana InfluxDB
 ```bash
-> docker-compose -f infrastructure/local/docker-compose.yaml up
+> ./scripts/runLocal.sh up
 ```
 Open http://localhost:3000/ in a browser. The default username/password combination is `admin/admin`. You will be asked to change that password after initial login. Setup the datasource with type `influxDB`and use `http://influxdb:8086` as the URL. Next import the dashboard from `infrastructure/grafana/dashboard.json` by hovering over the `+` icon on the left of your screen.
 
@@ -16,7 +16,7 @@ Open http://localhost:3000/ in a browser. The default username/password combinat
 
 If you're not running it yet:
 ```bash
-> docker-compose -f infrastructure/local/docker-compose.yaml up
+> ./scripts/runLocal.sh up
 ```
 
 Keep docker running and in another tab run:

@@ -20,6 +20,19 @@ services:
       - influxdb
     environment:
       GF_SERVER_ROOT_URL: http://ipfs-benchmarks.seretalabs.com
+  runner:
+    build:
+      context: ../../
+      dockerfile: Dockerfile-runner
+    depends_on:
+      - influxdb
+    ports:
+      - "9000:9000"
+    links:
+      - influxdb
+    environment:
+      INFLUX_HOST: influxdb
+    command: "npm start"
   nginx:
     image: nginx:1.15-alpine
     ports:
