@@ -16,17 +16,17 @@ jobs:
           name: npm-install-runner
           command: cd runner && npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "runner/package.json" }}
+          key: dependency-runner-cache-{{ checksum "runner/package.json" }}
           paths:
             - ./runner/node_modules
 
       - restore_cache:
-          key: dependency-runner-cache-{{ checksum "package.json" }}
+          key: dependency-benchmark-cache-{{ checksum "package.json" }}
       - run:
           name: npm-install-benchmarks
           command: cd tests && npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "tests/package.json" }}
+          key: dependency-benchmark-cache-{{ checksum "tests/package.json" }}
           paths:
             - ./tests/node_modules
 
