@@ -37,13 +37,14 @@
     become: yes
     file:
       path: "{{ item.path }}"
-      owner: "{{ uid | default('ubuntu') }}"
-      group: "{{ guid | default('docker') }}"
+      owner: "{{ item.uid | default('ubuntu') }}"
+      group: "{{ item.guid | default('docker') }}"
       state: directory
+      recurse: yes
       mode: 0755
     with_items:
     - { path: '/data/influxdb' }
-    - { path: '/data/grafana', uid: 472, guid: 472 }
+    - { path: '/data/grafana', uid: 472, guid: docker }
   - name: copy code
     become: no
     synchronize:
@@ -53,7 +54,22 @@
       rsync_opts:
         - "--exclude=runner/node_modules"
         - "--exclude=tests/node_modules"
+        - "--exclude=infrastructure/deploy/data"
+  - name: fix certbot permissions
+    become: yes
+    file:
+      path: "/home/ubuntu/ipfs-benchmarks/infrastructure/deploy"
+      owner: ubuntu
+      group: docker
+      state: directory
+      mode: 0755
+      recurse: yes
   - name: Install packages based on package.json.
     become: no
     npm:
       path: ~/ipfs-benchmarks/runner
+  - name: rebuild container image
+    shell: |
+      /usr/local/bin/docker-compose build runner
+    args:
+      chdir: ~/ipfs-benchmarks/infrastructure/deploy

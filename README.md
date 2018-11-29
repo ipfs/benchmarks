@@ -21,11 +21,12 @@ This project also provides a possibility to run tests locally on a development
 version of `js-ipfs`. Developers can then examine individual output files before
 submitting code to the community.
 
-## Links
+## Documentation Index
 * [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
 * Reference on how this [Repository](REPOSITORY.md) is organized
 * Using the [Runner](runner/README.md) to manage benchmark runs remotely
 * Description of [tests](tests/README.md)
+* Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
 
 ## Quickstart
 
