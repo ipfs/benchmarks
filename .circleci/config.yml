@@ -42,5 +42,5 @@ jobs:
             ANSIBLE_HOST_KEY_CHECKING=False \
             ansible-playbook -i infrastructure/inventory/inventory.yaml \
             infrastructure/playbooks/controller.yaml \
-            --skip-tags "docker,security,node,common"
+            --skip-tags "docker,security,node,common" \
             --extra-vars "action_user_pw=${USER_PW}"
