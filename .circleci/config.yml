@@ -37,6 +37,9 @@ jobs:
           name: test-runner
           command: cd runner && NODE_ENV=test npm test
       - run:
+          name: get private key
+          command: echo $IPFS_KEY | base64 -D > ~/.ssh/id_rsa_ipfs
+      - run:
           name: deploy
           command: |
             ANSIBLE_HOST_KEY_CHECKING=False \
