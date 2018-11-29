@@ -7,8 +7,9 @@ const config = require('./config')
 const run = (shell, name) => {
   config.log.info(`Running [${shell}] locally`)
   return new Promise((resolve, reject) => {
+    if (!shell || !name) reject(Error('shell+name required'))
     exec(shell, (err, stdout, stderr) => {
-      if (err) {
+      if (err || stderr) {
         reject(new Error(stderr))
         return
       }
@@ -16,7 +17,7 @@ const run = (shell, name) => {
       let retrieveCommand = `cat ${config.outFolder}/${name}.json`
       config.log.info(`Retrieving [${retrieveCommand}] locally`)
       exec(retrieveCommand, (err, stdout, stderr) => {
-        if (err) {
+        if (err || stderr) {
           reject(new Error(stderr))
           return
         }
