@@ -68,8 +68,11 @@
     become: no
     npm:
       path: ~/ipfs-benchmarks/runner
-  - name: rebuild container image
-    shell: |
-      /usr/local/bin/docker-compose build runner
-    args:
-      chdir: ~/ipfs-benchmarks/infrastructure/deploy
+  - name: rebuild / restart
+    docker_service:
+      project_src: runner
+      build: yes
+      restarted: true
+    register: output
+  - debug:
+      var: output
