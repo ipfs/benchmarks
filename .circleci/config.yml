@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/ipfs
     docker:
-      - image: nearform/circleci-node-ansible:1.0.2
+      - image: nearform/circleci-node-ansible:1.0.3
     steps:
       - checkout
       - run:
