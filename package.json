@@ -1,0 +1,25 @@
+{
+  "name": "ipfs-benchmarks",
+  "version": "1.0.0",
+  "description": "Run benchmark tests on IPFS projects",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "install": "cd tests && npm install && cd ../runner && npm install",
+    "test": "cd tests && npm run test && cd ../runner && npm run test",
+    "start": "LOG_PRETTY=true node runner/index.js",
+    "dev": "STAGE=local LOG_PRETTY=true node runner/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipfs/benchmarks.git"
+  },
+  "author": "Alex Knol <alex.knol@nearform.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ipfs/benchmarks/issues"
+  },
+  "homepage": "https://github.com/ipfs/benchmarks#readme"
+}
