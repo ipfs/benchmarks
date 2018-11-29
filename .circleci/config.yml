@@ -9,19 +9,27 @@ jobs:
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@6'
+
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-runner-cache-{{ checksum "package.json" }}
       - run:
           name: npm-install-runner
           command: cd runner && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "runner/package.json" }}
+          paths:
+            - ./runner/node_modules
+
+      - restore_cache:
+          key: dependency-runner-cache-{{ checksum "package.json" }}
       - run:
           name: npm-install-benchmarks
           command: cd tests && npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "tests/package.json" }}
           paths:
-            - ./runner/node_modules
             - ./tests/node_modules
+
       - run:
           name: test-benchmarks
           command: cd tests && npm test
