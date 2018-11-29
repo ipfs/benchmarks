@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: test-benchmarks
-          command: cd tests && npm test
+          command: cd tests && NODE_ENV=test npm test
       - run:
           name: test-runner
-          command: cd runner && npm test
+          command: cd runner && NODE_ENV=test npm test
