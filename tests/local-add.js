@@ -31,6 +31,7 @@ async function localAdd (node, name, subtest, testClass) {
   }
 }
 
+
 async function scenarios () {
   try {
     const nodeFactory = new NodeFactory()

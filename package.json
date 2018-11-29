@@ -16,7 +16,11 @@
     "type": "git",
     "url": "git+https://github.com/ipfs/benchmarks.git"
   },
-  "author": "Alex Knol <alex.knol@nearform.com>",
+  "contributors": [
+    "Matteo Collina <matteo.collina@nearform.com>",
+    "Alex Knol <alex.knol@nearform.com>",
+    "Ron Litzenberegr <ron.litzenberger@nearform.com>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ipfs/benchmarks/issues"
