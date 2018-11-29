@@ -31,7 +31,7 @@
   - name: create ~/ipfs-benchmarks
     become: yes
     file:
-      path: ~/ipfs-benchmarks
+      path: /home/ubuntu/ipfs-benchmarks
       state: directory
       mode: 0755
       owner: ubuntu
