@@ -15,19 +15,19 @@
   - import_role:
       name: security
     become: yes
-    tags: ["security"]
+    tags: ["prepare","security"]
   - import_role:
       name: "nickjj.docker"
-    tags: ["docker"]
+    tags: ["prepare","docker"]
     become: yes
   - import_role:
       name: geerlingguy.nodejs
     become: yes
-    tags: ["node"]
+    tags: ["prepare","node"]
   - import_role:
       name: common
     become: yes
-    tags: ["common"]
+    tags: ["prepare","common"]
   - name: create ~/ipfs-benchmarks
     file:
       path: ~/ipfs-benchmarks
@@ -54,25 +54,7 @@
       rsync_opts:
         - "--exclude=runner/node_modules"
         - "--exclude=tests/node_modules"
-        - "--exclude=infrastructure/deploy/data"
-  - name: fix certbot permissions
+  - import_role:
+      name: redeploy
     become: yes
-    file:
-      path: "/home/ubuntu/ipfs-benchmarks/infrastructure/deploy"
-      owner: ubuntu
-      group: docker
-      state: directory
-      mode: 0755
-      recurse: yes
-  - name: Install packages based on package.json.
-    become: no
-    npm:
-      path: ~/ipfs-benchmarks/runner
-  - name: rebuild / restart
-    docker_service:
-      project_src: runner
-      build: yes
-      restarted: true
-    register: output
-  - debug:
-      var: output
+    tags: ["redeploy"]

@@ -1,0 +1,13 @@
+---
+- name: Install packages based on package.json.
+  become: no
+  npm:
+    path: ~/ipfs-benchmarks/runner
+- name: install python docker-compose
+  pip:
+    name: docker-compose
+- name: rebuild / restart
+  docker_service:
+    project_src: ~/ipfs-benchmarks/infrastructure/deploy
+    build: yes
+    restarted: true
