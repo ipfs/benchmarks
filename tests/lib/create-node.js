@@ -1,26 +1,23 @@
-#!/usr/bin/env node
 'use strict'
-// TODO: point this to the branch code
-const IPFS = require('ipfs')
-const defaultConfig = require('../config/default-config.json')
 
-module.exports = (config) => {
+const defaultConfig = require('../config/default-config.json')
+const privateKey = require('../config/private-key.json')
+const { repoPath } = require('../package.json').config
+
+module.exports = (config, init, IPFS, count) => {
   return new Promise((resolve, reject) => {
-    console.log('Creating a node..')
     const node = new IPFS({
-      repo: '/tmp/.ipfs/' + Math.random()
+      repo: `${repoPath}${Math.random()
         .toString()
-        .substring(2, 8),
-      config: config || defaultConfig,
-      init: {
-        emptyRepo: true
-      }
+        .substring(2, 8)}`,
+      config: config || defaultConfig[count],
+      init: init || { privateKey: privateKey[count].privKey }
     })
     node.on('ready', () => {
       resolve(node)
     })
-    node.on('error', () => {
-      reject(node)
+    node.on('error', (e) => {
+      reject(e)
     })
   })
 }

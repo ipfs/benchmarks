@@ -2,12 +2,11 @@
 
 const fs = require('fs')
 const verbose = process.env.VERBOSE || false
-const ipfsNode = require('./lib/create-node.js')
+const NodeFactory = require('./lib/node-factory')
 const fixtures = require('./lib/fixtures.js')
 const { store } = require('./lib/output')
 const { build } = require('./schema/results')
 const clean = require('./lib/clean')
-
 const testName = 'localTransfer'
 
 const log = (msg) => {
@@ -41,8 +40,9 @@ const getDuration = async (peerA, peerB, subTest, testClass) => {
 
 const main = async () => {
   try {
-    const peerA = await ipfsNode()
-    const peerB = await ipfsNode({
+    const nodeFactory = new NodeFactory()
+    const peerA = await nodeFactory.add()
+    const peerB = await nodeFactory.add({
       'Addresses': {
         'API': '/ip4/127.0.0.1/tcp/5022',
         'Gateway': '/ip4/127.0.0.1/tcp/9092',
@@ -69,8 +69,7 @@ const main = async () => {
 
     store(arrResults)
 
-    peerA.stop()
-    peerB.stop()
+    nodeFactory.stop()
     clean.peerRepos()
   } catch (err) {
     throw Error(err)

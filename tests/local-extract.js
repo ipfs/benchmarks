@@ -1,12 +1,11 @@
 'use strict'
 
 const fs = require('fs')
-const ipfsNode = require('./lib/create-node.js')
+const NodeFactory = require('./lib/node-factory')
 const { build } = require('./schema/results')
 const { store } = require('./lib/output')
 const fixtures = require('./lib/fixtures')
 const clean = require('./lib/clean')
-
 const testName = 'unixFS-extract'
 
 async function localExtract (node, name, subtest, testClass) {
@@ -33,20 +32,11 @@ async function localExtract (node, name, subtest, testClass) {
 
 async function scenarios () {
   try {
+    const nodeFactory = new NodeFactory()
+    const node = await nodeFactory.add()
     let arrResults = []
-    const node = await ipfsNode()
-    arrResults.push(await localExtract(node, testName, 'empty-repo', 'smallfile'))
-    const node1 = await ipfsNode({
-      'Addresses': {
-        'API': '/ip4/127.0.0.1/tcp/5013',
-        'Gateway': '/ip4/127.0.0.1/tcp/9092',
-        'Swarm': [
-          '/ip4/0.0.0.0/tcp/4013',
-          '/ip4/127.0.0.1/tcp/4015/ws'
-        ]
-      },
-      'Bootstrap': []
-    })
+    arrResults.push(await localExtract(node, testName, 'extract-emptyRepo', 'smallfile'))
+    const node1 = await nodeFactory.add()
 
     const r = await localExtract(node1, testName, 'empty-repo', 'largefile')
     arrResults.push(r)
@@ -56,10 +46,8 @@ async function scenarios () {
     arrResults.push(await localExtract(node, testName, 'populated-repo', 'largefile'))
 
     store(arrResults)
-
-    node.stop()
-    node1.stop()
     clean.peerRepos()
+    nodeFactory.stop()
   } catch (err) {
     throw Error(err)
   }

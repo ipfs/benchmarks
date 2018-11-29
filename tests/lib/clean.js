@@ -1,7 +1,7 @@
 'use strict'
 
 const rimraf = require('rimraf')
-const repoPath = '.tmp/.ipfs'
+const { repoPath } = require('../package.json').config
 
 const peerRepos = () => {
   rimraf(repoPath, function () {

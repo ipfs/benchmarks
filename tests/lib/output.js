@@ -7,11 +7,10 @@ const fsWriteFile = util.promisify(fs.writeFile)
 const fsMakeDir = util.promisify(fs.mkdir)
 const fsExists = util.promisify(fs.access)
 const { validate } = require('../schema/results.js')
-
-
 const folder = process.env.OUT_FOLDER || path.join(__dirname, '/../out')
 
 async function store (data) {
+  console.log(folder)
   if (Array.isArray(data)) {
     if (process.env.REMOTE === 'true') {
       console.log('Writing output in a single file')
@@ -58,9 +57,6 @@ async function createFilename (folder, data) {
     }
   }
 }
-
-
-
 module.exports = {
   createFilename,
   write,

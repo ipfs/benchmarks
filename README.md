@@ -52,6 +52,10 @@ Run all benchmarks:
 ```bash
 > npm run benchmark
 ```
+Create a pre-generated key:
+```bash
+> node lib/create-privateKey
+```
 
 ### Run sub tests
 TODO:
