@@ -47,6 +47,9 @@ services:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+    depends_on:
+      - grafana
+      - runner
   certbot:
     image: certbot/certbot
     volumes:
