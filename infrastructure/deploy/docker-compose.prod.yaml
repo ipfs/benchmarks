@@ -32,7 +32,8 @@ services:
       - influxdb
     environment:
       INFLUX_HOST: influxdb
-    command: "cd runner && npm start"
+    working_dir: runner
+    command: "npm start"
   nginx:
     image: nginx:1.15-alpine
     ports:
