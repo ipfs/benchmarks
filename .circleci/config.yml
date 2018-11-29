@@ -36,3 +36,7 @@ jobs:
       - run:
           name: test-runner
           command: cd runner && NODE_ENV=test npm test
+      - run:
+          name: deploy
+          command: |
+            ansible-playbook -i infrastructure/inventory/inventory.yaml infrastructure/playbooks/controller.yaml --extra-vars "action_user_pw=${USER_PW}"
