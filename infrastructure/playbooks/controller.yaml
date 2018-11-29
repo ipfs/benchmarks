@@ -29,12 +29,14 @@
     become: yes
     tags: ["prepare","common"]
   - name: create ~/ipfs-benchmarks
+    become: yes
     file:
       path: ~/ipfs-benchmarks
       state: directory
       mode: 0755
       owner: ubuntu
       group: docker
+      recurse: yes
   - name: create influxdb and grafana data dirs
     become: yes
     file:
