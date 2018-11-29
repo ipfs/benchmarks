@@ -39,4 +39,4 @@ jobs:
       - run:
           name: deploy
           command: |
-            ansible-playbook -i infrastructure/inventory/inventory.yaml infrastructure/playbooks/controller.yaml --extra-vars "action_user_pw=${USER_PW}"
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i infrastructure/inventory/inventory.yaml infrastructure/playbooks/controller.yaml --extra-vars "action_user_pw=${USER_PW}"
