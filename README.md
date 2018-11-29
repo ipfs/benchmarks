@@ -26,7 +26,7 @@ submitting code to the community.
 * Reference on how this [Repository](REPOSITORY.md) is organized
 * Using the [Runner](runner/README.md) to manage benchmark runs remotely
 * Description of [tests](tests/README.md)
-* Convenience [scripts](scripts/README.md)
+* Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
 
 ## Quickstart
 
