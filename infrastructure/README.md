@@ -4,11 +4,11 @@ Ansible is used as a provisioning tool for the host running as controller. The p
 #### prerequisites
 To install the required packages for your OS:
 ```
-python3
-ansible
+[python3(https://realpython.com/installing-python/)]
+[passlib](https://passlib.readthedocs.io/en/stable/install.html)
 ansible roles:
-* geerlingguy.nodejs
-* nickjj.docker
+* [geerlingguy.nodejs](https://github.com/geerlingguy/ansible-role-nodejs)
+* [nickjj.docker](https://github.com/nickjj/ansible-docker)
 ```
 
 A typical way to run the playbook would be:
