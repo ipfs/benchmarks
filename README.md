@@ -65,17 +65,17 @@ TODO:
 
 Results will be written to out directory under /tests
 
-name: Name of test
-subtest: Name of subtest.
-description: Description of benchmark
-testClass: Either smallfile or largefile
-date: Date of benchmark
-file: Name of file used in benchmark
-meta.project: Repo that are benchmarked
-meta.commit: Commit used to trigger benchmark
-meta.version: Version of js-ipfs
-duration.s: The number of seconds for benchmark
-duration.ms: The number of millisecs the benchmark took.
-cpu: Information about cpu benchmark was run on.
-loadAvg: The load average of machine.
-memory: Memory used during benchmark.
+* `name`: Name of test
+* `subtest`: Name of subtest
+* `description`: Description of benchmark
+* `testClass`: Either smallfile or largefile
+* `date`: Date of benchmark
+* `file`: Name of file used in benchmark
+* `meta`.`project`: Repo that are benchmarked
+* `meta`.`commit`: Commit used to trigger benchmark
+* `meta`.`version`: Version of js-ipfs
+* `duration`.`s`: The number of seconds for benchmark
+* `duration`.`ms`: The number of millisecs the benchmark took.
+* `cpu`: Information about cpu benchmark was run on.
+* `loadAvg`: The load average of machine.
+* `memory`: Memory used during benchmark.
