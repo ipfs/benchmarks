@@ -7,6 +7,6 @@
   pip:
     name: docker-compose
 - name: rebuild / restart
-  shell: "runProd.sh restart"
+  shell: runProdEnv.sh restart
   args:
     chdir: /home/ubuntu/ipfs-benchmarks/scripts
