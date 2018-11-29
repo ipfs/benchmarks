@@ -14,7 +14,12 @@ const params = 'OUT_FOLDER=/tmp/out REMOTE=true'
 const remotePreCommand = `source ~/.nvm/nvm.sh && ${params}`
 
 // pretty logs in local
-if (process.env.LOG_PRETTY === 'true') {
+if (process.env.NODE_ENV === 'test') {
+  pino = Pino({
+    enabled: false
+  })
+  console.log('NODE_ENV=test')
+} else if (process.env.LOG_PRETTY === 'true') {
   pino = Pino({
     prettyPrint: {
       levelFirst: true
