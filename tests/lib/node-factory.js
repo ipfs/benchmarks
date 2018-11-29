@@ -10,7 +10,7 @@ class NodeFactory {
   }
 
   async add (config, init) {
-    const node = await createNode(config, init, this._ipfs)
+    const node = await createNode(config, init, this._ipfs, this._nodes.length)
     this._nodes.push(node)
     return node
   }
