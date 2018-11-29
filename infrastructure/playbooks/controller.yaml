@@ -57,3 +57,11 @@
     become: no
     npm:
       path: ~/ipfs-benchmarks/runner
+  - name: rebuild / restart
+    docker_service:
+      project_src: runner
+      build: yes
+      restarted: true
+    register: output
+  - debug:
+      var: output
