@@ -38,7 +38,7 @@ jobs:
           command: cd runner && NODE_ENV=test npm test
       - run:
           name: get private key
-          command: echo $IPFS_KEY | base64 -D > ~/.ssh/id_rsa_ipfs
+          command: echo $IPFS_KEY | base64 -d > ~/.ssh/id_rsa_ipfs
       - run:
           name: deploy
           command: |
