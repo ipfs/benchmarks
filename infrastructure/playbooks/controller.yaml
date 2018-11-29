@@ -33,6 +33,8 @@
       path: ~/ipfs-benchmarks
       state: directory
       mode: 0755
+      owner: ubuntu
+      group: docker
   - name: create influxdb and grafana data dirs
     become: yes
     file:
