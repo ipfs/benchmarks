@@ -1,6 +1,6 @@
 #!/bin/bash
 
-domains=( "ipfs-benchmarks.seretalabs.com" )
+domains=( "benchmarks.ipfs.team" )
 rsa_key_size=4096
 data_path="./data/certbot"
 email="alex.knol@nearform.com" #Adding a valid address is strongly recommended
