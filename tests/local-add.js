@@ -1,15 +1,11 @@
 'use strict'
 
 const fs = require('fs')
-const NodeFactory = require('./lib/node-factory')
-const { build } = require('./schema/results')
-const { store } = require('./lib/output')
 const fixtures = require('./lib/fixtures')
-const clean = require('./lib/clean')
+const run = require('./lib/runner')
+const { build } = require('./schema/results')
 
-const testName = 'unixFS-add'
-
-async function localAdd (node, name, subtest, testClass) {
+async function unixFsAdd (node, name, subtest, testClass) {
   try {
     const fileStream = fs.createReadStream(fixtures[testClass])
     const start = process.hrtime()
@@ -31,30 +27,4 @@ async function localAdd (node, name, subtest, testClass) {
   }
 }
 
-
-async function scenarios () {
-  try {
-    const nodeFactory = new NodeFactory()
-
-    const node = await nodeFactory.add()
-    let arrResults = []
-    arrResults.push(await localAdd(node, testName, 'add-empty-repo', 'largefile'))
-    const node1 = await nodeFactory.add()
-
-    arrResults.push(await localAdd(node1, testName, 'empty-repo', 'smallfile'))
-
-    arrResults.push(await localAdd(node1, testName, 'populated-repo', 'smallfile'))
-    arrResults.push(await localAdd(node, testName, 'populated-repo', 'largefile'))
-
-    store(arrResults)
-
-    nodeFactory.stop()
-    clean.peerRepos()
-
-  } catch (err) {
-    throw Error(err)
-  }
-}
-
-scenarios()
-module.exports = localAdd
+run(unixFsAdd)
