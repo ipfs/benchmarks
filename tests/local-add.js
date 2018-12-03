@@ -9,7 +9,8 @@ async function unixFsAdd (node, name, subtest, testClass) {
   try {
     const fileStream = fs.createReadStream(fixtures[testClass])
     const start = process.hrtime()
-    await node.files.add(fileStream)
+    const peer = node[0]
+    await peer.files.add(fileStream)
     const end = process.hrtime(start)
     return build({
       name: name,

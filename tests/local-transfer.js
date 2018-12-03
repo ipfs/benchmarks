@@ -2,12 +2,9 @@
 
 const fs = require('fs')
 const verbose = process.env.VERBOSE || false
-const NodeFactory = require('./lib/node-factory')
 const fixtures = require('./lib/fixtures.js')
-const { store } = require('./lib/output')
 const { build } = require('./schema/results')
-const clean = require('./lib/clean')
-const testName = 'localTransfer'
+const run = require('./lib/runner')
 
 const log = (msg) => {
   if (verbose) {
@@ -15,11 +12,14 @@ const log = (msg) => {
   }
 }
 
-const getDuration = async (peerA, peerB, subTest, testClass) => {
+const localTransfer = async (node, name, subTest, testClass) => {
   // Insert into peerA
   const fileStream = fs.createReadStream(fixtures[testClass])
+  const peerA = node[0]
+  const peerB = node[1]
+  const peerAId = await peerA.id()
+  peerB.swarm.connect(peerAId.addresses[0])
   const inserted = await peerA.files.add(fileStream)
-  log('vmx: inserted:', inserted)
 
   // peerB doesn't have any data cached, get all from peerA
   const start = process.hrtime()
@@ -27,7 +27,7 @@ const getDuration = async (peerA, peerB, subTest, testClass) => {
   const end = process.hrtime(start)
 
   return build({
-    name: testName,
+    name: name,
     subtest: subTest,
     testClass: testClass,
     file: fixtures[testClass],
@@ -38,42 +38,4 @@ const getDuration = async (peerA, peerB, subTest, testClass) => {
   })
 }
 
-const main = async () => {
-  try {
-    const nodeFactory = new NodeFactory()
-    const peerA = await nodeFactory.add()
-    const peerB = await nodeFactory.add({
-      'Addresses': {
-        'API': '/ip4/127.0.0.1/tcp/5022',
-        'Gateway': '/ip4/127.0.0.1/tcp/9092',
-        'Swarm': [
-          '/ip4/0.0.0.0/tcp/4022',
-          '/ip4/127.0.0.1/tcp/4023/ws'
-        ]
-      },
-      'Bootstrap': []
-    })
-    const peerAId = await peerA.id()
-    peerB.swarm.connect(peerAId.addresses[0])
-    log('vmx: connected')
-
-    let arrResults = []
-
-    clean.peerRepos()
-    arrResults.push(await getDuration(peerA, peerB, 'empty-repo', 'smallfile'))
-    clean.peerRepos()
-    arrResults.push(await getDuration(peerA, peerB, 'empty-repo', 'largefile'))
-
-    arrResults.push(await getDuration(peerA, peerB, 'populated-repo', 'smallfile'))
-    arrResults.push(await getDuration(peerA, peerB, 'populated-repo', 'largefile'))
-
-    store(arrResults)
-
-    nodeFactory.stop()
-    clean.peerRepos()
-  } catch (err) {
-    throw Error(err)
-  }
-}
-
-main()
+run(localTransfer)

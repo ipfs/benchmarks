@@ -8,10 +8,11 @@ const run = require('./lib/runner')
 async function localExtract (node, name, subtest, testClass) {
   try {
     const fileStream = fs.createReadStream(fixtures[testClass])
-    const inserted = await node.files.add(fileStream)
+    const peer = node[0]
+    const inserted = await peer.files.add(fileStream)
     const start = process.hrtime()
     const validCID = inserted[0].hash
-    await node.files.get(validCID)
+    await peer.files.get(validCID)
     const end = process.hrtime(start)
     return build({
       name: name,
