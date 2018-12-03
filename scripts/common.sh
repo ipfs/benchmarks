@@ -17,9 +17,13 @@ $FILESTRING
 EOF
 }
 
-if [ -z "$1" ]; then
-  usage $MODE
-  exit 1
-else
-  OP=$1
-fi
+checkParam () {
+  if [ -z "$1" ]; then
+    usage $MODE
+    exit 1
+  else
+    OP=$1
+  fi
+}
+
+FILES="-f $SCRIPTPATH/../infrastructure/deploy/docker-compose.yaml -f $SCRIPTPATH/../infrastructure/deploy/docker-compose.prod.yaml"

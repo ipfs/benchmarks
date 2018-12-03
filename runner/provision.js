@@ -29,9 +29,14 @@ const writeHash = (hash, dir) => {
 }
 
 const checkHash = async (hashPath) => {
-  let hash = await remote.run(`cat ${hashPath}`)
-  config.log.info(`Remote hash is: [${hash}]`)
-  return hash
+  try {
+    let hash = await remote.run(`cat ${hashPath}`)
+    config.log.info(`Remote hash is: [${hash}]`)
+    return hash
+  } catch (e) {
+    config.log.error(e)
+    throw Error(e)
+  }
 }
 
 const ensure = async () => {

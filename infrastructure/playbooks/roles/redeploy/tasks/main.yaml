@@ -2,9 +2,16 @@
 - name: Install packages based on package.json.
   become: no
   npm:
-    path: ~/ipfs-benchmarks/runner
-- name: install python docker-compose
-  pip:
-    name: docker-compose
-- name: rebuild / restart
-  shell: /home/ubuntu/ipfs-benchmarks/scripts/runProdEnv.sh restart
+    path: "{{ remote_folder }}"
+- name: Runner | Create Unit file
+  template:
+    src: runner.service.j2
+    dest: /lib/systemd/system/runner.service
+    mode: 644
+  notify:
+    - reload systemctl
+- name: Runner | Start runner
+  service:
+    name: runner.service
+    state: started
+    enabled: yes

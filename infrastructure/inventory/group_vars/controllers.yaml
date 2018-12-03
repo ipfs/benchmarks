@@ -1,6 +1,7 @@
 ---
 # user account used to ssh the hosts
 remote_user: ubuntu
+remote_folder: /home/ubuntu/ipfs-benchmarks/
 ansible_ssh_private_key_file: "~/.ssh/id_rsa_ipfs"
 # non-sudo user to be created for running process
 action_user: grafana

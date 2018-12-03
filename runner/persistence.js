@@ -21,6 +21,7 @@ const writePoints = (data) => {
   }
   let payload = []
   for (let point of data) {
+    config.log.info('point: ', point)
     payload.push({
       measurement: point.name,
       tags: { subTest: point.subtest, commit: point.meta.commit, project: point.meta.project, testClass: point.testClass },
