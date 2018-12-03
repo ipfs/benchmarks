@@ -15,61 +15,30 @@
   - import_role:
       name: security
     become: yes
-    tags: ["security"]
+    tags: ["prepare","security"]
   - import_role:
       name: "nickjj.docker"
-    tags: ["docker"]
+    tags: ["prepare","docker"]
     become: yes
   - import_role:
       name: geerlingguy.nodejs
     become: yes
-    tags: ["node"]
+    tags: ["prepare","node"]
   - import_role:
       name: common
     become: yes
-    tags: ["common"]
-  - name: create ~/ipfs-benchmarks
-    file:
-      path: ~/ipfs-benchmarks
-      state: directory
-      mode: 0755
-  - name: create influxdb and grafana data dirs
-    become: yes
-    file:
-      path: "{{ item.path }}"
-      owner: "{{ item.uid | default('ubuntu') }}"
-      group: "{{ item.guid | default('docker') }}"
-      state: directory
-      recurse: yes
-      mode: 0755
-    with_items:
-    - { path: '/data/influxdb' }
-    - { path: '/data/grafana', uid: 472, guid: docker }
+    tags: ["prepare","common"]
+
   - name: copy code
     become: no
     synchronize:
       src: ../../../
-      dest: ~/ipfs-benchmarks/
+      dest: "{{ remote_folder }}"
       checksum: yes
       rsync_opts:
         - "--exclude=runner/node_modules"
         - "--exclude=tests/node_modules"
-        - "--exclude=infrastructure/deploy/data"
-  - name: fix certbot permissions
+  - import_role:
+      name: redeploy
     become: yes
-    file:
-      path: "/home/ubuntu/ipfs-benchmarks/infrastructure/deploy"
-      owner: ubuntu
-      group: docker
-      state: directory
-      mode: 0755
-      recurse: yes
-  - name: Install packages based on package.json.
-    become: no
-    npm:
-      path: ~/ipfs-benchmarks/runner
-  - name: rebuild container image
-    shell: |
-      /usr/local/bin/docker-compose build runner
-    args:
-      chdir: ~/ipfs-benchmarks/infrastructure/deploy
+    tags: ["redeploy"]

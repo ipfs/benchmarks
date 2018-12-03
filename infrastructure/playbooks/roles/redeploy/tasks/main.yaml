@@ -1,0 +1,20 @@
+---
+- name: Install packages based on package.json.
+  become: no
+  npm:
+    path: "{{ item.path }}"
+  with_items:
+  - { path: "{{remote_folder}}/runner" }
+  - { path: "{{remote_folder}}/tests" }
+- name: Ensure Unit file
+  template:
+    src: runner.service.j2
+    dest: /lib/systemd/system/runner.service
+    mode: 644
+  notify:
+    - reload systemctl
+- name: Restart runner
+  service:
+    name: runner.service
+    state: restarted
+    enabled: yes

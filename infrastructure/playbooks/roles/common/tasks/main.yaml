@@ -1,8 +1,28 @@
 ---
-- name: setup Action User
-  user:
-    generate_ssh_key: yes
-    name: "{{ action_user }}"
-    password: "{{ action_user_pw | password_hash('sha512') }}"
-    group: "{{ action_user_group }}"
-    shell: /bin/bash
+- name: create remote_folder
+  become: yes
+  file:
+    path: "{{ remote_folder }}"
+    state: directory
+    mode: 0755
+    owner: ubuntu
+    group: docker
+    recurse: yes
+- name: create influxdb and grafana data dirs
+  become: yes
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.uid | default('ubuntu') }}"
+    group: "{{ item.guid | default('docker') }}"
+    state: directory
+    recurse: yes
+    mode: 0755
+  with_items:
+  - { path: '/data/influxdb' }
+  - { path: '/data/grafana', uid: 472, guid: docker }
+- name: install ansible
+  pip:
+    name: ansible
+- name: install ansible modules
+  become: no
+  shell: ansible-galaxy install geerlingguy.nodejs

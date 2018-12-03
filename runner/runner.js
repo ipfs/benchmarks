@@ -16,12 +16,15 @@ const runCommand = (test) => {
 
 const run = async () => {
   if (config.stage !== 'local') {
-    await provision.ensure()
+    try {
+      await provision.ensure()
+    } catch (e) {
+      config.log.error(e)
+    }
   }
   for (let test of config.benchmarks.tests) {
     try {
       let result = await runCommand(test)
-      // config.log.info(result)
       persistence.store(result)
     } catch (e) {
       config.log.error(e)

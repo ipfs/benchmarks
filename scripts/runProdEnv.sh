@@ -3,5 +3,6 @@
 MODE=prod
 SCRIPTPATH=$(dirname "$0")
 source $SCRIPTPATH/common.sh
+checkParam
 
-docker-compose -f SCRIPTPATH/../infrastructure/deploy/docker-compose.yaml -f SCRIPTPATH/../infrastructure/deploy/docker-compose.prod.yaml $OP -d
+docker-compose $FILES $OP

@@ -27,6 +27,21 @@
     port: https
     comment: Allow https access
 
+- name: Create a network with options
+  docker_network:
+    name: my-bridge
+    driver_options:
+      com.docker.network.bridge.name: my-bridge
+
+- name: Allow access to http port 9000 on the host include a comment
+  ufw:
+    rule: allow
+    proto: tcp
+    port: '9000'
+    direction: in
+    interface: my-bridge
+    comment: Allow https access
+
 - name: Set firewall default policy
   ufw:
     state: enabled
