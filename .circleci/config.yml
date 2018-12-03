@@ -36,7 +36,21 @@ jobs:
       - run:
           name: test-runner
           command: cd runner && NODE_ENV=test npm test
-    deploy:
+            # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job.
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: ~/ipfs
+          # Must be relative path from root
+          paths:
+            - .
+  deploy:
+    working_directory: ~/ipfs
+    docker:
+      - image: nearform/circleci-node-ansible:1.0.3
+    steps:
+      - attach_workspace:
+          at: ~/ipfs
       - run:
           name: get private key
           command: |
