@@ -36,6 +36,7 @@ jobs:
       - run:
           name: test-runner
           command: cd runner && NODE_ENV=test npm test
+    deploy:
       - run:
           name: get private key
           command: |
@@ -47,5 +48,16 @@ jobs:
             ANSIBLE_HOST_KEY_CHECKING=False \
             ansible-playbook -i infrastructure/inventory/inventory.yaml \
             infrastructure/playbooks/controller.yaml \
-            --skip-tags "prepare" \
-            --extra-vars "action_user_pw=${USER_PW}"
+            --skip-tags "prepare"
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: master
+
