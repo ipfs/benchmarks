@@ -20,3 +20,7 @@ Convenience scripts to run the different docker-compose setups are located under
 Nginx is configured to use certificates and will fail if the certificate files are not present. On a new deployment, no certificates will be available so before the first run a dummy certificate should be installed with [sudo ./init_letsencrypt.sh](./init_letsencrypt.sh). This installs a self signed cert starts nginx and certbot will initiate a handshake with let's encrypt to retrieve the real certificate and replace the self signed cert with the real one.
 
 Let's encrypt only works with publicly resolvable domains.
+
+## Continuous Integration and Deployment
+This project is being watched by CircleCi. At the end of each successful integration run the runner and test code are redeployed to the controller VM.
+The definition of the tests and deployment is contained in the [CircleCi](/.circleci/config.yml) configuration file.
