@@ -10,6 +10,9 @@ async function runner (test) {
   const node = []
   node.push(await nodeFactory.add())
   node.push(await nodeFactory.add())
+  node.push(await nodeFactory.add())
+  node.push(await nodeFactory.add())
+  node.push(await nodeFactory.add())
   for (let subtest of config[test.name]) {
     for (let testClass of subtest.testClass) {
       arrResults.push(await test(node, test.name, subtest.subtest, testClass))
