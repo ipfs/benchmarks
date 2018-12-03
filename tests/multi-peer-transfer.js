@@ -25,8 +25,6 @@ const multiPeerTransfer = async (node, name, subTest, testClass) => {
   peerE.swarm.connect(peerBId.addresses[0])
   peerE.swarm.connect(peerCId.addresses[0])
   peerE.swarm.connect(peerDId.addresses[0])
-
-  // peerB doesn't have any data cached, get all from peerA
   const start = process.hrtime()
   await peerE.files.cat(inserted[0].hash)
   const end = process.hrtime(start)

@@ -3,6 +3,6 @@
 const path = require('path')
 
 module.exports = {
-  smallfile: path.join(__dirname, '../fixtures/200Bytes.txt'),
-  largefile: path.join(__dirname, '../fixtures/1.2MiB.txt')
+  smallFile: path.join(__dirname, '../fixtures/200Bytes.txt'),
+  largeFile: path.join(__dirname, '../fixtures/1.2MiB.txt')
 }
