@@ -6,12 +6,6 @@ const fixtures = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
-const log = (msg) => {
-  if (verbose) {
-    console.log(msg)
-  }
-}
-
 const multiPeerTransfer = async (node, name, subTest, testClass) => {
   // Insert into peerA
   const fileStream = fs.createReadStream(fixtures[testClass])
