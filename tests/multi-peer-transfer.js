@@ -20,19 +20,14 @@ const multiPeerTransfer = async (node, name, subTest, testClass) => {
   const peerC = node[2]
   const peerD = node[3]
   const peerE = node[4]
-  
   const peerAId = await peerA.id()
   const peerBId = await peerB.id()
   const peerCId = await peerC.id()
   const peerDId = await peerD.id()
-
- 
   const inserted = await peerA.files.add(fileStream)
   await await peerB.files.add(fileStream)
   await await peerC.files.add(fileStream)
   await await peerD.files.add(fileStream)
-
-
   peerE.swarm.connect(peerAId.addresses[0])
   peerE.swarm.connect(peerBId.addresses[0])
   peerE.swarm.connect(peerCId.addresses[0])
