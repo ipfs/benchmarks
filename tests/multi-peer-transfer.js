@@ -1,7 +1,6 @@
 'use strict'
 
 const fs = require('fs')
-const verbose = process.env.VERBOSE || false
 const fixtures = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
