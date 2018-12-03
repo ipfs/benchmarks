@@ -7,7 +7,7 @@ const Influx = require('influx')
 const Pino = require('pino')
 let pino
 
-const inventoryPath = path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
+const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const params = 'OUT_FOLDER=/tmp/out '

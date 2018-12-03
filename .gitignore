@@ -4,3 +4,4 @@ local/data
 tests/dirHash.txt
 tests/out
 tests/data
+infrastructure/inventory/inventory.local.yaml
