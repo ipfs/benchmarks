@@ -3,15 +3,15 @@
   become: no
   npm:
     path: "{{ remote_folder }}"
-- name: Runner | Create Unit file
+- name: Ensure Unit file
   template:
     src: runner.service.j2
     dest: /lib/systemd/system/runner.service
     mode: 644
   notify:
     - reload systemctl
-- name: Runner | Start runner
+- name: Restart runner
   service:
     name: runner.service
-    state: started
+    state: restarted
     enabled: yes
