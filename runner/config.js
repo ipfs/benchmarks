@@ -10,8 +10,10 @@ let pino
 const inventoryPath = path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
-const params = 'OUT_FOLDER=/tmp/out REMOTE=true'
+const params = 'OUT_FOLDER=/tmp/out '
 const remotePreCommand = `source ~/.nvm/nvm.sh && ${params}`
+const HOME = process.env.HOME || process.env.USERPROFILE
+const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 
 // pretty logs in local
 if (process.env.NODE_ENV === 'test') {
@@ -35,7 +37,8 @@ const getInventory = () => {
 }
 
 const getBenchmarkHostname = () => {
-  return getInventory().all.hosts
+  pino.info(getInventory())
+  return getInventory().all.children.minions.hosts
 }
 
 const tests = [
@@ -58,7 +61,7 @@ const tests = [
 
 const config = {
   provison: {
-    command: `ansible-playbook -i ${inventoryPath} ${playbookPath}`
+    command: `ansible-playbook -i ${inventoryPath} --key-file ${keyfile} ${playbookPath}`
   },
   log: pino,
   stage: process.env.STAGE || 'local',
@@ -84,6 +87,7 @@ const config = {
   benchmarks: {
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
+    key: process.env.BENCHMARK_KEY || keyfile,
     path: path.join(__dirname, '../tests'),
     remotePath: remoteTestsPath,
     tests: tests

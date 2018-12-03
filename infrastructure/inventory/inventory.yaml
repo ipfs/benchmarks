@@ -6,4 +6,3 @@ all:
     minions:
       hosts:
         147.75.33.155
-        operations.azure.nearform.net

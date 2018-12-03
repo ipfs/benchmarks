@@ -1,0 +1,13 @@
+[Unit]
+Description=IPFS benchmark runner
+Requires=network.target
+After=network.target
+[Service]
+ExecStart=/usr/bin/node {{ remote_folder }}/runner/index.js
+User={{ remote_user }}
+Restart=always
+Environment="STAGE=remote"
+Environment="LOG_PRETTY=true"
+Environment="BENCHMARK_USER={{ remote_user }}"
+[Install]
+WantedBy=multi-user.target
