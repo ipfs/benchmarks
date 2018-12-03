@@ -5,15 +5,19 @@ const { build } = require('./schema/results')
 const fixtures = require('./lib/fixtures')
 const run = require('./lib/runner')
 
-async function localExtract (node, name, subtest, testClass) {
+async function ****TEST NAME***** (node, name, subtest, testClass) {
   try {
-    const fileStream = fs.createReadStream(fixtures[testClass])
-    const peer = node[0]
-    const inserted = await peer.files.add(fileStream)
+
+
+    *** SETUP ****
     const start = process.hrtime()
-    const validCID = inserted[0].hash
-    await peer.files.get(validCID)
+
+    **** ADD ACTION to be tested ****
+
     const end = process.hrtime(start)
+
+    // Pass in test output to build and return
+
     return build({
       name: name,
       subtest: subtest,
@@ -27,4 +31,5 @@ async function localExtract (node, name, subtest, testClass) {
     throw Error(err)
   }
 }
-run(localExtract)
+
+run(****TEST NAME***** )
