@@ -40,6 +40,7 @@ jobs:
       - run:
           name: get private key
           command: |
+            mkdir ~/.ssh
             echo $IPFS_KEY | base64 -d > ~/.ssh/id_rsa_ipfs
             chmod 600 ~/.ssh/id_rsa_ipfs
       - run:
