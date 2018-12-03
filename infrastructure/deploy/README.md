@@ -23,4 +23,4 @@ Let's encrypt only works with publicly resolvable domains.
 
 ## Continuous Integration and Deployment
 This project is being watched by CircleCi. At the end of each successful integration run the runner and test code are redeployed to the controller VM.
-The definition of the tests and deployment is contained in the [CircleCi](/.circleci/config.yml) configuration file.
+The definition of the tests and deployment is contained in the [CircleCi](/.circleci/config.yml) configuration file. For more details, see [playbook](/infrastructure/playbooks/README.md) doc
