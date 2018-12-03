@@ -61,6 +61,11 @@ Create a pre-generated key:
 ### Run sub tests
 TODO:
 
+
+### Adding new tests
+
+See README under test
+
 ###  Results
 
 Results will be written to out directory under /tests

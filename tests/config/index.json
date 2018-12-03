@@ -1,2 +1,6 @@
 {"unixFsAdd": [{"subtest": "empty-repo","testClass": ["largefile","smallfile"] },
-{"subtest": "populated-repo","testClass": ["largefile","smallfile"] }]}
+{"subtest": "populated-repo","testClass": ["largefile","smallfile"] }],
+"localExtract": [{"subtest": "empty-repo","testClass": ["largefile","smallfile"] },
+{"subtest": "populated-repo","testClass": ["largefile","smallfile"] }]
+
+}
