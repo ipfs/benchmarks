@@ -28,27 +28,7 @@
       name: common
     become: yes
     tags: ["prepare","common"]
-  - name: create {{ remote_folder }}
-    become: yes
-    file:
-      path: "{{ remote_folder }}"
-      state: directory
-      mode: 0755
-      owner: ubuntu
-      group: docker
-      recurse: yes
-  - name: create influxdb and grafana data dirs
-    become: yes
-    file:
-      path: "{{ item.path }}"
-      owner: "{{ item.uid | default('ubuntu') }}"
-      group: "{{ item.guid | default('docker') }}"
-      state: directory
-      recurse: yes
-      mode: 0755
-    with_items:
-    - { path: '/data/influxdb' }
-    - { path: '/data/grafana', uid: 472, guid: docker }
+
   - name: copy code
     become: no
     synchronize:
@@ -58,10 +38,6 @@
       rsync_opts:
         - "--exclude=runner/node_modules"
         - "--exclude=tests/node_modules"
-  - name: install ansible modules
-    become: no
-    shell: ansible-galaxy install geerlingguy.nodejs
-    tags: ['prepare']
   - import_role:
       name: redeploy
     become: yes
