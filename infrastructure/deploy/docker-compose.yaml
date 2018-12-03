@@ -20,3 +20,5 @@ services:
       - influxdb
     environment:
       GF_SERVER_ROOT_URL: http://localhost
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
