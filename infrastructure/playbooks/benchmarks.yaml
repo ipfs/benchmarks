@@ -27,10 +27,3 @@
       synchronize:
         src: ../../tests
         dest: ~/ipfs/
-        # rsync_opts:
-        #   - "--exclude=node_modules"
-    # - name: Install packages
-    #   shell: >
-    #     /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm install"
-    #   tags:
-    #     - always
