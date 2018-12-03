@@ -2,7 +2,10 @@
 - name: Install packages based on package.json.
   become: no
   npm:
-    path: "{{ remote_folder }}"
+    path: "{{ item.path }}"
+  with_items:
+  - { path: "{{remote_folder}}/runner" }
+  - { path: "{{remote_folder}}/tests" }
 - name: Ensure Unit file
   template:
     src: runner.service.j2
