@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Benchmarks for js-ifps",
   "engines": {
-    "node": "^10.4.1"
+    "node": ">=6.0.0"
   },
   "main": "index.js",
   "config": {
