@@ -10,7 +10,7 @@ const hashFile = '/dirHash.txt'
 
 const options = {
   folders: { include: ['.*'] },
-  files: { include: ['*.js', '*.json'] }
+  files: { include: ['*.js', '*.*/*js', '*.json', '**/*.json', '*.sh'] }
 }
 
 const dirHash = (dir) => {
@@ -34,21 +34,18 @@ const checkHash = async (hashPath) => {
     config.log.info(`Remote hash is: [${hash}]`)
     return hash
   } catch (e) {
-    config.log.error(e)
-    throw Error(e)
+    if (e.message.includes('No such file or directory')) {
+      return ''
+    } else {
+      config.log.error(e)
+      throw Error(e)
+    }
   }
 }
 
 const cloneIpfsRemote = async (commit) => {
   try {
-    let out = await remote.run(`
-      cd ${config.ipfs.path} && \
-      git clone https://github.com/ipfs/js-ipfs.git 2> /dev/null || (cd js-ipfs; git checkout master; git pull) && \
-      cd js-ipfs && \
-      git checkout ${commit} && \
-      ${config.nodePre} && \
-      npm install
-    `)
+    let out = await remote.run(`${config.benchmarks.remotePath}getIpfs.sh ${config.ipfs.path} ${commit || ''}`)
     config.log.info(out)
     return
   } catch (e) {
@@ -63,11 +60,11 @@ const ensure = async (commit) => {
     await writeHash(hash, config.benchmarks.path)
     let remotehash = await checkHash(path.join(config.benchmarks.remotePath, hashFile))
     if (remotehash !== hash.hash) {
-      config.log.info(`Tests on ${config.benchmarks.host} are out of sync, updating...`)
+      config.log.info(`Tests on [${config.benchmarks.host}] are out of sync, updating...`)
       let ansible = await local.run(config.provison.command)
       config.log.info(ansible)
     } else {
-      config.log.info(`Tests on ${config.benchmarks.host} are up to date.`)
+      config.log.info(`Tests on [${config.benchmarks.host}] are up to date.`)
     }
     // provision required commit of ipfs
     await cloneIpfsRemote(commit)

@@ -29,7 +29,7 @@ const writePoints = (data) => {
       timestamp: moment(point.date).toDate()
     })
   }
-  config.log.info(payload)
+  config.log.debug(payload)
   return influx.writePoints(payload)
 }
 
