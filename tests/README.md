@@ -18,5 +18,16 @@ The total time it takes to transfer a fie from repo A to repo B
 repoB.files.cat(inserted[0].hash)
 ```
 
-## Adding new tests
-TBD
+
+### Adding new tests
+
+- Copy test.template and give the file the name of the test
+- Add test fo the async function 
+- Call run() with the name of you test as param
+- Add the test name and subtests to the config/index.
+
+To Test it:
+
+```bash
+> node *test-name*
+```
