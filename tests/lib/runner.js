@@ -24,15 +24,15 @@ async function runner (test) {
         }
       }
     } else if (!subTestParam) {      
-    for (let testClass of subTest.testClass) {
-      if (testClassParam && testClass === testClassParam) {
-        arrResults.push(await test(node, test.name, subTest.subTest, testClass))
-      } else if (!testClassParam) {
-        arrResults.push(await test(node, test.name, subTest.subTest, testClass))
+      for (let testClass of subTest.testClass) {
+        if (testClassParam && testClass === testClassParam) {
+          arrResults.push(await test(node, test.name, subTest.subTest, testClass))
+        } else if (!testClassParam) {
+          arrResults.push(await test(node, test.name, subTest.subTest, testClass))
+        }
       }
     }
   }
-}
   store(arrResults)
   nodeFactory.stop()
   clean.peerRepos()
