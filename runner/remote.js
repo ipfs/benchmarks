@@ -16,7 +16,7 @@ const run = (shell, name) => {
         stdout: stdout,
         stderr: stderr
       })
-      if (err) {
+      if (err || stderr) {
         reject(Error(err))
       } else if (stderr) {
         if (!name && stderr.includes('No such file or directory')) {
@@ -26,6 +26,7 @@ const run = (shell, name) => {
         }
       }
 
+      // if name is provided we assume it's a json file we read and pass back as the command's result.
       if (name) {
         let retrieveCommand = `cat ${config.outFolder}/${name}.json`
         config.log.info(`Retrieving [${config.outFolder}/${name}.json] from [${config.benchmarks.host}]`)
@@ -34,11 +35,11 @@ const run = (shell, name) => {
           host: config.benchmarks.host,
           key: config.benchmarks.key
         }, (err, stdout, stderr) => {
-          // config.log.info({
-          //   err: err,
-          //   stdout: stdout.substring(0, 500) + '\n...',
-          //   stderr: stderr
-          // })
+          config.log.info({
+            err: err,
+            stdout: stdout,
+            stderr: stderr
+          })
           if (err || stderr) {
             reject(new Error(stderr))
             return
@@ -54,9 +55,8 @@ const run = (shell, name) => {
           }
         })
       } else {
-        resolve()
+        resolve(stdout)
       }
-
     })
   })
 }

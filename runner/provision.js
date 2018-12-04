@@ -39,7 +39,25 @@ const checkHash = async (hashPath) => {
   }
 }
 
-const ensure = async () => {
+const cloneIpfsRemote = async (commit) => {
+  try {
+    let out = await remote.run(`
+      cd ${config.ipfs.path} && \
+      git clone https://github.com/ipfs/js-ipfs.git 2> /dev/null || (cd js-ipfs; git checkout master; git pull) && \
+      cd js-ipfs && \
+      git checkout ${commit} && \
+      ${config.nodePre} && \
+      npm install
+    `)
+    config.log.info(out)
+    return
+  } catch (e) {
+    config.log.error(e)
+    throw Error(e)
+  }
+}
+
+const ensure = async (commit) => {
   try {
     let hash = await dirHash(config.benchmarks.path)
     await writeHash(hash, config.benchmarks.path)
@@ -51,6 +69,8 @@ const ensure = async () => {
     } else {
       config.log.info(`Tests on ${config.benchmarks.host} are up to date.`)
     }
+    // provision required commit of ipfs
+    await cloneIpfsRemote(commit)
   } catch (e) {
     throw Error(e)
   }
