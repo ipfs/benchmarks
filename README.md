@@ -28,6 +28,21 @@ submitting code to the community.
 * Description of [tests](tests/README.md)
 * Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
 
+## Benchmarks on the web
+The dashboard is available at [https://benchmarks.ipfs.team](https://benchmarks.ipfs.team) and can be viewed without a user account.
+A `Continuous Integration` server can trigger benchmark runs using the endpoint exposed on [https://benchmarks.ipfs.team/runner](https://benchmarks.ipfs.team/runner). A commit from the [js-ipfs](https://github.com/ipfs/js-ipfs) repository can be supplied to run the benchmarks against. An api key is also required to be able to trigger a run. Please check [Runner](runner/README.md) docs on how to configure an api key for the runner. An example invocation using curl is provided below.
+
+```bash
+> curl -XPOST -d '{"commit":"adfy3hk"}' \
+  -H "Content-Type: application/json" \
+  -H "x-ipfs-benchmarks-api-key: <api-key>" \
+  https://benchmarks.ipfs.team/runner
+```
+The response provides links to the output produced by the benchmark tests:
+```
+TBD
+```
+
 ## Quickstart
 
 Clone Benchmark tests and install:
@@ -64,7 +79,7 @@ TODO:
 ###  Results
 
 Results will be written to out directory under /tests
-
+```
 name: Name of test
 subtest: Name of subtest.
 description: Description of benchmark
@@ -79,3 +94,4 @@ duration.ms: The number of millisecs the benchmark took.
 cpu: Information about cpu benchmark was run on.
 loadAvg: The load average of machine.
 memory: Memory used during benchmark.
+```
