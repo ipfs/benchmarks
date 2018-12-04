@@ -1,16 +1,11 @@
 'use strict'
 
 const createNode = require(`./create-node`)
-const IPFS = require('ipfs')
-const REMOTE = process.env.REMOTE || false
-const remoteIPFS = require('../../../js-ipfs')
+const IPFS = process.env.STAGE === 'remote' ? require('../../../js-ipfs') : require('ipfs')
 
 class NodeFactory {
   constructor (ipfs) {
     this._ipfs = typeof ipfs !== 'undefined' ? ipfs : IPFS
-    if (REMOTE) {
-      this._ipfs = remoteIPFS
-    }
     this._nodes = []
   }
 
