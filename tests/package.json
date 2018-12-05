@@ -12,6 +12,7 @@
   "scripts": {
     "test": "tap -J unit/*.test.js",
     "lint": "standard --verbose",
+    "generateFiles": "node util/create-files",
     "benchmark": " node local-add.js  && node local-extract.js"
   },
   "contributors": [

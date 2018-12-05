@@ -6,7 +6,7 @@ const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
 const localTransfer = async (node, name, subTest, fileSet, version) => {
-  // Insert into peerA
+  
   const fileStream = fs.createReadStream(fixtures[fileSet])
   const peerA = node[0]
   const peerB = node[1]
