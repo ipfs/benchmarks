@@ -10,7 +10,7 @@ const hashFile = '/dirHash.txt'
 
 const options = {
   folders: { include: ['.*'] },
-  files: { include: ['*.js', '*.*/*js', '*.json', '**/*.json', '*.sh'] }
+  files: { include: ['dirHash.txt', '*.js', '*.*/*js', '*.json', '**/*.json', '*.sh'] }
 }
 
 const dirHash = (dir) => {
