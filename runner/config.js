@@ -12,7 +12,7 @@ const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmark
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
 const params = 'OUT_FOLDER=/tmp/out '
-const remotePreNode = `source ~/.nvm/nvm.sh && ${params}`
+const remotePreNode = `killall node && source ~/.nvm/nvm.sh && ${params}`
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 
