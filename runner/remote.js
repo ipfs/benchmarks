@@ -17,7 +17,11 @@ const run = (shell, name) => {
         stderr: stderr
       })
       if (err || stderr) {
-        reject(Error(stderr))
+        if (stderr.length) {
+          reject(Error(stderr))
+        } else {
+          reject(Error(stdout))
+        }
       }
 
       // if name is provided we assume it's a json file we read and pass back as the command's result.
@@ -35,8 +39,11 @@ const run = (shell, name) => {
             stderr: stderr
           })
           if (err || stderr) {
-            reject(new Error(stderr))
-            return
+            if (stderr.length) {
+              reject(Error(stderr))
+            } else {
+              reject(Error(stdout))
+            }
           }
           if (stdout) {
             try {
