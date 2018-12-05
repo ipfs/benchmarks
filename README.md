@@ -22,6 +22,7 @@ version of `js-ipfs`. Developers can then examine individual output files before
 submitting code to the community.
 
 ## Documentation Index
+* The [dashboard](infrastructure/grafana/README.md) documentation
 * [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
 * Reference on how this [Repository](REPOSITORY.md) is organized
 * Using the [Runner](runner/README.md) to manage benchmark runs remotely
@@ -42,6 +43,7 @@ The response provides links to the output produced by the benchmark tests:
 ```
 TBD
 ```
+For more details about the dashboard see the [Grafana](infrastructure/grafana/README.md) doc
 
 ## Quickstart
 

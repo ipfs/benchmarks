@@ -37,7 +37,6 @@ const getInventory = () => {
 }
 
 const getBenchmarkHostname = () => {
-  pino.info(getInventory())
   return getInventory().all.children.minions.hosts
 }
 
@@ -48,14 +47,19 @@ const tests = [
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-transfer.js')}`
   },
   {
-    name: 'unixFS-add',
+    name: 'unixFsAdd',
     shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-add.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-add.js')}`
   },
   {
-    name: 'unixFS-extract',
+    name: 'localExtract',
     shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-extract.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-extract.js')}`
+  },
+  {
+    name: 'multiPeerTransfer',
+    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/multi-peer-transfer.js`,
+    localShell: `${params} node ${path.join(__dirname, '/../tests/multi-peer-transfer.js')}`
   }
 ]
 

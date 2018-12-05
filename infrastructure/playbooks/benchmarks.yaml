@@ -27,3 +27,6 @@
       synchronize:
         src: ../../tests
         dest: ~/ipfs/
+    - name: Install npm modules
+      shell: |
+        /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && rm -Rf node_modules && npm install"

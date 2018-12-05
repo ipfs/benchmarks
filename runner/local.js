@@ -9,7 +9,7 @@ const run = (shell, name) => {
   return new Promise((resolve, reject) => {
     if (!shell) reject(Error('shell required'))
     exec(shell, (err, stdout, stderr) => {
-      config.log.info({
+      config.log.debug({
         err: err,
         stdout: stdout,
         stderr: stderr
