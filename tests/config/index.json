@@ -10,29 +10,29 @@
 	],
 	"localExtract": [{
 			"subTest": "empty-repo",
-			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
 			"subTest": "populated-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	],
 	"localTransfer": [{
 			"subTest": "empty-repo",
-			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
 			"subTest": "populated-repo",
-			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	],
 	"multiPeerTransfer": [{
 			"subTest": "empty-repo",
-			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
 			"subTest": "populated-repo",
-			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	]
 }

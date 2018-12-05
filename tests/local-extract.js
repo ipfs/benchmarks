@@ -20,7 +20,7 @@ async function localExtract (node, name, subtest, fileSet, version) {
       file: fixtures[fileSet],
       meta: { version: version },
       description: 'Get file to local repo',
-      testClass: fileSet,
+      fileSet: fileSet,
       duration: { s: end[0],
         ms: end[1] / 1000000 }
     })

@@ -5,9 +5,9 @@ const fixtures = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
-const localTransfer = async (node, name, subTest, testClass, version) => {
-  console.log(testClass)
-  const fileStream = fs.createReadStream(fixtures[testClass])
+const localTransfer = async (node, name, subTest, fileSet, version) => {
+  // Insert into peerA
+  const fileStream = fs.createReadStream(fixtures[fileSet])
   const peerA = node[0]
   const peerB = node[1]
   const peerAId = await peerA.id()
@@ -19,11 +19,11 @@ const localTransfer = async (node, name, subTest, testClass, version) => {
 
   return build({
     name: name,
-    subTest: subTest,
-    file: fixtures[testClass],
+    subtest: subTest,
+    fileSet: fileSet,
+    file: fixtures[fileSet],
     meta: { version: version },
     description: 'Transfer file between two local nodes',
-    testClass: testClass,
     duration: {
       s: end[0],
       ms: end[1] / 1000000

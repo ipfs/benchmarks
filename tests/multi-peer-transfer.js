@@ -5,9 +5,8 @@ const fixtures = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
-const multiPeerTransfer = async (node, name, subTest, testClass, version) => {
-  // Insert into peerA
-  const fileStream = fs.createReadStream(fixtures[testClass])
+const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
+  const fileStream = fs.createReadStream(fixtures[fileSet])
   const peerA = node[0]
   const peerB = node[1]
   const peerC = node[2]
@@ -32,8 +31,8 @@ const multiPeerTransfer = async (node, name, subTest, testClass, version) => {
   return build({
     name: name,
     subtest: subTest,
-    testClass: testClass,
-    file: fixtures[testClass],
+    fileSet: fileSet,
+    file: fixtures[fileSet],
     meta: { version: version },
     duration: {
       s: end[0],
