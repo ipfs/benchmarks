@@ -23,7 +23,7 @@
 		},
 		{
 			"subTest": "populated-repo",
-			"testClass": ["largeFile", "smallfile"]
+			"testClass": ["largeFile", "smallFile"]
 		}
 	],
 	"multiPeerTransfer": [{
