@@ -5,7 +5,7 @@ const fixtures = require('./lib/fixtures')
 const run = require('./lib/runner')
 const { build } = require('./schema/results')
 
-async function unixFsAdd (node, name, subTest, testClass) {
+async function unixFsAdd (node, name, subTest, testClass, version) {
   try {
     const fileStream = fs.createReadStream(fixtures[testClass])
     const start = process.hrtime()
@@ -16,6 +16,7 @@ async function unixFsAdd (node, name, subTest, testClass) {
       name: name,
       subTest: subTest,
       file: fixtures[testClass],
+      meta: { version: version },
       description: 'Add file to local repo using unixFS engine',
       testClass: testClass,
       duration: {
