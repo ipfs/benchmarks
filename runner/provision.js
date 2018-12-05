@@ -7,10 +7,11 @@ const local = require('./local')
 const remote = require('./remote')
 const fs = require('fs')
 const hashFile = '/dirHash.txt'
+const deployFile = '/deploy.txt'
 
 const options = {
   folders: { include: ['.*'] },
-  files: { include: ['dirHash.txt', '*.js', '*.*/*js', '*.json', '**/*.json', '*.sh'] }
+  files: { include: ['deploy.txt', '*.js', '*.*/*js', '*.json', '**/*.json', '*.sh'] }
 }
 
 const dirHash = (dir) => {
