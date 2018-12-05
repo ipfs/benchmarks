@@ -23,7 +23,7 @@ async function runner (test) {
           arrResults.push(await test(node, test.name, subTest.subTest, testClass))
         }
       }
-    } else if (!subTestParam) {      
+    } else if (!subTestParam) {
       for (let testClass of subTest.testClass) {
         if (testClassParam && testClass === testClassParam) {
           arrResults.push(await test(node, test.name, subTest.subTest, testClass))
