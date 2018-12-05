@@ -5,9 +5,6 @@ const crypto = require('crypto')
 const util = require('util')
 const fs = require('fs')
 const fsWriteFile = util.promisify(fs.writeFile)
-const fsMakeDir = util.promisify(fs.mkdir)
-const fsExists = util.promisify(fs.access)
-
 const KB = 1024
 const MB = KB * 1024
 const GB = MB * 1024
@@ -18,7 +15,7 @@ const files = [
   { size: 512 * KB, name: '512KB' },
   { size: 768 * KB, name: '768KB' },
   { size: 1023 * KB, name: '1023KB' },
-  { size: 1023 * KB, name: 'MB' },
+  { size: MB, name: 'MB' },
   { size: 4 * MB, name: '4MB' },
   { size: 8 * MB, name: '8MB' },
   { size: 64 * MB, name: '64MB' },
@@ -32,5 +29,6 @@ for (let file of files) {
 }
 
 async function write (data, name) {
-  await fsWriteFile(`./fixtures/${name}.txt`, data)
+  await fsWriteFile(path.join(__dirname, `../fixtures/${name}.txt`), data)
+  console.log(`File ${name} created.`)
 }
