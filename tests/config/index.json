@@ -1,11 +1,11 @@
 {
 	"unixFsAdd": [{
 			"subTest": "empty-repo",
-			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
 			"subTest": "populated-repo",
-			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
+      "fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	],
 	"localExtract": [{
@@ -19,20 +19,20 @@
 	],
 	"localTransfer": [{
 			"subTest": "empty-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
 		},
 		{
 			"subTest": "populated-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
 		}
 	],
 	"multiPeerTransfer": [{
 			"subTest": "empty-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
 		},
 		{
 			"subTest": "populated-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
 		}
 	]
 }

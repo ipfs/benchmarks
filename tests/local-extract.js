@@ -5,9 +5,9 @@ const { build } = require('./schema/results')
 const fixtures = require('./lib/fixtures')
 const run = require('./lib/runner')
 
-async function localExtract (node, name, subtest, testClass, version) {
+async function localExtract (node, name, subtest, fileSet, version) {
   try {
-    const fileStream = fs.createReadStream(fixtures[testClass])
+    const fileStream = fs.createReadStream(fixtures[fileSet])
     const peer = node[0]
     const inserted = await peer.files.add(fileStream)
     const start = process.hrtime()
@@ -17,10 +17,10 @@ async function localExtract (node, name, subtest, testClass, version) {
     return build({
       name: name,
       subtest: subtest,
-      file: fixtures[testClass],
+      file: fixtures[fileSet],
       meta: { version: version },
       description: 'Get file to local repo',
-      testClass: testClass,
+      testClass: fileSet,
       duration: { s: end[0],
         ms: end[1] / 1000000 }
     })
