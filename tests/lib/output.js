@@ -18,10 +18,10 @@ async function store (data) {
     } else {
       console.log('Writing output in a multiple files')
       var table = new Table({
-        head: ['Test', 'Sub Test', 'Description', 'Test Class', 'Duration'], colWidths: [20, 20, 50, 20]
+        head: ['Test', 'Sub Test', 'Description', 'File Set', 'Duration'], colWidths: [20, 20, 50, 20]
       })
       for (let testResult of data) {
-        table.push([testResult.name, testResult.subTest, testResult.description, testResult.testClass, `s:${testResult.duration.s} ms: ${testResult.duration.ms}`])
+        table.push([testResult.name, testResult.subTest, testResult.description, testResult.fileSet, `s:${testResult.duration.s} ms: ${testResult.duration.ms}`])
         write(testResult)
       }
       console.log(table.toString())

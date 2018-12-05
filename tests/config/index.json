@@ -1,16 +1,16 @@
 {
 	"unixFsAdd": [{
 			"subTest": "empty-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
 		},
 		{
 			"subTest": "populated-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
 		}
 	],
 	"localExtract": [{
 			"subTest": "empty-repo",
-			"testClass": ["largeFile", "smallFile"]
+			"fileSet": ["OneKBFile", "OneMBFile", "OneGBFile"]
 		},
 		{
 			"subTest": "populated-repo",
