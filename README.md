@@ -76,14 +76,14 @@ Create a pre-generated key:
 > node lib/create-privateKey
 ```
 
-### Run sub tests
-
-TESTCLASS:  Use env vairable TESTCLASS to run test just agianst that class.  Options of TestClass are define in the config.
+### TESTCLASS:  
+Use env vairable TESTCLASS to run test just agianst that class.  Options of TestClass are define in the config.
 ```bash
 > TESTCLASS="smallFile" node local-add
 ```
 
-SUBTEST:  Use env vairable SUBTEST to run the specfic subTest.  Options of subTest are define in the config.
+### SUBTEST:  
+Use env vairable SUBTEST to run the specfic subTest.  Options of subTest are define in the config.
 ```bash
 > SUBTEST="empty-repo" node local-add
 ```
