@@ -14,21 +14,22 @@ async function runner (test) {
   node.push(await nodeFactory.add())
   node.push(await nodeFactory.add())
   node.push(await nodeFactory.add())
+  const version = await node[0].version()
   for (let subTest of config[test.name]) {
     if (subTestParam && subTest.subTest === subTestParam) {
       for (let testClass of subTest.testClass) {
         if (testClassParam && testClass === testClassParam) {
-          arrResults.push(await test(node, test.name, subTest.subTest, testClass))
+          arrResults.push(await test(node, test.name, subTest.subTest, testClass, version))
         } else if (!testClassParam) {
-          arrResults.push(await test(node, test.name, subTest.subTest, testClass))
+          arrResults.push(await test(node, test.name, subTest.subTest, testClass, version))
         }
       }
     } else if (!subTestParam) {
       for (let testClass of subTest.testClass) {
         if (testClassParam && testClass === testClassParam) {
-          arrResults.push(await test(node, test.name, subTest.subTest, testClass))
+          arrResults.push(await test(node, test.name, subTest.subTest, testClass, version))
         } else if (!testClassParam) {
-          arrResults.push(await test(node, test.name, subTest.subTest, testClass))
+          arrResults.push(await test(node, test.name, subTest.subTest, testClass, version))
         }
       }
     }
