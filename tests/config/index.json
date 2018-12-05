@@ -1,66 +1,38 @@
 {
-  "unixFsAdd": [
-    {
-      "subtest": "empty-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    },
-    {
-      "subtest": "populated-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    }
-  ],
-  "localExtract": [
-    {
-      "subtest": "empty-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    },
-    {
-      "subtest": "populated-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    }
-  ],
-  "localTransfer": [
-    {
-      "subtest": "empty-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    },
-    {
-      "subtest": "populated-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    }
-  ],
-  "multiPeerTransfer": [
-    {
-      "subtest": "empty-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    },
-    {
-      "subtest": "populated-repo",
-      "testClass": [
-        "largefile",
-        "smallfile"
-      ]
-    }
-  ]
+	"unixFsAdd": [{
+			"subTest": "empty-repo",
+			"testClass": ["largeFile", "smallFile"]
+		},
+		{
+			"subTest": "populated-repo",
+			"testClass": ["largeFile", "smallFile"]
+		}
+	],
+	"localExtract": [{
+			"subTest": "empty-repo",
+			"testClass": ["largeFile", "smallFile"]
+		},
+		{
+			"subTest": "populated-repo",
+			"testClass": ["largeFile", "smallFile"]
+		}
+	],
+	"localTransfer": [{
+			"subTest": "empty-repo",
+			"testClass": ["largeFile", "smallFile"]
+		},
+		{
+			"subTest": "populated-repo",
+			"testClass": ["largeFile", "smallfile"]
+		}
+	],
+	"multiPeerTransfer": [{
+			"subTest": "empty-repo",
+			"testClass": ["largeFile", "smallFile"]
+		},
+		{
+			"subTest": "populated-repo",
+			"testClass": ["largeFile", "smallFile"]
+		}
+	]
 }
