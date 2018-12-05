@@ -21,7 +21,7 @@ async function store (data) {
         head: ['Test', 'Sub Test', 'Description', 'Test Class', 'Duration'], colWidths: [20, 20, 50, 20]
       })
       for (let testResult of data) {
-        table.push([testResult.name, testResult.subtest, testResult.description, testResult.testClass, `s:${testResult.duration.s} ms: ${testResult.duration.ms}`])
+        table.push([testResult.name, testResult.subTest, testResult.description, testResult.testClass, `s:${testResult.duration.s} ms: ${testResult.duration.ms}`])
         write(testResult)
       }
       console.log(table.toString())

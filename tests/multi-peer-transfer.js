@@ -1,16 +1,9 @@
 'use strict'
 
 const fs = require('fs')
-const verbose = process.env.VERBOSE || false
 const fixtures = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
-
-const log = (msg) => {
-  if (verbose) {
-    console.log(msg)
-  }
-}
 
 const multiPeerTransfer = async (node, name, subTest, testClass) => {
   // Insert into peerA
@@ -32,8 +25,6 @@ const multiPeerTransfer = async (node, name, subTest, testClass) => {
   peerE.swarm.connect(peerBId.addresses[0])
   peerE.swarm.connect(peerCId.addresses[0])
   peerE.swarm.connect(peerDId.addresses[0])
-
-  // peerB doesn't have any data cached, get all from peerA
   const start = process.hrtime()
   await peerE.files.cat(inserted[0].hash)
   const end = process.hrtime(start)
