@@ -7,7 +7,7 @@
     - name: Update repositories cache and install required packages
       become: yes
       apt:
-        name: [git, build-essential, g++]
+        name: [git, build-essential, g++, psmisc]
         update_cache: true
         state: present
     - name: Install nvm
