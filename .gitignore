@@ -6,3 +6,4 @@ tests/out
 tests/data
 infrastructure/inventory/inventory.local.yaml
 data
+infrastructure/playbooks/*.retry
