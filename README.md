@@ -1,7 +1,7 @@
- # IPFS Benchmarks [![CircleCI](https://circleci.com/gh/ipfs/benchmarks.svg?style=svg)](https://circleci.com/gh/ipfs/benchmarks)
+ # js-ipfs Benchmarks [![CircleCI](https://circleci.com/gh/ipfs/benchmarks.svg?style=svg)](https://circleci.com/gh/ipfs/benchmarks)
 
 
-This is a set of benchmarks tests to track IPFS performance.
+This is a set of benchmarks tests to track [js-ipfs](https://github.com/ipfs/js-ipfs) Benchmarks in a Grafana [Dashboard](https://benchmarks.ipfs.team).
 
 ## Purpose
 The IPFS team needs a historical view of various performance metrics around `js-ipfs`
