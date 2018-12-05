@@ -7,11 +7,12 @@ const Influx = require('influx')
 const Pino = require('pino')
 let pino
 
-const inventoryPath = path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
+const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
+const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
 const params = 'OUT_FOLDER=/tmp/out '
-const remotePreCommand = `source ~/.nvm/nvm.sh && ${params}`
+const remotePreNode = `source ~/.nvm/nvm.sh && ${params}`
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 
@@ -20,7 +21,6 @@ if (process.env.NODE_ENV === 'test') {
   pino = Pino({
     enabled: false
   })
-  console.log('NODE_ENV=test')
 } else if (process.env.LOG_PRETTY === 'true') {
   pino = Pino({
     prettyPrint: {
@@ -37,25 +37,29 @@ const getInventory = () => {
 }
 
 const getBenchmarkHostname = () => {
-  pino.info(getInventory())
   return getInventory().all.children.minions.hosts
 }
 
 const tests = [
   {
     name: 'localTransfer',
-    shell: `${remotePreCommand} REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
+    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-transfer.js')}`
   },
   {
-    name: 'unixFS-add',
-    shell: `${remotePreCommand} REMOTE=true node ${remoteTestsPath}/local-add.js`,
+    name: 'unixFsAdd',
+    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-add.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-add.js')}`
   },
   {
-    name: 'unixFS-extract',
-    shell: `${remotePreCommand} REMOTE=true node ${remoteTestsPath}/local-extract.js`,
+    name: 'localExtract',
+    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-extract.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-extract.js')}`
+  },
+  {
+    name: 'multiPeerTransfer',
+    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/multi-peer-transfer.js`,
+    localShell: `${params} node ${path.join(__dirname, '/../tests/multi-peer-transfer.js')}`
   }
 ]
 
@@ -66,6 +70,7 @@ const config = {
   log: pino,
   stage: process.env.STAGE || 'local',
   outFolder: process.env.OUT_FOLDER || '/tmp/out',
+  nodePre: remotePreNode,
   influxdb: {
     host: process.env.INFLUX_HOST || 'localhost',
     db: 'benchmarks',
@@ -91,6 +96,9 @@ const config = {
     path: path.join(__dirname, '../tests'),
     remotePath: remoteTestsPath,
     tests: tests
+  },
+  ipfs: {
+    path: remoteIpfsPath
   }
 }
 

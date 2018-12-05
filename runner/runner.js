@@ -14,10 +14,10 @@ const runCommand = (test) => {
   }
 }
 
-const run = async () => {
+const run = async (commit) => {
   if (config.stage !== 'local') {
     try {
-      await provision.ensure()
+      await provision.ensure(commit)
     } catch (e) {
       config.log.error(e)
     }

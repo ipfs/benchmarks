@@ -11,42 +11,44 @@ const run = (shell, name) => {
       host: config.benchmarks.host,
       key: config.benchmarks.key
     }, (err, stdout, stderr) => {
-      config.log.info({
+      config.log.debug({
         err: err,
         stdout: stdout,
         stderr: stderr
       })
-      if (err) {
-        reject(Error(err))
-      } else if (stderr) {
-        if (!name && stderr.includes('No such file or directory')) {
-          resolve('')
-        } else {
+      if (err || stderr) {
+        if (stderr.length) {
           reject(Error(stderr))
+        } else {
+          reject(Error(stdout))
         }
       }
 
+      // if name is provided we assume it's a json file we read and pass back as the command's result.
       if (name) {
         let retrieveCommand = `cat ${config.outFolder}/${name}.json`
-        config.log.info(`Retrieving [${config.outFolder}/${name}.json] from [${config.benchmarks.host}]`)
+        config.log.info(`running  [${retrieveCommand}] on [${config.benchmarks.host}]`)
         remoteExec(retrieveCommand, {
           user: config.benchmarks.user,
           host: config.benchmarks.host,
           key: config.benchmarks.key
         }, (err, stdout, stderr) => {
-          // config.log.info({
-          //   err: err,
-          //   stdout: stdout.substring(0, 500) + '\n...',
-          //   stderr: stderr
-          // })
+          config.log.debug({
+            err: err,
+            stdout: stdout,
+            stderr: stderr
+          })
           if (err || stderr) {
-            reject(new Error(stderr))
-            return
+            if (stderr.length) {
+              reject(Error(stderr))
+            } else {
+              reject(Error(stdout))
+            }
           }
           if (stdout) {
             try {
               let objResults = JSON.parse(stdout)
-              config.log.info(objResults)
+              config.log.debug(objResults)
               resolve(objResults)
             } catch (e) {
               reject(e)
@@ -54,9 +56,8 @@ const run = (shell, name) => {
           }
         })
       } else {
-        resolve()
+        resolve(stdout)
       }
-
     })
   })
 }

@@ -1,6 +1,7 @@
-# IPFS Benchmarks
+ # js-ipfs Benchmarks [![CircleCI](https://circleci.com/gh/ipfs/benchmarks.svg?style=svg)](https://circleci.com/gh/ipfs/benchmarks)
 
-This is a set of benchmarks tests to track IPFS performance.
+
+This is a set of benchmarks tests to track [js-ipfs](https://github.com/ipfs/js-ipfs) Benchmarks in a Grafana [Dashboard](https://benchmarks.ipfs.team).
 
 ## Purpose
 The IPFS team needs a historical view of various performance metrics around `js-ipfs`
@@ -22,11 +23,28 @@ version of `js-ipfs`. Developers can then examine individual output files before
 submitting code to the community.
 
 ## Documentation Index
+* The [dashboard](infrastructure/grafana/README.md) documentation
 * [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
 * Reference on how this [Repository](REPOSITORY.md) is organized
 * Using the [Runner](runner/README.md) to manage benchmark runs remotely
 * Description of [tests](tests/README.md)
 * Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
+
+## Benchmarks on the web
+The dashboard is available at [https://benchmarks.ipfs.team](https://benchmarks.ipfs.team) and can be viewed without a user account.
+A `Continuous Integration` server can trigger benchmark runs using the endpoint exposed on [https://benchmarks.ipfs.team/runner](https://benchmarks.ipfs.team/runner). A commit from the [js-ipfs](https://github.com/ipfs/js-ipfs) repository can be supplied to run the benchmarks against. An api key is also required to be able to trigger a run. Please check [Runner](runner/README.md) docs on how to configure an api key for the runner. An example invocation using curl is provided below.
+
+```bash
+> curl -XPOST -d '{"commit":"adfy3hk"}' \
+  -H "Content-Type: application/json" \
+  -H "x-ipfs-benchmarks-api-key: <api-key>" \
+  https://benchmarks.ipfs.team/runner
+```
+The response provides links to the output produced by the benchmark tests:
+```
+TBD
+```
+For more details about the dashboard see the [Grafana](infrastructure/grafana/README.md) doc
 
 ## Quickstart
 
@@ -92,4 +110,4 @@ Results will be written to out directory under /tests
 * `duration`.`ms`: The number of millisecs the benchmark took.
 * `cpu`: Information about cpu benchmark was run on.
 * `loadAvg`: The load average of machine.
-* `memory`: Memory used during benchmark.
+

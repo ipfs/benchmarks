@@ -64,3 +64,16 @@ Swarm listening on /ip4/127.94.0.1/tcp/4012/ipfs/QmYUDZWVCuahJfiVonM8GfftQ8rCDgM
 To view the Grafana dashboard: http://localhost:3000/
 
 Use the default account admin/admin to login
+
+## Runner configuration
+The runner can be configured with environment variables
+| name | default | function |
+|---|---|---|
+| NODE_ENV | `null` | Disable logging if `test` |
+| REMOTE_FOLDER | `~/ipfs/tests/` | The folder where tests are checked out on the benchmark host |
+| STAGE | `local` | `local` will skip provisioning a remote host, `remote` runs provisioning |
+| OUT_FOLDER | `/tmp/out` | Folder where tests write their results in a file named after the test |
+| INFLUX_HOST | `localhost` | Host name for InfluxDB to store metrics |
+| BENCHMARK_USER | `elexy` | Username for logging into the benchmark host |
+| BENCHMARK_KEY | `~/.ssh/id_rsa` | Path to the ssh identity to use for accessing the benchmark host |
+| API_KEY | `supersecret` | The api key for the http trigger to validate against |

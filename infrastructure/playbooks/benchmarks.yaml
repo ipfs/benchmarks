@@ -4,6 +4,11 @@
   vars:
     node_version: 10.13.0
   tasks:
+    - name: Update repositories cache and install "git" package
+      become: yes
+      apt:
+        name: git
+        update_cache: yes
     - name: Install nvm
       shell: |
         curl https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh | sh
@@ -27,3 +32,6 @@
       synchronize:
         src: ../../tests
         dest: ~/ipfs/
+    - name: Install npm modules
+      shell: |
+        /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && rm -Rf node_modules && npm install"
