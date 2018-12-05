@@ -1,4 +1,5 @@
-# IPFS Benchmarks
+ # IPFS Benchmarks [![CircleCI](https://circleci.com/gh/ipfs/benchmarks.svg?style=svg)](https://circleci.com/gh/ipfs/benchmarks)
+
 
 This is a set of benchmarks tests to track IPFS performance.
 
