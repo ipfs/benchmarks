@@ -7,6 +7,7 @@ const fs = require('fs')
 const fsWriteFile = util.promisify(fs.writeFile)
 const fsMakeDir = util.promisify(fs.mkdir)
 const fsExists = util.promisify(fs.access)
+const fsStat = util.promisify(fs.lstat)
 const KB = 1024
 const MB = KB * 1024
 const GB = MB * 1024
@@ -49,10 +50,28 @@ async function write (data, name, folder) {
   await fsWriteFile(path.join(__dirname, `../fixtures/${name}.txt`), data)
   console.log(`File ${name} created.`)
 }
-function file (name) {
-  const file = files.find((file) => {
-    return file.name === name
-  })
-  return path.join(__dirname, `../fixtures/${file.name}.txt`)
+async function file (name) {
+  const isDir = await isDirectory(name)
+  if (!isDir) {
+    const file = files.find((file) => {
+      return file.name === name
+    })
+    if (typeof file !== 'undefined' && file) {
+      return path.join(__dirname, `../fixtures/${file.name}.txt`)
+    } else {
+      return file
+    }
+  }
 }
-module.exports = { generateFiles, file }
+
+async function isDirectory (name) {
+  try {
+    const dir = path.join(__dirname, `../fixtures/${name}`)
+    const stats = await fsStat(dir)
+    return stats.isDirectory()
+  } catch (e) {
+    return false
+  }
+}
+
+module.exports = { generateFiles, file, isDirectory }
