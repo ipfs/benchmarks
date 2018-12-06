@@ -5,6 +5,8 @@ const crypto = require('crypto')
 const util = require('util')
 const fs = require('fs')
 const fsWriteFile = util.promisify(fs.writeFile)
+const fsMakeDir = util.promisify(fs.mkdir)
+const fsExists = util.promisify(fs.access)
 const KB = 1024
 const MB = KB * 1024
 const GB = MB * 1024
@@ -25,10 +27,16 @@ const files = [
   { size: GB, name: 'OneGBFile' }
 
 ]
-function generateFiles () {
+async function generateFiles () {
+  const testPath = path.join(__dirname, `../fixtures/`)
   for (let file of files) {
     if (file.count) {
-      for (let i = 0; i <= file.count; i++) {
+      try {
+        await fsExists(`${testPath}${file.name}`)
+      } catch (err) {
+        await fsMakeDir(`${testPath}${file.name}`)
+      }
+      for (let i = 0; i < file.count; i++) {
         write(crypto.randomBytes(file.size), `${file.name}/${file.name}-${i}`)
       }
     } else {
@@ -41,5 +49,10 @@ async function write (data, name, folder) {
   await fsWriteFile(path.join(__dirname, `../fixtures/${name}.txt`), data)
   console.log(`File ${name} created.`)
 }
-
-module.exports = generateFiles
+function file (name) {
+  const file = files.find((file) => {
+    return file.name === name
+  })
+  return path.join(__dirname, `../fixtures/${file.name}.txt`)
+}
+module.exports = { generateFiles, file }

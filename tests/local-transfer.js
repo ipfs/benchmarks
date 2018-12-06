@@ -1,13 +1,12 @@
 'use strict'
 
 const fs = require('fs')
-const fixtures = require('./lib/fixtures.js')
+const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
 const localTransfer = async (node, name, subTest, fileSet, version) => {
-  
-  const fileStream = fs.createReadStream(fixtures[fileSet])
+  const fileStream = fs.createReadStream(file(fileSet))
   const peerA = node[0]
   const peerB = node[1]
   const peerAId = await peerA.id()
@@ -19,9 +18,9 @@ const localTransfer = async (node, name, subTest, fileSet, version) => {
 
   return build({
     name: name,
-    subtest: subTest,
+    subTest: subTest,
     fileSet: fileSet,
-    file: fixtures[fileSet],
+    file: file(fileSet),
     meta: { version: version },
     description: 'Transfer file between two local nodes',
     duration: {
