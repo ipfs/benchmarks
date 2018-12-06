@@ -1,13 +1,12 @@
 'use strict'
 
 const fs = require('fs')
-const fixtures = require('./lib/fixtures.js')
+const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
-const multiPeerTransfer = async (node, name, subTest, testClass, version) => {
-  // Insert into peerA
-  const fileStream = fs.createReadStream(fixtures[testClass])
+const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
+  const fileStream = fs.createReadStream(file(fileSet))
   const peerA = node[0]
   const peerB = node[1]
   const peerC = node[2]
@@ -18,9 +17,9 @@ const multiPeerTransfer = async (node, name, subTest, testClass, version) => {
   const peerCId = await peerC.id()
   const peerDId = await peerD.id()
   const inserted = await peerA.files.add(fileStream)
-  await await peerB.files.add(fileStream)
-  await await peerC.files.add(fileStream)
-  await await peerD.files.add(fileStream)
+  await peerB.files.add(fileStream)
+  await peerC.files.add(fileStream)
+  await peerD.files.add(fileStream)
   peerE.swarm.connect(peerAId.addresses[0])
   peerE.swarm.connect(peerBId.addresses[0])
   peerE.swarm.connect(peerCId.addresses[0])
@@ -31,9 +30,9 @@ const multiPeerTransfer = async (node, name, subTest, testClass, version) => {
 
   return build({
     name: name,
-    subtest: subTest,
-    testClass: testClass,
-    file: fixtures[testClass],
+    subTest: subTest,
+    fileSet: fileSet,
+    file: file(fileSet),
     meta: { version: version },
     duration: {
       s: end[0],

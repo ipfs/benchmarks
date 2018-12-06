@@ -57,6 +57,23 @@ Clone Benchmark tests and install:
 >  cd ../benchmarks/runner
 >  npm install
 ```
+### Gnerate test files
+The files are defined in (fixutres)[tests/lib/fuxtures.js]
+
+```bash
+> npm run generateFiles
+```
+### Add test files
+
+Here is the file object for a single test:
+```js
+{ size: KB, name: 'OneKBFile' }
+```
+To add mutiple test files add a count property:
+
+```js
+{ size: KB, name: 'OneHundredKBFile', count: 100 }
+```
 
 ### Run tests locally
 
@@ -76,10 +93,10 @@ Create a pre-generated key:
 > node lib/create-privateKey
 ```
 
-### TESTCLASS:  
+### FILESET:  
 Use env vairable TESTCLASS to run test just agianst that class.  Options of TestClass are define in the config.
 ```bash
-> TESTCLASS="smallFile" node local-add
+> FILESET="One64MBFile" node local-add
 ```
 
 ### SUBTEST:  
@@ -100,7 +117,7 @@ Results will be written to out directory under /tests
 * `name`: Name of test
 * `subtest`: Name of subtest
 * `description`: Description of benchmark
-* `testClass`: Either smallfile or largefile
+* `fileSet`: Set of files to be used in a test
 * `date`: Date of benchmark
 * `file`: Name of file used in benchmark
 * `meta`.`project`: Repo that are benchmarked
