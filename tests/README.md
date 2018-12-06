@@ -28,7 +28,7 @@ peerE.files.cat(inserted[0].hash)
 - Copy test.template and give the file the name of the test
 - Add test fo the async function 
 - Call run() with the name of you test as param
-- Add the test name and subtests to the [config/index](config/index.js).
+- Add the test name and subtests to the [config/index](config/index.json).
 
 To Test it:
 
