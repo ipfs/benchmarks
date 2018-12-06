@@ -58,9 +58,21 @@ Clone Benchmark tests and install:
 >  npm install
 ```
 ### Gnerate test files
+The files are defined in (fixutres)[tests/lib/fuxtures.js]
 
 ```bash
 > npm run generateFiles
+```
+### Add test files
+
+Here is the file object for a single test:
+```js
+{ size: KB, name: 'OneKBFile' }
+```
+To add mutiple test files add a count property:
+
+```js
+{ size: KB, name: 'OneHundredKBFile', count: 100 }
 ```
 
 ### Run tests locally
