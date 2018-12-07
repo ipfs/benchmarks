@@ -14,7 +14,7 @@ const MB = KB * 1024
 const GB = MB * 1024
 const files = [
   { size: KB, name: 'OneKBFile' },
-  { size: KB, name: 'HundredKBFile', count: 100 },
+  { size: KB, name: 'Hundred1KBFile', count: 100 },
   { size: 62 * KB, name: 'One62KBFile' },
   { size: 64 * KB, name: 'One64KBFile' },
   { size: 512 * KB, name: 'One512KBFile' },
@@ -60,7 +60,7 @@ async function file (name) {
     if (typeof file !== 'undefined' && file) {
       return path.join(__dirname, `../fixtures/${file.name}.txt`)
     } else {
-      return file
+      return path.join(__dirname, `../fixtures/${name}`)
     }
   } else {
     const arr = await fsReadDir(path.join(__dirname, `../fixtures/${name}`))

@@ -37,11 +37,11 @@
   ],
   "addMultiKb": [{
     "subTest": "empty-repo",
-    "fileSet": ["HundredKBFile"]
+    "fileSet": ["Hundred1KBFile"]
   },
   {
     "subTest": "populated-repo",
-    "fileSet": ["HundredKBFile" ]
+    "fileSet": ["Hundred1KBFile" ]
   }
 ]
 }
