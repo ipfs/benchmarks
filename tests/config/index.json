@@ -34,5 +34,14 @@
 			"subTest": "populated-repo",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
-	]
+  ],
+  "addMultiKb": [{
+    "subTest": "empty-repo",
+    "fileSet": ["HundredKBFile"]
+  },
+  {
+    "subTest": "populated-repo",
+    "fileSet": ["HundredKBFile" ]
+  }
+]
 }

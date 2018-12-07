@@ -8,6 +8,7 @@ const fsWriteFile = util.promisify(fs.writeFile)
 const fsMakeDir = util.promisify(fs.mkdir)
 const fsExists = util.promisify(fs.access)
 const fsStat = util.promisify(fs.lstat)
+const fsReadDir = util.promisify(fs.readdir)
 const KB = 1024
 const MB = KB * 1024
 const GB = MB * 1024
@@ -61,6 +62,9 @@ async function file (name) {
     } else {
       return file
     }
+  } else {
+    const arr = await fsReadDir(path.join(__dirname, `../fixtures/${name}`))
+    return arr
   }
 }
 

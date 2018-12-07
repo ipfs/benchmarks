@@ -31,3 +31,10 @@ test('Is a Directory ', async t => {
   t.assert(results)
   t.pass()
 })
+test('File set ', async t => {
+  t.plan(2)
+  const results = await file('HundredKBFile')
+  console.log(results[0])
+  t.assert(results.length === 100)
+  t.pass()
+})
