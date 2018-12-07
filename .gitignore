@@ -4,7 +4,6 @@ local/data
 tests/dirHash.txt
 tests/out
 tests/data
-tests/fixtures
 infrastructure/inventory/inventory.local.yaml
 data
 infrastructure/playbooks/*.retry
