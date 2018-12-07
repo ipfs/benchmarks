@@ -42,4 +42,4 @@ const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
   })
 }
 
-run(multiPeerTransfer)
+run(multiPeerTransfer, 5)
