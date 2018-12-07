@@ -5,7 +5,7 @@ tests/dirHash.txt
 tests/out
 tests/data
 tests/fixtures/*
-!tests/fixtures//.gitkeep 
+!tests/fixtures/.gitkeep 
 infrastructure/inventory/inventory.local.yaml
 data
 infrastructure/playbooks/*.retry
