@@ -1,6 +1,5 @@
 'use strict'
 
-const {generateFiles} = require('../lib/fixtures')
+const { generateFiles } = require('../lib/fixtures')
 
 generateFiles()
-

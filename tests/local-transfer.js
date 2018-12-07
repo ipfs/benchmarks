@@ -31,4 +31,4 @@ const localTransfer = async (node, name, subTest, fileSet, version) => {
   })
 }
 
-run(localTransfer)
+run(localTransfer, 3)

@@ -42,6 +42,10 @@
   {
     "subTest": "populated-repo",
     "fileSet": ["Hundred1KBFile" ]
+  }],
+    "initializeNode": [{
+      "subTest": "empty-repo",
+    "fileSet": ["None"]
   }
 ]
 }

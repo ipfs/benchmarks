@@ -11,9 +11,10 @@
   },
   "scripts": {
     "test": "npm run generateFiles && tap -J unit/*.test.js",
+    "test-local": "tap -J unit/*.test.js",
     "lint": "standard --verbose",
     "generateFiles": "node util/create-files",
-    "benchmark": " node local-add.js  && node local-extract.js && node local-transfer && node multi-peer-transfer"
+    "benchmark": " npm generateFiles && node local-add.js  && node local-extract.js && node local-transfer && node multi-peer-transfer"
   },
   "contributors": [
     "Matteo Collina <matteo.collina@nearform.com>",
