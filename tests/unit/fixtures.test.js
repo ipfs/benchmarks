@@ -34,7 +34,7 @@ test('Is a Directory ', async t => {
 test('File set ', async t => {
   t.plan(2)
   const results = await file('Hundred1KBFile')
-  console.log(results[0])
-  t.assert(results.length === 101)
+  console.log(results.length)
+  t.assert(results.length === 100)
   t.pass()
 })
