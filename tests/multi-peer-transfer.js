@@ -6,7 +6,8 @@ const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
 const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
-  const fileStream = fs.createReadStream(file(fileSet))
+  const filePath = await file(fileSet)
+  const fileStream = fs.createReadStream(filePath)
   const peerA = node[0]
   const peerB = node[1]
   const peerC = node[2]
@@ -32,7 +33,7 @@ const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
     name: name,
     subTest: subTest,
     fileSet: fileSet,
-    file: file(fileSet),
+    file: filePath,
     meta: { version: version },
     duration: {
       s: end[0],
@@ -41,4 +42,4 @@ const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
   })
 }
 
-run(multiPeerTransfer)
+run(multiPeerTransfer, 5)

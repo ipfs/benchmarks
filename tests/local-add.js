@@ -6,7 +6,8 @@ const { build } = require('./schema/results')
 const fs = require('fs')
 
 async function unixFsAdd (node, name, subTest, fileSet, version) {
-  const fileStream = fs.createReadStream(file(fileSet))
+  const filePath = await file(fileSet)
+  const fileStream = fs.createReadStream(filePath)
   const start = process.hrtime()
   const peer = node[0]
   await peer.files.add(fileStream)
@@ -14,7 +15,7 @@ async function unixFsAdd (node, name, subTest, fileSet, version) {
   return build({
     name: name,
     subTest: subTest,
-    file: file(fileSet),
+    file: filePath,
     meta: { version: version },
     description: 'Add file to local repo using unixFS engine',
     fileSet: fileSet,

@@ -5,15 +5,13 @@ const clean = require('./clean')
 const { store } = require('./output')
 const fileSetParam = process.env.FILESET || false
 const subTestParam = process.env.SUBTEST || false
-async function runner (test) {
+async function runner (test, nodeCount = 1) {
   const arrResults = []
   const nodeFactory = new NodeFactory()
   const node = []
-  node.push(await nodeFactory.add())
-  node.push(await nodeFactory.add())
-  node.push(await nodeFactory.add())
-  node.push(await nodeFactory.add())
-  node.push(await nodeFactory.add())
+  for (let i = 0; i < nodeCount; i++) {
+    node.push(await nodeFactory.add())
+  }
   const version = await node[0].version()
   try {
     for (let subTest of config[test.name]) {

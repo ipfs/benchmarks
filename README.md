@@ -108,7 +108,7 @@ Use env vairable SUBTEST to run the specfic subTest.  Options of subTest are def
 
 ### Adding new tests
 
-See README under test
+See (README)[tests/README.md] under test
 
 ###  Results
 

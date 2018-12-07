@@ -6,7 +6,8 @@ const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
 const localTransfer = async (node, name, subTest, fileSet, version) => {
-  const fileStream = fs.createReadStream(file(fileSet))
+  const filePath = await file(fileSet)
+  const fileStream = fs.createReadStream(filePath)
   const peerA = node[0]
   const peerB = node[1]
   const peerAId = await peerA.id()
@@ -20,7 +21,7 @@ const localTransfer = async (node, name, subTest, fileSet, version) => {
     name: name,
     subTest: subTest,
     fileSet: fileSet,
-    file: file(fileSet),
+    file: filePath,
     meta: { version: version },
     description: 'Transfer file between two local nodes',
     duration: {
@@ -30,4 +31,4 @@ const localTransfer = async (node, name, subTest, fileSet, version) => {
   })
 }
 
-run(localTransfer)
+run(localTransfer, 3)

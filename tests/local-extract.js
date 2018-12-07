@@ -6,7 +6,8 @@ const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
 
 async function localExtract (node, name, subtest, fileSet, version) {
-  const fileStream = fs.createReadStream(file(fileSet))
+  const filePath = await file(fileSet)
+  const fileStream = fs.createReadStream(filePath)
   const peer = node[0]
   const inserted = await peer.files.add(fileStream)
   const start = process.hrtime()
@@ -16,7 +17,7 @@ async function localExtract (node, name, subtest, fileSet, version) {
   return build({
     name: name,
     subTest: subtest,
-    file: file(fileSet),
+    file: filePath,
     meta: { version: version },
     description: 'Get file to local repo',
     fileSet: fileSet,
