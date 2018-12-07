@@ -60,7 +60,11 @@ async function file (name) {
     if (typeof file !== 'undefined' && file) {
       return path.join(__dirname, `../fixtures/${file.name}.txt`)
     } else {
-      return path.join(__dirname, `../fixtures/${name}`)
+      if (name.includes(`/`)) {
+        return path.join(__dirname, `../fixtures/${name}`)
+      } else {
+        return file
+      }
     }
   } else {
     const arr = await fsReadDir(path.join(__dirname, `../fixtures/${name}`))

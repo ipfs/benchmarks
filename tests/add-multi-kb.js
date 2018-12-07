@@ -6,7 +6,7 @@ const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
 
 async function addMultiKb (node, name, subTest, fileSet, version) {
-  const fileArr = await file(fileSet) 
+  const fileArr = await file(fileSet)
   const start = process.hrtime()
   const peer = node[0]
   for (var i = 0, len = fileArr.length; i < len; i++) {
