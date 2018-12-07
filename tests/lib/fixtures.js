@@ -68,6 +68,7 @@ async function file (name) {
     }
   } else {
     const arr = await fsReadDir(path.join(__dirname, `../fixtures/${name}`))
+
     return arr
   }
 }
@@ -82,4 +83,39 @@ async function isDirectory (name) {
   }
 }
 
-module.exports = { generateFiles, file, isDirectory }
+async function verifyTestFiles () {
+  const fixtures = path.join(__dirname, `../fixtures`)
+  try {
+    await fsExists(fixtures)
+  } catch (e) {
+    await fsMakeDir(fixtures)
+  }
+  for (let f of files) {
+    if (f.count) {
+      console.log(`Verifying Directory ${f.name}`)
+      const dir = await isDirectory(f.name)
+      if (dir) {
+        const fileArr = file(f.name)
+        if (fileArr.length < f.count) {
+          console.log(`Missing files in directory ${f.name}`)
+          return false
+        }
+      } else {
+        console.log(`Missing directory ${f.name}`)
+        return false
+      }
+    } else {
+      const filePath = await file(f.name)
+      try {
+        console.log(`Verifying File ${f.name}`)
+        await fsExists(filePath)
+      } catch (err) {
+        console.log('Missing ${f.name')
+        return false
+      }
+    }
+  }
+  return true
+}
+
+module.exports = { generateFiles, file, isDirectory, verifyTestFiles }
