@@ -25,7 +25,7 @@ async function initializeNode (node, name, subTest, fileSet, version) {
     subTest: subTest,
     file: '',
     meta: { version: version },
-    description: 'Get file to local repo',
+    description: 'Initialize node without pre-generated key',
     fileSet: '',
     duration: { s: end[0],
       ms: end[1] / 1000000 }
