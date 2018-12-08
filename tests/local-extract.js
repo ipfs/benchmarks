@@ -12,7 +12,7 @@ async function localExtract (node, name, subtest, fileSet, version) {
   const inserted = await peer.files.add(fileStream)
   const start = process.hrtime()
   const validCID = inserted[0].hash
-  await peer.files.get(validCID)
+  await peer.files.cat(validCID)
   const end = process.hrtime(start)
   return build({
     name: name,
