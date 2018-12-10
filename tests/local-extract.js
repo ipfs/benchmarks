@@ -4,7 +4,6 @@ const fs = require('fs')
 const { build } = require('./schema/results')
 const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
-const eos = require('end-of-stream')
 const { once } = require('stream-iterators-utils')
 
 async function localExtract (node, name, subtest, fileSet, version) {
