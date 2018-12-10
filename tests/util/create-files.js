@@ -1,5 +1,17 @@
 'use strict'
 
-const { generateFiles } = require('../lib/fixtures')
+const { generateFiles, verifyTestFiles } = require('../lib/fixtures')
 
-generateFiles()
+const verifyAndCreateFiles = async () => {
+  const valid = await verifyTestFiles()
+  if (!valid) {
+    console.log('Some files missing.  Generating files')
+    await generateFiles()
+  } else {
+    console.log('Files Verified')
+  }
+}
+if (require.main === module) {
+  verifyAndCreateFiles()
+}
+module.exports = verifyAndCreateFiles

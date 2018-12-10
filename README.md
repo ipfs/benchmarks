@@ -105,6 +105,11 @@ Use env vairable SUBTEST to run the specfic subTest.  Options of subTest are def
 > SUBTEST="empty-repo" node local-add
 ```
 
+### VERIFYOFF
+Use env variable VERIFYOFF=true to skip the pre-generation of test files.  
+```js
+>VERIFYOFF=true node local-add
+```
 
 ### Adding new tests
 

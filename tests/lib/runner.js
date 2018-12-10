@@ -3,9 +3,16 @@ const NodeFactory = require('./node-factory')
 const config = require('../config')
 const clean = require('./clean')
 const { store } = require('./output')
+
 const fileSetParam = process.env.FILESET || false
 const subTestParam = process.env.SUBTEST || false
+const verify = process.env.VERIFYOFF === 'true'
+const genTests = require('../util/create-files')
+
 async function runner (test, nodeCount = 1) {
+  if (!verify) {
+    await genTests()
+  }
   const arrResults = []
   const nodeFactory = new NodeFactory()
   const node = []
