@@ -24,7 +24,6 @@
   "license": "ISC",
   "dependencies": {
     "ajv": "^6.5.5",
-    "bl": "^2.1.2",
     "cli-table3": "^0.5.1",
     "fluent-schema": "^0.2.0",
     "ipfs": "^0.33.1",
