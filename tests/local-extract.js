@@ -4,9 +4,8 @@ const fs = require('fs')
 const { build } = require('./schema/results')
 const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
-const util = require('util')
-const stream = require('stream')
-const finished = util.promisify(stream.finished)
+const eos = require('end-of-stream')
+const { once } = require('stream-iterators-utils')
 
 async function localExtract (node, name, subtest, fileSet, version) {
   const filePath = await file(fileSet)
@@ -18,8 +17,11 @@ async function localExtract (node, name, subtest, fileSet, version) {
   // endof steam
   stream.resume()
 
-  await finished(stream)
-  console.log('done')
+  // we cannot use end-of-stream/pump for some reason here
+  // investigate.
+  // https://github.com/ipfs/js-ipfs/issues/1774
+  await once(stream, 'end')
+
   const end = process.hrtime(start)
   return build({
     name: name,
