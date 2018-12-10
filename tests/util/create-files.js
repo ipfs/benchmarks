@@ -11,4 +11,7 @@ const verifyAndCreateFiles = async () => {
     console.log('Files Verified')
   }
 }
+if (require.main === module) {
+  verifyAndCreateFiles()
+}
 module.exports = verifyAndCreateFiles
