@@ -10,7 +10,7 @@ async function unixFsAdd (node, name, subTest, fileSet, version) {
   const fileStream = fs.createReadStream(filePath)
   const start = process.hrtime()
   const peer = node[0]
-  await peer.files.add(fileStream)
+  peer.add ? await peer.add(fileStream) : await peer.files.add(fileStream)
   const end = process.hrtime(start)
   return build({
     name: name,
