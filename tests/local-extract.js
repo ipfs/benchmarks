@@ -8,7 +8,6 @@ const util = require('util')
 const stream = require('stream')
 const finished = util.promisify(stream.finished)
 
-
 async function localExtract (node, name, subtest, fileSet, version) {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
@@ -20,7 +19,7 @@ async function localExtract (node, name, subtest, fileSet, version) {
   stream.resume()
 
   await finished(stream)
-  console.log("done")
+  console.log('done')
   const end = process.hrtime(start)
   return build({
     name: name,
@@ -32,7 +31,5 @@ async function localExtract (node, name, subtest, fileSet, version) {
     duration: { s: end[0],
       ms: end[1] / 1000000 }
   })
-
 }
-
 run(localExtract)
