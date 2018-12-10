@@ -2,7 +2,7 @@
 
 const { generateFiles, verifyTestFiles } = require('../lib/fixtures')
 
-async function verifyAndCreateFiles () {
+const verifyAndCreateFiles = async () => {
   const valid = await verifyTestFiles()
   if (!valid) {
     console.log('Some files missing.  Generating files')
@@ -11,4 +11,4 @@ async function verifyAndCreateFiles () {
     console.log('Files Verified')
   }
 }
-verifyAndCreateFiles()
+module.exports = verifyAndCreateFiles

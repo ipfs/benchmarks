@@ -7,11 +7,12 @@ const { store } = require('./output')
 const fileSetParam = process.env.FILESET || false
 const subTestParam = process.env.SUBTEST || false
 const verify = process.env.VERIFYOFF === 'true'
-if (!verify) {
-  require('../util/create-files')
-}
+const genTests = require('../util/create-files')
 
 async function runner (test, nodeCount = 1) {
+  if (!verify) {
+    await genTests()
+  }
   const arrResults = []
   const nodeFactory = new NodeFactory()
   const node = []
