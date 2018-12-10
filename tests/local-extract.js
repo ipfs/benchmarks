@@ -4,6 +4,10 @@ const fs = require('fs')
 const { build } = require('./schema/results')
 const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
+const util = require('util')
+const stream = require('stream')
+const finished = util.promisify(stream.finished)
+
 
 async function localExtract (node, name, subtest, fileSet, version) {
   const filePath = await file(fileSet)
@@ -11,8 +15,12 @@ async function localExtract (node, name, subtest, fileSet, version) {
   const peer = node[0]
   const inserted = await peer.files.add(fileStream)
   const start = process.hrtime()
-  const validCID = inserted[0].hash
-  await peer.files.cat(validCID)
+  const stream = peer.files.catReadableStream(inserted[0].hash)
+  // endof steam
+  stream.resume()
+
+  await finished(stream)
+  console.log("done")
   const end = process.hrtime(start)
   return build({
     name: name,
@@ -24,5 +32,7 @@ async function localExtract (node, name, subtest, fileSet, version) {
     duration: { s: end[0],
       ms: end[1] / 1000000 }
   })
+
 }
+
 run(localExtract)
