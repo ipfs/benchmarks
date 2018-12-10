@@ -114,11 +114,18 @@ Use env variable VERIFYOFF=true to skip the pre-generation of test files.
 On the same diriectory level as benchmakrs, clone js-ipfs:
 ```bash
 > git clone https://github.com/ipfs/js-ipfs.git
-> git status
-On branch master
-> tree -L 1
+```
+
+Directory structure now :
+```
 ├── benchmarks
 ├── js-ipfs
+```
+
+Install js-ipfs:
+```bash
+> cd js-ipfs
+> npm install
 ```
 
 Run tests against branch
