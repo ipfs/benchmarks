@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "config": {
-    "repoPath": "./data/ipfs"
+    "repoPath": "./data/ipfs/"
   },
   "scripts": {
     "test": "npm run generateFiles && tap -J unit/*.test.js",
