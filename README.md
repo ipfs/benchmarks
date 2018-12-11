@@ -133,3 +133,7 @@ Results will be written to out directory under /tests
 * `cpu`: Information about cpu benchmark was run on.
 * `loadAvg`: The load average of machine.
 
+
+## License
+
+Copyright (c) Protocol Labs, Inc. under the MIT license. See [LICENSE file](./LICENSE) for details.
