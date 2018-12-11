@@ -7,3 +7,5 @@ tests/data
 infrastructure/inventory/inventory.local.yaml
 data
 infrastructure/playbooks/*.retry
+*clinic*
+tests/node_trace.*.log
