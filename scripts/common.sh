@@ -3,7 +3,7 @@
 # Usage info
 usage() {
   FILESTRING="/infrastructure/deploy/docker-compose.yaml"
-  if [ "$1" = "prod" ];then
+  if [[ $0 == *"runProdEnv"* ]];then
     FILESTRING+=" plus overrides from /infrastructure/deploy/docker-compose.prod.yaml"
   fi
 cat << EOF
@@ -19,7 +19,7 @@ EOF
 
 checkParam () {
   if [ -z "$1" ]; then
-    usage $MODE
+    usage
     exit 1
   else
     OP=$1
