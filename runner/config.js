@@ -11,7 +11,7 @@ const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrast
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
-const params = 'OUT_FOLDER=/tmp/out '
+const params = 'OUT_FOLDER=/tmp/out REMOTE=true '
 const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && ${params}`
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
@@ -43,22 +43,22 @@ const getBenchmarkHostname = () => {
 const tests = [
   {
     name: 'localTransfer',
-    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-transfer.js`,
+    shell: `${remotePreNode} node ${remoteTestsPath}/local-transfer.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-transfer.js')}`
   },
   {
     name: 'unixFsAdd',
-    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-add.js`,
+    shell: `${remotePreNode} node ${remoteTestsPath}/local-add.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-add.js')}`
   },
   {
     name: 'localExtract',
-    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/local-extract.js`,
+    shell: `${remotePreNode} node ${remoteTestsPath}/local-extract.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/local-extract.js')}`
   },
   {
     name: 'multiPeerTransfer',
-    shell: `${remotePreNode} REMOTE=true node ${remoteTestsPath}/multi-peer-transfer.js`,
+    shell: `${remotePreNode} node ${remoteTestsPath}/multi-peer-transfer.js`,
     localShell: `${params} node ${path.join(__dirname, '/../tests/multi-peer-transfer.js')}`
   }
 ]
