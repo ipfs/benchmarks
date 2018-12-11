@@ -12,6 +12,7 @@ const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmark
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
 const params = 'OUT_FOLDER=/tmp/out REMOTE=true '
+const clinicOperations = ['doctor', 'flame', 'bubleprof']
 const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && ${params}`
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
@@ -95,7 +96,8 @@ const config = {
     key: process.env.BENCHMARK_KEY || keyfile,
     path: path.join(__dirname, '../tests'),
     remotePath: remoteTestsPath,
-    tests: tests
+    tests: tests,
+    clinicOperations: clinicOperations
   },
   ipfs: {
     path: remoteIpfsPath
