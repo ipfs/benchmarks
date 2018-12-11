@@ -26,6 +26,7 @@ fastify.post('/', { schema }, async (request, reply) => {
 const start = async () => {
   try {
     await fastify.listen(9000, '0.0.0.0')
+    fastify.server.timeout = 96000
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
   } catch (err) {
     fastify.log.error(err)

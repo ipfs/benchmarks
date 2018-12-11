@@ -3,6 +3,6 @@
 MODE=prod
 SCRIPTPATH=$(dirname "$0")
 source $SCRIPTPATH/common.sh
-checkParam
+checkParam $1
 
 docker-compose $FILES $OP
