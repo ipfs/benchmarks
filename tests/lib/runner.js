@@ -4,9 +4,9 @@ const config = require('../config')
 const clean = require('./clean')
 const { store } = require('./output')
 
-const fileSetParam = process.env.FILESET || false
-const subTestParam = process.env.SUBTEST || false
-const verify = process.env.VERIFYOFF === 'true'
+const fileSetParam = (process.env.FILESET && process.env.FILESET.toLowerCase()) || false
+const warmup = (process.env.WARMUP && process.env.WARMUP.toLowerCase()) || false
+const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 'true'
 const genTests = require('../util/create-files')
 
 async function runner (test, nodeCount = 1) {
@@ -22,20 +22,20 @@ async function runner (test, nodeCount = 1) {
   const version = await node[0].version()
   try {
     for (let subTest of config[test.name]) {
-      if (subTestParam && subTest.subTest === subTestParam) {
+      if (warmup && subTest.warmup.toLowerCase() === warmup) {
         for (let fileSet of subTest.fileSet) {
-          if (fileSetParam && fileSet === fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
+          if (fileSetParam && fileSet.toLowerCase() === fileSetParam) {
+            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
           } else if (!fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
+            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
           }
         }
-      } else if (!subTestParam) {
+      } else if (!warmup) {
         for (let fileSet of subTest.fileSet) {
-          if (fileSetParam && fileSet === fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
+          if (fileSetParam && fileSet.toLowerCase() === fileSetParam) {
+            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
           } else if (!fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
+            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
           }
         }
       }
