@@ -81,10 +81,10 @@ const config = {
           duration: Influx.FieldType.INTEGER
         },
         tags: [
-          'subTest',
+          'warmup',
           'commit',
           'project',
-          'testClass'
+          'fileSet'
         ]
       }
     ]

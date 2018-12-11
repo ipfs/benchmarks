@@ -24,12 +24,7 @@ const writePoints = (data) => {
     config.log.info('point: ', point)
     payload.push({
       measurement: point.name,
-      tags: {
-        subTest: point.subTest,
-        commit: point.meta.version.commit || 'tbd',
-        project: point.meta.project || 'tbd',
-        file: point.file || 'tbd'
-      },
+      tags: { warmup: point.warmup, commit: point.meta.version.commit || 'tbd', project: point.meta.project || 'tbd', file_set: point.file_set },
       fields: { duration: parseDuration(point.duration) },
       timestamp: moment(point.date).toDate()
     })
