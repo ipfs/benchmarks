@@ -110,7 +110,30 @@ Use env variable VERIFYOFF=true to skip the pre-generation of test files.
 ```js
 >VERIFYOFF=true node local-add
 ```
+### Run tests locally on a js-ipfs branch
+On the same diriectory level as benchmakrs, clone js-ipfs:
+```bash
+> git clone https://github.com/ipfs/js-ipfs.git
+```
 
+Directory structure now :
+```
+├── benchmarks
+├── js-ipfs
+```
+
+Install js-ipfs:
+```bash
+> cd js-ipfs
+> npm install
+```
+
+Run tests against branch
+```bash
+> cd benchamrks/tests
+> STAGE=remote node local-add
+``
+`
 ### Adding new tests
 
 See (README)[tests/README.md] under test

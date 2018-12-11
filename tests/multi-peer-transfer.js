@@ -3,6 +3,7 @@
 const fs = require('fs')
 const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
+const { once } = require('stream-iterators-utils')
 const run = require('./lib/runner')
 
 const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
@@ -17,16 +18,23 @@ const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
   const peerBId = await peerB.id()
   const peerCId = await peerC.id()
   const peerDId = await peerD.id()
-  const inserted = await peerA.files.add(fileStream)
-  await peerB.files.add(fileStream)
-  await peerC.files.add(fileStream)
-  await peerD.files.add(fileStream)
+  const inserted = peerA.add ? await peerA.add(fileStream) : await peerA.files.add(fileStream)
+  peerB.add ? await peerB.add(fileStream) : await peerB.files.add(fileStream)
+  peerC.add ? await peerC.add(fileStream) : await peerC.files.add(fileStream)
+  peerD.add ? await peerD.add(fileStream) : await peerD.files.add(fileStream)
   peerE.swarm.connect(peerAId.addresses[0])
   peerE.swarm.connect(peerBId.addresses[0])
   peerE.swarm.connect(peerCId.addresses[0])
   peerE.swarm.connect(peerDId.addresses[0])
   const start = process.hrtime()
-  await peerE.files.cat(inserted[0].hash)
+  let stream = peerE.catReadableStream ? peerE.catReadableStream(inserted[0].hash) : peerE.files.catReadableStream(inserted[0].hash)
+  // endof steam
+  stream.resume()
+
+  // we cannot use end-of-stream/pump for some reason here
+  // investigate.
+  // https://github.com/ipfs/js-ipfs/issues/1774
+  await once(stream, 'end')
   const end = process.hrtime(start)
 
   return build({
