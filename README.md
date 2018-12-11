@@ -99,10 +99,10 @@ Use env vairable TESTCLASS to run test just agianst that class.  Options of Test
 > FILESET="One64MBFile" node local-add
 ```
 
-### SUBTEST:  
-Use env vairable SUBTEST to run the specfic subTest.  Options of subTest are define in the config.
+### WARMUP:  
+Use env vairable WARMUP to run a warmup routine.  Warmup is eaither On or Off.
 ```bash
-> SUBTEST="empty-repo" node local-add
+> WARMUP="On" node local-add
 ```
 
 ### VERIFYOFF
