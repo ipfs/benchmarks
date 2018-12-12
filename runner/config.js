@@ -84,7 +84,7 @@ const config = {
           'warmup',
           'commit',
           'project',
-          'fileSet'
+          'file_set'
         ]
       }
     ]
