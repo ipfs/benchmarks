@@ -104,7 +104,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Cat small file (tcp, mplex)              | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat small file (tcp, mplex, secio)       | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍏             | 🍎             |
+| Cat small file (tcp, mplex, secio)       | n/a        | 🍏         | n/a        | 🍎         | 🍎         | 🍎         | 🍏             | 🍎             |
 | Cat small file (websocket, mplex, secio) | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex, secio)    | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat small file (tcp, spdy)               | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
