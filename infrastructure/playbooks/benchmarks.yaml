@@ -33,6 +33,10 @@
       synchronize:
         src: ../../tests
         dest: ~/ipfs/
+        rsync_opts:
+          - "--exclude=node_modules"
+          - "--exclude=data"
+          - "--exclude=fixtures/*.txt"
     - name: Install npm modules
       shell: |
         /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && rm -Rf node_modules && npm install"
