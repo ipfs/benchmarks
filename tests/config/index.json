@@ -9,7 +9,7 @@
 		}
 	],
 	"localExtract": [{
-			"wamrup": "Off",
+			"warmup": "Off",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
@@ -22,16 +22,16 @@
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
-			"wamrup": "On",
+			"warmup": "On",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	],
 	"multiPeerTransfer": [{
-			"wamrup": "Off",
+			"warmup": "Off",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
-			"wamrup": "On",
+			"warmup": "On",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
   ],

@@ -25,17 +25,17 @@ async function runner (test, nodeCount = 1) {
       if (warmup && subTest.warmup.toLowerCase() === warmup) {
         for (let fileSet of subTest.fileSet) {
           if (fileSetParam && fileSet.toLowerCase() === fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           } else if (!fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           }
         }
       } else if (!warmup) {
         for (let fileSet of subTest.fileSet) {
           if (fileSetParam && fileSet.toLowerCase() === fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           } else if (!fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.warmup, fileSet, version))
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           }
         }
       }

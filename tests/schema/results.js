@@ -26,7 +26,7 @@ const schema = FluentSchema()
       .asString()
       .default('Description of test'))
   .prop(
-    'fileSet',
+    'file_set',
     FluentSchema()
       .asString()
       .default('OneKBFile')
@@ -68,8 +68,8 @@ const schema = FluentSchema()
 const resultsDTO = {
   'name': 'test name',
   'warmup': true,
-  'description': 'Description of benchamrk',
-  'fileSet': 'OneKBFile',
+  'description': 'Description of benchmark',
+  'file_set': 'OneKBFile',
   'date': 'date',
   'file': 'file name',
   'meta': {
@@ -91,6 +91,7 @@ function build (props) {
   results.loadAvg = os.loadavg()
   results.memory = os.totalmem() - os.freemem()
   results.date = new Date().toISOString()
+  results.meta.project = 'js-ipfs'
   return results
 }
 

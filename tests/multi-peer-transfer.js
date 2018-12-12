@@ -6,7 +6,7 @@ const { build } = require('./schema/results')
 const { once } = require('stream-iterators-utils')
 const run = require('./lib/runner')
 
-const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
+const multiPeerTransfer = async (node, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
   const peerA = node[0]
@@ -39,9 +39,10 @@ const multiPeerTransfer = async (node, name, subTest, fileSet, version) => {
 
   return build({
     name: name,
-    subTest: subTest,
-    fileSet: fileSet,
+    warmup: warmup,
+    file_set: fileSet,
     file: filePath,
+    description: 'Retrieve file from one of 4 peers',
     meta: { version: version },
     duration: {
       s: end[0],
