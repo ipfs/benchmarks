@@ -6,11 +6,11 @@ const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
 
-const runCommand = (test) => {
+const runCommand = (command, name) => {
   if (config.stage === 'local') {
-    return local.run(test.localShell, test.name)
+    return local.run(command, name)
   } else {
-    return remote.run(test.shell, test.name)
+    return remote.run(command, name)
   }
 }
 
@@ -23,9 +23,18 @@ const run = async (commit) => {
     }
   }
   for (let test of config.benchmarks.tests) {
+    // first run the benchmark straght up
     try {
-      let result = await runCommand(test)
+      let result = await runCommand(test.benchmark, test.name)
       persistence.store(result)
+    } catch (e) {
+      config.log.error(e)
+    }
+    // then run it with each of the clinic tools
+    try {
+      let doctor = await runCommand(test.doctor)
+      let flame = await runCommand(test.flame)
+      let bubbleProf = await runCommand(test.bubbleProf)
     } catch (e) {
       config.log.error(e)
     }

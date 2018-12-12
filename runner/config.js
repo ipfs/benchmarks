@@ -12,10 +12,10 @@ const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmark
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
 const params = 'OUT_FOLDER=/tmp/out REMOTE=true '
-const clinicOperations = ['doctor', 'flame', 'bubleprof']
-const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && ${params}`
+const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && `
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
+const tests = []
 
 // pretty logs in local
 if (process.env.NODE_ENV === 'test') {
@@ -41,28 +41,71 @@ const getBenchmarkHostname = () => {
   return getInventory().all.children.minions.hosts
 }
 
-const tests = [
-  {
-    name: 'localTransfer',
-    shell: `${remotePreNode} node ${remoteTestsPath}/local-transfer.js`,
-    localShell: `${params} node ${path.join(__dirname, '/../tests/local-transfer.js')}`
-  },
+const getLocalCommand = (test) => {
+  return `${test.params} node ${test.path.local}/${test.file}`
+}
+
+const getRemoteCommand = (test) => {
+  return `${remotePreNode} ${test.params} node ${test.path.local}/${test.file}`
+}
+
+const getLocalClinicCommand = (test, operation) => {
+  return `${test.params} clinic ${operation} -- node ${test.path.local}/${test.file}`
+}
+
+const getRemoteClinicCommand = (test, operation) => {
+  return `${remotePreNode} ${test.params} clinic ${operation} -- node ${test.path.local}/${test.file}`
+}
+
+const testAbstracts = [
+  // {
+  //   name: 'localTransfer',
+  //   shell: `${remotePreNode} node ${remoteTestsPath}/local-transfer.js`,
+  //   localShell: `${params} node ${path.join(__dirname, '/../tests/local-transfer.js')}`
+  // },
   {
     name: 'unixFsAdd',
-    shell: `${remotePreNode} node ${remoteTestsPath}/local-add.js`,
-    localShell: `${params} node ${path.join(__dirname, '/../tests/local-add.js')}`
+    file: 'local-add.js',
+    path: {
+      remote: remoteTestsPath,
+      local: path.join(__dirname, '/../tests')
+    },
+    params: params,
+    remotePreCommand: remotePreNode
+    // shell: `${remotePreNode} node ${remoteTestsPath}/local-add.js`,
+    // localShell: `${params} node ${path.join(__dirname, '/../tests/local-add.js')}`
   },
-  {
-    name: 'localExtract',
-    shell: `${remotePreNode} node ${remoteTestsPath}/local-extract.js`,
-    localShell: `${params} node ${path.join(__dirname, '/../tests/local-extract.js')}`
-  },
-  {
-    name: 'multiPeerTransfer',
-    shell: `${remotePreNode} node ${remoteTestsPath}/multi-peer-transfer.js`,
-    localShell: `${params} node ${path.join(__dirname, '/../tests/multi-peer-transfer.js')}`
-  }
+  // {
+  //   name: 'localExtract',
+  //   shell: `${remotePreNode} node ${remoteTestsPath}/local-extract.js`,
+  //   localShell: `${params} node ${path.join(__dirname, '/../tests/local-extract.js')}`
+  // },
+  // {
+  //   name: 'multiPeerTransfer',
+  //   shell: `${remotePreNode} node ${remoteTestsPath}/multi-peer-transfer.js`,
+  //   localShell: `${params} node ${path.join(__dirname, '/../tests/multi-peer-transfer.js')}`
+  // }
 ]
+
+for (let test of testAbstracts) {
+  if (process.env.STAGE === 'local') {
+    tests.push({
+      name: test.name,
+      benchmark: getLocalCommand(test),
+      doctor: getLocalClinicCommand(test, 'doctor'),
+      flame: getLocalClinicCommand(test, 'flame'),
+      bubbleProf: getLocalClinicCommand(test, 'bubbleProf')
+    })
+  } else {
+    tests.push({
+      name: test.name,
+      benchmark: getRemoteCommand(test),
+      doctor: getRemoteClinicCommand(test, 'doctor'),
+      flame: getRemoteClinicCommand(test, 'flame'),
+      bubbleProf: getRemoteClinicCommand(test, 'bubbleProf')
+    })
+  }
+}
 
 const config = {
   provison: {
@@ -97,11 +140,13 @@ const config = {
     path: path.join(__dirname, '../tests'),
     remotePath: remoteTestsPath,
     tests: tests,
-    clinicOperations: clinicOperations
+    clinicOperations: ['doctor', 'flame', 'bubleprof']
   },
   ipfs: {
     path: remoteIpfsPath
   }
 }
+
+console.log(config.benchmarks.tests)
 
 module.exports = config
