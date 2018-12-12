@@ -1,50 +1,50 @@
 {
 	"unixFsAdd": [{
-			"subTest": "empty-repo",
+			"warmup": "Off",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
-			"subTest": "populated-repo",
+			"warmup": "On",
       "fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	],
 	"localExtract": [{
-			"subTest": "empty-repo",
+			"warmup": "Off",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
-			"subTest": "populated-repo",
+			"warmup": "On",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	],
 	"localTransfer": [{
-			"subTest": "empty-repo",
+    "warmup": "Off",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
-			"subTest": "populated-repo",
+			"warmup": "On",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
 	],
 	"multiPeerTransfer": [{
-			"subTest": "empty-repo",
+			"warmup": "Off",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		},
 		{
-			"subTest": "populated-repo",
+			"warmup": "On",
 			"fileSet": ["OneKBFile", "OneMBFile", "One4MBFile", "One64MBFile" ]
 		}
   ],
   "addMultiKb": [{
-    "subTest": "empty-repo",
+    "warmup": "Off",
     "fileSet": ["Hundred1KBFile"]
   },
   {
-    "subTest": "populated-repo",
+    "warmup": "On",
     "fileSet": ["Hundred1KBFile" ]
   }],
     "initializeNode": [{
-      "subTest": "empty-repo",
+      "warmup": false,
     "fileSet": ["None"]
   }
 ]

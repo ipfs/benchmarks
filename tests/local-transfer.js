@@ -6,7 +6,7 @@ const { build } = require('./schema/results')
 const run = require('./lib/runner')
 const { once } = require('stream-iterators-utils')
 
-const localTransfer = async (node, name, subTest, fileSet, version) => {
+const localTransfer = async (node, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
   const peerA = node[0]
@@ -28,8 +28,8 @@ const localTransfer = async (node, name, subTest, fileSet, version) => {
 
   return build({
     name: name,
-    subTest: subTest,
-    fileSet: fileSet,
+    warmup: warmup,
+    file_set: fileSet,
     file: filePath,
     meta: { version: version },
     description: 'Transfer file between two local nodes',
