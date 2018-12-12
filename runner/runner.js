@@ -23,7 +23,7 @@ const run = async (commit) => {
     }
   }
   for (let test of config.benchmarks.tests) {
-    // first run the benchmark straght up
+    // first run the benchmark straight up
     try {
       let result = await runCommand(test.benchmark, test.name)
       persistence.store(result)
@@ -32,9 +32,13 @@ const run = async (commit) => {
     }
     // then run it with each of the clinic tools
     try {
-      let doctor = await runCommand(test.doctor)
-      let flame = await runCommand(test.flame)
-      let bubbleProf = await runCommand(test.bubbleProf)
+      for (let op of ['doctor', 'flame', 'bubbleProf']) {
+        for (let run of test[op]) {
+          await runCommand(run)
+        }
+      }
+      // cleanup clinic files
+      await runCommand(config.benchmarks.cleanup)
     } catch (e) {
       config.log.error(e)
     }

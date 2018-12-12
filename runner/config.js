@@ -11,11 +11,14 @@ const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrast
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
-const params = 'OUT_FOLDER=/tmp/out REMOTE=true '
+const tmpOut = '/tmp/out'
+const params = `OUT_FOLDER=${tmpOut} REMOTE=true `
 const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && `
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 const tests = []
+const locations = ['local', 'remote']
+const clinicOperations = ['doctor', 'flame', 'bubbleProf']
 
 // pretty logs in local
 if (process.env.NODE_ENV === 'test') {
@@ -27,7 +30,8 @@ if (process.env.NODE_ENV === 'test') {
     prettyPrint: {
       levelFirst: true
     },
-    prettifier: require('pino-pretty')
+    prettifier: require('pino-pretty'),
+    level: (process.env.LOGLEVEL ? process.env.LOGLEVEL : 'info')
   })
 } else {
   pino = Pino()
@@ -41,70 +45,74 @@ const getBenchmarkHostname = () => {
   return getInventory().all.children.minions.hosts
 }
 
-const getLocalCommand = (test) => {
-  return `${test.params} node ${test.path.local}/${test.file}`
+const getCommand = (test, loc) => {
+  return `${loc === 'remote' ? remotePreNode : ''} ${testDefaults.params} node ${testDefaults.path[loc]}/${test.file}`
 }
 
-const getRemoteCommand = (test) => {
-  return `${remotePreNode} ${test.params} node ${test.path.local}/${test.file}`
+const getClinicCommands = (test, operation, loc) => {
+  if (locations.includes(loc) && clinicOperations.includes(operation)) {
+    let variations = []
+    for (let fileSet of clinicRuns[operation].fileSets) {
+      variations.push(`${loc === 'remote' ? remotePreNode : ''} FILESET="${fileSet}" clinic ${operation} --dest ${tmpOut}/${test.name}/ -- node ${testDefaults.path[loc]}/${test.file}`)
+    }
+    return variations
+  } else {
+    throw Error(`getClinicCommands requires an operation from ${clinicOperations} and a location from ${locations}`)
+  }
 }
 
-const getLocalClinicCommand = (test, operation) => {
-  return `${test.params} clinic ${operation} -- node ${test.path.local}/${test.file}`
+const clinicRuns = {
+  doctor: {
+    fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
+  },
+  flame: {
+    fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
+  },
+  bubbleProf: {
+    fileSets: ['One4MBFile', 'One128MBFile']
+  }
 }
 
-const getRemoteClinicCommand = (test, operation) => {
-  return `${remotePreNode} ${test.params} clinic ${operation} -- node ${test.path.local}/${test.file}`
+const testDefaults = {
+  path: {
+    remote: remoteTestsPath,
+    local: path.join(__dirname, '/../tests')
+  },
+  params: params,
+  remotePreCommand: remotePreNode
 }
 
 const testAbstracts = [
-  // {
-  //   name: 'localTransfer',
-  //   shell: `${remotePreNode} node ${remoteTestsPath}/local-transfer.js`,
-  //   localShell: `${params} node ${path.join(__dirname, '/../tests/local-transfer.js')}`
-  // },
+  {
+    name: 'localTransfer',
+    file: 'local-transfer.js'
+  },
   {
     name: 'unixFsAdd',
-    file: 'local-add.js',
-    path: {
-      remote: remoteTestsPath,
-      local: path.join(__dirname, '/../tests')
-    },
-    params: params,
-    remotePreCommand: remotePreNode
-    // shell: `${remotePreNode} node ${remoteTestsPath}/local-add.js`,
-    // localShell: `${params} node ${path.join(__dirname, '/../tests/local-add.js')}`
+    file: 'local-add.js'
   },
-  // {
-  //   name: 'localExtract',
-  //   shell: `${remotePreNode} node ${remoteTestsPath}/local-extract.js`,
-  //   localShell: `${params} node ${path.join(__dirname, '/../tests/local-extract.js')}`
-  // },
-  // {
-  //   name: 'multiPeerTransfer',
-  //   shell: `${remotePreNode} node ${remoteTestsPath}/multi-peer-transfer.js`,
-  //   localShell: `${params} node ${path.join(__dirname, '/../tests/multi-peer-transfer.js')}`
-  // }
+  {
+    name: 'unixFsAdd',
+    file: 'local-extract.js'
+  },
+  {
+    name: 'multiPeerTransfer',
+    file: 'multi-peer-transfer.js'
+  }
 ]
 
 for (let test of testAbstracts) {
+  let loc = 'remote'
   if (process.env.STAGE === 'local') {
-    tests.push({
-      name: test.name,
-      benchmark: getLocalCommand(test),
-      doctor: getLocalClinicCommand(test, 'doctor'),
-      flame: getLocalClinicCommand(test, 'flame'),
-      bubbleProf: getLocalClinicCommand(test, 'bubbleProf')
-    })
-  } else {
-    tests.push({
-      name: test.name,
-      benchmark: getRemoteCommand(test),
-      doctor: getRemoteClinicCommand(test, 'doctor'),
-      flame: getRemoteClinicCommand(test, 'flame'),
-      bubbleProf: getRemoteClinicCommand(test, 'bubbleProf')
-    })
+    loc = 'local'
   }
+  tests.push({
+    name: test.name,
+    benchmark: getCommand(test, loc),
+    doctor: getClinicCommands(test, 'doctor', loc),
+    flame: getClinicCommands(test, 'flame', loc),
+    bubbleProf: getClinicCommands(test, 'bubbleProf', loc)
+  })
 }
 
 const config = {
@@ -114,7 +122,7 @@ const config = {
   log: pino,
   stage: process.env.STAGE || 'local',
   outFolder: process.env.OUT_FOLDER || '/tmp/out',
-  nodePre: remotePreNode,
+  dataDir: process.env.DATADIR || './data/',
   influxdb: {
     host: process.env.INFLUX_HOST || 'localhost',
     db: 'benchmarks',
@@ -140,13 +148,13 @@ const config = {
     path: path.join(__dirname, '../tests'),
     remotePath: remoteTestsPath,
     tests: tests,
-    clinicOperations: ['doctor', 'flame', 'bubleprof']
+    cleanup: `rm -Rf ${tmpOut}/*`
   },
   ipfs: {
     path: remoteIpfsPath
   }
 }
 
-console.log(config.benchmarks.tests)
+config.log.debug(config.benchmarks.tests)
 
 module.exports = config

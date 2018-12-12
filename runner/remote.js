@@ -2,15 +2,16 @@
 
 const remoteExec = require('ssh-exec-plus')
 const config = require('./config')
+const sshConf = {
+  user: config.benchmarks.user,
+  host: config.benchmarks.host,
+  key: config.benchmarks.key
+}
 
-const run = (shell, name) => {
+const run = (shell, name, isClinic) => {
   config.log.info(`Running [${shell}] on host [${config.benchmarks.host}] for user [${config.benchmarks.user}] using [${config.benchmarks.key}]`)
   return new Promise((resolve, reject) => {
-    remoteExec(shell, {
-      user: config.benchmarks.user,
-      host: config.benchmarks.host,
-      key: config.benchmarks.key
-    }, (err, stdout, stderr) => {
+    remoteExec(shell, sshConf, (err, stdout, stderr) => {
       config.log.debug({
         err: err,
         stdout: stdout,
@@ -28,11 +29,7 @@ const run = (shell, name) => {
       if (name) {
         let retrieveCommand = `cat ${config.outFolder}/${name}.json`
         config.log.info(`running  [${retrieveCommand}] on [${config.benchmarks.host}]`)
-        remoteExec(retrieveCommand, {
-          user: config.benchmarks.user,
-          host: config.benchmarks.host,
-          key: config.benchmarks.key
-        }, (err, stdout, stderr) => {
+        remoteExec(retrieveCommand, sshConf, (err, stdout, stderr) => {
           config.log.debug({
             err: err,
             stdout: stdout,
