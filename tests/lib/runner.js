@@ -51,7 +51,7 @@ async function runner (test, nodeCount = 1) {
     process.exit(1)
   }
   store(arrResults)
-  nodeFactory.stop()
+  await nodeFactory.stop()
   clean.peerRepos()
 }
 module.exports = runner
