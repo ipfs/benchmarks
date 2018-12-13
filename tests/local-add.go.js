@@ -1,21 +1,25 @@
 'use strict'
 
 const { exec } = require('child_process')
+const { spawn } = require('child_process')
 const { execSync } = require('child_process')
 const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
+let out
 
 const startNode = (id) => {
   return new Promise((resolve, reject) => {
-    let command = `export IPFS_PATH=~/tmp/ipfs${id} && ipfs daemon`
-    let peer = exec(command)
+    let peer = spawn('ipfs', ['daemon'], { IPFS_PATH: '~/tmp/ipfs' + id })
     peer.stdout.on('data', (data) => {
-      console.log(data)
+      console.log(`stdout: ${data}`)
       if (data.includes('Daemon is ready')) resolve(peer)
     })
     peer.stderr.on('data', (data) => {
       console.error(data)
       reject(data)
+    })
+    peer.on('close', (code, signal) => {
+      console.error('Daemon is stopped')
     })
   })
 }
@@ -46,8 +50,14 @@ const unixFsAdd = async (name, warmup, fileSet, version) => {
 }
 
 const run = async () => {
-  let out = await unixFsAdd('unixFsAdd', true, 'One64MBFile')
-  console.log(out)
+  try {
+    out = await unixFsAdd('unixFsAdd', true, 'One64MBFile')
+    console.log(out)
+    out = await unixFsAdd('unixFsAdd', false, 'One64MBFile')
+    console.log(out)
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 run()
