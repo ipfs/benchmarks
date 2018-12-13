@@ -53,7 +53,12 @@ const getClinicCommands = (test, operation, loc) => {
   if (locations.includes(loc) && clinicOperations.includes(operation)) {
     let variations = []
     for (let fileSet of clinicRuns[operation].fileSets) {
-      variations.push(`${loc === 'remote' ? remotePreNode : ''} FILESET="${fileSet}" clinic ${operation} --dest ${tmpOut}/${test.name}/ -- node ${testDefaults.path[loc]}/${test.file}`)
+      let shellCommand = `${loc === 'remote' ? remotePreNode : ''} FILESET="${fileSet}" clinic ${operation} --dest ${tmpOut}/${test.name}/ -- node ${testDefaults.path[loc]}/${test.file} && ${testDefaults.path[loc]}/upload-ipfs.sh ${tmpOut} ${test.name}`
+      variations.push({
+        command: shellCommand,
+        fileSet: fileSet,
+        benchmarkName: test.name
+      })
     }
     return variations
   } else {
@@ -63,7 +68,7 @@ const getClinicCommands = (test, operation, loc) => {
 
 const clinicRuns = {
   doctor: {
-    fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
+    fileSets: ['One4MBFile'] //, 'One128MBFile', 'OneGBFile']
   },
   flame: {
     fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
@@ -83,22 +88,22 @@ const testDefaults = {
 }
 
 const testAbstracts = [
-  {
-    name: 'localTransfer',
-    file: 'local-transfer.js'
-  },
+  // {
+  //   name: 'localTransfer',
+  //   file: 'local-transfer.js'
+  // },
   {
     name: 'unixFsAdd',
     file: 'local-add.js'
   },
-  {
-    name: 'unixFsAdd',
-    file: 'local-extract.js'
-  },
-  {
-    name: 'multiPeerTransfer',
-    file: 'multi-peer-transfer.js'
-  }
+  // {
+  //   name: 'unixFsAdd',
+  //   file: 'local-extract.js'
+  // },
+  // {
+  //   name: 'multiPeerTransfer',
+  //   file: 'multi-peer-transfer.js'
+  // }
 ]
 
 for (let test of testAbstracts) {
@@ -121,7 +126,7 @@ const config = {
   },
   log: pino,
   stage: process.env.STAGE || 'local',
-  outFolder: process.env.OUT_FOLDER || '/tmp/out',
+  outFolder: process.env.OUT_FOLDER || tmpOut,
   dataDir: process.env.DATADIR || './data/',
   influxdb: {
     host: process.env.INFLUX_HOST || 'localhost',

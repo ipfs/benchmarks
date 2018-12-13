@@ -25,7 +25,8 @@ fi
 
 # doesn't work yet
 # ipfs-cluster-ctl --host /dnsaddr/cluster.ipfs.io --basic-auth $IPFSUSER:$IPFSPWD add /tmp/out/$TESTNAME
-
+SHA="c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2"
 mkdir -p $OUTPATH
 # echo some sha for now
-echo c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2 > $OUTPATH/$TESTNAME.json
+echo "Writing IPFS sha to $OUTPATH/$TESTNAME.json"
+echo "{ \"sha\": \"$SHA\" }" > $OUTPATH/$TESTNAME.json

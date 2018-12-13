@@ -24,17 +24,31 @@ const run = async (commit) => {
   }
   for (let test of config.benchmarks.tests) {
     // first run the benchmark straight up
-    try {
-      let result = await runCommand(test.benchmark, test.name)
-      persistence.store(result)
-    } catch (e) {
-      config.log.error(e)
-    }
+    // try {
+    //   let result = await runCommand(test.benchmark, test.name)
+    //   persistence.store(result)
+    // } catch (e) {
+    //   config.log.error(e)
+    // }
     // then run it with each of the clinic tools
     try {
-      for (let op of ['doctor', 'flame', 'bubbleProf']) {
+      for (let op of ['doctor']) { //, 'flame', 'bubbleProf']) {
         for (let run of test[op]) {
-          await runCommand(run)
+          let sha = await runCommand(run.command, test.name)
+          // just log it for now, but TODO to relate this to datapoints written for a specific commit
+          config.log.info({
+            benchmark: {
+              name: run.benchmarkName,
+              fileSet: run.fileSet,
+            },
+            clinic: {
+              operation: op,
+              sha: sha
+            },
+            ipfs: {
+              commit: commit || 'tbd'
+            }
+          })
         }
       }
       // cleanup clinic files
