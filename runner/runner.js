@@ -24,12 +24,12 @@ const run = async (commit) => {
   }
   for (let test of config.benchmarks.tests) {
     // first run the benchmark straight up
-    // try {
-    //   let result = await runCommand(test.benchmark, test.name)
-    //   persistence.store(result)
-    // } catch (e) {
-    //   config.log.error(e)
-    // }
+    try {
+      let result = await runCommand(test.benchmark, test.name)
+      persistence.store(result)
+    } catch (e) {
+      config.log.error(e)
+    }
     // then run it with each of the clinic tools
     try {
       for (let op of ['doctor']) { //, 'flame', 'bubbleProf']) {

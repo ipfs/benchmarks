@@ -68,7 +68,7 @@ const getClinicCommands = (test, operation, loc) => {
 
 const clinicRuns = {
   doctor: {
-    fileSets: ['One4MBFile'] //, 'One128MBFile', 'OneGBFile']
+    fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
   },
   flame: {
     fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
@@ -88,22 +88,22 @@ const testDefaults = {
 }
 
 const testAbstracts = [
-  // {
-  //   name: 'localTransfer',
-  //   file: 'local-transfer.js'
-  // },
+  {
+    name: 'localTransfer',
+    file: 'local-transfer.js'
+  },
   {
     name: 'unixFsAdd',
     file: 'local-add.js'
   },
-  // {
-  //   name: 'unixFsAdd',
-  //   file: 'local-extract.js'
-  // },
-  // {
-  //   name: 'multiPeerTransfer',
-  //   file: 'multi-peer-transfer.js'
-  // }
+  {
+    name: 'unixFsAdd',
+    file: 'local-extract.js'
+  },
+  {
+    name: 'multiPeerTransfer',
+    file: 'multi-peer-transfer.js'
+  }
 ]
 
 for (let test of testAbstracts) {
