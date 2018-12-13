@@ -16,6 +16,9 @@ module.exports = (config, init, IPFS, count) => {
     node.on('ready', () => {
       resolve(node)
     })
+    node.on('stop', () => {
+      resolve(node)
+    })
     node.on('error', (e) => {
       reject(e)
     })
