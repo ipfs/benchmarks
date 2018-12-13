@@ -39,7 +39,7 @@ const run = async (commit) => {
           config.log.info({
             benchmark: {
               name: run.benchmarkName,
-              fileSet: run.fileSet,
+              fileSet: run.fileSet
             },
             clinic: {
               operation: op,
