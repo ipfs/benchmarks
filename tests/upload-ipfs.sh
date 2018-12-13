@@ -1,15 +1,31 @@
 #!/bin/bash
 
-TESTNAME=$1
+OUTPATH=$1
+TESTNAME=$2
 
-if [ -z "$TESTNAME" ]
+# Usage info
+usage() {
+cat << EOF
+
+Usage: ${0##*/} <ouputPath> <TestName>
+
+Upload a directory to ipfs and store the SHA in a json file at <ouput path>/<Test name>.json
+
+    outputPath    something like '/tmp/out'
+    TestName      something like 'localAdd'
+
+EOF
+}
+
+if [ -z "$TESTNAME" ] || [ -z "$OUTPATH" ]
 then
-  echo "Please provide the name of the test as the first argument: 'upload-ipfs.sh localAdd' "
+  usage
   exit 1
 fi
 
 # doesn't work yet
 # ipfs-cluster-ctl --host /dnsaddr/cluster.ipfs.io --basic-auth $IPFSUSER:$IPFSPWD add /tmp/out/$TESTNAME
 
+mkdir -p $OUTPATH
 # echo some sha for now
-echo c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2
+echo c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2 > $OUTPATH/$TESTNAME.json
