@@ -1,7 +1,7 @@
 'use strict'
 
 const createNode = require(`./create-node`)
-const IPFS = process.env.STAGE === 'remote' ? require('../../../js-ipfs') : require('ipfs')
+const IPFS = process.env.REMOTE === 'true' ? require('../../js-ipfs') : require('ipfs')
 
 class NodeFactory {
   constructor (ipfs) {
@@ -14,15 +14,15 @@ class NodeFactory {
     this._nodes.push(node)
     return node
   }
-  stop () {
-    this._nodes.forEach(async (node) => {
+  async stop () {
+    for (let node of this._nodes) {
       try {
         await node.stop()
       } catch (e) {
         console.log(`Error stopping node: ${e}`)
       }
-    })
-    this._nodes.length = 0
+    }
+    this._nodes.length = null
   }
   get () {
     return this._nodes

@@ -55,7 +55,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "small file - empty repo",
+          "alias": "OneKBFile - warmup off",
           "groupBy": [
             {
               "params": [
@@ -97,20 +97,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "OneKBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "off"
             }
           ]
         },
         {
-          "alias": "large file - empty repo",
+          "alias": "OneKBFile - warmup",
           "groupBy": [
             {
               "params": [
@@ -152,20 +152,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "OneKBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "on"
             }
           ]
         },
         {
-          "alias": "large file - populated repo",
+          "alias": "One64MBFile - warmup",
           "groupBy": [
             {
               "params": [
@@ -207,20 +207,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "One64MBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "on"
             }
           ]
         },
         {
-          "alias": "small file - populated repo",
+          "alias": "One64MBFile - warmup off",
           "groupBy": [
             {
               "params": [
@@ -262,15 +262,15 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "One64MBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "off"
             }
           ]
         }
@@ -354,7 +354,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Empty Repo - large file",
+          "alias": "warmup off - One64MBFile",
           "groupBy": [
             {
               "params": [
@@ -390,20 +390,20 @@
           ],
           "tags": [
             {
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "off"
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "One64MBFile"
             }
           ]
         },
         {
-          "alias": "Empty Repo - small file",
+          "alias": "Warmup Off - OneKBFile",
           "groupBy": [
             {
               "params": [
@@ -439,20 +439,20 @@
           ],
           "tags": [
             {
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "off"
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "OneKBFile"
             }
           ]
         },
         {
-          "alias": "Populated Repo - small file",
+          "alias": "Warmup - OneKBFile",
           "groupBy": [
             {
               "params": [
@@ -488,20 +488,20 @@
           ],
           "tags": [
             {
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "on"
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "OneKBFile"
             }
           ]
         },
         {
-          "alias": "Populated Repo - large file",
+          "alias": "Warmup - One64MBFile",
           "groupBy": [
             {
               "params": [
@@ -537,15 +537,15 @@
           ],
           "tags": [
             {
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "on"
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "One64MBFile"
             }
           ]
         }
@@ -627,7 +627,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "small file - empty repo",
+          "alias": "OneKBFile - warmup off",
           "groupBy": [
             {
               "params": [
@@ -669,20 +669,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "OneKBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "off"
             }
           ]
         },
         {
-          "alias": "large file - empty repo",
+          "alias": "One64MBFile - warmup Off",
           "groupBy": [
             {
               "params": [
@@ -724,20 +724,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "One64MBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "off"
             }
           ]
         },
         {
-          "alias": "large file - populated repo",
+          "alias": "One64MBFile - warmup",
           "groupBy": [
             {
               "params": [
@@ -779,20 +779,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "One64MBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "on"
             }
           ]
         },
         {
-          "alias": "small file - populated repo",
+          "alias": "OneKBFile - warmup",
           "groupBy": [
             {
               "params": [
@@ -834,15 +834,15 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "OneKBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "on"
             }
           ]
         }
@@ -926,7 +926,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "small file - empty repo",
+          "alias": "OneKBFile - warmup off",
           "groupBy": [
             {
               "params": [
@@ -968,20 +968,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "OneKBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "off"
             }
           ]
         },
         {
-          "alias": "large file - empty repo",
+          "alias": "One64MBFile - warmup off",
           "groupBy": [
             {
               "params": [
@@ -1023,20 +1023,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "One64MBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "empty-repo"
+              "value": "off"
             }
           ]
         },
         {
-          "alias": "large file - populated repo",
+          "alias": "One64MBFile - warmup",
           "groupBy": [
             {
               "params": [
@@ -1078,20 +1078,20 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "largefile"
+              "value": "One64MBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "on"
             }
           ]
         },
         {
-          "alias": "small file - populated repo",
+          "alias": "OneKBFile - warmup",
           "groupBy": [
             {
               "params": [
@@ -1133,15 +1133,15 @@
             },
             {
               "condition": "AND",
-              "key": "testClass",
+              "key": "file_set",
               "operator": "=",
-              "value": "smallfile"
+              "value": "OneKBFile"
             },
             {
               "condition": "AND",
-              "key": "subTest",
+              "key": "warmup",
               "operator": "=",
-              "value": "populated-repo"
+              "value": "on"
             }
           ]
         }
@@ -1225,7 +1225,7 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "UTC",
   "title": "IPFS performance",
   "uid": "nxBZpJBmk",
   "version": 4

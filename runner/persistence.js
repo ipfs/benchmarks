@@ -24,18 +24,20 @@ const writePoints = (data) => {
     config.log.info('point: ', point)
     payload.push({
       measurement: point.name,
-      tags: {
-        subTest: point.subTest,
-        commit: point.meta.version.commit || 'tbd',
+      tags: { warmup: point.warmup || 'tbd',
+        commit: point.meta.commit || 'tbd',
         project: point.meta.project || 'tbd',
-        file: point.file || 'tbd'
-      },
+        file_set: point.file_set || 'tbd',
+        version: point.meta.version.version || 'tbd',
+        repo: point.meta.version.repo || 'tbd',
+        guid: point.meta.guid || 'tbd',
+        branch: point.meta.branch || 'tbd' },
       fields: { duration: parseDuration(point.duration) },
-      timestamp: moment(point.date).toDate()
+
+      timestamp: moment().toDate()
     })
   }
-  config.log.debug(payload)
-  return influx.writePoints(payload)
+  influx.writePoints(payload)
 }
 
 const ensureDb = async (db) => {

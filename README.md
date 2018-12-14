@@ -99,10 +99,10 @@ Use env vairable TESTCLASS to run test just agianst that class.  Options of Test
 > FILESET="One64MBFile" node local-add
 ```
 
-### SUBTEST:  
-Use env vairable SUBTEST to run the specfic subTest.  Options of subTest are define in the config.
+### WARMUP:  
+Use env vairable WARMUP to run a warmup routine.  Warmup is eaither On or Off.
 ```bash
-> SUBTEST="empty-repo" node local-add
+> WARMUP="On" node local-add
 ```
 
 ### VERIFYOFF
@@ -111,29 +111,25 @@ Use env variable VERIFYOFF=true to skip the pre-generation of test files.
 >VERIFYOFF=true node local-add
 ```
 ### Run tests locally on a js-ipfs branch
-On the same diriectory level as benchmakrs, clone js-ipfs:
+Inside the benchmark/tests dir is a script to pull down master branch and install:
 ```bash
-> git clone https://github.com/ipfs/js-ipfs.git
+> ./getIpfs.sh ../
 ```
 
 Directory structure now :
 ```
 ├── benchmarks
-├── js-ipfs
+├──── js-ipfs
+├──── tests
 ```
 
-Install js-ipfs:
-```bash
-> cd js-ipfs
-> npm install
-```
 
 Run tests against branch
 ```bash
 > cd benchamrks/tests
-> STAGE=remote node local-add
-``
-`
+> STAGE=local REMOTE=true node local-add
+```
+
 ### Adding new tests
 
 See (README)[tests/README.md] under test
@@ -156,3 +152,7 @@ Results will be written to out directory under /tests
 * `cpu`: Information about cpu benchmark was run on.
 * `loadAvg`: The load average of machine.
 
+
+## License
+
+Copyright (c) Protocol Labs, Inc. under the MIT license. See [LICENSE file](./LICENSE) for details.

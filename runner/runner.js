@@ -26,7 +26,7 @@ const run = async (commit) => {
     // first run the benchmark straight up
     try {
       let result = await runCommand(test.benchmark, test.name)
-      persistence.store(result)
+      await persistence.store(result)
     } catch (e) {
       config.log.error(e)
     }

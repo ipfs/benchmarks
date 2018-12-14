@@ -3,14 +3,10 @@ const NodeFactory = require('./node-factory')
 const config = require('../config')
 const clean = require('./clean')
 const { store } = require('./output')
-
-const fileSetParam = process.env.FILESET || false
-const subTestParam = process.env.SUBTEST || false
-const verify = process.env.VERIFYOFF === 'true'
 const genTests = require('../util/create-files')
 
 async function runner (test, nodeCount = 1) {
-  if (!verify) {
+  if (!config.verify) {
     await genTests()
   }
   const arrResults = []
@@ -21,21 +17,21 @@ async function runner (test, nodeCount = 1) {
   }
   const version = await node[0].version()
   try {
-    for (let subTest of config[test.name]) {
-      if (subTestParam && subTest.subTest === subTestParam) {
+    for (let subTest of config.test[test.name]) {
+      if (config.warmup && subTest.warmup.toLowerCase() === config.warmup) {
         for (let fileSet of subTest.fileSet) {
-          if (fileSetParam && fileSet === fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
-          } else if (!fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
+          if (config.fileSetParam && fileSet.toLowerCase() === config.fileSetParam) {
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
+          } else if (!config.fileSetParam) {
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           }
         }
-      } else if (!subTestParam) {
+      } else if (!config.warmup) {
         for (let fileSet of subTest.fileSet) {
-          if (fileSetParam && fileSet === fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
-          } else if (!fileSetParam) {
-            arrResults.push(await test(node, test.name, subTest.subTest, fileSet, version))
+          if (config.fileSetParam && fileSet.toLowerCase() === config.fileSetParam) {
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
+          } else if (!config.fileSetParam) {
+            arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           }
         }
       }
@@ -51,7 +47,7 @@ async function runner (test, nodeCount = 1) {
     process.exit(1)
   }
   store(arrResults)
-  nodeFactory.stop()
+  await nodeFactory.stop()
   clean.peerRepos()
 }
 module.exports = runner

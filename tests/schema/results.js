@@ -3,7 +3,9 @@
 const { FluentSchema } = require('fluent-schema')
 const os = require('os')
 const Ajv = require('ajv')
+const config = require('../config')
 const ajv = new Ajv({ allErrors: true, useDefaults: true, removeAdditional: true })
+const { getIpfsCommit, getBranchName } = require('../util/get-commit')
 const schema = FluentSchema()
   .id('ipfs')
   .title('IPFS Benchmarks')
@@ -15,10 +17,10 @@ const schema = FluentSchema()
       .default('Benchmark Test Name'))
   .required()
   .prop(
-    'subTest',
+    'warmup',
     FluentSchema()
-      .asString()
-      .default('sub test name'))
+      .asBoolean()
+      .default(true))
   .required()
   .prop(
     'description',
@@ -26,11 +28,10 @@ const schema = FluentSchema()
       .asString()
       .default('Description of test'))
   .prop(
-    'testClass',
+    'file_set',
     FluentSchema()
       .asString()
-      .enum(['smallfile', 'largefile'])
-      .default('smallfile')
+      .default('OneKBFile')
   )
   .prop(
     'date',
@@ -62,16 +63,15 @@ const schema = FluentSchema()
       .prop('commit')
       .prop('version')
   )
-  .prop('meta', FluentSchema()
-    .default('js-ipfs'))
+  .prop('meta')
   .ref('#definitions/meta')
 
 // TODO: use this until we get AJV to generate all defaults
 const resultsDTO = {
   'name': 'test name',
-  'subTest': 'sub test',
-  'description': 'Description of benchamrk',
-  'testClass': 'smallfile',
+  'warmup': true,
+  'description': 'Description of benchmark',
+  'file_set': 'OneKBFile',
   'date': 'date',
   'file': 'file name',
   'meta': {
@@ -87,12 +87,16 @@ const resultsDTO = {
   'loadAvg': 'load average',
   'memory': 'memory'
 }
-function build (props) {
+async function build (props) {
   const results = { ...resultsDTO, ...props }
   results.cpu = os.cpus()
   results.loadAvg = os.loadavg()
   results.memory = os.totalmem() - os.freemem()
-  results.date = new Date().toISOString()
+  results.date = new Date()
+  results.meta.project = 'js-ipfs'
+  results.meta.commit = await getIpfsCommit()
+  results.meta.branch = await getBranchName()
+  results.meta.guid = config.guid
   return results
 }
 

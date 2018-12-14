@@ -5,6 +5,8 @@ const path = require('path')
 const YAML = require('yaml')
 const Influx = require('influx')
 const Pino = require('pino')
+const uuidv1 = require('uuid/v1')
+
 let pino
 
 const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
@@ -12,7 +14,7 @@ const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmark
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
 const tmpOut = '/tmp/out'
-const params = `OUT_FOLDER=${tmpOut} REMOTE=true `
+const params = `OUT_FOLDER=${tmpOut} REMOTE=true GUID=${uuidv1()} `
 const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && `
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
@@ -135,13 +137,17 @@ const config = {
       {
         measurement: tests[0].measurement,
         fields: {
-          duration: Influx.FieldType.INTEGER
+          duration: Influx.FieldType.FLOAT
         },
         tags: [
-          'subTest',
+          'warmup',
           'commit',
           'project',
-          'testClass'
+          'file_set',
+          'branch',
+          'guid',
+          'version',
+          'repo'
         ]
       }
     ]

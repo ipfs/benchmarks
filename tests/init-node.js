@@ -4,7 +4,7 @@ const { build } = require('./schema/results')
 const run = require('./lib/runner')
 const NodeFactory = require('./lib/node-factory')
 
-async function initializeNode (node, name, subTest, fileSet, version) {
+async function initializeNode (node, name, warmup, fileSet, version) {
   const start = process.hrtime()
   const nodeFactory = new NodeFactory()
   await nodeFactory.add({
@@ -22,11 +22,11 @@ async function initializeNode (node, name, subTest, fileSet, version) {
   nodeFactory.stop()
   return build({
     name: name,
-    subTest: subTest,
+    wamrup: warmup,
     file: '',
     meta: { version: version },
     description: 'Initialize node without pre-generated key',
-    fileSet: '',
+    file_set: '',
     duration: { s: end[0],
       ms: end[1] / 1000000 }
   })

@@ -12,16 +12,16 @@ const folder = process.env.OUT_FOLDER || path.join(__dirname, '/../out')
 
 async function store (data) {
   if (Array.isArray(data)) {
-    if (process.env.REMOTE === 'true') {
+    if (process.env.REMOTE === 'true' && process.env.STAGE !== 'local') {
       console.log('Writing output in a single file')
       write(data)
     } else {
       console.log('Writing output in a multiple files')
       var table = new Table({
-        head: ['Test', 'Sub Test', 'Description', 'File Set', 'Duration'], colWidths: [20, 20, 50, 20]
+        head: ['Test', 'Warmup', 'Description', 'File Set', 'Duration'], colWidths: [20, 20, 50, 20]
       })
       for (let testResult of data) {
-        table.push([testResult.name, testResult.subTest, testResult.description, testResult.fileSet, `s:${testResult.duration.s} ms: ${testResult.duration.ms}`])
+        table.push([testResult.name, testResult.warmup, testResult.description, testResult.file_set, `s:${testResult.duration.s} ms: ${testResult.duration.ms}`])
         write(testResult)
       }
       console.log(table.toString())
@@ -42,7 +42,7 @@ async function write (data) {
 }
 
 const buildName = (data) => {
-  if (process.env.REMOTE === 'true') {
+  if (process.env.REMOTE === 'true' && process.env.STAGE !== 'local') {
     return `${folder}/${data[0].name || 'undefined'}`
   } else {
     return `${folder}/${data.name || 'undefined'}-${new Date().toISOString()}`
