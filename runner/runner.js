@@ -25,7 +25,7 @@ const run = async (commit) => {
   for (let test of config.benchmarks.tests) {
     try {
       let result = await runCommand(test)
-      persistence.store(result)
+      await persistence.store(result)
     } catch (e) {
       config.log.error(e)
     }

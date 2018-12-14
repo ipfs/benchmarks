@@ -3,14 +3,10 @@ const NodeFactory = require('./node-factory')
 const config = require('../config')
 const clean = require('./clean')
 const { store } = require('./output')
-
-const fileSetParam = (process.env.FILESET && process.env.FILESET.toLowerCase()) || false
-const warmup = (process.env.WARMUP && process.env.WARMUP.toLowerCase()) || false
-const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 'true'
 const genTests = require('../util/create-files')
 
 async function runner (test, nodeCount = 1) {
-  if (!verify) {
+  if (!config.verify) {
     await genTests()
   }
   const arrResults = []
@@ -21,20 +17,20 @@ async function runner (test, nodeCount = 1) {
   }
   const version = await node[0].version()
   try {
-    for (let subTest of config[test.name]) {
-      if (warmup && subTest.warmup.toLowerCase() === warmup) {
+    for (let subTest of config.test[test.name]) {
+      if (config.warmup && subTest.warmup.toLowerCase() === config.warmup) {
         for (let fileSet of subTest.fileSet) {
-          if (fileSetParam && fileSet.toLowerCase() === fileSetParam) {
+          if (config.fileSetParam && fileSet.toLowerCase() === config.fileSetParam) {
             arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
-          } else if (!fileSetParam) {
+          } else if (!config.fileSetParam) {
             arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           }
         }
-      } else if (!warmup) {
+      } else if (!config.warmup) {
         for (let fileSet of subTest.fileSet) {
-          if (fileSetParam && fileSet.toLowerCase() === fileSetParam) {
+          if (config.fileSetParam && fileSet.toLowerCase() === config.fileSetParam) {
             arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
-          } else if (!fileSetParam) {
+          } else if (!config.fileSetParam) {
             arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
           }
         }

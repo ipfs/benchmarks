@@ -3,7 +3,9 @@
 const { FluentSchema } = require('fluent-schema')
 const os = require('os')
 const Ajv = require('ajv')
+const config = require('../config')
 const ajv = new Ajv({ allErrors: true, useDefaults: true, removeAdditional: true })
+const { getIpfsCommit, getBranchName } = require('../util/get-commit')
 const schema = FluentSchema()
   .id('ipfs')
   .title('IPFS Benchmarks')
@@ -85,13 +87,16 @@ const resultsDTO = {
   'loadAvg': 'load average',
   'memory': 'memory'
 }
-function build (props) {
+async function build (props) {
   const results = { ...resultsDTO, ...props }
   results.cpu = os.cpus()
   results.loadAvg = os.loadavg()
   results.memory = os.totalmem() - os.freemem()
-  results.date = new Date().toISOString()
+  results.date = new Date()
   results.meta.project = 'js-ipfs'
+  results.meta.commit = await getIpfsCommit()
+  results.meta.branch = await getBranchName()
+  results.meta.guid = config.guid
   return results
 }
 
