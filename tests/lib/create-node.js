@@ -49,12 +49,15 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
   } else if (kind === 'go') {
     return new Promise(async (resolve, reject) => {
       const peerDir = `${config.tmpPath}/ipfs${count}`
-      console.log(`Peer dir: ${peerDir}`)
       const peerSpecificConf = goConfigs[count]
       const peerConf = Object.assign({}, defaultConfigGo, peerSpecificConf)
       rimraf.sync(peerDir)
       fs.mkdirSync(peerDir, { recursive: true })
-      await initRepo(peerDir)
+      try {
+        await initRepo(peerDir)
+      } catch (e) {
+        reject(e)
+      }
       fs.writeFileSync(`${peerDir}/config`, JSON.stringify(peerConf))
       let peer = spawn('ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
       peer.stdout.on('data', (data) => {
