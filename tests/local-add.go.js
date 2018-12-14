@@ -1,35 +1,19 @@
 'use strict'
 
-const { exec } = require('child_process')
-const { spawn } = require('child_process')
+const os = require('os')
 const { execSync } = require('child_process')
 const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
+const createNode = require(`./lib/create-node`)
+const conf = {tmpPath: os.tmpdir()}
 let out
-
-const startNode = (id) => {
-  return new Promise((resolve, reject) => {
-    let peer = spawn('ipfs', ['daemon'], { IPFS_PATH: '~/tmp/ipfs' + id })
-    peer.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`)
-      if (data.includes('Daemon is ready')) resolve(peer)
-    })
-    peer.stderr.on('data', (data) => {
-      console.error(data)
-      reject(data)
-    })
-    peer.on('close', (code, signal) => {
-      console.error('Daemon is stopped')
-    })
-  })
-}
 
 const unixFsAdd = async (name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
-  let peer = await startNode('A')
+  let peer = await createNode(conf, null, null, 1, 'go')
 
   const start = process.hrtime()
-  let command = `export IPFS_PATH=~/tmp/ipfsA && ipfs add ${filePath}`
+  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs1 && ipfs add ${filePath}`
   execSync(command)
   const end = process.hrtime(start)
 
