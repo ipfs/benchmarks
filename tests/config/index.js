@@ -1,6 +1,11 @@
 'use strict'
+const uuidv1 = require('uuid/v1')
+const guid = process.env.GUID || uuidv1()
+const fileSetParam = (process.env.FILESET && process.env.FILESET.toLowerCase()) || false
+const warmup = (process.env.WARMUP && process.env.WARMUP.toLowerCase()) || false
+const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 'true'
 
-const config = { 'unixFsAdd': [{
+const tests = { 'unixFsAdd': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] },
 { 'warmup': 'On',
@@ -33,6 +38,12 @@ const config = { 'unixFsAdd': [{
   'fileSet': ['None'] }]
 }
 
-const fileSetParam = (process.env.FILESET && process.env.FILESET.toLowerCase()) || false
-const warmup = (process.env.WARMUP && process.env.WARMUP.toLowerCase()) || false
-const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 'true'
+const config = {
+  test: tests,
+  fileSetParam: fileSetParam,
+  warmup: warmup,
+  verify: verify,
+  guid: guid
+}
+
+module.exports = config

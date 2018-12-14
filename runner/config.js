@@ -5,13 +5,15 @@ const path = require('path')
 const YAML = require('yaml')
 const Influx = require('influx')
 const Pino = require('pino')
+const uuidv1 = require('uuid/v1')
+
 let pino
 
 const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
-const params = 'OUT_FOLDER=/tmp/out REMOTE=true '
+const params = `OUT_FOLDER=/tmp/out REMOTE=true GUID=${uuidv1()}`
 const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && ${params}`
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')

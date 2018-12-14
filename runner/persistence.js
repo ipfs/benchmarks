@@ -11,6 +11,7 @@ const influx = new Influx.InfluxDB({
 })
 
 const parseDuration = (objDuration) => {
+  console.log(objDuration)
   let ms = ((objDuration.s * 1000) + objDuration.ms)
   return parseFloat(ms)
 }
@@ -24,7 +25,15 @@ const writePoints = (data) => {
     config.log.info('point: ', point)
     payload.push({
       measurement: point.name,
-      tags: { warmup: point.warmup, commit: point.meta.version.commit || 'tbd', project: point.meta.project || 'tbd', file_set: point.file_set, version: point.meta.version.version || 'tbd', repo: point.meta.version.repo || 'tbd' },
+      tags: { warmup: point.warmup,
+        commit: point.meta.commit || 'tbd',
+        project: point.meta.project || 'tbd',
+        file_set: point.file_set || 'tbd',
+        version: point.meta.version.version || 'tbd',
+        repo: point.meta.version.repo || 'tbd',
+        date: point.date || 'tbd',
+        guid: point.meta.guid || 'tbd',
+        branch: point.meta.branch || 'tbd' },
       fields: { duration: parseDuration(point.duration) },
       timestamp: moment(point.date).toDate()
     })
