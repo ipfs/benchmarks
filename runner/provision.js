@@ -7,7 +7,6 @@ const local = require('./local')
 const remote = require('./remote')
 const fs = require('fs')
 const hashFile = '/dirHash.txt'
-const deployFile = '/deploy.txt'
 
 const options = {
   folders: { include: ['.*'] },

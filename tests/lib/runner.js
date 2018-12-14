@@ -3,10 +3,6 @@ const NodeFactory = require('./node-factory')
 const config = require('../config')
 const clean = require('./clean')
 const { store } = require('./output')
-
-//const fileSetParam = (process.env.FILESET && process.env.FILESET.toLowerCase()) || false
-//const warmup = (process.env.WARMUP && process.env.WARMUP.toLowerCase()) || false
-//const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 'true'
 const genTests = require('../util/create-files')
 
 async function runner (test, nodeCount = 1) {

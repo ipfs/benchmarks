@@ -80,13 +80,17 @@ const config = {
       {
         measurement: tests[0].measurement,
         fields: {
-          duration: Influx.FieldType.INTEGER
+          duration: Influx.FieldType.FLOAT
         },
         tags: [
           'warmup',
           'commit',
           'project',
-          'file_set'
+          'file_set',
+          'branch',
+          'guid',
+          'version',
+          'repo'
         ]
       }
     ]

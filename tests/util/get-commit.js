@@ -1,6 +1,5 @@
 'use strict'
 
-
 const path = require('path')
 const util = require('util')
 const execute = util.promisify(util.promisify(require('child_process').exec))
@@ -12,11 +11,11 @@ const shell = async (command) => {
 }
 const getIpfsCommit = async () => {
   const out = await shell(`${appDir}/util/getCommit.sh ${appDir}/../../`)
-  return out.stdout
+  return out.stdout.replace(/\n$/, '')
 }
 const getBranchName = async () => {
   const out = await shell(`${appDir}/util/getBranch.sh ${appDir}/../../`)
-  return out.stdout
+  return out.stdout.replace(/\n$/, '')
 }
 module.exports = {
   getIpfsCommit,
