@@ -1,6 +1,6 @@
 'use strict'
 
-const createNode = require(`./create-node`)
+const { CreateNodeJs, CreateGo } = require(`./create-node`)
 const IPFS = process.env.REMOTE === 'true' ? require('../../js-ipfs') : require('ipfs')
 
 class NodeFactory {
@@ -20,12 +20,12 @@ class NodeFactory {
     }
   }
   async addGo (config, init) {
-    const node = await createNode(config, init, this._ipfs, this._nodes.length, 'go')
+    const node = await CreateGo(config, init, this._ipfs, this._nodes.length)
     this._nodes.push(node)
     return node
   }
   async addNodeJs (config, init) {
-    const node = await createNode(config, init, this._ipfs, this._nodes.length)
+    const node = await CreateNodeJs(config, init, this._ipfs, this._nodes.length)
     this._nodes.push(node)
     return node
   }
