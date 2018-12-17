@@ -62,10 +62,8 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
       }
       fs.writeFileSync(`${peerDir}/config`, JSON.stringify(peerConf))
       let peer = spawn('ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
-      console.log(peer.stdout)
       peer.version = function () { return '1' }
       peer.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`)
         let version = {}
         if (data.includes('go-ipfs version:')) {
           const stdArray = data.toString('utf8').split('\n')

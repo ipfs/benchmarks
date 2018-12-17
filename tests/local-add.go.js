@@ -1,7 +1,8 @@
 'use strict'
 
 const os = require('os')
-const { execSync } = require('child_process')
+const util = require('util')
+const execute = util.promisify(util.promisify(require('child_process').exec))
 const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
@@ -11,7 +12,7 @@ const unixFsAddGo = async (node, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
   const start = process.hrtime()
   let command = `export IPFS_PATH=${conf.tmpPath}/ipfs1 && ipfs add ${filePath}`
-  execSync(command)
+  await execute(command)
   const end = process.hrtime(start)
   return build({
     name: name,
