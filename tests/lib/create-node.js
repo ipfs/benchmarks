@@ -19,7 +19,7 @@ const initRepo = (path) => {
     })
     init.stderr.on('data', (errorData) => {
       console.error(`${errorData}`)
-      reject(errorData)
+      return reject(errorData)
     })
     init.on('close', (code, signal) => {
       console.error('Repo iinitialized')
@@ -45,7 +45,7 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
         resolve(node)
       })
       node.on('error', (e) => {
-        reject(e)
+        return reject(e)
       })
     })
   } else if (kind === 'go') {
@@ -58,7 +58,7 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
       try {
         await initRepo(peerDir)
       } catch (e) {
-        reject(e)
+        return reject(e)
       }
       fs.writeFileSync(`${peerDir}/config`, JSON.stringify(peerConf))
       let peer = spawn('ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
@@ -83,7 +83,7 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
       })
       peer.stderr.on('data', (data) => {
         console.error(`${data}`)
-        reject(data)
+        return reject(data)
       })
       peer.on('close', (code, signal) => {
         console.error('Daemon is stopped')
