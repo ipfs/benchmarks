@@ -18,13 +18,13 @@ const unixFsAddGo = async (node, name, warmup, fileSet, version) => {
     warmup: warmup,
     file_set: fileSet,
     file: filePath,
-    meta: { version: version },
-    description: 'Transfer file between two local nodes',
+    meta: { version: version, project: 'go-ipfs' },
+    description: 'Add files to go node',
     duration: {
       s: end[0],
       ms: end[1] / 1000000
     }
-  })
+  }, 'go')
 }
 
 run(unixFsAddGo, 1, 'go')
