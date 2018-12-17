@@ -66,8 +66,20 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
       peer.version = function () { return '1' }
       peer.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`)
+        let version = {}
         if (data.includes('go-ipfs version:')) {
-          peer.version = function () { return data.toString('utf8') }
+          const stdArray = data.toString('utf8').split('\n')
+          for (let item of stdArray) {
+            if (item.includes('go-ipfs version:')) {
+              version.version = item.split(':')[1].trim()
+            }
+            if (item.includes('Repo version:')) {
+              version.repo = item.split(':')[1].trim()
+            }
+          }
+          peer.version = function () {
+            return version
+          }
         }
         if (data.includes('Daemon is ready')) resolve(peer)
       })
