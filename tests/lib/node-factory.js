@@ -15,9 +15,8 @@ class NodeFactory {
       return node
     }
     if (type === 'nodejs') {
-      console.log("nodejs")
-     const node = await this.addNodeJs(config, init)
-     return node
+      const node = await this.addNodeJs(config, init)
+      return node
     }
   }
   async addGo (config, init) {
