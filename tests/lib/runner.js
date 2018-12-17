@@ -5,7 +5,7 @@ const clean = require('./clean')
 const { store } = require('./output')
 const genTests = require('../util/create-files')
 
-async function runner (test, nodeCount = 1) {
+async function runner (test, nodeCount = 1, type = 'nodejs') {
   if (!config.verify) {
     await genTests()
   }
@@ -13,7 +13,7 @@ async function runner (test, nodeCount = 1) {
   const nodeFactory = new NodeFactory()
   const node = []
   for (let i = 0; i < nodeCount; i++) {
-    node.push(await nodeFactory.add())
+    node.push(await nodeFactory.add(type))
   }
   const version = await node[0].version()
   try {
@@ -43,11 +43,12 @@ async function runner (test, nodeCount = 1) {
       clean.peerRepos()
       process.exit(1)
     }
+    console.log(err)
     console.log(err.message)
     process.exit(1)
   }
   store(arrResults)
-  await nodeFactory.stop()
+  await nodeFactory.stop(type)
   clean.peerRepos()
 }
 module.exports = runner

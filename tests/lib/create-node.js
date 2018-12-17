@@ -7,6 +7,8 @@ const defaultConfigGo = require('../config/default-config-go.json')
 const goConfigs = require('../config/go-configs.json')
 const fs = require('fs')
 const privateKey = require('../config/private-key.json')
+const os = require('os')
+const conf = { tmpPath: os.tmpdir() }
 const { repoPath } = require('../package.json').config
 
 const initRepo = (path) => {
@@ -48,7 +50,7 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
     })
   } else if (kind === 'go') {
     return new Promise(async (resolve, reject) => {
-      const peerDir = `${config.tmpPath}/ipfs${count}`
+      const peerDir = `${conf.tmpPath}/ipfs${count}`
       const peerSpecificConf = goConfigs[count]
       const peerConf = Object.assign({}, defaultConfigGo, peerSpecificConf)
       rimraf.sync(peerDir)
@@ -60,8 +62,13 @@ module.exports = (config, init, IPFS, count, kind = 'nodejs') => {
       }
       fs.writeFileSync(`${peerDir}/config`, JSON.stringify(peerConf))
       let peer = spawn('ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
+      console.log(peer.stdout)
+      peer.version = function () { return '1' }
       peer.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`)
+        if (data.includes('go-ipfs version:')) {
+          peer.version = function () { return data.toString('utf8') }
+        }
         if (data.includes('Daemon is ready')) resolve(peer)
       })
       peer.stderr.on('data', (data) => {

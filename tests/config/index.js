@@ -35,7 +35,10 @@ const tests = { 'unixFsAdd': [{
   'fileSet': ['Hundred1KBFile'] } ],
 'initializeNode': [{
   'warmup': 'Off',
-  'fileSet': ['None'] }]
+  'fileSet': ['None'] }],
+'unixFsAddGo': [{
+  'warmup': 'Off',
+  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }]
 }
 
 const config = {

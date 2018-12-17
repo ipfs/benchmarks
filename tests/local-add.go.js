@@ -4,21 +4,15 @@ const os = require('os')
 const { execSync } = require('child_process')
 const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
-const createNode = require(`./lib/create-node`)
-const conf = {tmpPath: os.tmpdir()}
-let out
+const run = require('./lib/runner')
+const conf = { tmpPath: os.tmpdir() }
 
-const unixFsAdd = async (name, warmup, fileSet, version) => {
+const unixFsAddGo = async (node, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
-  let peer = await createNode(conf, null, null, 1, 'go')
-
   const start = process.hrtime()
   let command = `export IPFS_PATH=${conf.tmpPath}/ipfs1 && ipfs add ${filePath}`
   execSync(command)
   const end = process.hrtime(start)
-
-  peer.kill('SIGTERM')
-
   return build({
     name: name,
     warmup: warmup,
@@ -33,15 +27,4 @@ const unixFsAdd = async (name, warmup, fileSet, version) => {
   })
 }
 
-const run = async () => {
-  try {
-    out = await unixFsAdd('unixFsAdd', true, 'One64MBFile')
-    console.log(out)
-    out = await unixFsAdd('unixFsAdd', false, 'One64MBFile')
-    console.log(out)
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-run()
+run(unixFsAddGo, 1, 'go')
