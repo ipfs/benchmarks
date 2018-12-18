@@ -87,15 +87,16 @@ const resultsDTO = {
   'loadAvg': 'load average',
   'memory': 'memory'
 }
-async function build (props) {
+async function build (props, type = 'nodejs') {
   const results = { ...resultsDTO, ...props }
   results.cpu = os.cpus()
   results.loadAvg = os.loadavg()
   results.memory = os.totalmem() - os.freemem()
   results.date = new Date()
-  results.meta.project = 'js-ipfs'
-  results.meta.commit = await getIpfsCommit()
-  results.meta.branch = await getBranchName()
+  if (type !== 'go') {
+    results.meta.commit = await getIpfsCommit()
+    results.meta.branch = await getBranchName()
+  }
   results.meta.guid = config.guid
   return results
 }
