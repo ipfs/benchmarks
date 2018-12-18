@@ -10,8 +10,9 @@ const privateKey = require('../config/private-key.json')
 const os = require('os')
 const conf = { tmpPath: os.tmpdir() }
 const { repoPath } = require('../package.json').config
-const IPFSAPI = require('ipfs-http-client')
-const HTTPAPI = require('ipfs/src/http')
+const ipfsClient = require('ipfs-http-client')
+const IPFSFactory = require('ipfsd-ctl')
+const util = require('util')
 
 const initRepo = async (path) => {
   return new Promise((resolve, reject) => {
@@ -37,7 +38,10 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
         .toString()
         .substring(2, 8)}`,
       config: config || defaultConfig[count],
-      init: init || { privateKey: privateKey[count].privKey }
+      init: init || { privateKey: privateKey[count].privKey },
+      EXPERIMENTAL: {
+        pubsub: true
+      }
     })
     node.on('ready', () => {
       resolve(node)
@@ -52,20 +56,18 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
 }
 
 const CreateBrowser = async (config, init, IPFS, count) => {
-  // create Node
-  const node = await CreateNodeJs(config, init, IPFS, count)
-  const repo = await node.repo.stat()
+  return new Promise((resolve, reject) => {
 
   // create deamon
-  const daemon = new HTTPAPI(repo.repoPath)
-  daemon.repoPath = repo.repoPath
-  await daemon.start()
-
-  // create client
-  const client = IPFSAPI(daemon.apiMultiaddr)
-  client.repoPath = repo.repoPath
-  client.apiMultiaddr = daemon.apiMultiaddr
-  return client
+  let daemon
+  let client
+  const f = IPFSFactory.create()
+  f.spawn({ initOptions: { bits: 1024 } }, (err, _ipfsd) => {
+    daemon = _ipfsd
+    client = ipfsClient(_ipfsd.apiAddr)
+    resolve(client)
+  })
+})
 }
 
 const CreateGo = async (config, init, IPFS, count) => {
