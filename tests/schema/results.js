@@ -94,6 +94,7 @@ async function build (props, type = 'nodejs') {
   results.memory = os.totalmem() - os.freemem()
   results.date = new Date()
   if (type !== 'go') {
+    results.meta.project = 'js-ipfs'
     results.meta.commit = await getIpfsCommit()
     results.meta.branch = await getBranchName()
   }
