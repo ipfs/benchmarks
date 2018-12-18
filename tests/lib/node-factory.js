@@ -46,6 +46,9 @@ class NodeFactory {
       case 'go':
         await this.stopGo()
         break
+      case 'browser':
+        await this.stopBrowser()
+        break
     }
   }
 
@@ -63,6 +66,16 @@ class NodeFactory {
     for (let node of this._nodes) {
       try {
         await node.kill('SIGTERM')
+      } catch (e) {
+        console.log(`Error stopping node: ${e}`)
+      }
+    }
+    this._nodes.length = null
+  }
+  async stopBrowser () {
+    for (let node of this._nodes) {
+      try {
+        await node.stop()
       } catch (e) {
         console.log(`Error stopping node: ${e}`)
       }

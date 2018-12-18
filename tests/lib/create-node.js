@@ -14,7 +14,8 @@ const ipfsClient = require('ipfs-http-client')
 const IPFSFactory = require('ipfsd-ctl')
 const util = require('util')
 
-const initRepo = async (path) => {
+
+const initRepo = (path) => {
   return new Promise((resolve, reject) => {
     let init = spawn('ipfs', ['init'], { env: Object.assign(process.env, { IPFS_PATH: path }) })
     init.stdout.on('data', (data) => {
@@ -22,7 +23,7 @@ const initRepo = async (path) => {
     })
     init.stderr.on('data', (errorData) => {
       console.error(`${errorData}`)
-      return reject(Error(errorData))
+      //return reject(Error(errorData))
     })
     init.on('close', (code, signal) => {
       console.error('Repo iinitialized')
@@ -31,17 +32,14 @@ const initRepo = async (path) => {
   })
 }
 
-const CreateNodeJs = async (config, init, IPFS, count) => {
+const CreateNodeJs = (config, init, IPFS, count) => {
   return new Promise((resolve, reject) => {
     const node = new IPFS({
       repo: `${repoPath}${Math.random()
         .toString()
         .substring(2, 8)}`,
       config: config || defaultConfig[count],
-      init: init || { privateKey: privateKey[count].privKey },
-      EXPERIMENTAL: {
-        pubsub: true
-      }
+      init: init || { privateKey: privateKey[count].privKey }
     })
     node.on('ready', () => {
       resolve(node)
@@ -56,28 +54,26 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
 }
 
 const CreateBrowser = async (config, init, IPFS, count) => {
-  return new Promise((resolve, reject) => {
-
-  // create deamon
-  let daemon
   let client
-  const f = IPFSFactory.create()
-  f.spawn({ initOptions: { bits: 1024 } }, (err, _ipfsd) => {
-    daemon = _ipfsd
-    client = ipfsClient(_ipfsd.apiAddr)
-    resolve(client)
-  })
-})
+  const factory = IPFSFactory.create()
+  const spawn = util.promisify(factory.spawn).bind(factory)
+  const _ipfsd = await spawn({ initOptions: { bits: 1024 } })
+  client = ipfsClient(_ipfsd.apiAddr)
+  return client
 }
 
 const CreateGo = async (config, init, IPFS, count) => {
+  // TODO remove promise use 
   return new Promise(async (resolve, reject) => {
     const peerDir = `${conf.tmpPath}/ipfs${count}`
     const peerSpecificConf = goConfigs[count]
     const peerConf = Object.assign({}, defaultConfigGo, peerSpecificConf)
+    // todo make this async
     rimraf.sync(peerDir)
+    // todo make this async
     fs.mkdirSync(peerDir, { recursive: true })
     await initRepo(peerDir)
+    // TODO make this async
     fs.writeFileSync(`${peerDir}/config`, JSON.stringify(peerConf))
     let peer = spawn('ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
     peer.version = function () { return '1' }
