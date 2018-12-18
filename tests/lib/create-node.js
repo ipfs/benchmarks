@@ -10,6 +10,8 @@ const privateKey = require('../config/private-key.json')
 const os = require('os')
 const conf = { tmpPath: os.tmpdir() }
 const { repoPath } = require('../package.json').config
+const IPFSAPI = require('ipfs-http-client')
+const HTTPAPI = require('ipfs/src/http')
 
 const initRepo = async (path) => {
   return new Promise((resolve, reject) => {
@@ -49,6 +51,23 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
   })
 }
 
+const CreateBrowser = async (config, init, IPFS, count) => {
+  // create Node
+  const node = await CreateNodeJs(config, init, IPFS, count)
+  const repo = await node.repo.stat()
+
+  // create deamon
+  const daemon = new HTTPAPI(repo.repoPath)
+  daemon.repoPath = repo.repoPath
+  await daemon.start()
+
+  // create client
+  const client = IPFSAPI(daemon.apiMultiaddr)
+  client.repoPath = repo.repoPath
+  client.apiMultiaddr = daemon.apiMultiaddr
+  return client
+}
+
 const CreateGo = async (config, init, IPFS, count) => {
   return new Promise(async (resolve, reject) => {
     const peerDir = `${conf.tmpPath}/ipfs${count}`
@@ -76,7 +95,7 @@ const CreateGo = async (config, init, IPFS, count) => {
           return version
         }
       }
-      if (data.includes('Daemon is ready')) resolve (peer)
+      if (data.includes('Daemon is ready')) resolve(peer)
     })
     peer.stderr.on('data', (data) => {
       console.error(`${data}`)
@@ -90,5 +109,6 @@ const CreateGo = async (config, init, IPFS, count) => {
 
 module.exports = {
   CreateNodeJs,
-  CreateGo
+  CreateGo,
+  CreateBrowser
 }
