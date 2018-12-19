@@ -43,7 +43,6 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
   })
   node.on('ready', () => {
     console.log('Node ready')
-    node.start()
   })
   node.on('error', (err) => {
     console.error(`${err}`)
