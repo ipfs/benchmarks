@@ -1,6 +1,6 @@
 'use strict'
 
-const { CreateNodeJs, CreateGo, CreateBrowser } = require(`./create-node`)
+const { CreateNodeJs, CreateGo, CreateHttp } = require(`./create-node`)
 const IPFS = process.env.REMOTE === 'true' ? require('../../js-ipfs') : require('ipfs')
 
 class NodeFactory {
@@ -18,8 +18,8 @@ class NodeFactory {
       const node = await this.addNodeJs(config, init)
       return node
     }
-    if (type === 'browser') {
-      const node = await this.addBrowser(config, init)
+    if (type === 'http') {
+      const node = await this.addHttp(config, init)
       return node
     }
   }
@@ -33,8 +33,8 @@ class NodeFactory {
     this._nodes.push(node)
     return node
   }
-  async addBrowser (config, init) {
-    const node = await CreateBrowser(config, init, this._ipfs, this._nodes.length)
+  async addHttp (config, init) {
+    const node = await CreateHttp(config, init, this._ipfs, this._nodes.length)
     this._nodes.push(node)
     return node
   }
@@ -46,8 +46,8 @@ class NodeFactory {
       case 'go':
         await this.stopGo()
         break
-      case 'browser':
-        await this.stopBrowser()
+      case 'http':
+        await this.stopHttp()
         break
     }
   }
@@ -72,7 +72,7 @@ class NodeFactory {
     }
     this._nodes.length = null
   }
-  async stopBrowser () {
+  async stopHttp () {
     for (let node of this._nodes) {
       try {
         await node.stop()

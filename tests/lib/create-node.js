@@ -63,6 +63,15 @@ const CreateBrowser = async (config, init, IPFS, count) => {
   return client
 }
 
+const CreateHttp = async (config, init, IPFS, count) => {
+  let client
+  const factory = IPFSFactory.create()
+  const spawn = util.promisify(factory.spawn).bind(factory)
+  const _ipfsd = await spawn({ initOptions: { bits: 1024 } })
+  client = ipfsClient(_ipfsd.apiAddr)
+  return client
+}
+
 const CreateGo = async (config, init, IPFS, count) => {
   const peerDir = `${conf.tmpPath}/ipfs${count}`
   const peerSpecificConf = goConfigs[count]
@@ -109,5 +118,6 @@ const CreateGo = async (config, init, IPFS, count) => {
 module.exports = {
   CreateNodeJs,
   CreateGo,
-  CreateBrowser
+  CreateBrowser,
+  CreateHttp
 }

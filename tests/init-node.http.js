@@ -7,7 +7,7 @@ const NodeFactory = require('./lib/node-factory')
 async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
   const start = process.hrtime()
   const nodeFactory = new NodeFactory()
-  await nodeFactory.add('browser', {
+  await nodeFactory.add('http', {
     'Addresses': {
       'API': '/ip4/127.0.0.1/tcp/6012',
       'Gateway': '/ip4/127.0.0.1/tcp/9191',
@@ -19,7 +19,7 @@ async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
     'Bootstrap': []
   }, { 'empty-repo': true })
   const end = process.hrtime(start)
-  await nodeFactory.stop('browser')
+  await nodeFactory.stop('http')
   return build({
     name: name,
     wamrup: warmup,
