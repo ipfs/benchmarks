@@ -16,7 +16,6 @@ const conf = { tmpPath: os.tmpdir() }
 const { repoPath } = require('../package.json').config
 const ipfsClient = require('ipfs-http-client')
 const IPFSFactory = require('ipfsd-ctl')
-
 const { once } = require('stream-iterators-utils')
 
 const initRepo = async (path) => {
@@ -25,10 +24,10 @@ const initRepo = async (path) => {
     console.log(`stdout: ${data}`)
   })
   init.stderr.on('data', (errorData) => {
-    console.error(`${errorData}`)
+    console.error(`stderr: ${errorData}`)
   })
   init.on('close', (code, signal) => {
-    console.log('Repo iinitialized')
+    console.log('Repo initialized')
   })
   await once(init, 'close')
   return init
@@ -46,7 +45,7 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
     console.log('Node ready')
   })
   node.on('error', (err) => {
-    console.error(`${err}`)
+    console.error(err)
   })
   node.on('stop', () => {
     console.log('Node stopped')
@@ -98,7 +97,7 @@ const CreateGo = async (config, init, IPFS, count) => {
     console.error(`${data}`)
   })
   peer.on('close', (code, signal) => {
-    console.error('Daemon is stopped')
+    console.error(`Daemon exited with code: ${code}`)
   })
   peer.on('done', () => {
     console.log('Daemon is ready')
