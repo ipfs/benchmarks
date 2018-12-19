@@ -13,6 +13,7 @@ const { repoPath } = require('../package.json').config
 const ipfsClient = require('ipfs-http-client')
 const IPFSFactory = require('ipfsd-ctl')
 const util = require('util')
+const { once } = require('stream-iterators-utils')
 
 
 const initRepo = (path) => {
@@ -32,25 +33,26 @@ const initRepo = (path) => {
   })
 }
 
-const CreateNodeJs = (config, init, IPFS, count) => {
-  return new Promise((resolve, reject) => {
-    const node = new IPFS({
-      repo: `${repoPath}${Math.random()
-        .toString()
-        .substring(2, 8)}`,
-      config: config || defaultConfig[count],
-      init: init || { privateKey: privateKey[count].privKey }
-    })
-    node.on('ready', () => {
-      resolve(node)
-    })
-    node.on('stop', () => {
-      resolve(node)
-    })
-    node.on('error', (e) => {
-      return reject(e)
-    })
+const CreateNodeJs = async (config, init, IPFS, count) => {
+  const node = new IPFS({
+    repo: `${repoPath}${Math.random()
+      .toString()
+      .substring(2, 8)}`,
+    config: config || defaultConfig[count],
+    init: init || { privateKey: privateKey[count].privKey }
   })
+  node.on('ready', () => {
+    console.log('Node ready')
+    node.start()
+  })
+  node.on('error', (err) => {
+    console.error(`${err}`)
+  })
+  node.on('stop', () => {
+    console.log('Node stopped')
+  })
+  await once(node, 'ready')
+  return node
 }
 
 const CreateBrowser = async (config, init, IPFS, count) => {
