@@ -2,8 +2,12 @@
   "name": "browser",
   "version": "0.1.0",
   "private": true,
+  "config": {
+    "repoPath": "./data/ipfs/"
+  },
   "dependencies": {
     "browser-process-hrtime": "^1.0.0",
+    "ipfs": "^0.33.1",
     "ipfs-http-client": "^28.1.0",
     "ipfsd-ctl": "^0.40.2",
     "react": "^16.6.3",
