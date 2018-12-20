@@ -1,10 +1,10 @@
 tests/node_modules
+tests/browser/node_modules
 runner/node_modules
 local/data
 tests/dirHash.txt
 tests/out
 tests/data
-browser/node_modules
 js-ipfs
 infrastructure/inventory/inventory.local.yaml
 data
