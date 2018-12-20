@@ -1,6 +1,7 @@
 'use strict'
 
 const { spawn } = require('child_process')
+const path = require('path')
 const rimraf = require('rimraf')
 const defaultConfig = require('../config/default-config.json')
 const defaultConfigGo = require('../config/default-config-go.json')
@@ -17,6 +18,7 @@ const { repoPath } = require('../package.json').config
 const ipfsClient = require('ipfs-http-client')
 const IPFSFactory = require('ipfsd-ctl')
 const { once } = require('stream-iterators-utils')
+const puppeteer = require('puppeteer')
 
 const initRepo = async (path) => {
   let init = spawn('ipfs', ['init'], { env: Object.assign(process.env, { IPFS_PATH: path }) })
@@ -55,12 +57,12 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
 }
 
 const CreateBrowser = async (config, init, IPFS, count) => {
-  let client
-  const factory = IPFSFactory.create()
-  const spawn = util.promisify(factory.spawn).bind(factory)
-  const _ipfsd = await spawn({ initOptions: { bits: 1024 } })
-  client = ipfsClient(_ipfsd.apiAddr)
-  return client
+  const testPath = path.join(__dirname, `../browser/build/index.html`)
+  const browser = await puppeteer.launch()
+  const page = await browser.newPage()
+  await page.goto(`file://${testPath}`)
+  page.version = () => { return '1' }
+  return page
 }
 
 const CreateHttp = async (config, init, IPFS, count) => {
