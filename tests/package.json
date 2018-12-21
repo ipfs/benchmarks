@@ -14,6 +14,7 @@
     "test-local": "tap -J unit/*.test.js",
     "lint": "standard --verbose",
     "generateFiles": "node util/create-files",
+    "build-browser": "./util/build-browser-test.sh",
     "benchmark": " npm generateFiles && node local-add.js  && node local-extract.js && node local-transfer && node multi-peer-transfer"
   },
   "contributors": [

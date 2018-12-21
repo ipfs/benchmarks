@@ -38,3 +38,5 @@
         /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && rm -Rf node_modules && npm install"
     - name: generate test files
       shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm run generateFiles"
+    - name: build-browser
+      shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm run build-br"
