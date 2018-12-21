@@ -106,6 +106,14 @@ const testAbstracts = [
   {
     name: 'multiPeerTransfer',
     file: 'multi-peer-transfer.js'
+  },
+  {
+    name: 'addMultiKb',
+    file: 'add-multi-kb.js'
+  },
+  {
+    name: 'unixFsAddGo',
+    file: 'local-add.go.js'
   }
 ]
 

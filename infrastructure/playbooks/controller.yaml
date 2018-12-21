@@ -28,7 +28,6 @@
       name: common
     become: yes
     tags: ["prepare","common"]
-
   - name: copy code
     become: no
     synchronize:
