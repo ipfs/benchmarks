@@ -36,6 +36,9 @@ const tests = { 'unixFsAdd': [{
 'initializeNode': [{
   'warmup': 'Off',
   'fileSet': ['None'] }],
+'initializeNodeBrowser': [{
+  'warmup': 'Off',
+  'fileSet': ['None'] }],
 'unixFsAddGo': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }]

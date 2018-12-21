@@ -1,6 +1,6 @@
 'use strict'
 
-const { CreateNodeJs, CreateGo } = require(`./create-node`)
+const { CreateNodeJs, CreateGo, CreateHttp, CreateBrowser } = require(`./create-node`)
 const IPFS = process.env.REMOTE === 'true' ? require('../../js-ipfs') : require('ipfs')
 
 class NodeFactory {
@@ -10,12 +10,21 @@ class NodeFactory {
   }
 
   async add (type, config, init) {
+    console.log(type)
     if (type === 'go') {
       const node = await this.addGo(config, init)
       return node
     }
     if (type === 'nodejs') {
       const node = await this.addNodeJs(config, init)
+      return node
+    }
+    if (type === 'http') {
+      const node = await this.addHttp(config, init)
+      return node
+    }
+    if (type === 'browser') {
+      const node = await this.addBrowser(config, init)
       return node
     }
   }
@@ -29,6 +38,16 @@ class NodeFactory {
     this._nodes.push(node)
     return node
   }
+  async addHttp (config, init) {
+    const node = await CreateHttp(config, init, this._ipfs, this._nodes.length)
+    this._nodes.push(node)
+    return node
+  }
+  async addBrowser (config, init) {
+    const node = await CreateBrowser(config, init, this._ipfs, this._nodes.length)
+    this._nodes.push(node)
+    return node
+  }
   async stop (type) {
     switch (type) {
       case 'nodejs':
@@ -36,6 +55,12 @@ class NodeFactory {
         break
       case 'go':
         await this.stopGo()
+        break
+      case 'http':
+        await this.stopHttp()
+        break
+      case 'browser':
+        await this.stopBrowser()
         break
     }
   }
@@ -60,6 +85,27 @@ class NodeFactory {
     }
     this._nodes.length = null
   }
+  async stopHttp () {
+    for (let node of this._nodes) {
+      try {
+        await node.stop()
+      } catch (e) {
+        console.log(`Error stopping node: ${e}`)
+      }
+    }
+    this._nodes.length = null
+  }
+  async stopBrowser () {
+    for (let node of this._nodes) {
+      try {
+        await node.browser.close()
+      } catch (e) {
+        console.log(`Error stopping node: ${e}`)
+      }
+    }
+    this._nodes.length = null
+  }
+
   get () {
     return this._nodes
   }

@@ -14,6 +14,7 @@
     "test-local": "tap -J unit/*.test.js",
     "lint": "standard --verbose",
     "generateFiles": "node util/create-files",
+    "build-browser": "./util/build-browser-test.sh",
     "benchmark": " npm generateFiles && node local-add.js  && node local-extract.js && node local-transfer && node multi-peer-transfer"
   },
   "contributors": [
@@ -26,14 +27,19 @@
     "ajv": "^6.5.5",
     "cli-table3": "^0.5.1",
     "fluent-schema": "^0.2.0",
+    "go-ipfs-dep": "^0.4.18",
     "ipfs": "^0.33.1",
+    "ipfs-http-client": "^28.1.0",
+    "ipfsd-ctl": "^0.40.2",
     "os": "^0.1.1",
     "peer-id": "^0.12.0",
     "pretty-hrtime": "^1.0.3",
     "proper-lockfile": "^3.2.0",
+    "puppeteer": "^1.11.0",
     "rimraf": "^2.6.2",
     "stream-iterators-utils": "^0.1.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "eslint": "5.6.0"
   },
   "devDependencies": {
     "standard": "^12.0.1",
