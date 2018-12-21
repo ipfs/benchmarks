@@ -1,18 +1,26 @@
 'use strict'
 
 const Rsync = require('rsync')
+const fs = require('fs')
 
-// Build the command
-var rsync = new Rsync()
-  // .shell('ssh')
-  .flags('avz')
-  .shell(`ssh -i ${process.env.HOME}/.ssh/id_rsa`)
-  .source('elexy@operations.azure.nearform.net:/tmp/out/localAdd')
-  .destination('~/tmp')
-
-// Execute the command
-rsync.execute(function (error, code, cmd) {
-  if (error) console.log(error)
-  console.log(code)
-  console.log(cmd)
-})
+module.exports = (config, run, targetDir) => {
+  const targetPath = `${targetDir}/${run.benchmarkName}/${run.operation}/${run.fileSet}`
+  fs.mkdirSync(targetPath, { recursive: true })
+  var rsync = new Rsync()
+    .flags('avz')
+    .shell(`ssh -i ${config.benchmarks.key}`)
+    .source(`${config.benchmarks.user}@${config.benchmarks.host}:${config.outFolder}/${run.benchmarkName}/`)
+    .destination(targetPath)
+  config.log.info(`Retrieving the clinic files with [${rsync.command()}]`)
+  return new Promise((resolve, reject) => {
+    rsync.execute(function (error, code, cmd) {
+      if (error) {
+        reject(error)
+      } else {
+        config.log.info(code)
+        config.log.info(cmd)
+        resolve(targetPath)
+      }
+    })
+  })
+}

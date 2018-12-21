@@ -5,7 +5,9 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
-
+const retrieve = require('./retrieve')
+const fs = require('fs')
+const os = require('os')
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
     return local.run(command, name)
@@ -15,6 +17,8 @@ const runCommand = (command, name) => {
 }
 
 const run = async (commit) => {
+  const targetDir = `${os.tmpdir()}/${Date.now()}`
+  fs.mkdirSync(targetDir, { recursive: true })
   if (config.stage !== 'local') {
     try {
       await provision.ensure(commit)
@@ -26,15 +30,20 @@ const run = async (commit) => {
     // first run the benchmark straight up
     try {
       let result = await runCommand(test.benchmark, test.name)
+      config.log.debug(result)
+      fs.writeFileSync(`${targetDir}/${test.name}/results.json`, JSON.stringify(result))
       await persistence.store(result)
     } catch (e) {
       config.log.error(e)
     }
     // then run it with each of the clinic tools
     try {
-      for (let op of ['doctor']) { //, 'flame', 'bubbleProf']) {
+      for (let op of ['doctor', 'flame', 'bubbleProf']) {
         for (let run of test[op]) {
-          let sha = await runCommand(run.command, test.name)
+          await runCommand(run.command)
+          let clinicPath = await retrieve(config, run, targetDir)
+          // cleanup clinic files
+          await runCommand(config.benchmarks.cleanup)
           // just log it for now, but TODO to relate this to datapoints written for a specific commit
           config.log.info({
             benchmark: {
@@ -43,7 +52,7 @@ const run = async (commit) => {
             },
             clinic: {
               operation: op,
-              sha: sha
+              path: clinicPath
             },
             ipfs: {
               commit: commit || 'tbd'
@@ -51,8 +60,7 @@ const run = async (commit) => {
           })
         }
       }
-      // cleanup clinic files
-      await runCommand(config.benchmarks.cleanup)
+
     } catch (e) {
       config.log.error(e)
     }
