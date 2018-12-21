@@ -52,6 +52,8 @@ const run = (shell, name, isClinic) => {
             }
           }
         })
+      } else if (isClinic) {
+
       } else {
         resolve(stdout)
       }
