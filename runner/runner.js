@@ -8,8 +8,8 @@ const persistence = require('./persistence')
 const retrieve = require('./retrieve')
 const os = require('os')
 const util = require('util')
-const writeFile = util.promisify('fs').writeFile
-const mkDir = util.promisify('fs').writeFile
+const writeFile = util.promisify(require('fs').writeFile)
+const mkDir = util.promisify(require('fs').mkdir)
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
     return local.run(command, name)
@@ -40,7 +40,7 @@ const run = async (commit) => {
     }
     // then run it with each of the clinic tools
     try {
-      for (let op of ['doctor', 'flame', 'bubbleProf']) {
+      for (let op of ['doctor', 'flame']) { //, 'bubbleProf']) {
         for (let run of test[op]) {
           await runCommand(run.command)
           let clinicPath = await retrieve(config, run, targetDir)
