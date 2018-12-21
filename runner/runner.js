@@ -5,7 +5,9 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
-
+const retrieve = require('./retrieve')
+const fs = require('fs')
+const os = require('os')
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
     return local.run(command, name)
@@ -15,6 +17,8 @@ const runCommand = (command, name) => {
 }
 
 const run = async (commit) => {
+  const targetDir = `${os.tmpdir()}/${Date.now()}`
+  fs.mkdirSync(targetDir, { recursive: true })
   if (config.stage !== 'local') {
     try {
       await provision.ensure(commit)
@@ -26,6 +30,8 @@ const run = async (commit) => {
     // first run the benchmark straight up
     try {
       let result = await runCommand(test.benchmark, test.name)
+      config.log.debug(result)
+      fs.writeFileSync(`${targetDir}/${test.name}/results.json`, JSON.stringify(result))
       await persistence.store(result)
     } catch (e) {
       config.log.error(e)
