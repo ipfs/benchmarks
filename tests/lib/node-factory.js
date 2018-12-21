@@ -10,7 +10,6 @@ class NodeFactory {
   }
 
   async add (type, config, init) {
-    console.log(type)
     if (type === 'go') {
       const node = await this.addGo(config, init)
       return node
