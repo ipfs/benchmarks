@@ -6,10 +6,15 @@ const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
 const retrieve = require('./retrieve')
+<<<<<<< HEAD
 const os = require('os')
 const util = require('util')
 const writeFile = util.promisify(require('fs').writeFile)
 const mkDir = util.promisify(require('fs').mkdir)
+=======
+const fs = require('fs')
+const os = require('os')
+>>>>>>> retrieve clinic files
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
     return local.run(command, name)
@@ -20,7 +25,11 @@ const runCommand = (command, name) => {
 
 const run = async (commit) => {
   const targetDir = `${os.tmpdir()}/${Date.now()}`
+<<<<<<< HEAD
   await mkDir(targetDir, { recursive: true })
+=======
+  fs.mkdirSync(targetDir, { recursive: true })
+>>>>>>> retrieve clinic files
   if (config.stage !== 'local') {
     try {
       await provision.ensure(commit)
