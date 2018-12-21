@@ -98,7 +98,7 @@ class NodeFactory {
   async stopBrowser () {
     for (let node of this._nodes) {
       try {
-        await node.stop()
+        await node.browser.close()
       } catch (e) {
         console.log(`Error stopping node: ${e}`)
       }

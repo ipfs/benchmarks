@@ -13,7 +13,8 @@ class App extends Component {
       protocol_version: null,
       added_file_hash: null,
       added_file_contents: null,
-      time: null
+      time_s: null,
+      time_ms: null
     }
   }
   componentDidMount () {
@@ -24,16 +25,20 @@ class App extends Component {
 
     function create () {
       // Create the IPFS node instance
+      const start = hrtime()
+
 
       node = new IPFS({ repo: String(Math.random() + Date.now()) })
 
       node.once('ready', () => {
+        const delta = hrtime(start)
         console.log('IPFS node is ready')
-        ops()
+        console.log(delta)
+        ops(delta)
       })
     }
 
-    function ops () {
+    function ops (delta) {
       node.id((err, res) => {
         if (err) {
           throw err
@@ -41,7 +46,9 @@ class App extends Component {
         self.setState({
           id: res.id,
           version: res.agentVersion,
-          protocol_version: res.protocolVersion
+          protocol_version: res.protocolVersion,
+          time_s: delta[0],
+          time_ms: delta[1]
         })
       })
     }
@@ -54,12 +61,7 @@ class App extends Component {
       <p>Your IPFS protocol version is <strong>{this.state.protocol_version}</strong></p>
       <div>
         <div>
-          Time <br />
-          {this.state.time}
-        </div>
-        <div>
-          Contents of this file: <br />
-          {this.state.added_file_contents}
+          Time <span class='init-node-browser-time_s'>{this.state.time_s}</span>.<span class='init-node-browser-time_ms'>{this.state.time_ms}</span>
         </div>
       </div>
     </div>

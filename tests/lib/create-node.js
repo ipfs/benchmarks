@@ -61,8 +61,7 @@ const CreateBrowser = async (config, init, IPFS, count) => {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   await page.goto(`file://${testPath}`)
-  page.version = () => { return '1' }
-  return page
+  return { page: page, browser: browser, version: () => { return '1' } }
 }
 
 const CreateHttp = async (config, init, IPFS, count) => {
