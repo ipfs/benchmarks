@@ -39,7 +39,7 @@ const run = (shell, name) => {
           }
         })
       } else {
-        resolve()
+        resolve(stdout)
       }
     })
   })
