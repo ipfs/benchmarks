@@ -8,8 +8,8 @@ const persistence = require('./persistence')
 const retrieve = require('./retrieve')
 const os = require('os')
 const util = require('util')
-const writeFile = util.promisify('fs').writeFile
-const mkDir = util.promisify('fs').writeFile
+const writeFile = util.promisify(require('fs').writeFile)
+const mkDir = util.promisify(require('fs').mkdir)
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
     return local.run(command, name)
