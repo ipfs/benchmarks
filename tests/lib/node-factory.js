@@ -1,7 +1,7 @@
 'use strict'
 
 const { CreateNodeJs, CreateGo, CreateHttp, CreateBrowser } = require(`./create-node`)
-const IPFS = process.env.REMOTE === 'true' ? require('../../js-ipfs') : require('ipfs')
+const IPFS = process.env.REMOTE === 'true' ? require('../../../js-ipfs') : require('ipfs')
 
 class NodeFactory {
   constructor (ipfs) {

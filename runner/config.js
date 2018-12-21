@@ -100,12 +100,20 @@ const testAbstracts = [
     file: 'local-add.js'
   },
   {
-    name: 'unixFsAdd',
+    name: 'localExtract',
     file: 'local-extract.js'
   },
   {
     name: 'multiPeerTransfer',
     file: 'multi-peer-transfer.js'
+  },
+  {
+    name: 'addMultiKb',
+    file: 'add-multi-kb.js'
+  },
+  {
+    name: 'unixFsAddGo',
+    file: 'local-add.go.js'
   }
 ]
 
