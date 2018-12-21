@@ -11,3 +11,25 @@ data
 infrastructure/playbooks/*.retry
 *clinic*
 tests/node_trace.*.log
+
+# browser dependencies
+tests/browser/node_modules
+tests/browser/.pnp
+tests/browser/.pnp.js
+
+# testing
+tests/browser/coverage
+
+# production
+tests/browser/build
+
+# misc
+tests/browser/.DS_Store
+tests/browser/.env.local
+tests/browser/.env.development.local
+tests/browser/.env.test.local
+tests/browser/.env.production.local
+
+tests/browser/npm-debug.log*
+tests/browser/yarn-debug.log*
+tests/browser/yarn-error.log*
