@@ -4,6 +4,8 @@ import './App.css'
 import IPFS from 'ipfs'
 import hrtime from 'browser-process-hrtime'
 import { config } from '../package.json'
+import uuidv1 from 'uuid/v1'
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -28,7 +30,7 @@ class App extends Component {
       const start = hrtime()
 
 
-      node = new IPFS({ repo: String(Math.random() + Date.now()) })
+      node = new IPFS({ repo: String(uuidv1()) })
 
       node.once('ready', () => {
         const delta = hrtime(start)
