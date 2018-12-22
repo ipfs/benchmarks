@@ -5,7 +5,8 @@ import IPFS from 'ipfs'
 import hrtime from 'browser-process-hrtime'
 import { config } from '../package.json'
 import uuidv1 from 'uuid/v1'
-
+import ReactTable from "react-table"
+import 'react-table/react-table.css'
 class App extends Component {
   constructor (props) {
     super(props)
@@ -19,7 +20,7 @@ class App extends Component {
       time_ms: null
     }
   }
-  componentDidMount () {
+  submitClick (t) {
     const self = this
     let node
 
@@ -34,8 +35,6 @@ class App extends Component {
 
       node.once('ready', () => {
         const delta = hrtime(start)
-        console.log('IPFS node is ready')
-        console.log(delta)
         ops(delta)
       })
     }
@@ -54,18 +53,56 @@ class App extends Component {
         })
       })
     }
+    
+  }
+  componentDidMount () {
+   
   }
   render () {
-    return <div style={{ textAlign: 'center' }}>
-      <h1>IPFS Browser Benchmark</h1>
-      <p>Your ID is <strong>{this.state.id}</strong></p>
-      <p>Your IPFS version is <strong>{this.state.version}</strong></p>
-      <p>Your IPFS protocol version is <strong>{this.state.protocol_version}</strong></p>
-      <div>
-        <div>
-          Time <span class='init-node-browser-time_s'>{this.state.time_s}</span>.<span class='init-node-browser-time_ms'>{this.state.time_ms}</span>
+    const data = [{
+      name: 'Initialize Node',
+      start: "initialize_node",
+      time: {
+        s: this.state.time_s,
+        ms: this.state.time_ms
+      },
+      node: {
+        id: this.state.id,
+         version: this.state.version,
+         protocal_version: this.state.protocol_version
+      }
+    }]
+  
+    const columns = [
+      {
+        Header: 'Start',
+        accessor: 'start',
+        style: {
+          cursor: 'pointer'
+        },
+        Cell: props => <button class={props.value} onClick={()=>this.submitClick(props.value)}>Start Test</button>
+      },
+      {
+        Header: 'Test',
+        accessor: 'name'
+      }, {
+        Header: 'Node',
+        accessor: 'node',
+        Cell: props => <div>
+          <p>Your ID is <strong>{props.value.id}</strong></p>
+          <p>Your IPFS version is <strong>{props.value.version}</strong></p>
+          <p>Your IPFS protocol version is <strong>{props.value.protocal_version}</strong></p>
         </div>
-      </div>
+      }, {
+        id: 'time',
+        Header: 'Time',
+        accessor: d => `${d.time.s}.${d.time.ms}`
+      }]
+    return <div style={{ textAlign: 'center' }}>       <h1>IPFS Browser Benchmark</h1><ReactTable
+      data={data}
+      columns={columns}
+      showPagination={false}
+    />
     </div>
   }
 }
