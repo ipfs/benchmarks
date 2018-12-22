@@ -19,7 +19,6 @@ const ipfsClient = require('ipfs-http-client')
 const IPFSFactory = require('ipfsd-ctl')
 const { once } = require('stream-iterators-utils')
 const puppeteer = require('puppeteer')
-
 const initRepo = async (path) => {
   let init = spawn('ipfs', ['init'], { env: Object.assign(process.env, { IPFS_PATH: path }) })
   init.stdout.on('data', (data) => {
