@@ -17,7 +17,8 @@ class App extends Component {
       added_file_hash: null,
       added_file_contents: null,
       time_s: null,
-      time_ms: null
+      time_ms: null,
+      ready: ''
     }
   }
   submitClick (t) {
@@ -49,7 +50,8 @@ class App extends Component {
           version: res.agentVersion,
           protocol_version: res.protocolVersion,
           time_s: delta[0],
-          time_ms: delta[1]
+          time_ms: delta[1],
+          ready: 'ready'
         })
       })
     }
@@ -64,7 +66,9 @@ class App extends Component {
       start: "initialize_node",
       time: {
         s: this.state.time_s,
-        ms: this.state.time_ms
+        ms: this.state.time_ms,
+        name: 'initialize_node',
+        ready: this.state.ready
       },
       node: {
         id: this.state.id,
@@ -94,9 +98,9 @@ class App extends Component {
           <p>Your IPFS protocol version is <strong>{props.value.protocal_version}</strong></p>
         </div>
       }, {
-        id: 'time',
         Header: 'Time',
-        accessor: d => `${d.time.s}.${d.time.ms}`
+        accessor: 'time',
+        Cell: props => <div><div class={props.value.name + '_s_' + props.value.ready}>{props.value.s}</div>.<div class={props.value.name + '_ms_' + props.value.ready}_ms>{props.value.ms}</div></div>
       }]
     return <div style={{ textAlign: 'center' }}>       <h1>IPFS Browser Benchmark</h1><ReactTable
       data={data}
