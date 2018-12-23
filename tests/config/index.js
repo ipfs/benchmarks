@@ -7,32 +7,19 @@ const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 
 
 const tests = { 'unixFsAdd': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] },
-{ 'warmup': 'On',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }],
 'localExtract': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] },
-{ 'warmup': 'On',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }],
 'localTransfer': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] },
-{
-  'warmup': 'On',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }],
 'multiPeerTransfer': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] },
-{
-  'warmup': 'On',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ],
 'addMultiKb': [{
   'warmup': 'Off',
-  'fileSet': ['Hundred1KBFile'] },
-{
-  'warmup': 'On',
-  'fileSet': ['Hundred1KBFile'] } ],
+  'fileSet': ['Hundred1KBFile'] }],
 'initializeNode': [{
   'warmup': 'Off',
   'fileSet': ['None'] }],
