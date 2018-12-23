@@ -19,7 +19,7 @@ const files = [
   { size: 64 * KB, name: 'One64KBFile' },
   { size: 512 * KB, name: 'One512KBFile' },
   { size: 768 * KB, name: 'One768KBFile' },
-  { size: 1023 * KB, name: 'One1023MBFile' },
+  { size: 1023 * KB, name: 'One1023KBFile' },
   { size: MB, name: 'OneMBFile' },
   { size: 4 * MB, name: 'One4MBFile' },
   { size: 8 * MB, name: 'One8MBFile' },
