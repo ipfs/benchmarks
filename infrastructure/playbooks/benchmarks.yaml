@@ -43,4 +43,4 @@
     - name: generate test files
       shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm run generateFiles"
     - name: build-browser
-      shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm run build-br"
+      shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm run build-browser"
