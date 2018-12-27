@@ -9,7 +9,7 @@ const uuidv1 = require('uuid/v1')
 
 let pino
 
-const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
+const inventoryPath = process.env.INVENTORY || path.join(__dirname, '../infrastructure/inventory/inventory.yaml')
 const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmarks.yaml')
 const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
@@ -99,7 +99,7 @@ const testAbstracts = [
     file: 'local-add.js'
   },
   {
-    name: 'unixFsAdd',
+    name: 'localExtract',
     file: 'local-extract.js'
   },
   {
