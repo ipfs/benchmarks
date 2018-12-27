@@ -44,6 +44,7 @@ const run = (shell, name, isClinic) => {
           }
           if (stdout) {
             try {
+              console.log(stdout)
               let objResults = JSON.parse(stdout)
               config.log.debug(objResults)
               resolve(objResults)
