@@ -12,7 +12,7 @@ const folder = process.env.OUT_FOLDER || path.join(__dirname, '/../out')
 
 async function store (data) {
   if (Array.isArray(data)) {
-    if (process.env.REMOTE === 'true' && process.env.STAGE !== 'local') {
+    if (process.env.REMOTE === 'true' && (process.env.STAGE !== 'local' || process.env.DASHBOARD === 'local')) {
       console.log('Writing output in a single file')
       write(data)
     } else {
@@ -42,7 +42,7 @@ async function write (data) {
 }
 
 const buildName = (data) => {
-  if (process.env.REMOTE === 'true' && process.env.STAGE !== 'local') {
+  if (process.env.REMOTE === 'true' && (process.env.STAGE !== 'local' || process.env.DASHBOARD === 'local')) {
     return `${folder}/${data[0].name || 'undefined'}`
   } else {
     return `${folder}/${data.name || 'undefined'}-${new Date().toISOString()}`
