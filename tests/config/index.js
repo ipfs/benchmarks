@@ -7,7 +7,7 @@ const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 
 
 const tests = { 'unixFsAdd': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'One62KBFile', 'One64KBFile', 'OneMBFile', 'One512KBFile','One768KBFile', 'One1023KBFile', 'OneMBFile', 'One4MBFile', 'One8MBFile', 'One64MBFile', 'One128MBFile', 'One512MBFile', 'OneGBFile'] }],
+  'fileSet': ['OneKBFile', 'One62KBFile', 'One64KBFile', 'OneMBFile', 'One512KBFile', 'One768KBFile', 'One1023KBFile', 'OneMBFile', 'One4MBFile', 'One8MBFile', 'One64MBFile'] }],
 'localExtract': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ],
