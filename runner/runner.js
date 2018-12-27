@@ -26,35 +26,37 @@ const run = async (commit) => {
     // first run the benchmark straight up
     try {
       let result = await runCommand(test.benchmark, test.name)
+      config.log.info(result)
       await persistence.store(result)
     } catch (e) {
       config.log.error(e)
     }
-    // then run it with each of the clinic tools
-    try {
-      for (let op of ['doctor']) { //, 'flame', 'bubbleProf']) {
-        for (let run of test[op]) {
-          let sha = await runCommand(run.command, test.name)
-          // just log it for now, but TODO to relate this to datapoints written for a specific commit
-          config.log.info({
-            benchmark: {
-              name: run.benchmarkName,
-              fileSet: run.fileSet
-            },
-            clinic: {
-              operation: op,
-              sha: sha
-            },
-            ipfs: {
-              commit: commit || 'tbd'
-            }
-          })
+    if (process.env.DOCTOR !== 'off') { // then run it with each of the clinic tools
+      try {
+        for (let op of ['doctor']) { //, 'flame', 'bubbleProf']) {
+          for (let run of test[op]) {
+            let sha = await runCommand(run.command, test.name)
+            // just log it for now, but TODO to relate this to datapoints written for a specific commit
+            config.log.info({
+              benchmark: {
+                name: run.benchmarkName,
+                fileSet: run.fileSet
+              },
+              clinic: {
+                operation: op,
+                sha: sha
+              },
+              ipfs: {
+                commit: commit || 'tbd'
+              }
+            })
+          }
         }
+        // cleanup clinic files
+        await runCommand(config.benchmarks.cleanup)
+      } catch (e) {
+        config.log.error(e)
       }
-      // cleanup clinic files
-      await runCommand(config.benchmarks.cleanup)
-    } catch (e) {
-      config.log.error(e)
     }
   }
 }
