@@ -35,7 +35,7 @@ const run = async (commit) => {
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result))
       await persistence.store(result)
     } catch (e) {
-      config.log.error(e)
+      throw e
     }
     if (process.env.DOCTOR !== 'off') { // then run it with each of the clinic tools
       try {
@@ -63,6 +63,8 @@ const run = async (commit) => {
       } catch (e) {
         config.log.error(e)
       }
+    } else {
+      config.log.info(`not running doctor: ${process.env.DOCTOR}`)
     }
   }
 }
