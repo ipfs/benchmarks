@@ -54,7 +54,7 @@ const run = (shell, name, isClinic) => {
         stream.on('data', function (data) {
           results = results + data
         })
-        stream.on('end', function () {
+        stream.on('close', function () {
           console.log(results)
           let objResults = JSON.parse(results)
           config.log.debug(objResults)
