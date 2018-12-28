@@ -5,6 +5,7 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
+const retrieve = require('./retrieve')
 const os = require('os')
 const util = require('util')
 const fs = require('fs')
@@ -45,10 +46,10 @@ const run = async (commit) => {
     if (process.env.DOCTOR !== 'off') { // then run it with each of the clinic tools
       config.log.debug('running Doctor')
       try {
-        for (let op of ['doctor']) { //, 'flame', 'bubbleProf']) {
+        for (let op of ['doctor', 'flame', 'bubbleProf']) {
           for (let run of test[op]) {
             config.log.debug(`${run.benchmarkName}`)
-            let sha = await runCommand(run.command)
+            await runCommand(run.command)
             // just log it for now, but TODO to relate this to datapoints written for a specific commit
             config.log.info({
               benchmark: {
@@ -56,13 +57,14 @@ const run = async (commit) => {
                 fileSet: run.fileSet
               },
               clinic: {
-                operation: op,
-                sha: sha
+                operation: op
               },
               ipfs: {
                 commit: commit || 'tbd'
               }
             })
+            // retrieve the clinic files
+            await retrieve(config, run, targetDir)
           }
         }
         // cleanup clinic files
