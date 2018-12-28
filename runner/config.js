@@ -55,11 +55,12 @@ const getClinicCommands = (test, operation, loc) => {
   if (locations.includes(loc) && clinicOperations.includes(operation)) {
     let variations = []
     for (let fileSet of clinicRuns[operation].fileSets) {
-      let shellCommand = `${loc === 'remote' ? remotePreNode : ''} FILESET="${fileSet}" clinic ${operation} --dest ${tmpOut}/${test.name}/ -- node ${testDefaults.path[loc]}/${test.file} && ${testDefaults.path[loc]}/upload-ipfs.sh ${tmpOut} ${test.name}`
+      let shellCommand = `${loc === 'remote' ? remotePreNode : ''} FILESET="${fileSet}" clinic ${operation} --dest ${tmpOut}/${test.name}/ -- node ${testDefaults.path[loc]}/${test.file}`
       variations.push({
         command: shellCommand,
         fileSet: fileSet,
-        benchmarkName: test.name
+        benchmarkName: test.name,
+        operation: operation
       })
     }
     return variations
@@ -105,6 +106,14 @@ const testAbstracts = [
   {
     name: 'multiPeerTransfer',
     file: 'multi-peer-transfer.js'
+  },
+  {
+    name: 'addMultiKb',
+    file: 'add-multi-kb.js'
+  },
+  {
+    name: 'unixFsAddGo',
+    file: 'local-add.go.js'
   }
 ]
 

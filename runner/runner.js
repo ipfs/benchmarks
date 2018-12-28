@@ -5,7 +5,12 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
-
+const retrieve = require('./retrieve')
+const os = require('os')
+const util = require('util')
+const fs = require('fs')
+const writeFile = util.promisify(fs.writeFile)
+const mkDir = util.promisify(fs.mkdir)
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
     return local.run(command, name)
@@ -15,6 +20,8 @@ const runCommand = (command, name) => {
 }
 
 const run = async (commit) => {
+  const targetDir = `${os.tmpdir()}/${Date.now()}`
+  await mkDir(targetDir, { recursive: true })
   if (config.stage !== 'local') {
     try {
       await provision.ensure(commit)
@@ -26,15 +33,23 @@ const run = async (commit) => {
     // first run the benchmark straight up
     try {
       let result = await runCommand(test.benchmark, test.name)
+      config.log.debug(result)
+      config.log.debug(`Creating ${targetDir}/${test.name}`)
+      await mkDir(`${targetDir}/${test.name}`, { recursive: true })
+      config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
+      await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result))
+      config.log.debug(`Persisting results in DB`)
       await persistence.store(result)
     } catch (e) {
-      config.log.error(e)
+      throw e
     }
     if (process.env.DOCTOR !== 'off') { // then run it with each of the clinic tools
+      config.log.debug('running Doctor')
       try {
-        for (let op of ['doctor']) { //, 'flame', 'bubbleProf']) {
+        for (let op of ['doctor', 'flame', 'bubbleProf']) {
           for (let run of test[op]) {
-            let sha = await runCommand(run.command, test.name)
+            config.log.debug(`${run.benchmarkName}`)
+            await runCommand(run.command)
             // just log it for now, but TODO to relate this to datapoints written for a specific commit
             config.log.info({
               benchmark: {
@@ -42,13 +57,14 @@ const run = async (commit) => {
                 fileSet: run.fileSet
               },
               clinic: {
-                operation: op,
-                sha: sha
+                operation: op
               },
               ipfs: {
                 commit: commit || 'tbd'
               }
             })
+            // retrieve the clinic files
+            await retrieve(config, run, targetDir)
           }
         }
         // cleanup clinic files
@@ -56,6 +72,8 @@ const run = async (commit) => {
       } catch (e) {
         config.log.error(e)
       }
+    } else {
+      config.log.info(`not running doctor: ${process.env.DOCTOR}`)
     }
   }
 }
