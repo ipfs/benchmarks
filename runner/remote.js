@@ -27,9 +27,10 @@ const run = (shell, name, isClinic) => {
 
       // if name is provided we assume it's a json file we read and pass back as the command's result.
       if (name) {
+        let results = ''
         let retrieveCommand = `cat ${config.outFolder}/${name}.json`
         config.log.info(`running  [${retrieveCommand}] on [${config.benchmarks.host}]`)
-        remoteExec(retrieveCommand, sshConf, (err, stdout, stderr) => {
+        const stream = remoteExec(retrieveCommand, sshConf, (err, stdout, stderr) => {
           config.log.debug({
             err: err,
             stdout: stdout,
@@ -44,14 +45,20 @@ const run = (shell, name, isClinic) => {
           }
           if (stdout) {
             try {
-              console.log(stdout)
-              let objResults = JSON.parse(stdout)
-              config.log.debug(objResults)
-              resolve(objResults)
+              console.log("reading data")
             } catch (e) {
               reject(e)
             }
           }
+        })
+        stream.on('data', function (data) {
+          results = results + data
+        })
+        stream.on('end', function () {
+          console.log(results)
+          let objResults = JSON.parse(results)
+          config.log.debug(objResults)
+          resolve(objResults)
         })
       } else {
         resolve(stdout)
