@@ -22,6 +22,10 @@ const tests = []
 const locations = ['local', 'remote']
 const clinicOperations = ['doctor', 'flame', 'bubbleProf']
 
+const ipfsAddress = process.env.IPFS_ADDRESS || '/dnsaddr/cluster.ipfs.io'
+const ipfsUser = process.env.IPFS_USER || 'ipfsbenchmarks'
+const ipfsPassword = process.env.IPFS_PASSWORD || false
+
 // pretty logs in local
 if (process.env.NODE_ENV === 'test') {
   pino = Pino({
@@ -160,7 +164,8 @@ const config = {
           'branch',
           'guid',
           'version',
-          'repo'
+          'repo',
+          'sha'
         ]
       }
     ]
@@ -175,7 +180,12 @@ const config = {
     cleanup: `rm -Rf ${tmpOut}/*`
   },
   ipfs: {
-    path: remoteIpfsPath
+    path: remoteIpfsPath,
+    network: {
+      address: ipfsAddress,
+      user: ipfsUser,
+      password: ipfsPassword
+    }
   }
 }
 
