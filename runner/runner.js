@@ -78,15 +78,19 @@ const run = async (commit) => {
       config.log.info(`not running doctor: ${process.env.DOCTOR}`)
     }
   }
-  config.log.info(`Uploading ${targetDir} to IPFS network`)
-  const storeOutput = await ipfs.store(targetDir)
-  config.log.debug(storeOutput)
-  const sha = ipfs.parse(storeOutput, now)
-  config.log.info(`sha: ${sha}`)
-  config.log.debug(`Persisting results in DB`)
-  for (let result of results) {
-    result.meta.sha = sha
-    await persistence.store(result)
+  try {
+    config.log.info(`Uploading ${targetDir} to IPFS network`)
+    const storeOutput = await ipfs.store(targetDir)
+    config.log.debug(storeOutput)
+    const sha = ipfs.parse(storeOutput, now)
+    config.log.info(`sha: ${sha}`)
+    config.log.debug(`Persisting results in DB`)
+    for (let result of results) {
+      result.meta.sha = sha
+      await persistence.store(result)
+    }
+  } catch (e) {
+    config.log.error(`Error storing on IPFS network: ${e.message}`)
   }
 }
 
