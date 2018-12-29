@@ -33,4 +33,4 @@
     cp ipfs-cluster-ctl/ipfs-cluster-ctl /usr/local/bin
     chmod +x /usr/local/bin/ipfs-cluster-ctl
   args:
-    creates: chmod +x /usr/local/bin/ipfs-cluster-ctl
+    creates: /usr/local/bin/ipfs-cluster-ctl

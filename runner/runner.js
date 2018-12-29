@@ -6,6 +6,7 @@ const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
 const retrieve = require('./retrieve')
+const ipfs = require('./ipfs')
 const os = require('os')
 const util = require('util')
 const fs = require('fs')
@@ -20,7 +21,9 @@ const runCommand = (command, name) => {
 }
 
 const run = async (commit) => {
-  const targetDir = `${os.tmpdir()}/${Date.now()}`
+  let results = []
+  const now = Date.now()
+  const targetDir = `${os.tmpdir()}/${now}`
   await mkDir(targetDir, { recursive: true })
   if (config.stage !== 'local') {
     try {
@@ -38,8 +41,7 @@ const run = async (commit) => {
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result))
-      config.log.debug(`Persisting results in DB`)
-      await persistence.store(result)
+      results.push(result)
     } catch (e) {
       throw e
     }
@@ -75,6 +77,16 @@ const run = async (commit) => {
     } else {
       config.log.info(`not running doctor: ${process.env.DOCTOR}`)
     }
+  }
+  config.log.info(`Uploading ${targetDir} to IPFS network`)
+  const storeOutput = await ipfs.store(targetDir)
+  config.log.debug(storeOutput)
+  const sha = ipfs.parse(storeOutput, now)
+  config.log.info(`sha: ${sha}`)
+  config.log.debug(`Persisting results in DB`)
+  for (let result of results) {
+    result.meta.sha = sha
+    await persistence.store(result)
   }
 }
 
