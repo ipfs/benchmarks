@@ -5,7 +5,7 @@ const { build } = require('./schema/results')
 const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
 
-async function addMultiKb (node, name, subTest, fileSet, version) {
+async function addMultiKb (node, name, warmup, fileSet, version) {
   const fileArr = await file(fileSet)
   const start = process.hrtime()
   const peer = node[0]
@@ -20,10 +20,11 @@ async function addMultiKb (node, name, subTest, fileSet, version) {
 
   return build({
     name: name,
-    subTest: subTest,
+    warmup: warmup,
+    file: fileSet,
     meta: { version: version },
-    description: 'Add 100 1 KB files to local',
-    fileSet: fileSet,
+    description: `Add ${fileArr.length} 1 KB files to local`,
+    file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }
   })
