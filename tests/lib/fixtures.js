@@ -110,7 +110,7 @@ async function verifyTestFiles () {
         console.log(`Verifying File ${f.name}`)
         await fsExists(filePath)
       } catch (err) {
-        console.log('Missing ${f.name')
+        console.log(`Missing ${f.name}`)
         return false
       }
     }

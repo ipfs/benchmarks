@@ -19,7 +19,7 @@ const tests = { 'unixFsAdd': [{
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ],
 'addMultiKb': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ],
+  'fileSet': ['Hundred1KBFile'] } ],
 'initializeNode': [{
   'warmup': 'Off',
   'fileSet': ['None'] }],
