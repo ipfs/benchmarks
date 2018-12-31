@@ -34,7 +34,7 @@ const writePoints = (data) => {
         sha: point.meta.sha || 'tbd',
         branch: point.meta.branch || 'tbd'
       },
-      fields: { duration: parseDuration(point.duration), ipfs_sha: point.meta.sha },
+      fields: { duration: parseDuration(point.duration), ipfs_sha: point.meta.sha || 'no upload' },
 
       timestamp: moment().toDate()
     })
