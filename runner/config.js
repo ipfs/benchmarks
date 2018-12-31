@@ -150,7 +150,8 @@ const config = {
       {
         measurement: tests[0].measurement,
         fields: {
-          duration: Influx.FieldType.FLOAT
+          duration: Influx.FieldType.FLOAT,
+          ipfs_sha: Influx.FieldType.STRING
         },
         tags: [
           'warmup',
