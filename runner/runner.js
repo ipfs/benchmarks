@@ -89,7 +89,7 @@ const run = async (commit) => {
       await persistence.store(result)
     }
     // cleanup tmpout
-    rmfr(config.outFolder)
+    rmfr(targetDir)
   } catch (e) {
     throw e
   }
