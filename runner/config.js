@@ -81,7 +81,7 @@ const clinicRuns = {
     fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
   },
   bubbleProf: {
-    fileSets: ['One4MBFile', 'One64MBFile']
+    fileSets: ['One4MBFile']
   }
 }
 
