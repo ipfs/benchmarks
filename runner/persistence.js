@@ -31,8 +31,10 @@ const writePoints = (data) => {
         version: point.meta.version.version || 'tbd',
         repo: point.meta.version.repo || 'tbd',
         guid: point.meta.guid || 'tbd',
-        branch: point.meta.branch || 'tbd' },
-      fields: { duration: parseDuration(point.duration) },
+        sha: point.meta.sha || 'tbd',
+        branch: point.meta.branch || 'tbd'
+      },
+      fields: { duration: parseDuration(point.duration), ipfs_sha: point.meta.sha },
 
       timestamp: moment().toDate()
     })

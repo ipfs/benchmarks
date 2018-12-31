@@ -22,6 +22,10 @@ const tests = []
 const locations = ['local', 'remote']
 const clinicOperations = ['doctor', 'flame', 'bubbleProf']
 
+const ipfsAddress = process.env.IPFS_ADDRESS || '/dnsaddr/cluster.ipfs.io'
+const ipfsUser = process.env.IPFS_USER || 'ipfsbenchmarks'
+const ipfsPassword = process.env.IPFS_PASSWORD || false
+
 // pretty logs in local
 if (process.env.NODE_ENV === 'test') {
   pino = Pino({
@@ -77,7 +81,7 @@ const clinicRuns = {
     fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
   },
   bubbleProf: {
-    fileSets: ['One4MBFile', 'One64MBFile']
+    fileSets: ['One4MBFile']
   }
 }
 
@@ -150,7 +154,8 @@ const config = {
       {
         measurement: tests[0].measurement,
         fields: {
-          duration: Influx.FieldType.FLOAT
+          duration: Influx.FieldType.FLOAT,
+          ipfs_sha: Influx.FieldType.STRING
         },
         tags: [
           'warmup',
@@ -160,7 +165,8 @@ const config = {
           'branch',
           'guid',
           'version',
-          'repo'
+          'repo',
+          'sha'
         ]
       }
     ]
@@ -175,7 +181,12 @@ const config = {
     cleanup: `rm -Rf ${tmpOut}/*`
   },
   ipfs: {
-    path: remoteIpfsPath
+    path: remoteIpfsPath,
+    network: {
+      address: ipfsAddress,
+      user: ipfsUser,
+      password: ipfsPassword
+    }
   }
 }
 
