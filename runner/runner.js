@@ -87,7 +87,7 @@ const run = async (commit) => {
   try {
     config.log.debug(`Persisting results in DB`)
     for (let result of results) {
-      config.log.debug(`DB store: ${result}`) 
+      config.log.debug(`DB store: ${JSON.stringify(result)}`)
       await persistence.store(result)
     }
     // cleanup tmpout
