@@ -55,10 +55,10 @@ const run = async (commit) => {
             await runCommand(run.command)
             // retrieve the clinic files
             await retrieve(config, run, targetDir)
+            // cleanup clinic files remotely
+            await runCommand(config.benchmarks.cleanup)
           }
         }
-        // cleanup clinic files
-        await runCommand(config.benchmarks.cleanup)
       } catch (e) {
         config.log.error(e)
       }
