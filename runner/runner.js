@@ -77,7 +77,7 @@ const run = async (commit) => {
     results.map((arrOfResultObjects) => {
       arrOfResultObjects.map((obj) => {
         // add the sha to each measurement
-        obj.meta.sha = sha
+        obj.meta.sha = (typeof sha !== 'undefined' && sha) ? sha : 'none'
         return obj
       })
     })
@@ -87,6 +87,7 @@ const run = async (commit) => {
   try {
     config.log.debug(`Persisting results in DB`)
     for (let result of results) {
+      config.log.debug(`DB store: ${result}`) 
       await persistence.store(result)
     }
     // cleanup tmpout
