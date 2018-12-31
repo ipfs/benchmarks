@@ -44,7 +44,7 @@ const run = async (commit) => {
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result))
       results.push(result)
     } catch (e) {
-      console.log(e)
+      config.log.error(e)
       // TODO:  maybe trigger an alert here ??
     }
     if (process.env.DOCTOR !== 'off') { // then run it with each of the clinic tools
