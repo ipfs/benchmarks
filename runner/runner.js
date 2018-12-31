@@ -7,6 +7,7 @@ const provision = require('./provision')
 const persistence = require('./persistence')
 const retrieve = require('./retrieve')
 const ipfs = require('./ipfs')
+const rmfr = require('rmfr')
 const os = require('os')
 const util = require('util')
 const fs = require('fs')
@@ -52,19 +53,6 @@ const run = async (commit) => {
           for (let run of test[op]) {
             config.log.debug(`${run.benchmarkName}`)
             await runCommand(run.command)
-            // just log it for now, but TODO to relate this to datapoints written for a specific commit
-            config.log.info({
-              benchmark: {
-                name: run.benchmarkName,
-                fileSet: run.fileSet
-              },
-              clinic: {
-                operation: op
-              },
-              ipfs: {
-                commit: commit || 'tbd'
-              }
-            })
             // retrieve the clinic files
             await retrieve(config, run, targetDir)
           }
@@ -81,16 +69,29 @@ const run = async (commit) => {
   try {
     config.log.info(`Uploading ${targetDir} to IPFS network`)
     const storeOutput = await ipfs.store(targetDir)
-    config.log.debug(storeOutput)
+    // config.log.debug(storeOutput)
     const sha = ipfs.parse(storeOutput, now)
     config.log.info(`sha: ${sha}`)
-    config.log.debug(`Persisting results in DB`)
-    for (let result of results) {
-      result.meta.sha = sha
-      await persistence.store(result)
-    }
+    // config.log.debug(results)
+    results.map((arrOfResultObjects) => {
+      arrOfResultObjects.map((obj) => {
+        // add the sha to each measurement
+        obj.meta.sha = sha
+        return obj
+      })
+    })
   } catch (e) {
     config.log.error(`Error storing on IPFS network: ${e.message}`)
+  }
+  try {
+    config.log.debug(`Persisting results in DB`)
+    for (let result of results) {
+      await persistence.store(result)
+    }
+    // cleanup tmpout
+    rmfr(config.outFolder)
+  } catch (e) {
+    throw e
   }
 }
 
