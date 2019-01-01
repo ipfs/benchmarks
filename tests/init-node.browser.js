@@ -12,11 +12,11 @@ async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
   const timeMs = await page.evaluate(element => element.textContent, element)
   return build({
     name: name,
-    wamrup: false,
+    wamrup: 'off',
     file: '',
     meta: { version: version },
-    description: 'Initialize node without pre-generated key',
-    file_set: '',
+    description: 'Initialize node in browser without pre-generated key',
+    file_set: 'none',
     duration: { s: parseInt(timeS),
       ms: parseInt(timeMs) / 1000000 }
   })
