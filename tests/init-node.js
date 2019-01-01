@@ -23,10 +23,10 @@ async function initializeNode (node, name, warmup, fileSet, version) {
   return build({
     name: name,
     wamrup: warmup,
-    file: '',
+    file: 'none',
     meta: { version: version },
     description: 'Initialize node without pre-generated key',
-    file_set: '',
+    file_set: 'none',
     duration: { s: end[0],
       ms: end[1] / 1000000 }
   })
