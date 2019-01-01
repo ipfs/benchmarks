@@ -7,7 +7,27 @@
     - name: Update repositories cache and install required packages
       become: yes
       apt:
-        name: [git, build-essential, g++, psmisc]
+        name:
+          - git
+          - build-essential
+          - g++
+          - psmisc
+          - golang-go
+          - libpangocairo-1.0-0
+          - libx11-xcb1
+          - libxcomposite1
+          - libxcursor1
+          - libxdamage1
+          - libxi6
+          - libxtst6
+          - libnss3
+          - libcups2
+          - libxss1
+          - libxrandr2
+          - libgconf2-4
+          - libasound2
+          - libatk1.0-0
+          - libgtk-3-0
         update_cache: true
         state: present
     - name: Install nvm
@@ -25,6 +45,16 @@
         /bin/bash -c "source ~/.nvm/nvm.sh && npm i clinic autocannon -g"
       args:
         creates: /home/{{ ansible_user_id }}/.nvm/versions/node/v{{ node_version }}/bin/clinic
+    - name: Install go-ipfs
+      become: yes
+      shell: >
+        wget https://dist.ipfs.io/go-ipfs/{{go_ipfs_version}}/go-ipfs_{{go_ipfs_version}}_linux-386.tar.gz && \
+        tar xvfz go-ipfs_{{go_ipfs_version}}_linux-386.tar.gz && \
+        mv go-ipfs/ipfs /usr/local/bin/ipfs_{{go_ipfs_version}} && \
+        rm /usr/local/bin/ipfs && \
+        ln -s /usr/local/bin/ipfs_{{go_ipfs_version}} /usr/local/bin/ipfs
+      args:
+        creates: /usr/local/bin/ipfs_{{go_ipfs_version}}
     - file:
         path: ~/ipfs
         state: directory
