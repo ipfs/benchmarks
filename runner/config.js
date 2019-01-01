@@ -116,11 +116,11 @@ const testAbstracts = [
     file: 'add-multi-kb.js'
   },
   {
-    name: 'browser-initNode',
+    name: 'initializeNodeBrowser',
     file: 'init-node.browser.js'
   },
   {
-    name: 'go-unixFsAdd',
+    name: 'unixFsAddGo',
     file: 'local-add.go.js'
   }
 ]
