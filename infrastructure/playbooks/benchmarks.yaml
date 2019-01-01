@@ -52,7 +52,7 @@
         tar xvfz go-ipfs_{{go_ipfs_version}}_linux-386.tar.gz && \
         mv go-ipfs/ipfs /usr/local/bin/ipfs
       args:
-        creates: /usr/local/bin/ipfs_{{go_ipfs_version}}
+        creates: /usr/local/bin/ipfs
         warn: false
     - file:
         path: ~/ipfs
