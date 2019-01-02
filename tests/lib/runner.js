@@ -18,10 +18,10 @@ async function runner (test, nodeCount = 1, type = 'nodejs') {
   const version = await node[0].version()
   try {
     for (let subTest of config.test[test.name]) {
-      for (let fileSet of subTest.fileSet) {
-        if (config.fileSetParam && fileSet.toLowerCase() === config.fileSetParam) {
-          arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
-        } else if (!config.fileSetParam) {
+      if (config.fileSetParam) {
+        arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), config.fileSetParam, version))
+      } else {
+        for (let fileSet of subTest.fileSet) {
           arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
         }
       }
