@@ -20,9 +20,8 @@ const run = (shell, name, isClinic) => {
       if (err || stderr) {
         if (stderr.length) {
           config.log.erorr(stderr)
-        // reject(Error(stderr))
         } else {
-          reject(Error(stdout))
+          config.log.erorr(err)
         }
       }
 
@@ -38,9 +37,9 @@ const run = (shell, name, isClinic) => {
           })
           if (err || stderr) {
             if (stderr.length) {
-              reject(Error(stderr))
+              config.log.erorr(stderr)
             } else {
-              reject(Error(stdout))
+              config.log.erorr(err)
             }
           }
           if (stdout) {
@@ -49,7 +48,7 @@ const run = (shell, name, isClinic) => {
               config.log.debug(objResults)
               resolve(objResults)
             } catch (e) {
-              reject(e)
+              config.log.erorr(e)
             }
           }
         })
