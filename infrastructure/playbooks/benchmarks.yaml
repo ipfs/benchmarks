@@ -51,6 +51,9 @@
         wget https://dist.ipfs.io/go-ipfs/{{go_ipfs_version}}/go-ipfs_{{go_ipfs_version}}_linux-386.tar.gz && \
         tar xvfz go-ipfs_{{go_ipfs_version}}_linux-386.tar.gz && \
         mv go-ipfs/ipfs /usr/local/bin/ipfs_{{go_ipfs_version}} && \
+        rm go-ipfs_{{go_ipfs_version}}_linux-386.tar.gz && \
+        rm -Rf go-ipfs && \
+        chmod +x /usr/local/bin/ipfs_{{go_ipfs_version}} && \
         rm /usr/local/bin/ipfs && \
         ln -s /usr/local/bin/ipfs_{{go_ipfs_version}} /usr/local/bin/ipfs
       args:
