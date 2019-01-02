@@ -41,7 +41,7 @@ const run = async (commit) => {
       config.log.debug(`Creating ${targetDir}/${test.name}`)
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
-      await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result))
+      await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result, null, 2))
       results.push(result)
     } catch (e) {
       config.log.error(e)
