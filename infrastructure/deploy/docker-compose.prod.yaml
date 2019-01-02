@@ -31,6 +31,7 @@ services:
       GF_SERVER_ROOT_URL: https://benchmarks.ipfs.team
       GF_SECURITY_ADMIN_USER: ${GF_ADMIN_USER}
       GF_SECURITY_ADMIN_PASSWORD: ${GF_ADMIN_PASSWORD}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
     restart: always
   nginx:
     image: nginx:alpine
