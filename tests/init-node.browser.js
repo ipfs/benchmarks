@@ -12,7 +12,7 @@ async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
   const timeMs = await page.evaluate(element => element.textContent, element)
   return build({
     name: name,
-    wamrup: 'off',
+    warmup: 'off',
     file: '',
     meta: { version: version },
     description: 'Initialize node in browser without pre-generated key',
