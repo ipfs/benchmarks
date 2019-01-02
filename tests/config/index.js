@@ -2,7 +2,6 @@
 const uuidv1 = require('uuid/v1')
 const guid = process.env.GUID || uuidv1()
 const fileSetParam = (process.env.FILESET && process.env.FILESET.toLowerCase()) || false
-const warmup = (process.env.WARMUP && process.env.WARMUP.toLowerCase()) || false
 const verify = process.env.VERIFYOFF && process.env.VERIFYOFF.toLowerCase() === 'true'
 
 const tests = { 'unixFsAdd': [{
@@ -34,7 +33,6 @@ const tests = { 'unixFsAdd': [{
 const config = {
   test: tests,
   fileSetParam: fileSetParam,
-  warmup: warmup,
   verify: verify,
   guid: guid
 }

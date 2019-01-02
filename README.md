@@ -99,12 +99,6 @@ Use env vairable TESTCLASS to run test just agianst that class.  Options of Test
 > FILESET="One64MBFile" node local-add
 ```
 
-### WARMUP:  
-Use env vairable WARMUP to run a warmup routine.  Warmup is eaither On or Off.
-```bash
-> WARMUP="On" node local-add
-```
-
 ### VERIFYOFF
 Use env variable VERIFYOFF=true to skip the pre-generation of test files.  
 ```js
@@ -139,7 +133,7 @@ See (README)[tests/README.md] under test
 Results will be written to out directory under /tests
 
 * `name`: Name of test
-* `subtest`: Name of subtest
+* `warmup`: Flag for if we warm up db
 * `description`: Description of benchmark
 * `fileSet`: Set of files to be used in a test
 * `date`: Date of benchmark
