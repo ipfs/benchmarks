@@ -75,10 +75,10 @@ const getClinicCommands = (test, operation, loc) => {
 
 const clinicRuns = {
   doctor: {
-    fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
+    fileSets: ['One4MBFile', 'One64MBFile']
   },
   flame: {
-    fileSets: ['One4MBFile', 'One128MBFile', 'OneGBFile']
+    fileSets: ['One4MBFile', 'One64MBFile']
   },
   bubbleProf: {
     fileSets: ['One4MBFile']
