@@ -19,7 +19,8 @@ const run = (shell, name, isClinic) => {
       })
       if (err || stderr) {
         if (stderr.length) {
-          reject(Error(stderr))
+          config.log.erorr(stderr)
+        // reject(Error(stderr))
         } else {
           reject(Error(stdout))
         }
