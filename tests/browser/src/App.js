@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import './App.css'
-
 import IPFS from 'ipfs'
 import hrtime from 'browser-process-hrtime'
-import { config } from '../package.json'
 import uuidv1 from 'uuid/v1'
-import ReactTable from "react-table"
+import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 class App extends Component {
   constructor (props) {
@@ -24,14 +22,10 @@ class App extends Component {
   submitClick (t) {
     const self = this
     let node
-
     create()
-
     function create () {
       // Create the IPFS node instance
       const start = hrtime()
-
-
       node = new IPFS({ repo: String(uuidv1()) })
 
       node.once('ready', () => {
@@ -55,15 +49,13 @@ class App extends Component {
         })
       })
     }
-    
   }
   componentDidMount () {
-   
   }
   render () {
     const data = [{
       name: 'Initialize Node',
-      start: "initialize_node",
+      start: 'initialize_node',
       time: {
         s: this.state.time_s,
         ms: this.state.time_ms,
@@ -72,11 +64,10 @@ class App extends Component {
       },
       node: {
         id: this.state.id,
-         version: this.state.version,
-         protocal_version: this.state.protocol_version
+        version: this.state.version,
+        protocal_version: this.state.protocol_version
       }
     }]
-  
     const columns = [
       {
         Header: 'Start',
@@ -84,7 +75,7 @@ class App extends Component {
         style: {
           cursor: 'pointer'
         },
-        Cell: props => <button class={props.value} onClick={()=>this.submitClick(props.value)}>Start Test</button>
+        Cell: props => <button class='{props.value} button button-outlined' onClick={() => this.submitClick(props.value)}>Start Test</button>
       },
       {
         Header: 'Test',
@@ -93,16 +84,20 @@ class App extends Component {
         Header: 'Node',
         accessor: 'node',
         Cell: props => <div>
-          <p>Your ID is <strong>{props.value.id}</strong></p>
-          <p>Your IPFS version is <strong>{props.value.version}</strong></p>
-          <p>Your IPFS protocol version is <strong>{props.value.protocal_version}</strong></p>
+          <p>ID:<strong>{props.value.id}</strong></p>
+          <p>IPFS version: <strong>{props.value.version}</strong></p>
+          <p>IPFS protocol version:<strong>{props.value.protocal_version}</strong></p>
         </div>
       }, {
         Header: 'Time',
         accessor: 'time',
-        Cell: props => <div><div class={props.value.name + '_s_' + props.value.ready}>{props.value.s}</div>.<div class={props.value.name + '_ms_' + props.value.ready}_ms>{props.value.ms}</div></div>
+        Cell: props => <div><div class={props.value.name + '_s_' + props.value.ready}>secs:{props.value.s}</div><div class={props.value.name + '_ms_' + props.value.ready}_ms>milli:{props.value.ms}</div></div>
       }]
-    return <div style={{ textAlign: 'center' }}>       <h1>IPFS Browser Benchmark</h1><ReactTable
+    return <div><header class='pa2 bg-navy'>
+      <h2 class='ma0 montserrat aqua'>
+      IPFS Browser Benchmark
+      </h2>
+    </header><ReactTable
       data={data}
       columns={columns}
       showPagination={false}
