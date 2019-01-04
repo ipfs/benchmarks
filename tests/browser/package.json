@@ -15,6 +15,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "react-table": "^6.8.6",
+    "stream-iterators-utils": "^0.1.0",
     "tachyons": "^4.11.1",
     "webcrypto-shim": "^0.1.4"
   },

@@ -5,67 +5,72 @@ import hrtime from 'browser-process-hrtime'
 import uuidv1 from 'uuid/v1'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
+import { once } from 'stream-iterators-utils'
+const test = {
+  initializeNode: async () => {
+    // Create the IPFS node instance
+    const start = hrtime()
+    const node = new IPFS({ repo: String(uuidv1()) })
+    node.on('ready', () => {
+    })
+    await once(node, 'ready')
+    const delta = hrtime(start)
+    console.log(delta)
+    return {node: node , delta: delta, name:'initialize_node'}
+  }
+
+}
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      id: null,
-      version: null,
-      protocol_version: null,
-      added_file_hash: null,
-      added_file_contents: null,
-      time_s: null,
-      time_ms: null,
-      ready: ''
+      initializeNode: { id: null,
+        version: null,
+        protocol_version: null,
+        added_file_hash: null,
+        added_file_contents: null,
+        time_s: null,
+        time_ms: null,
+        ready: '' }
     }
   }
-  submitClick (t) {
-    const self = this
-    let node
-    create()
-    function create () {
-      // Create the IPFS node instance
-      const start = hrtime()
-      node = new IPFS({ repo: String(uuidv1()) })
-
-      node.once('ready', () => {
-        const delta = hrtime(start)
-        ops(delta)
-      })
-    }
-
-    function ops (delta) {
-      node.id((err, res) => {
-        if (err) {
-          throw err
-        }
-        self.setState({
-          id: res.id,
-          version: res.agentVersion,
-          protocol_version: res.protocolVersion,
-          time_s: delta[0],
-          time_ms: delta[1],
-          ready: 'ready'
-        })
-      })
-    }
+  ops (node, delta, name) {
+    node.id((err, res) => {
+      if (err) {
+        throw err
+      }
+      const results = { ...this.state[name] }
+      results.id = res.id
+      results.version = res.agentVersion
+      results.protocol_version = res.protocolVersion
+      results.time_s = delta[0]
+      results.time_ms = delta[1]
+      results.ready = 'ready'
+      this.setState({ initializeNode: results })
+    })
   }
+
+  async startTest (t) {
+    const tt = await test[t]()
+    this.ops(tt.node, tt.delta, tt.name)
+  }
+
   componentDidMount () {
   }
   render () {
     const data = [{
       name: 'Initialize Node',
-      start: 'initialize_node',
+      start: 'initializeNode',
       time: {
-        s: this.state.time_s,
-        ms: this.state.time_ms,
-        name: 'initialize_node',
-        ready: this.state.ready
+        s: this.state.initializeNode.time_s,
+        ms: this.state.initializeNode.time_ms,
+        name: 'initializeNode',
+        ready: this.state.initializeNode.ready
       },
       node: {
-        id: this.state.id,
-        version: this.state.version,
-        protocal_version: this.state.protocol_version
+        id: this.state.initializeNode.id,
+        version: this.state.initializeNode.version,
+        protocal_version: this.state.initializeNode.protocol_version
       }
     }]
     const columns = [
@@ -75,7 +80,7 @@ class App extends Component {
         style: {
           cursor: 'pointer'
         },
-        Cell: props => <button class='{props.value} button button-outlined' onClick={() => this.submitClick(props.value)}>Start Test</button>
+        Cell: props => <button class='{props.value} button button-outlined' onClick={(e) => this.startTest(props.value)}>Start Test</button>
       },
       {
         Header: 'Test',
