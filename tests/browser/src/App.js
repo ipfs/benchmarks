@@ -80,7 +80,7 @@ class App extends Component {
         style: {
           cursor: 'pointer'
         },
-        Cell: props => <button class='{props.value} button button-outlined' onClick={(e) => this.startTest(props.value)}>Start Test</button>
+        Cell: props => <button class={props.value} onClick={(e) => this.startTest(props.value)}>Start Test</button>
       },
       {
         Header: 'Test',

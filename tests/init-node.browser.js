@@ -5,9 +5,9 @@ const run = require('./lib/runner')
 
 async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
   const page = node[0].page
-  await page.click('.initialize_node')
-  const t = await page.waitFor('.initialize_node_s_ready')
-  const element = await page.waitFor('.initialize_node_ms_ready')
+  await page.click('.initializeNode')
+  const t = await page.waitFor('.initializeNode_s_ready')
+  const element = await page.waitFor('.initializeNode_ms_ready')
   const timeS = await page.evaluate(t => t.textContent, t)
   const timeMs = await page.evaluate(element => element.textContent, element)
   return build({
@@ -17,8 +17,8 @@ async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
     meta: { version: version },
     description: 'Initialize node in browser without pre-generated key',
     file_set: 'none',
-    duration: { s: parseInt(timeS),
-      ms: parseInt(timeMs) / 1000000 }
+    duration: { s: parseInt(timeS.split(':')[1]),
+      ms: parseInt(timeMs.split(':')[1]) / 1000000 }
   })
 }
 
