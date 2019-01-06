@@ -6,7 +6,6 @@ import uuidv1 from 'uuid/v1'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import { once } from 'stream-iterators-utils'
-import blob from './fixtures/One4MBFile.txt'
 import fileReaderStream from 'filereader-stream'
 const test = {
   initializeNode: async () => {
@@ -128,7 +127,7 @@ class App extends Component {
         style: {
           cursor: 'pointer'
         },
-        Cell: props => props.value.type === 'button' ? <button class={props.value.name} onClick={(e) => this.startTest(props.value.name)}>Start Test</button> : <input type="file" clasee={props.value.name} onChange={(e) => this.handleselectedFile(e, props.value.name)} />
+        Cell: props => props.value.type === 'button' ? <button class={props.value.name} onClick={(e) => this.startTest(props.value.name)}>Start Test</button> : <input type="file" class={props.value.name} onChange={(e) => this.handleselectedFile(e, props.value.name)} />
       },
       {
         Header: 'Test',
