@@ -120,6 +120,10 @@ const testAbstracts = [
     file: 'init-node.browser.js'
   },
   {
+    name: 'unixFsAddBrowser',
+    file: 'local-add.browser.js'
+  },
+  {
     name: 'unixFsAddGo',
     file: 'local-add.go.js'
   }
