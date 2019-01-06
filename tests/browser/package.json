@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "browser-process-hrtime": "^1.0.0",
+    "filereader-stream": "^2.0.0",
     "ipfs": "^0.33.1",
     "ipfs-css": "^0.12.0",
     "react": "^16.6.3",
