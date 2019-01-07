@@ -50,8 +50,9 @@ const getStatus = (queueStatus, params) => {
 }
 
 class q {
-  constructor () {
+  constructor (stopFn) {
     let that = this
+    this.stopFn = stopFn
     this.queueStatus = {}
     this.q = Jobs(db, this._handler(), 1)
     this.q.pendingStream().on('data', function (d) {
@@ -80,10 +81,7 @@ class q {
       that.queueStatus[id] = getStatus(that.queueStatus, { id: id, status: 'started' })
       try {
         if (params.restart) {
-          // exit process, relying on process manager to restart
-          config.log.info('Exiting, for restart.')
-          cb()
-          process.exit(0)
+          this.stopFn(cb)
         } else {
           await run(params)
           config.log.info('Finished job id: %s, work: %j', id, params)
