@@ -147,6 +147,7 @@ const config = {
   stage: process.env.STAGE || 'local',
   outFolder: process.env.OUT_FOLDER || tmpOut,
   dataDir: process.env.DATADIR || './data/',
+  db: 'ipfs-db',
   server: {
     port: 9000,
     apikey: process.env.API_KEY || 'supersecret'
