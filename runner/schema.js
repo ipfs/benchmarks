@@ -1,10 +1,13 @@
 'use strict'
 
+const config = require('./config')
+
 const schema = {
   body: {
     type: 'object',
     properties: {
-      commit: { type: 'string' }
+      commit: { type: 'string' },
+      doctor: { type: 'string', default: 'on' }
     },
     required: ['commit']
   },
@@ -12,7 +15,7 @@ const schema = {
   headers: {
     type: 'object',
     properties: {
-      'x-ipfs-benchmarks-api-key': { const: process.env.API_KEY || 'supersecret' }
+      'x-ipfs-benchmarks-api-key': { const: config.server.apikey }
     },
     required: ['x-ipfs-benchmarks-api-key']
   }

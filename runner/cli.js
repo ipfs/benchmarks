@@ -1,16 +1,21 @@
 'user strict'
 
 const argv = require('yargs').argv
-const runner = require('./runner')
+const get = require('simple-get')
 const config = require('./config')
 
-const cli = async () => {
-  if (argv.commit) {
-    config.log.info(`Running benchmarks with IPFS@${argv.commit}`)
-    await runner(argv.commit)
-  } else {
-    runner()
+const opts = {
+  url: `http://localhost:${config.server.port}/`,
+  body: {
+    commit: argv.commit || '',
+    doctor: argv.doctor || 'true'
+  },
+  json: true,
+  headers: {
+    'x-ipfs-benchmarks-api-key': config.server.apikey
   }
 }
-
-cli()
+get.post(opts, function (err, res) {
+  if (err) throw err
+  res.pipe(process.stdout) // `res` is a stream
+})

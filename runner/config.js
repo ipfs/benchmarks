@@ -147,6 +147,10 @@ const config = {
   stage: process.env.STAGE || 'local',
   outFolder: process.env.OUT_FOLDER || tmpOut,
   dataDir: process.env.DATADIR || './data/',
+  server: {
+    port: 9000,
+    apikey: process.env.API_KEY || 'supersecret'
+  },
   influxdb: {
     host: process.env.INFLUX_HOST || 'localhost',
     db: 'benchmarks',
@@ -172,6 +176,7 @@ const config = {
     ]
   },
   benchmarks: {
+    doctor: process.env.DOCTOR || true,
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
     key: process.env.BENCHMARK_KEY || keyfile,
