@@ -34,6 +34,19 @@ fastify.get('/', async (request, reply) => {
   return status
 })
 
+// we do wat to be able to drain the queue
+fastify.post('/drain', async (request, reply) => {
+  return queue.drain()
+})
+
+// after CD deployed new code we queue a restart of the runner
+fastify.post('/restart', async (request, reply) => {
+  let task = queue.add({
+    restart: true
+  })
+  return task
+})
+
 // Run the server!
 const start = async () => {
   try {
