@@ -121,11 +121,11 @@ const testAbstracts = [
   },
   {
     name: 'unixFsAddBrowser',
-    file: 'local-add.browser.j'
+    file: 'local-add.browser.js'
   },
   {
     name: 'addMultiKbBrowser',
-    file: 'add-multi-kb.browser.js '
+    file: 'add-multi-kb.browser.js'
   },
   {
     name: 'unixFsAddGo',
