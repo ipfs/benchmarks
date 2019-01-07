@@ -147,7 +147,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 |------------------------------------------|------------|------------|------------|------------|------------|------------|----------------|----------------|
 | Node initialization                      | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add small file (balanced)                | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add many small files (balanced)          | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add many small files (balanced)          | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add large file (balanced)                | 🍏          | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add small file (trickle)                 | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add many small files (trickle)           | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
