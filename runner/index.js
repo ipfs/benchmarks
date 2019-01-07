@@ -5,27 +5,63 @@ const fastify = require('fastify')({
   logger: true
 })
 const schema = require('./schema')
-const baseUrl = 'https://some.url.com'
-const run = require('./runner')
+const config = require('./config')
+const Queue = require('./queue')
+
+// This function exits the main process, relying on process manager to restart
+// so that a new version of the runner can be applied on next startup
+const stopFn = (cb) => {
+  config.log.info('Exiting for restart.')
+  cb()
+  fastify.close(() => {
+    process.exit(0)
+  })
+}
+
+const queue = new Queue(stopFn)
 
 // run this every day at midnight, at least
 schedule.scheduleJob('0 0 * * *', function () {
-  run()
+  queue.add({
+    commit: '',
+    doctor: true,
+    remote: true
+  })
 })
 
 // Declare a route
 fastify.post('/', { schema }, async (request, reply) => {
-  let resultsHash = await run(request.body.commit)
-  return {
+  let task = queue.add({
     commit: request.body.commit,
-    url: `${baseUrl}/${resultsHash}`
-  }
+    doctor: request.body.doctor,
+    remote: true
+  })
+  return task
+})
+
+fastify.get('/', async (request, reply) => {
+  let status = queue.getStatus()
+  fastify.log.info('getting queue status', status)
+  return status
+})
+
+// we do wat to be able to drain the queue
+fastify.post('/drain', async (request, reply) => {
+  return queue.drain()
+})
+
+// after CD deployed new code we queue a restart of the runner
+fastify.post('/restart', async (request, reply) => {
+  let task = queue.add({
+    restart: true
+  })
+  return task
 })
 
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen(9000, '0.0.0.0')
+    await fastify.listen(config.server.port, '0.0.0.0')
     fastify.server.timeout = 96000
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
   } catch (err) {

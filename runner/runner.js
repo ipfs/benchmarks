@@ -21,14 +21,15 @@ const runCommand = (command, name) => {
   }
 }
 
-const run = async (commit) => {
+const run = async (params) => {
+  config.stage = params.remote ? 'remote' : 'local'
   let results = []
   const now = Date.now()
   const targetDir = `${os.tmpdir()}/${now}`
   await mkDir(targetDir, { recursive: true })
   if (config.stage !== 'local') {
     try {
-      await provision.ensure(commit)
+      await provision.ensure(params.commit)
     } catch (e) {
       config.log.error(e)
     }
@@ -47,7 +48,7 @@ const run = async (commit) => {
       config.log.error(e)
       // TODO:  maybe trigger an alert here ??
     }
-    if (process.env.DOCTOR !== 'off') { // then run it with each of the clinic tools
+    if (config.doctor) { // then run it with each of the clinic tools
       config.log.debug('running Doctor')
       try {
         for (let op of ['doctor', 'flame', 'bubbleProf']) {
