@@ -124,7 +124,7 @@ const testAbstracts = [
     file: 'add-multi-kb.browser.js'
   },
   {
-    name: 'addMultiKb',
+    name: 'addMultiKbBrowser',
     file: 'local-add.browser.js'
   },
   {
