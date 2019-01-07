@@ -10,8 +10,7 @@ async function addMultiKb (node, name, warmup, fileSet, version) {
   const start = process.hrtime()
   const peer = node[0]
   for (var i = 0, len = fileArr.length; i < len; i++) {
-    const filePath = await file(`${fileSet}/${fileArr[i]}`)
-    const fileStream = fs.createReadStream(filePath)
+    const fileStream = fs.createReadStream(fileArr[i])
     peer.add ? await peer.add(fileStream) : await peer.files.add(fileStream)
   }
   const end = process.hrtime(start)

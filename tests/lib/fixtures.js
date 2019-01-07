@@ -51,6 +51,7 @@ async function write (data, name, folder) {
   await fsWriteFile(path.join(__dirname, `../fixtures/${name}.txt`), data)
   console.log(`File ${name} created.`)
 }
+
 async function file (name) {
   const isDir = await isDirectory(name.toLowerCase())
   if (!isDir) {
@@ -68,8 +69,10 @@ async function file (name) {
     }
   } else {
     const arr = await fsReadDir(path.join(__dirname, `../fixtures/${name.toLowerCase()}`))
-
-    return arr
+    const fullPath = arr.map((fileName) => {
+      return path.join(__dirname, `../fixtures/${name.toLowerCase()}/${fileName.toLowerCase()}`)
+    })
+    return fullPath
   }
 }
 
