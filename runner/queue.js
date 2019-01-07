@@ -7,7 +7,7 @@ const config = require('./config')
 const db = levelup(leveldown(`${config.dataDir}/${config.db}`))
 const run = require('./runner')
 
-
+config.log.debug(db)
 
 let queueStatus = {}
 
@@ -84,7 +84,6 @@ class q {
       config.log.info('Next job id: %s, work: %j', d.key, d.value)
     })
     this.q.runningStream().on('data', function (d) {
-      console.log('runing D', d)
       queueStatus[d.key] = getStatus({
         id: d.key,
         status: 'pending',
