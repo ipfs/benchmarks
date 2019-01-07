@@ -2,10 +2,12 @@
 
 const levelup = require('levelup')
 const leveldown = require('leveldown')
-const db = levelup(leveldown('./mydb'))
 const Jobs = require('level-jobs')
 const config = require('./config')
+const db = levelup(leveldown(`${config.dataDir}/${config.db}`))
 const run = require('./runner')
+
+
 
 let queueStatus = {}
 
@@ -15,26 +17,37 @@ const getStatus = (params) => {
     if (queueStatus[params.id]) {
       retVal = Object.assign({}, queueStatus[params.id])
     } else {
-      if (params.value) {
+      if (params.work) {
         retVal = {
           jobId: params.id,
-          work: params.value
+          work: params.work
         }
       }
     }
-    switch (params.status) {
-      case 'queued':
-        retVal.status = 'queued'
-        retVal.queued = new Date().toString()
-        break
-      case 'started':
-        retVal.status = 'started'
-        retVal.started = new Date().toString()
-        break
-      case 'error':
-        retVal.status = 'error'
-        retVal.queued = new Date().toString()
-        break
+    if (queueStatus[params.id]) {
+      switch (params.status) {
+        case 'pending':
+          if (queueStatus[params.id].status !== 'pending') {
+            retVal.status = 'pending'
+            retVal.queued = new Date().toString()
+          }
+          break
+        case 'started':
+          if (queueStatus[params.id].status !== 'started') {
+            retVal.status = 'started'
+            retVal.started = new Date().toString()
+          }
+          break
+        case 'error':
+          if (queueStatus[params.id].status !== 'error') {
+            retVal.status = 'error'
+            retVal.queued = new Date().toString()
+          }
+          break
+      }
+    } else {
+      retVal.status = 'pending'
+      retVal.queued = new Date().toString()
     }
   }
   console.log(retVal)
@@ -63,11 +76,20 @@ class q {
   constructor () {
     this.q = Jobs(db, handler, 1)
     this.q.pendingStream().on('data', function (d) {
-      queueStatus[d.key] = getStatus({ id: d.key, status: 'pending' })
+      queueStatus[d.key] = getStatus({
+        id: d.key,
+        status: 'pending',
+        work: d.value
+      })
       config.log.info('Next job id: %s, work: %j', d.key, d.value)
     })
     this.q.runningStream().on('data', function (d) {
-      queueStatus[d.key] = getStatus({ id: d.key, status: 'pending' })
+      console.log('runing D', d)
+      queueStatus[d.key] = getStatus({
+        id: d.key,
+        status: 'pending',
+        work: d.value
+      })
       config.log.info('Pending job id: %s, work: %j', d.key, d.value)
     })
   }
@@ -80,7 +102,7 @@ class q {
     })
     queueStatus[jobId] = getStatus({
       status: 'pending',
-      id: jobId,
+      id: `${jobId}`,
       work: params
     })
     task.id = jobId
