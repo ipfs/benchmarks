@@ -7,9 +7,7 @@ const config = require('./config')
 const db = levelup(leveldown(`${config.dataDir}/${config.db}`))
 const run = require('./runner')
 
-let queueStatus = {}
-
-const getStatus = (params) => {
+const getStatus = (queueStatus, params) => {
   let retVal = {}
   if (params.id) {
     if (queueStatus[params.id]) {
@@ -51,36 +49,14 @@ const getStatus = (params) => {
   return retVal
 }
 
-const handler = async (id, params, cb) => {
-  config.log.info('Started job id: %s, work: %j', id, params)
-  queueStatus[id] = getStatus({ id: id, status: 'started' })
-  try {
-    if (params.restart) {
-      // exit process, relying on process manager to restart
-      config.log.info('Exiting, for restart.')
-      cb()
-      process.exit(0)
-    } else {
-      await run(params)
-      config.log.info('Finished job id: %s, work: %j', id, params)
-      if (queueStatus[id]) {
-        delete queueStatus[id]
-      }
-      cb()
-    }
-  } catch (e) {
-    config.log.error(e)
-    if (queueStatus[id]) {
-      queueStatus[id] = getStatus({ id: id, status: 'error' })
-    }
-    cb(e)
-  }
-}
 class q {
   constructor () {
-    this.q = Jobs(db, handler, 1)
+    let that = this
+    this.queueStatus = {}
+    this.q = Jobs(db, this._handler(), 1)
     this.q.pendingStream().on('data', function (d) {
-      queueStatus[d.key] = getStatus({
+      console.log(that.queueStatus)
+      that.queueStatus[d.key] = getStatus(that.queueStatus, {
         id: d.key,
         status: 'pending',
         work: d.value
@@ -88,7 +64,7 @@ class q {
       config.log.info('Next job id: %s, work: %j', d.key, d.value)
     })
     this.q.runningStream().on('data', function (d) {
-      queueStatus[d.key] = getStatus({
+      that.queueStatus[d.key] = getStatus(that.queueStatus, {
         id: d.key,
         status: 'pending',
         work: d.value
@@ -97,12 +73,41 @@ class q {
     })
   }
 
+  _handler () {
+    let that = this
+    return async (id, params, cb) => {
+      config.log.info('Started job id: %s, work: %j', id, params)
+      that.queueStatus[id] = getStatus(that.queueStatus, { id: id, status: 'started' })
+      try {
+        if (params.restart) {
+          // exit process, relying on process manager to restart
+          config.log.info('Exiting, for restart.')
+          cb()
+          process.exit(0)
+        } else {
+          await run(params)
+          config.log.info('Finished job id: %s, work: %j', id, params)
+          if (that.queueStatus[id]) {
+            delete that.queueStatus[id]
+          }
+          cb()
+        }
+      } catch (e) {
+        config.log.error(e)
+        if (that.queueStatus[id]) {
+          that.queueStatus[id] = getStatus(that.queueStatus, { id: id, status: 'error' })
+        }
+        cb(e)
+      }
+    }
+  }
+
   add (params) {
     let task = Object.assign({}, params)
     let jobId = this.q.push(params, function (err) {
       if (err) config.log.error('Error pushing work into the queue', err.stack)
     })
-    queueStatus[jobId] = getStatus({
+    this.queueStatus[jobId] = getStatus(this.queueStatus, {
       status: 'pending',
       id: `${jobId}`,
       work: params
@@ -114,12 +119,12 @@ class q {
 
   async drain () {
     return new Promise((resolve, reject) => {
-      if (Object.values(queueStatus)) {
+      if (Object.values(this.queueStatus)) {
         let taskIds = []
-        for (let task of Object.values(queueStatus)) {
+        for (let task of Object.values(this.queueStatus)) {
           if (task.status !== 'started') {
             taskIds.push(task.jobId)
-            delete queueStatus[task.jobId]
+            delete this.queueStatus[task.jobId]
           }
         }
         this.q.delBatch(taskIds, (err) => {
@@ -127,7 +132,7 @@ class q {
             config.log.error('Error deleting jobs', err.stack)
             reject(Error('Error deleting jobs'))
           } else {
-            resolve(queueStatus)
+            resolve(this.queueStatus)
           }
         })
       }
@@ -135,7 +140,7 @@ class q {
   }
 
   getStatus (q) {
-    return queueStatus
+    return this.queueStatus
   }
 }
 
