@@ -13,7 +13,9 @@ const Queue = require('./queue')
 const stopFn = (cb) => {
   config.log.info('Exiting for restart.')
   cb()
-  process.exit(0)
+  fastify.close(() => {
+    process.exit(0)
+  })
 }
 
 const queue = new Queue(stopFn)
