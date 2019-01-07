@@ -28,6 +28,9 @@ const tests = { 'unixFsAdd': [{
 'unixFsAddBrowser': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }],
+'addMultiKbBrowser': [{
+  'warmup': 'Off',
+  'fileSet': ['Hundred1KBFile'] } ],
 'unixFsAddGo': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ]

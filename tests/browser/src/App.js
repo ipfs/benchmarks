@@ -16,19 +16,21 @@ const test = {
     })
     await once(node, 'ready')
     const delta = hrtime(start)
-    console.log(delta)
-    return { node: node , delta: delta, name: 'initializeNode' }
+    return { node: node, delta: delta, name: 'initializeNode' }
   },
   addLocalFile: async (file) => {
     // Create the IPFS node instance
     const node = new IPFS({ repo: String(uuidv1()) })
-    const readStream = fileReaderStream(file)
+    const fileArray = [...file]
+
     node.on('ready', () => {})
     await once(node, 'ready')
     const start = hrtime()
-    const inserted = node.add ? await node.add(readStream) : await node.files.add(readStream)
+    for (let i = 0; i < fileArray.length; i++) {
+      const readStream = fileReaderStream(fileArray[i])
+      node.add ? await node.add(readStream) : await node.files.add(readStream)
+    }
     const delta = hrtime(start)
-    console.log(inserted)
     return { node: node, delta: delta, name: 'addLocalFile' }
   }
 }
@@ -76,10 +78,8 @@ class App extends Component {
     this.ops(tt.node, tt.delta, tt.name)
   }
   async handleselectedFile (e, name) {
-    console.log(name)
-    const tt = await test[name](e.target.files[0])
+    const tt = await test[name](e.target.files)
     this.ops(tt.node, tt.delta, tt.name)
-
   }
   componentDidMount () {
   }
@@ -127,7 +127,7 @@ class App extends Component {
         style: {
           cursor: 'pointer'
         },
-        Cell: props => props.value.type === 'button' ? <button class={props.value.name} onClick={(e) => this.startTest(props.value.name)}>Start Test</button> : <input type="file" class={props.value.name} onChange={(e) => this.handleselectedFile(e, props.value.name)} />
+        Cell: props => props.value.type === 'button' ? <button class={props.value.name} onClick={(e) => this.startTest(props.value.name)}>Start Test</button> : <input type='file' class={props.value.name} multiple='multiple' onChange={(e) => this.handleselectedFile(e, props.value.name)} />
       },
       {
         Header: 'Test',
@@ -154,11 +154,6 @@ class App extends Component {
       columns={columns}
       showPagination={false}
     />
-    <div className="App">
-      <input type="file" name="" id="" onChange={this.handleselectedFile} />
-      <button onClick={this.handleUpload}>Upload</button>
-     <div> {Math.round(this.state.loaded,2) } %</div>
-    </div>
     </div>
   }
 }
