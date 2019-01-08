@@ -9,5 +9,6 @@ Restart=always
 Environment="STAGE=remote"
 Environment="LOG_PRETTY=true"
 Environment="BENCHMARK_USER={{ remote_user }}"
+Environment="IPFS_PASSWORD=$(cat /etc/pwd.txt)"
 [Install]
 WantedBy=multi-user.target
