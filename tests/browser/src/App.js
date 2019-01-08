@@ -20,7 +20,17 @@ const test = {
   },
   addLocalFile: async (file) => {
     // Create the IPFS node instance
-    const node = new IPFS({ repo: String(uuidv1()) })
+   
+    const  node = new IPFS({ repo: String(uuidv1()),
+      config: { 
+        Addresses: {
+        Swarm: [
+         //'/dnsaddr/ws-star-signal-1.servep2p.com/tcp/9090/ws/p2p-websocket-star/'
+         '/dnsaddr/ws-star.discovery.libp2p.io/tcp/9090/ws/p2p-websocket-star/'
+        ]
+        }
+      }})
+
     const fileArray = [...file]
 
     node.on('ready', () => {})
@@ -32,6 +42,43 @@ const test = {
     }
     const delta = hrtime(start)
     return { node: node, delta: delta, name: 'addLocalFile' }
+  },
+  peerTransfer: async (file) => {
+    // Create the IPFS node instance
+   
+    const node = new IPFS({ repo: String(uuidv1()),
+      config: {
+        Addresses: {
+          Swarm: [
+            '/dnsaddr/ws-star.discovery.libp2p.io/tcp/9090/ws/p2p-websocket-star/'
+          ]
+        }
+      }
+    })
+    const node2 = new IPFS({ repo: String(uuidv1()),
+      config: {
+        Addresses: {
+          Swarm: [
+            '/dnsaddr/ws-star.discovery.libp2p.io/tcp/9090/ws/p2p-websocket-star/'
+          ]
+        }
+      }
+    })
+    node.on('ready', () => {})
+    node2.on('ready', () => {})
+    await once(node, 'ready')
+    await once(node2, 'ready')
+    const fileArray = [...file]
+    const nodeId = await node.id()
+    node2.swarm.connect(nodeId.addresses[0])
+    const fileStream = fileReaderStream(fileArray[0])
+    const inserted = node.add ? await node.add(fileStream) : await node.files.add(fileStream)
+    const start = hrtime()
+    let stream = node2.catReadableStream ? node2.catReadableStream(inserted[0].hash) : node2.files.catReadableStream(inserted[0].hash)
+    stream.resume()
+    await once(stream, 'end')
+    const delta = hrtime(start)
+    return { node: node, delta: delta, name: 'peerTransfer' }
   }
 }
 class App extends Component {
@@ -54,7 +101,17 @@ class App extends Component {
         added_file_contents: null,
         time_s: null,
         time_ms: null,
-        ready: '' }
+        ready: ''
+      },
+      peerTransfer: { id: null,
+        version: null,
+        protocol_version: null,
+        added_file_hash: null,
+        added_file_contents: null,
+        time_s: null,
+        time_ms: null,
+        ready: ''
+      }
     }
   }
   ops (node, delta, name) {
@@ -118,6 +175,24 @@ class App extends Component {
         id: this.state.addLocalFile.id,
         version: this.state.addLocalFile.version,
         protocal_version: this.state.addLocalFile.protocol_version
+      }
+    },
+    {
+      name: 'Transfer file between peer',
+      start: {
+        type: 'file',
+        name: 'peerTransfer'
+      },
+      time: {
+        s: this.state.peerTransfer.time_s,
+        ms: this.state.peerTransfer.time_ms,
+        name: 'peerTransfer',
+        ready: this.state.peerTransfer.ready
+      },
+      node: {
+        id: this.state.peerTransfer.id,
+        version: this.state.peerTransfer.version,
+        protocal_version: this.state.peerTransfer.protocol_version
       }
     }]
     const columns = [
