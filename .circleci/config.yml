@@ -68,6 +68,11 @@ jobs:
           name: write deploy.txt to trigger benchmark host sync on first run after deploy
           command: |
             ssh -i  ~/.ssh/id_rsa_ipfs -o "StrictHostKeyChecking no" ubuntu@benchmarks.ipfs.team "echo $(date) > /data/ipfs-benchmarks/tests/deploy.txt"
+      - run:
+          name: schedule restart
+          command: |
+            curl -XPOST -H "x-ipfs-benchmarks-api-key: $APIKEY" -k https://benchmarks.ipfs.team/runner/restart
+
 workflows:
   version: 2
   build_and_test:
