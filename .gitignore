@@ -1,6 +1,7 @@
 tests/node_modules
 tests/browser/node_modules
 runner/node_modules
+runner/test/db
 local/data
 tests/dirHash.txt
 tests/out

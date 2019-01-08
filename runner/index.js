@@ -6,6 +6,7 @@ const fastify = require('fastify')({
 })
 const schema = require('./schema')
 const config = require('./config')
+const runner = require('./runner')
 const Queue = require('./queue')
 
 // This function exits the main process, relying on process manager to restart
@@ -18,7 +19,7 @@ const stopFn = (cb) => {
   })
 }
 
-const queue = new Queue(stopFn)
+const queue = new Queue(stopFn, runner)
 
 // run this every day at midnight, at least
 schedule.scheduleJob('0 0 * * *', function () {
