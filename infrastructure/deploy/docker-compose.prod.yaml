@@ -66,3 +66,9 @@ services:
     restart: always
     # networks:
     #   - my_bridge
+  rendezvous:
+    image: libp2p/websocket-star-rendezvous:release
+    ports:
+      - "9090:9090"
+    environment:
+      DISABLE_METRICS: 1
