@@ -13,8 +13,3 @@
     mode: 644
   notify:
     - reload systemctl
-- name: Restart runner
-  service:
-    name: runner.service
-    state: restarted
-    enabled: yes
