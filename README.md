@@ -25,8 +25,8 @@ submitting code to the community.
 ## Documentation Index
 * The [dashboard](infrastructure/grafana/README.md) documentation
 * [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
-* Reference on how this [Repository](REPOSITORY.md) is organized
-* Using the [Runner](runner/README.md) to manage benchmark runs remotely
+* Reference on how this [Repository](CONTRIBUTING.md) is organized
+* Using the [Runner](runner/README.md) to manage benchmark runs remotely, which includes an [API](runner/API.md) available [here](https://benchmarks.ipfs.team/runner)
 * Description of [tests](tests/README.md)
 * Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
 
@@ -93,14 +93,14 @@ Create a pre-generated key:
 > node lib/create-privateKey
 ```
 
-### FILESET:  
+### FILESET:
 Use env vairable TESTCLASS to run test just agianst that class.  Options of TestClass are define in the config.
 ```bash
 > FILESET="One64MBFile" node local-add
 ```
 
 ### VERIFYOFF
-Use env variable VERIFYOFF=true to skip the pre-generation of test files.  
+Use env variable VERIFYOFF=true to skip the pre-generation of test files.
 ```js
 >VERIFYOFF=true node local-add
 ```
