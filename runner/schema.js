@@ -2,23 +2,26 @@
 
 const config = require('./config')
 
-const schema = {
-  body: {
-    type: 'object',
-    properties: {
-      commit: { type: 'string' },
-      doctor: { type: 'string', default: 'on' }
-    },
-    required: ['commit']
+const headers = {
+  $id: 'protect',
+  type: 'object',
+  properties: {
+    'x-ipfs-benchmarks-api-key': { const: config.server.apikey }
   },
-
-  headers: {
-    type: 'object',
-    properties: {
-      'x-ipfs-benchmarks-api-key': { const: config.server.apikey }
-    },
-    required: ['x-ipfs-benchmarks-api-key']
-  }
+  required: ['x-ipfs-benchmarks-api-key']
 }
 
-module.exports = schema
+const addBody = {
+  $id: 'addBody',
+  type: 'object',
+  properties: {
+    commit: { type: 'string' },
+    doctor: { type: 'string', default: 'on' }
+  },
+  required: ['commit']
+}
+
+module.exports = {
+  addBody,
+  headers
+}

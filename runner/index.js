@@ -29,33 +29,63 @@ schedule.scheduleJob('0 0 * * *', function () {
   })
 })
 
-// Declare a route
-fastify.post('/', { schema }, async (request, reply) => {
-  let task = queue.add({
-    commit: request.body.commit,
-    doctor: request.body.doctor,
-    remote: true
-  })
-  return task
+fastify.addSchema(schema.addBody)
+fastify.addSchema(schema.headers)
+
+// add a new task to the queue
+fastify.route({
+  method: 'POST',
+  url: '/',
+  schema: {
+    body: 'addBody#',
+    headers: 'protect#'
+  },
+  handler: async (request, reply) => {
+    let task = queue.add({
+      commit: request.body.commit,
+      doctor: request.body.doctor,
+      remote: true
+    })
+    return task
+  }
 })
 
-fastify.get('/', async (request, reply) => {
-  let status = queue.getStatus()
-  fastify.log.info('getting queue status', status)
-  return status
+// list tasks
+fastify.route({
+  method: 'GET',
+  url: '/',
+  handler: async (request, reply) => {
+    let status = queue.getStatus()
+    fastify.log.info('getting queue status', status)
+    return status
+  }
 })
 
-// we do wat to be able to drain the queue
-fastify.post('/drain', async (request, reply) => {
-  return queue.drain()
+// we do want to be able to drain the queue
+fastify.route({
+  method: 'POST',
+  url: '/drain',
+  schema: {
+    headers: 'protect#'
+  },
+  handler: async (request, reply) => {
+    return queue.drain()
+  }
 })
 
 // after CD deployed new code we queue a restart of the runner
-fastify.post('/restart', async (request, reply) => {
-  let task = queue.add({
-    restart: true
-  })
-  return task
+fastify.route({
+  method: 'POST',
+  url: '/restart',
+  schema: {
+    headers: 'protect#'
+  },
+  handler: async (request, reply) => {
+    let task = queue.add({
+      restart: true
+    })
+    return task
+  }
 })
 
 // Run the server!
