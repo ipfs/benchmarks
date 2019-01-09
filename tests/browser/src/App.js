@@ -20,19 +20,8 @@ const test = {
   },
   addLocalFile: async (file) => {
     // Create the IPFS node instance
-   
-    const  node = new IPFS({ repo: String(uuidv1()),
-      config: { 
-        Addresses: {
-        Swarm: [
-         //'/dnsaddr/ws-star-signal-1.servep2p.com/tcp/9090/ws/p2p-websocket-star/'
-         '/dnsaddr/ws-star.discovery.libp2p.io/tcp/9090/ws/p2p-websocket-star/'
-        ]
-        }
-      }})
-
+    const node = new IPFS({ repo: String(uuidv1()) })
     const fileArray = [...file]
-
     node.on('ready', () => {})
     await once(node, 'ready')
     const start = hrtime()
