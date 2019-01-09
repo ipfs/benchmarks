@@ -23,6 +23,7 @@ version of `js-ipfs`. Developers can then examine individual output files before
 submitting code to the community.
 
 ## Documentation Index
+
 * The [dashboard](infrastructure/grafana/README.md) documentation
 * [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
 * Reference on how this [Repository](CONTRIBUTING.md) is organized
@@ -30,6 +31,7 @@ submitting code to the community.
 * Description of [tests](tests/README.md)
 * Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
 * Overview [video](https://cloudflare-ipfs.com/ipfs/QmSZgcL7dyjcifZ5uJYmBDCCACfzQD5Ve2RFSoB4RdYATp) hosted on the IPFS network.
+* [Introduction to Clinic.js in the context of IPFS](https://github.com/ipfs/team-mgmt/issues/796) [Recording](https://nearform.zoom.us/recording/play/A-4Vn3jA5aeK9BCPwKCA44IfwpLZePIBlzvD1bUYF7JqTXnG2JptVaLEVcRUmQ1i)
 
 ## Benchmarks on the web
 The dashboard is available at [https://benchmarks.ipfs.team](https://benchmarks.ipfs.team) and can be viewed without a user account.
