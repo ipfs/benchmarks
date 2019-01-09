@@ -10,7 +10,7 @@ async function addMultiKbBrowser (node, name, warmup, fileSet, version) {
   await page.reload()
   const elementHandle = await page.$('.addLocalFile')
   await elementHandle.uploadFile(...filePath)
-  const t = await page.waitFor('.addLocalFile_s_ready', { timeout: 100000 })
+  const t = await page.waitFor('.addLocalFile_s_ready')
   const element = await page.waitFor('.addLocalFile_ms_ready')
   const timeS = await page.evaluate(t => t.textContent, t)
   const timeMs = await page.evaluate(element => element.textContent, element)
