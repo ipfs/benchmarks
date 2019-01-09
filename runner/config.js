@@ -128,12 +128,12 @@ const testAbstracts = [
     file: 'add-multi-kb.browser.js'
   },
   {
-    name: 'peerTransferBrowser',
-    file: 'peer-transfer.browser.js'
-  },
-  {
     name: 'unixFsAddGo',
     file: 'local-add.go.js'
+  },
+  {
+    name: 'peerTransferBrowser',
+    file: 'peer-transfer.browser.js'
   }
 ]
 
