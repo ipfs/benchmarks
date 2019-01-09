@@ -130,10 +130,6 @@ const testAbstracts = [
   {
     name: 'unixFsAddGo',
     file: 'local-add.go.js'
-  },
-  {
-    name: 'peerTransferBrowser',
-    file: 'peer-transfer.browser.js'
   }
 ]
 
