@@ -38,8 +38,10 @@ const run = (shell, name, isClinic) => {
           if (err || stderr) {
             if (stderr.length) {
               config.log.error(stderr)
+              resolve(stderr)
             } else {
               config.log.error(err)
+              resolve(err)
             }
           }
           if (stdout) {
@@ -49,6 +51,7 @@ const run = (shell, name, isClinic) => {
               resolve(objResults)
             } catch (e) {
               config.log.error(e)
+              resolve(e)
             }
           }
         })
