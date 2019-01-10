@@ -8,9 +8,9 @@ async function peerTransferBrowser (node, name, warmup, fileSet, version) {
   const filePath = await file(fileSet)
   const page = node[0].page
   await page.reload()
+  page.on('console', msg => console.log('PAGE LOG:', msg._text))
   const elementHandle = await page.$('.peerTransfer')
   await elementHandle.uploadFile(filePath)
-  console.log("wait")
   const t = await page.waitFor('.peerTransfer_s_ready')
   const element = await page.waitFor('.peerTransfer_ms_ready')
   const timeS = await page.evaluate(t => t.textContent, t)
