@@ -37,7 +37,9 @@
       rsync_opts:
         - "--exclude=runner/node_modules"
         - "--exclude=tests/node_modules"
+        - "--exclude=tests/package-lock.json"
         - "--exclude=tests/browser/node_modules"
+        - "--exclude=tests/browser/package-lock.json"
         - "--exclude=tests/fixtures/*"
   - import_role:
       name: redeploy
