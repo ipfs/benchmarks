@@ -40,6 +40,8 @@
         /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ node_version }} && nvm alias default {{ node_version }}"
       args:
         creates: /home/{{ ansible_user_id }}/.nvm/versions/node/v{{ node_version }}
+    - name: Npm config
+      shell: /bin/bash -c "source ~/.nvm/nvm.sh && npm config set package-lock false"
     - name: Install clinic and autocannon
       shell: >
         /bin/bash -c "source ~/.nvm/nvm.sh && npm i clinic autocannon -g"

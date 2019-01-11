@@ -5,6 +5,8 @@ local/data
 tests/dirHash.txt
 tests/out
 tests/data
+tests/package-lock.json
+tests/browser/package-lock.json
 js-ipfs
 infrastructure/inventory/inventory.local.yaml
 data
