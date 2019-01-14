@@ -60,7 +60,7 @@ Clone Benchmark tests and install:
 >  cd ../benchmarks/runner
 >  npm install
 ```
-### Gnerate test files
+### Generate test files
 The files are defined in (fixutres)[tests/lib/fuxtures.js]
 
 ```bash
