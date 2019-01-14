@@ -55,9 +55,9 @@ Clone Benchmark tests and install:
 
 ```bash
 >  git clone https://github.com/ipfs/benchmarks.git
->  cd benchmarks/tests
+>  cd benchmarks/runner
 >  npm install
->  cd ../benchmarks/runner
+>  cd ../tests
 >  npm install
 ```
 ### Generate test files
