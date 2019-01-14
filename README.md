@@ -55,13 +55,13 @@ Clone Benchmark tests and install:
 
 ```bash
 >  git clone https://github.com/ipfs/benchmarks.git
->  cd benchmarks/tests
+>  cd benchmarks/runner
 >  npm install
->  cd ../benchmarks/runner
+>  cd ../tests
 >  npm install
 ```
-### Gnerate test files
-The files are defined in (fixutres)[tests/lib/fuxtures.js]
+### Generate test files
+The files are defined in (fixtures)[tests/lib/fixtures.js]
 
 ```bash
 > npm run generateFiles
@@ -72,7 +72,7 @@ Here is the file object for a single test:
 ```js
 { size: KB, name: 'OneKBFile' }
 ```
-To add mutiple test files add a count property:
+To add multiple test files add a count property:
 
 ```js
 { size: KB, name: 'OneHundredKBFile', count: 100 }
@@ -97,7 +97,7 @@ Create a pre-generated key:
 ```
 
 ### FILESET:
-Use env vairable TESTCLASS to run test just agianst that class.  Options of TestClass are define in the config.
+Use env variable TESTCLASS to run test just against that class.  Options of TestClass are define in the config.
 ```bash
 > FILESET="One64MBFile" node local-add
 ```
