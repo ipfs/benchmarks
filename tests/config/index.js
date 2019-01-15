@@ -33,7 +33,7 @@ const tests = { 'unixFsAdd': [{
   'fileSet': ['Hundred1KBFile'] } ],
 'peerTransferBrowser': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }],
+  'fileSet': ['OneMBFile'] }],
 'unixFsAddGo': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ]
