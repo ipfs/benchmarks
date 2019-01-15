@@ -42,7 +42,7 @@ new IPFS({
 - Copy test.template and give the file the name of the test
 - Add test fo the async function 
 - Call run() with the name of you test as param
-- Add the test name and subtests to the [config/index](config/index.json).
+- Add the test name and subtests to the [config/index](config/index.js).
 
 To Test it:
 
