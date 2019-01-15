@@ -39,7 +39,7 @@ const test = {
       config: {
         Addresses: {
           Swarm: [
-            '/dnsaddr/95.179.134.100/tcp/9090/ws/p2p-websocket-star/'
+            '/dnsaddr/benchmarks.ipfs.team/tcp/9090/ws/p2p-websocket-star/'
           ]
         }
       }
@@ -48,7 +48,7 @@ const test = {
       config: {
         Addresses: {
           Swarm: [
-            '/dnsaddr/95.179.134.100/tcp/9090/ws/p2p-websocket-star/'
+            '/dnsaddr/benchmarks.ipfs.team:9090/tcp/9090/ws/p2p-websocket-star/'
           ]
         }
       }
