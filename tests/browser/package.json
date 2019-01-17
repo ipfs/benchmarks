@@ -18,6 +18,8 @@
     "react-table": "^6.8.6",
     "stream-iterators-utils": "^0.1.0",
     "tachyons": "^4.11.1",
+    "util": "^0.11.1",
+    "util.promisify": "^1.0.0",
     "webcrypto-shim": "^0.1.4"
   },
   "scripts": {
