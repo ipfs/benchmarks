@@ -13,8 +13,9 @@ export default class Table extends React.Component {
         </div></div>
         <div class='rt-tbody' style={{ minWidth: '400px' }}><div class='rt-tr-group' role='rowgroup'>
           <InitializeNode />
-          <AddLocalFile />
           <PeerTransfer />
+          <AddLocalFile />
+
         </div>
         </div>
       </div>
