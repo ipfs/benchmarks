@@ -23,8 +23,10 @@
     "webcrypto-shim": "^0.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_REMOTE=true react-scripts start",
+    "build": "REACT_APP_REMOTE=true react-scripts build",
+    "startDev": "react-scripts start",
+    "buildDev": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

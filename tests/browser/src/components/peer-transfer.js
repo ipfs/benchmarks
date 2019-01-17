@@ -15,12 +15,14 @@ class PeerTransfer extends React.Component {
   }
 
   async test (e) {
+    const server = process.env.REACT_APP_REMOTE === 'true' ? 'benchmarks.ipfs.team' : 'ws-star.discovery.libp2p.io'
+    const fileArray = [...e.target.files]
     // Create the IPFS node instance
     const node = new IPFS({ repo: String(uuidv1()),
       config: {
         Addresses: {
           Swarm: [
-            '/dnsaddr/benchmarks.ipfs.team/tcp/9090/ws/p2p-websocket-star/'
+            `/dnsaddr/${server}/tcp/9090/ws/p2p-websocket-star/`
           ]
         }
       }
@@ -29,7 +31,7 @@ class PeerTransfer extends React.Component {
       config: {
         Addresses: {
           Swarm: [
-            '/dnsaddr/benchmarks.ipfs.team/tcp/9090/ws/p2p-websocket-star/'
+            `/dnsaddr/${server}/tcp/9090/ws/p2p-websocket-star/`
           ]
         }
       }
@@ -38,7 +40,6 @@ class PeerTransfer extends React.Component {
     node2.on('ready', () => {})
     await once(node, 'ready')
     await once(node2, 'ready')
-    const fileArray = [...e.target.files]
     const nodeId = await node.id()
     node2.swarm.connect(nodeId.addresses[0])
     const fileStream = fileReaderStream(fileArray[0])
