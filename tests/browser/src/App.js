@@ -8,8 +8,7 @@ class App extends Component {
       <h2 class='ma0 montserrat aqua'>
       IPFS Browser Benchmark
       </h2>
-    </header>
-    <Table />
+    </header><Table />
     </div>
   }
 }
