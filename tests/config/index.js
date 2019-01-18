@@ -31,6 +31,9 @@ const tests = { 'unixFsAdd': [{
 'addMultiKbBrowser': [{
   'warmup': 'Off',
   'fileSet': ['Hundred1KBFile'] } ],
+'peerTransferBrowser': [{
+  'warmup': 'Off',
+  'fileSet': ['OneKBFile', 'OneMBFile'] }],
 'unixFsAddGo': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ]

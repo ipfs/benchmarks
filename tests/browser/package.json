@@ -9,7 +9,7 @@
   "dependencies": {
     "browser-process-hrtime": "^1.0.0",
     "filereader-stream": "^2.0.0",
-    "ipfs": "^0.33.1",
+    "ipfs": "file:../../js-ipfs",
     "ipfs-css": "^0.12.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -18,11 +18,15 @@
     "react-table": "^6.8.6",
     "stream-iterators-utils": "^0.1.0",
     "tachyons": "^4.11.1",
+    "util": "^0.11.1",
+    "util.promisify": "^1.0.0",
     "webcrypto-shim": "^0.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_REMOTE=true react-scripts start",
+    "build": "REACT_APP_REMOTE=true react-scripts build",
+    "startDev": "react-scripts start",
+    "buildDev": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

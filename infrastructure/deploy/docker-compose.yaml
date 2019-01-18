@@ -22,3 +22,9 @@ services:
       GF_SERVER_ROOT_URL: http://localhost
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
       GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+  rendezvous:
+    image: libp2p/websocket-star-rendezvous:release
+    ports:
+      - "9090:9090"
+    environment:
+      DISABLE_METRICS: 1

@@ -23,12 +23,15 @@ version of `js-ipfs`. Developers can then examine individual output files before
 submitting code to the community.
 
 ## Documentation Index
+
 * The [dashboard](infrastructure/grafana/README.md) documentation
 * [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
 * Reference on how this [Repository](CONTRIBUTING.md) is organized
 * Using the [Runner](runner/README.md) to manage benchmark runs remotely, which includes an [API](runner/API.md) available [here](https://benchmarks.ipfs.team/runner)
 * Description of [tests](tests/README.md)
 * Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
+* Overview [video](https://cloudflare-ipfs.com/ipfs/QmSZgcL7dyjcifZ5uJYmBDCCACfzQD5Ve2RFSoB4RdYATp) hosted on the IPFS network.
+* [Introduction to Clinic.js in the context of IPFS](https://github.com/ipfs/team-mgmt/issues/796) [Recording](https://nearform.zoom.us/recording/play/A-4Vn3jA5aeK9BCPwKCA44IfwpLZePIBlzvD1bUYF7JqTXnG2JptVaLEVcRUmQ1i)
 
 ## Benchmarks on the web
 The dashboard is available at [https://benchmarks.ipfs.team](https://benchmarks.ipfs.team) and can be viewed without a user account.
@@ -52,13 +55,13 @@ Clone Benchmark tests and install:
 
 ```bash
 >  git clone https://github.com/ipfs/benchmarks.git
->  cd benchmarks/tests
+>  cd benchmarks/runner
 >  npm install
->  cd ../benchmarks/runner
+>  cd ../tests
 >  npm install
 ```
-### Gnerate test files
-The files are defined in (fixutres)[tests/lib/fuxtures.js]
+### Generate test files
+The files are defined in (fixtures)[tests/lib/fixtures.js]
 
 ```bash
 > npm run generateFiles
@@ -69,7 +72,7 @@ Here is the file object for a single test:
 ```js
 { size: KB, name: 'OneKBFile' }
 ```
-To add mutiple test files add a count property:
+To add multiple test files add a count property:
 
 ```js
 { size: KB, name: 'OneHundredKBFile', count: 100 }
@@ -94,7 +97,7 @@ Create a pre-generated key:
 ```
 
 ### FILESET:
-Use env vairable TESTCLASS to run test just agianst that class.  Options of TestClass are define in the config.
+Use env variable TESTCLASS to run test just against that class.  Options of TestClass are define in the config.
 ```bash
 > FILESET="One64MBFile" node local-add
 ```

@@ -48,7 +48,7 @@ const run = async (params) => {
       config.log.error(e)
       // TODO:  maybe trigger an alert here ??
     }
-    if (config.doctor) { // then run it with each of the clinic tools
+    if (config.benchmarks.doctor) { // then run it with each of the clinic tools
       config.log.debug('running Doctor')
       try {
         for (let op of ['doctor', 'flame', 'bubbleProf']) {
@@ -65,7 +65,7 @@ const run = async (params) => {
         config.log.error(e)
       }
     } else {
-      config.log.info(`not running doctor: ${process.env.DOCTOR}`)
+      config.log.info(`not running doctor: ${config.benchmarks.doctor}`)
     }
   }
   try {

@@ -2,31 +2,35 @@
 
 const fs = require('fs')
 const { build } = require('./schema/results')
-const fixtures = require('./lib/fixtures')
+const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
 
-async function ****TEST NAME***** (node, name, subtest, fileSet) {
+async function ****TEST NAME***** (node, name, warmup, fileSet, version) {
 
 
-    *** SETUP ****
-    const start = process.hrtime()
+  *** SETUP ****
+  const filePath = await file(fileSet)
+  const start = process.hrtime()
 
-    **** ADD ACTION to be tested ****
+  **** ADD ACTION to be tested ****
 
-    const end = process.hrtime(start)
+  const end = process.hrtime(start)
 
-    // Pass in test output to build and return
+  // Pass in test output to build and return
 
-    return build({
-      name: name,
-      subtest: subtest,
-      file: file(fileSet),
-      meta: { version: version },
-      description: 'Get file to local repo',
-      fileSet: fileSet,
-      duration: { s: end[0],
-        ms: end[1] / 1000000 }
-    })
+  return build({
+    name: name,
+    warmup: warmup,
+    file: filePath,
+    meta: { version: version },
+    description: 'Get file to local repo',
+    file_set: fileSet,
+    duration: {
+      s: end[0],
+      ms: end[1] / 1000000
+    }
+    subtest: subtest,
+  })
 }
 
 run(****TEST NAME***** )

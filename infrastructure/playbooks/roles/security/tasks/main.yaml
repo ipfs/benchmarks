@@ -27,6 +27,14 @@
     port: https
     comment: Allow https access
 
+- name: Allow access to https port 9090 and include a comment
+  ufw:
+    rule: allow
+    proto: tcp
+    port: '9090'
+    src: '147.75.33.155'
+    comment: Allow rendezvous server access from benchmark machine
+
 - name: Create a network with options
   docker_network:
     name: my-bridge
