@@ -27,13 +27,13 @@ const tests = { 'unixFsAdd': [{
   'fileSet': ['None'] }],
 'unixFsAddBrowser': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile'] }],
+  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] }],
 'addMultiKbBrowser': [{
   'warmup': 'Off',
   'fileSet': ['Hundred1KBFile'] } ],
 'peerTransferBrowser': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile'] }],
+  'fileSet': ['OneKBFile', 'OneMBFile'] }],
 'unixFsAddGo': [{
   'warmup': 'Off',
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ]
