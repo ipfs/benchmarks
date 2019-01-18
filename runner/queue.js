@@ -4,7 +4,6 @@ const levelup = require('levelup')
 const leveldown = require('leveldown')
 const Jobs = require('level-jobs')
 const config = require('./config')
-const db = levelup(leveldown(`${config.dataDir}/${config.db}`))
 
 const getStatus = (queueStatus, params) => {
   let retVal = {}
@@ -53,7 +52,11 @@ class q {
     let that = this
     this.stopFn = stopFn
     this.queueStatus = {}
-    this.q = Jobs(database || db, this._handler(runner), 1)
+    let dbRef = database
+    if (!database) {
+      dbRef = levelup(leveldown(`${config.dataDir}/${config.db}`))
+    }
+    this.q = Jobs(dbRef, this._handler(runner), 1)
     this.q.pendingStream().on('data', function (d) {
       console.log(that.queueStatus)
       that.queueStatus[d.key] = getStatus(that.queueStatus, {
