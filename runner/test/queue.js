@@ -67,7 +67,7 @@ tap.test('check started', async (t) => {
   let taskOne = q.add(task1)
   let statusOne = q.getStatus()
   tap.equal(statusOne[taskOne.id].status, 'pending', 'task1 pending')
-  await wait(200)
+  await wait(300)
   let statusTwo = q.getStatus()
   tap.equal(statusTwo[taskOne.id].status, 'started', 'task1 started')
   await wait(500)
