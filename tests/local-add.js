@@ -10,7 +10,10 @@ async function unixFsAdd (node, name, warmup, fileSet, version) {
   const fileStream = fs.createReadStream(filePath)
   const start = process.hrtime()
   const peer = node[0]
-  peer.add ? await peer.add(fileStream) : await peer.files.add(fileStream)
+  const strategy = process.argv[2] === 'trickle' ? 'trickle' : 'balanced'
+  // output file and dashboard name will match trategy.  default is balanced
+  name = strategy === 'trickle' ? `${name}Trickle` : name
+  peer.add ? await peer.add(fileStream, { strategy: strategy }) : await peer.files.add(fileStream)
   const end = process.hrtime(start)
   return build({
     name: name,
