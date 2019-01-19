@@ -9,9 +9,12 @@ async function addMultiKb (node, name, warmup, fileSet, version) {
   const fileArr = await file(fileSet)
   const start = process.hrtime()
   const peer = node[0]
+  const strategy = process.argv[2] === 'trickle' ? 'trickle' : 'balanced'
+  // output file and dashboard name will match trategy.  default is balanced
+  name = strategy === 'trickle' ? `${name}Trickle` : name
   for (var i = 0, len = fileArr.length; i < len; i++) {
     const fileStream = fs.createReadStream(fileArr[i])
-    peer.add ? await peer.add(fileStream) : await peer.files.add(fileStream)
+    await peer.add(fileStream, { strategy: strategy })
   }
   const end = process.hrtime(start)
 

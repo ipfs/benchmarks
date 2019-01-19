@@ -120,6 +120,10 @@ const testAbstracts = [
     file: 'add-multi-kb.js'
   },
   {
+    name: 'addMultiKbTrickle',
+    file: 'add-multi-kb.js trickle'
+  },
+  {
     name: 'initializeNodeBrowser',
     file: 'init-node.browser.js'
   },

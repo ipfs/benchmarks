@@ -150,7 +150,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Add many small files (balanced)          | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add large file (balanced)                | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add small file (trickle)                 | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add many small files (trickle)           | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add many small files (trickle)           | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add large file (trickle)                 | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (local)                   | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
