@@ -104,6 +104,10 @@ const testAbstracts = [
     file: 'local-add.js'
   },
   {
+    name: 'unixFsAddTrickle',
+    file: 'local-add.js trickle'
+  },
+  {
     name: 'localExtract',
     file: 'local-extract.js'
   },
