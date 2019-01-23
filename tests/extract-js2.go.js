@@ -15,18 +15,18 @@ async function extractJs2Go (ipfs, name, warmup, fileSet, version) {
   console.log(fileSet)
   //Runner rtunrs the NodeJS ipfs but we need to create the Go ipfs
   const nodeFactory = new NodeFactory()
-  const ipfsGo = await nodeFactory.add('go')
+  await nodeFactory.add('go')
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
   const peer = ipfs[0]
   const inserted = await peer.add(fileStream)
 
   const peerId = await peer.id()
-  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[0]}`
-  const results = await execute(command, { maxBuffer: 1024 * 1024 * 100 })
+  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[0]} > /dev/null`
+  await execute(command)
 
   const start = process.hrtime()
-  command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs cat ${inserted[0].hash}`
+  command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs cat ${inserted[0].hash} > /dev/null`
   await execute(command)
   const end = process.hrtime(start)
   await nodeFactory.stop('go')
