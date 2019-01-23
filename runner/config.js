@@ -201,7 +201,7 @@ const config = {
     ]
   },
   benchmarks: {
-    doctor: process.env.DOCTOR && process.env.DOCTOR !== 'false'  true,
+    doctor: process.env.DOCTOR || true,
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
     key: process.env.BENCHMARK_KEY || keyfile,
