@@ -140,6 +140,10 @@ const testAbstracts = [
     file: 'local-add.go.js'
   },
   {
+    name: 'extractJs2Go',
+    file: 'extract-js2.go.js'
+  },
+  {
     name: 'peerTransferBrowser',
     file: 'peer-transfer.browser.js'
   }
@@ -197,7 +201,7 @@ const config = {
     ]
   },
   benchmarks: {
-    doctor: process.env.DOCTOR || true,
+    doctor: process.env.DOCTOR && process.env.DOCTOR !== 'false'  true,
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
     key: process.env.BENCHMARK_KEY || keyfile,
