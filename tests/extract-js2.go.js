@@ -5,7 +5,6 @@ const fs = require('fs')
 const { build } = require('./schema/results')
 const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
-const { once } = require('stream-iterators-utils')
 const NodeFactory = require('./lib/node-factory')
 const util = require('util')
 const execute = util.promisify(util.promisify(require('child_process').exec))
@@ -13,7 +12,7 @@ const conf = { tmpPath: os.tmpdir() }
 
 async function extractJs2Go (ipfs, name, warmup, fileSet, version) {
   console.log(fileSet)
-  //Runner rtunrs the NodeJS ipfs but we need to create the Go ipfs
+  //  Runner returns the NodeJS ipfs but we need to create the Go ipfs
   const nodeFactory = new NodeFactory()
   await nodeFactory.add('go')
   const filePath = await file(fileSet)
