@@ -144,6 +144,10 @@ const testAbstracts = [
     file: 'extract-js2.go.js'
   },
   {
+    name: 'extractGo2Js',
+    file: 'extract-go2.js'
+  },
+  {
     name: 'peerTransferBrowser',
     file: 'peer-transfer.browser.js'
   }
