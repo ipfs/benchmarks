@@ -1,7 +1,6 @@
 'use strict'
 
 const os = require('os')
-const fs = require('fs')
 const { build } = require('./schema/results')
 const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
@@ -12,7 +11,7 @@ const execute = util.promisify(util.promisify(require('child_process').exec))
 const conf = { tmpPath: os.tmpdir() }
 
 async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
-  //Runner rtunrs the NodeJS ipfs but we need to create the Go ipfs
+  // Runner rtunrs the NodeJS ipfs but we need to create the Go ipfs
   const nodeFactory = new NodeFactory()
   await nodeFactory.add('go')
   const filePath = await file(fileSet)
