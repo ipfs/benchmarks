@@ -11,7 +11,7 @@ const conf = { tmpPath: os.tmpdir() }
 const unixFsAddGo = async (node, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
   const start = process.hrtime()
-  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs add ${filePath}`
+  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs add ${filePath} > /dev/null`
   await execute(command)
   const end = process.hrtime(start)
   return build({

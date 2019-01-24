@@ -82,8 +82,14 @@ const CreateGo = async (config, init, IPFS, count) => {
   await fsWriteFile(`${peerDir}/config`, JSON.stringify(peerConf))
   let peer = spawn('ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
   peer.version = function () { return '1' }
+  peer.addresses = ''
   peer.stdout.on('data', (data) => {
     let version = {}
+    const addresses = []
+    if (data.includes('Swarm announcing')) {
+      addresses.push(data.toString('utf8').split('Swarm announcing')[1])
+      peer.addresses = addresses
+    }
     if (data.includes('go-ipfs version:')) {
       const stdArray = data.toString('utf8').split('\n')
       for (let item of stdArray) {
@@ -112,6 +118,7 @@ const CreateGo = async (config, init, IPFS, count) => {
     console.log('Daemon is ready')
   })
   await once(peer, 'done')
+
   return peer
 }
 
