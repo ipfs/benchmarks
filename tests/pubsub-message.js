@@ -16,11 +16,11 @@ async function pubsubMessage (node, name, warmup, fileSet, version) {
 
   await peerB.swarm.connect(peerAId.addresses[0])
 
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const start = process.hrtime()
 
     // Subscribe topic
-    await peerB.pubsub.subscribe(topic, () => {
+    peerB.pubsub.subscribe(topic, () => {
       const end = process.hrtime(start)
       resolve(build({
         name: name,
@@ -38,17 +38,17 @@ async function pubsubMessage (node, name, warmup, fileSet, version) {
 
     // wait for peerA to know about peerB subscription
     let peers
-    await promiseRetry(async (retry, number) => {
+    promiseRetry(async (retry, number) => {
       peers = await peerA.pubsub.peers(topic)
       if (peers.length && peers.includes(peerBId.id)) {
         return Promise.resolve()
       } else {
         retry()
       }
-    })
-
-    // Publish
-    await peerA.pubsub.publish(topic, Buffer.from('data'))
+    }).then(() => {
+      // Publish
+      return peerA.pubsub.publish(topic, Buffer.from('data'))
+    }).catch((err) => reject(err))
   })
 }
 

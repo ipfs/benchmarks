@@ -150,6 +150,10 @@ const testAbstracts = [
   {
     name: 'peerTransferBrowser',
     file: 'peer-transfer.browser.js'
+  },
+  {
+    name: 'pubsubMessage',
+    file: 'pubsub-message.js'
   }
 ]
 
