@@ -43,6 +43,7 @@ new IPFS({
 - Add test fo the async function 
 - Call run() with the name of you test as param
 - Add the test name and subtests to the [config/index](config/index.js).
+- Add the test to the runner config (`testAbstracts` array), in order to be available on the dashboard [runner/config.js](../runner/config.js)
 
 To Test it:
 
