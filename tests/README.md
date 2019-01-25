@@ -138,7 +138,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | MFS mv a file                            | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | MFS rm a file                            | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | MFS stat a file                          | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Pubsub publish & receive a message       | n/a        | 🍎         | n/a        | 🍎         | 🍎          | 🍎         | n/a            | n/a            |
+| Pubsub publish & receive a message       | n/a        | 🍏         | n/a        | 🍎         | 🍎          | 🍎         | n/a            | n/a            |
 | Pubsub publish & receive 1k messages     | n/a        | 🍎         | n/a        | 🍎         | 🍎          | 🍎         | n/a            | n/a            |
 
 ### Browser
