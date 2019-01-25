@@ -18,7 +18,11 @@ async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
   const peer = ipfs[0]
 
   const peerId = await peer.id()
-  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[0]} > /dev/null`
+  const protocal = process.argv[2] === 'ws' ? 'ws' : 'tcp'
+  // output file and dashboard name will match trategy.  default is balanced
+  name = protocal === 'ws' ? `${name}Ws` : name
+  const id = protocal === 'ws' ? 2 : 0
+  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[id]} > /dev/null`
   await execute(command)
   // redirect stderr to dev/null due to the progress of file being processed is sent to stderr causing maxBuffer error
   const addCommand = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs add ${filePath} 2> /dev/null`
