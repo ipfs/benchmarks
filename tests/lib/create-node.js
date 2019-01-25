@@ -40,7 +40,10 @@ const CreateNodeJs = async (config, init, IPFS, count) => {
       .toString()
       .substring(2, 8)}`,
     config: config || defaultConfig[count],
-    init: init || { privateKey: privateKey[count].privKey }
+    init: init || { privateKey: privateKey[count].privKey },
+    EXPERIMENTAL: {
+      pubsub: true
+    }
   })
   node.on('ready', () => {
     console.log('Node ready')

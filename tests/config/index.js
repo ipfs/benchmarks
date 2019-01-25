@@ -42,7 +42,10 @@ const tests = { 'unixFsAdd': [{
   'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ],
 'extractGo2Js': [{
   'warmup': 'Off',
-  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ]
+  'fileSet': ['OneKBFile', 'OneMBFile', 'One4MBFile', 'One64MBFile'] } ],
+'pubsubMessage': [{
+  'warmup': 'Off',
+  'fileSet': ['None'] }]
 }
 
 const config = {
