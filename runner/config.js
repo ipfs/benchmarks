@@ -144,6 +144,14 @@ const testAbstracts = [
     file: 'extract-js2.go.js'
   },
   {
+    name: 'extractGo2JsWs',
+    file: 'extract-go2.js ws'
+  },
+  {
+    name: 'extractJs2GoWs',
+    file: 'extract-js2.go.js ws'
+  },
+  {
     name: 'extractGo2Js',
     file: 'extract-go2.js'
   },

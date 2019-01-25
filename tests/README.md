@@ -102,7 +102,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Add large file (trickle)                 | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (local)                   | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (tcp, mplex)              | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
-| Cat small file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat small file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat small file (tcp, mplex, secio)       | n/a        | 🍏         | n/a        | 🍎         | 🍎         | 🍎         | 🍏             | 🍎             |
 | Cat small file (websocket, mplex, secio) | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
@@ -115,7 +115,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Cat small file (webrtc, spdy, secio)     | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat large file (local)                   | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat large file (tcp, mplex)              | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
-| Cat large file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat large file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat large file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat large file (tcp, mplex, secio)       | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat large file (websocket, mplex, secio) | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
