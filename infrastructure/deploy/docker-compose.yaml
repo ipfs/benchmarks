@@ -1,9 +1,13 @@
-version: "3"
+version: "3.2"
 services:
   influxdb:
     image: influxdb:1.7-alpine
     volumes:
-      - ../../../data/influxdb:/var/lib/influxdb
+      - type: volume
+        source: grafana
+        target: /var/lib/influxdb
+        volume:
+          nocopy: true
     ports:
       - "8086:8086"
     environment:
@@ -13,7 +17,11 @@ services:
     ports:
      - "3000:3000"
     volumes:
-      - ../../../data/grafana:/var/lib/grafana
+      - type: volume
+        source: grafana
+        target: /var/lib/grafana
+        volume:
+          nocopy: true
     depends_on:
       - influxdb
     links:
@@ -28,3 +36,6 @@ services:
       - "9090:9090"
     environment:
       DISABLE_METRICS: 1
+volumes:
+  influx:
+  grafana:
