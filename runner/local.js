@@ -39,37 +39,6 @@ const run = (shell, name) => {
       commandLogger.error('error', err)
       reject(new Error(err))
     })
-
-    // if (name) {
-      // let retrieveCommand = `cat ${config.outFolder}/${name}.json`
-      // config.log.info(`Retrieving [${retrieveCommand}] locally`)
-      // const retrieveLogger = config.log.child({command: retrieveCommand})
-      // let retrieveStream = exec(retrieveCommand)
-      // let jsonResponse = ''
-      // retrieveStream.setEncoding('utf-8')
-      // retrieveStream.on('data', (data) => {
-        // retrieveLogger.debug(data)
-        // jsonResponse += data
-      // })
-      // retrieveStream.on('warn', (data) => {
-        // retrieveLogger.error(data)
-      // })
-      // retrieveStream.on('end', () => {
-        // retrieveLogger.debug('-- retrieve command end --')
-        // try {
-          // let objResults = JSON.parse(jsonResponse)
-          // retrieveLogger.debug(objResults)
-          // resolve(objResults)
-        // } catch (e) {
-          // retrieveLogger.error(e)
-          // resolve(e)
-        // }
-      // })
-      // retrieveStream.on('error', (err) => {
-        // retrieveLogger.error('error', err)
-        // resolve(err)
-      // })
-    // }
   })
 }
 
