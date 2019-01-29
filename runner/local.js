@@ -11,7 +11,7 @@ const run = (shell, name) => {
   args.shift()
 
   return new Promise((resolve, reject) => {
-    if (!shell) reject(Error('shell command required'))
+    if (!shell) return reject(Error('shell command required'))
     let cmdInstance = spawn(cmd, args)
     let stdOut = ''
     let stdErr = ''
