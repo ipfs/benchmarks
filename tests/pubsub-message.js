@@ -52,4 +52,6 @@ async function pubsubMessage (node, name, warmup, fileSet, version) {
   })
 }
 
-run(pubsubMessage, 2)
+run(pubsubMessage, 2, 'nodejs', { EXPERIMENTAL: {
+  pubsub: true
+} })
