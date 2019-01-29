@@ -8,7 +8,6 @@ const persistence = require('./persistence')
 const retrieve = require('./retrieve')
 const ipfs = require('./ipfs')
 const rmfr = require('rmfr')
-const os = require('os')
 const util = require('util')
 const fs = require('fs')
 const writeFile = util.promisify(fs.writeFile)
@@ -24,8 +23,7 @@ const runCommand = (command, name) => {
 const run = async (params) => {
   config.stage = params.remote ? 'remote' : 'local'
   let results = []
-  const now = Date.now()
-  const targetDir = `${os.tmpdir()}/${now}`
+  const targetDir = config.targetDir
   await mkDir(targetDir, { recursive: true })
   if (config.stage !== 'local') {
     try {
@@ -38,9 +36,6 @@ const run = async (params) => {
     // first run the benchmark straight up
     try {
       let result = await runCommand(test.benchmark, test.name)
-      config.log.debug(result)
-      config.log.debug(`Creating ${targetDir}/${test.name}`)
-      await mkDir(`${targetDir}/${test.name}`, { recursive: true })
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result, null, 2))
       results.push(result)
@@ -72,7 +67,7 @@ const run = async (params) => {
     config.log.info(`Uploading ${targetDir} to IPFS network`)
     const storeOutput = await ipfs.store(targetDir)
     // config.log.debug(storeOutput)
-    const sha = ipfs.parse(storeOutput, now)
+    const sha = ipfs.parse(storeOutput, config.now)
     config.log.info(`sha: ${sha}`)
     // config.log.debug(results)
     results.map((arrOfResultObjects) => {
