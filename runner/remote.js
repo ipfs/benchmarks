@@ -6,12 +6,12 @@ const sshConf = {
   user: config.benchmarks.user,
   host: config.benchmarks.host,
   key: config.benchmarks.key,
-  timeout: 1000*60*10
+  timeout: 1000 * 60 * 10
 }
 
-const run = (shell, name, isClinic) => {
+const run = (shell, name) => {
   config.log.info(`Running [${shell}] on host [${config.benchmarks.host}] for user [${config.benchmarks.user}] using [${config.benchmarks.key}]`)
-  const commandLogger = config.log.child({command: shell})
+  const commandLogger = config.log.child({command: name || shell})
   return new Promise((resolve, reject) => {
     let mainStream = remoteExec(shell, sshConf)
     let cmdOutput = ''

@@ -8,6 +8,7 @@ const persistence = require('./persistence')
 const retrieve = require('./retrieve')
 const ipfs = require('./ipfs')
 const rmfr = require('rmfr')
+const os = require('os')
 const util = require('util')
 const fs = require('fs')
 const writeFile = util.promisify(fs.writeFile)
@@ -23,8 +24,14 @@ const runCommand = (command, name) => {
 const run = async (params) => {
   config.stage = params.remote ? 'remote' : 'local'
   let results = []
-  const targetDir = config.targetDir
-  await mkDir(targetDir, { recursive: true })
+  const targetDir = `${os.tmpdir()}/${Date.now()}`
+  config.log.info(`Target Directory: ${targetDir}`)
+  try {
+    await mkDir(`${targetDir}`, { recursive: true })
+    console.log('tmpDir:', targetDir)
+  } catch (e) {
+    throw (e)
+  }
   if (config.stage !== 'local') {
     try {
       await provision.ensure(params.commit)
@@ -35,15 +42,17 @@ const run = async (params) => {
   for (let test of config.benchmarks.tests) {
     // first run the benchmark straight up
     try {
+      await mkDir(`${targetDir}/${test.name}`, { recursive: true })
       let result = await runCommand(test.benchmark, test.name)
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
+      console.log(result)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result, null, 2))
-      results.push(result)
+      results.push(result.result)
     } catch (e) {
       config.log.error(e)
       // TODO:  maybe trigger an alert here ??
     }
-    if (config.benchmarks.doctor) { // then run it with each of the clinic tools
+    if (config.benchmarks.clinic) { // then run it with each of the clinic tools
       config.log.debug('running Doctor')
       try {
         for (let op of ['doctor', 'flame', 'bubbleProf']) {
@@ -60,10 +69,14 @@ const run = async (params) => {
         config.log.error(e)
       }
     } else {
-      config.log.info(`not running doctor: ${config.benchmarks.doctor}`)
+      config.log.info(`not running doctor: ${config.benchmarks.clinic}`)
     }
   }
   try {
+    config.log.info(`Moving ${config.logFile} to ${targetDir}/stdout.log`)
+    fs.rename(config.logFile, `${targetDir}/stdout.log`, (err) => {
+      config.log.error(err)
+    })
     config.log.info(`Uploading ${targetDir} to IPFS network`)
     const storeOutput = await ipfs.store(targetDir)
     // config.log.debug(storeOutput)
@@ -87,7 +100,7 @@ const run = async (params) => {
       await persistence.store(result)
     }
     // cleanup tmpout
-    rmfr(targetDir)
+    // rmfr(targetDir)
   } catch (e) {
     throw e
   }

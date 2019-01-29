@@ -29,23 +29,25 @@ const ipfsAddress = process.env.IPFS_ADDRESS || '/dnsaddr/cluster.ipfs.io'
 const ipfsUser = process.env.IPFS_USER || 'ipfsbenchmarks'
 const ipfsPassword = process.env.IPFS_PASSWORD || false
 const now = Date.now()
-const tmpDir = `${os.tmpdir()}/${now}`
+const logDir = `${os.tmpdir()}/${now}`
+const logFile = `${logDir}/stdout.log`
 
 const mkWorkDir = async () => {
   try {
-    await mkDir(`${tmpDir}`, { recursive: true })
+    await mkDir(`${logDir}`, { recursive: true })
+    console.log('logFile:', logFile)
   } catch (e) {
     throw (e)
   }
 }
 mkWorkDir()
+
 const stdoutStream = {
   level: (process.env.LOGLEVEL ? process.env.LOGLEVEL : 'info'),
   stream: process.stdout
 }
-
 const fileStream = {
-  level: 'debug', stream: fs.createWriteStream(`${tmpDir}/stdout.log`)
+  level: 'debug', stream: fs.createWriteStream(logFile)
 }
 
 // pretty logs in local
@@ -58,7 +60,6 @@ if (process.env.NODE_ENV === 'test') {
     streams: [ stdoutStream, fileStream ]
   })
 }
-pino.debug('jopie')
 
 const getInventory = () => {
   return YAML.parse(fs.readFileSync(inventoryPath, 'utf8'))
@@ -196,6 +197,15 @@ for (let test of testAbstracts) {
   })
 }
 
+const requireClinic = () => {
+  if (process.env.CLINIC) {
+    if (process.env.CLINIC === 'ON' || process.env.CLINIC === true) {
+      return true
+    }
+  }
+  return false
+}
+
 const config = {
   provison: {
     command: `ansible-playbook -i ${inventoryPath} --key-file ${keyfile} ${playbookPath}`
@@ -204,7 +214,7 @@ const config = {
   stage: process.env.STAGE || 'local',
   outFolder: process.env.OUT_FOLDER || tmpOut,
   dataDir: process.env.DATADIR || './data/',
-  targetDir: tmpDir, // where we store all the stuff that is to be sent to IPFS
+  logFile: logFile, // where we store all the stuff that is to be sent to IPFS
   now: now,
   db: 'ipfs-db',
   server: {
@@ -236,7 +246,7 @@ const config = {
     ]
   },
   benchmarks: {
-    doctor: process.env.DOCTOR || true,
+    clinic: requireClinic(),
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
     key: process.env.BENCHMARK_KEY || keyfile,
