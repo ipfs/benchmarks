@@ -6,7 +6,7 @@ const sshConf = {
   user: config.benchmarks.user,
   host: config.benchmarks.host,
   key: config.benchmarks.key,
-  timeout: 1000 * 60 * 1
+  timeout: 1000 * 60 * 3
 }
 
 const run = (shell, name) => {
