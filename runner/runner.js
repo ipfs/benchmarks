@@ -95,7 +95,7 @@ const run = async (params) => {
       })
     })
   } catch (e) {
-    config.log.error(`Error storing on IPFS network: ${e}`)
+    config.log.error({ e }, 'Error storing on IPFS network')
   }
   try {
     config.log.debug(`Persisting results in DB`)
