@@ -24,7 +24,8 @@ const runCommand = (command, name) => {
 const run = async (params) => {
   config.stage = params.remote ? 'remote' : 'local'
   let results = []
-  const targetDir = `${os.tmpdir()}/${Date.now()}`
+  const now = Date.now()
+  const targetDir = `${os.tmpdir()}/${now}`
   config.log.info(`Target Directory: ${targetDir}`)
   try {
     await mkDir(`${targetDir}`, { recursive: true })
@@ -45,9 +46,13 @@ const run = async (params) => {
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
       let result = await runCommand(test.benchmark, test.name)
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
-      console.log(result)
+      // console.log(result)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result, null, 2))
-      results.push(result.result)
+      if (Object.keys(result).length) {
+        results.push(result)
+      } else {
+        config.log.info(`Skipping empty result: ${result}`)
+      }
     } catch (e) {
       config.log.error(e)
       // TODO:  maybe trigger an alert here ??
@@ -80,7 +85,7 @@ const run = async (params) => {
     config.log.info(`Uploading ${targetDir} to IPFS network`)
     const storeOutput = await ipfs.store(targetDir)
     // config.log.debug(storeOutput)
-    const sha = ipfs.parse(storeOutput, config.now)
+    const sha = ipfs.parse(storeOutput, now)
     config.log.info(`sha: ${sha}`)
     // config.log.debug(results)
     results.map((arrOfResultObjects) => {
@@ -91,7 +96,7 @@ const run = async (params) => {
       })
     })
   } catch (e) {
-    config.log.error(`Error storing on IPFS network: ${e.message}`)
+    config.log.error(`Error storing on IPFS network: ${e}`)
   }
   try {
     config.log.debug(`Persisting results in DB`)
@@ -100,7 +105,7 @@ const run = async (params) => {
       await persistence.store(result)
     }
     // cleanup tmpout
-    // rmfr(targetDir)
+    rmfr(targetDir)
   } catch (e) {
     throw e
   }

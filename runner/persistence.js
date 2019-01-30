@@ -21,7 +21,7 @@ const writePoints = (data) => {
   }
   let payload = []
   for (let point of data) {
-    config.log.info('point: ', point)
+    config.log.info('data point: ', point)
     payload.push({
       measurement: point.name,
       tags: { warmup: point.warmup || 'tbd',
