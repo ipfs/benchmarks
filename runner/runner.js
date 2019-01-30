@@ -57,8 +57,8 @@ const run = async (params) => {
       config.log.error(e)
       // TODO:  maybe trigger an alert here ??
     }
-    if (config.benchmarks.clinic) { // then run it with each of the clinic tools
-      config.log.debug('running Doctor')
+    if (config.benchmarks.clinic || params.clinic) { // then run it with each of the clinic tools
+      config.log.info(`Running clinic: default [${config.benchmarks.clinic}] param [${params.clinic}]`)
       try {
         for (let op of ['doctor', 'flame', 'bubbleProf']) {
           for (let run of test[op]) {
@@ -74,7 +74,7 @@ const run = async (params) => {
         config.log.error(e)
       }
     } else {
-      config.log.info(`not running doctor: ${config.benchmarks.clinic}`)
+      config.log.info(`not running clinic: default [${config.benchmarks.clinic}] param [${params.clinic}]`)
     }
   }
   try {
