@@ -113,50 +113,50 @@ const testDefaults = {
 }
 
 const testAbstracts = [
-  // {
-  //   name: 'localTransfer',
-  //   file: 'local-transfer.js'
-  // },
-  // {
-  //   name: 'unixFsAdd',
-  //   file: 'local-add.js'
-  // },
-  // {
-  //   name: 'unixFsAddTrickle',
-  //   file: 'local-add.js trickle'
-  // },
-  // {
-  //   name: 'localExtract',
-  //   file: 'local-extract.js'
-  // },
-  // {
-  //   name: 'multiPeerTransfer',
-  //   file: 'multi-peer-transfer.js'
-  // },
-  // {
-  //   name: 'addMultiKb',
-  //   file: 'add-multi-kb.js'
-  // },
-  // {
-  //   name: 'addMultiKbTrickle',
-  //   file: 'add-multi-kb.js trickle'
-  // },
-  // {
-  //   name: 'initializeNodeBrowser',
-  //   file: 'init-node.browser.js'
-  // },
-  // {
-  //   name: 'unixFsAddBrowser',
-  //   file: 'local-add.browser.js'
-  // },
-  // {
-  //   name: 'addMultiKbBrowser',
-  //   file: 'add-multi-kb.browser.js'
-  // },
-  // {
-  //   name: 'unixFsAddGo',
-  //   file: 'local-add.go.js'
-  // },
+  {
+    name: 'localTransfer',
+    file: 'local-transfer.js'
+  },
+  {
+    name: 'unixFsAdd',
+    file: 'local-add.js'
+  },
+  {
+    name: 'unixFsAddTrickle',
+    file: 'local-add.js trickle'
+  },
+  {
+    name: 'localExtract',
+    file: 'local-extract.js'
+  },
+  {
+    name: 'multiPeerTransfer',
+    file: 'multi-peer-transfer.js'
+  },
+  {
+    name: 'addMultiKb',
+    file: 'add-multi-kb.js'
+  },
+  {
+    name: 'addMultiKbTrickle',
+    file: 'add-multi-kb.js trickle'
+  },
+  {
+    name: 'initializeNodeBrowser',
+    file: 'init-node.browser.js'
+  },
+  {
+    name: 'unixFsAddBrowser',
+    file: 'local-add.browser.js'
+  },
+  {
+    name: 'addMultiKbBrowser',
+    file: 'add-multi-kb.browser.js'
+  },
+  {
+    name: 'unixFsAddGo',
+    file: 'local-add.go.js'
+  },
   {
     name: 'extractJs2Go',
     file: 'extract-js2.go.js'
@@ -165,22 +165,22 @@ const testAbstracts = [
     name: 'extractGo2JsWs',
     file: 'extract-go2.js ws'
   },
-  // {
-  //   name: 'extractJs2GoWs',
-  //   file: 'extract-js2.go.js ws'
-  // },
-  // {
-  //   name: 'extractGo2Js',
-  //   file: 'extract-go2.js'
-  // },
-  // {
-  //   name: 'peerTransferBrowser',
-  //   file: 'peer-transfer.browser.js'
-  // },
-  // {
-  //   name: 'pubsubMessage',
-  //   file: 'pubsub-message.js'
-  // }
+  {
+    name: 'extractJs2GoWs',
+    file: 'extract-js2.go.js ws'
+  },
+  {
+    name: 'extractGo2Js',
+    file: 'extract-go2.js'
+  },
+  {
+    name: 'peerTransferBrowser',
+    file: 'peer-transfer.browser.js'
+  },
+  {
+    name: 'pubsubMessage',
+    file: 'pubsub-message.js'
+  }
 ]
 
 for (let test of testAbstracts) {
