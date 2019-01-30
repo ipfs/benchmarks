@@ -102,10 +102,10 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Add many small files (trickle)           | [🍏](add-multi-kb.js)          | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add large file (trickle)                 | [🍏](local-add.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (local)                   | [🍏](local-extract.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Cat small file (tcp, mplex)              | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
+| Cat small file (tcp, mplex)              | n/a        | 🍏         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat small file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat small file (tcp, mplex, secio)       | n/a        | 🍏         | n/a        | 🍎         | 🍎         | 🍎         | 🍏             | 🍎             |
+| Cat small file (tcp, mplex, secio)       | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍏             | 🍎             |
 | Cat small file (websocket, mplex, secio) | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex, secio)    | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat small file (tcp, spdy)               | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |

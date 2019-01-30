@@ -10,9 +10,9 @@ async function localExtract (node, name, warmup, fileSet, version) {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
   const peer = node[0]
-  const inserted = peer.add ? await peer.add(fileStream) : await peer.files.add(fileStream)
+  const inserted = await peer.add(fileStream)
   const start = process.hrtime()
-  let stream = peer.catReadableStream ? peer.catReadableStream(inserted[0].hash) : peer.files.catReadableStream(inserted[0].hash)
+  let stream = peer.catReadableStream(inserted[0].hash)
   // endof steam
   stream.resume()
 

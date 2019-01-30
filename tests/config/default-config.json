@@ -1,5 +1,8 @@
 [ {"libp2p": {
     "modules": {
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
     "peerDiscovery": []
     }
   },
@@ -15,7 +18,10 @@
 },
 {"libp2p": {
   "modules": {
-  "peerDiscovery": []
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
   }
 },
   "Addresses": {
@@ -30,7 +36,10 @@
 },
 {"libp2p": {
   "modules": {
-  "peerDiscovery": []
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
   }
 },
   "Addresses": {
@@ -45,7 +54,10 @@
 },
 {"libp2p": {
   "modules": {
-  "peerDiscovery": []
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
   }
 },
   "Addresses": {
@@ -60,7 +72,10 @@
 },
 {"libp2p": {
   "modules": {
-  "peerDiscovery": []
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
   }
 },
   "Addresses": {
