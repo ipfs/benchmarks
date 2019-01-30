@@ -58,7 +58,7 @@ class q {
     }
     this.q = Jobs(dbRef, this._handler(runner), 1)
     this.q.pendingStream().on('data', function (d) {
-      console.log(that.queueStatus)
+      config.log.info(that.queueStatus)
       that.queueStatus[d.key] = getStatus(that.queueStatus, {
         id: d.key,
         status: 'pending',

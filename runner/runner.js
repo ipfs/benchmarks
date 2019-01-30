@@ -29,7 +29,7 @@ const run = async (params) => {
   config.log.info(`Target Directory: ${targetDir}`)
   try {
     await mkDir(`${targetDir}`, { recursive: true })
-    console.log('tmpDir:', targetDir)
+    config.log.info('tmpDir:', targetDir)
   } catch (e) {
     throw (e)
   }
@@ -46,7 +46,6 @@ const run = async (params) => {
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
       let result = await runCommand(test.benchmark, test.name)
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
-      // console.log(result)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result, null, 2))
       if (Object.keys(result).length) {
         results.push(result)
