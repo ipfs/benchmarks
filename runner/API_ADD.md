@@ -13,7 +13,7 @@
 * **Data Params**
 
   * **commit**: Commit SHA from [js-ipfs](https://github.com/ipfs/js-ipfs)
-  * **doctor**: 'on' or 'off' controls whether clinic tools are included in the run.
+  * **clinic**: 'on' or 'off' controls whether clinic tools are included in the run.
 
 * **Success Response:**
 
@@ -22,7 +22,7 @@
 ```json
         {
           "commit":"b6a7ab63",
-          "doctor":"on",
+          "clinic":"on",
           "remote":true,
           "id":1584093487785384
         }
@@ -41,5 +41,5 @@
 * **Sample Call:**
 
   ```bash
-    curl -XPOST -d '{"commit":"b6a7ab63", "doctor": "on"}' -H "Content-Type: application/json" -H "x-ipfs-benchmarks-api-key: somesecret" -k https://benchmarks.ipfs.team/runner
+    curl -XPOST -d '{"commit":"b6a7ab63", "clinic": "on"}' -H "Content-Type: application/json" -H "x-ipfs-benchmarks-api-key: somesecret" -k https://benchmarks.ipfs.team/runner
   ```
