@@ -197,7 +197,7 @@ for (let test of testAbstracts) {
   })
 }
 
-const requireClinic = () => {
+const runClinic = () => {
   if (process.env.CLINIC) {
     if (process.env.CLINIC === 'ON' || process.env.CLINIC === true) {
       return true
@@ -246,7 +246,7 @@ const config = {
     ]
   },
   benchmarks: {
-    clinic: requireClinic(),
+    clinic: runClinic(),
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
     key: process.env.BENCHMARK_KEY || keyfile,
