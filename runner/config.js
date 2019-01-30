@@ -197,14 +197,7 @@ for (let test of testAbstracts) {
   })
 }
 
-const runClinic = () => {
-  if (process.env.CLINIC) {
-    if (process.env.CLINIC === 'ON' || process.env.CLINIC === true) {
-      return true
-    }
-  }
-  return false
-}
+const runClinic = (process.env.CLINIC && (process.env.CLINIC === 'ON' || process.env.CLINIC === true)) || false
 
 const config = {
   provison: {
