@@ -20,6 +20,13 @@ const IPFSFactory = require('ipfsd-ctl')
 const uuidv1 = require('uuid/v1')
 const { once } = require('stream-iterators-utils')
 const puppeteer = require('puppeteer')
+const WS = require('libp2p-websockets')
+const MPLEX = require('libp2p-mplex')
+const TCP = require('libp2p-tcp')
+const SPDY = require('libp2p-spdy')
+const SECIO = require('libp2p-secio')
+const argv = require('minimist')(process.argv.slice(2))
+
 const initRepo = async (path) => {
   let init = spawn('ipfs', ['init'], { env: Object.assign(process.env, { IPFS_PATH: path }) })
   init.stdout.on('data', (data) => {
@@ -34,17 +41,37 @@ const initRepo = async (path) => {
   await once(init, 'close')
   return init
 }
-
+const parseParams = (options) => {
+  if (argv.t === 'ws') {
+    options.libp2p.modules.transport.push(WS)
+  } else {
+    options.libp2p.modules.transport.push(TCP)
+  }
+  if (argv.m === 'spyd') {
+    options.libp2p.modules.streamMuxer.push(SPDY)
+  } else {
+    options.libp2p.modules.streamMuxer.push(MPLEX)
+  }
+  if (argv.e === 'secio') {
+    options.libp2p.modules.streamMuxer.push(SECIO)
+  }
+}
 const CreateNodeJs = async (opt, IPFS, count) => {
-  const newConfig = defaultConfig[count]
+  console.log(argv)
+  const config = defaultConfig[count].config
+  const libp2p = defaultConfig[count].libp2p
   const options = {
     init: { privateKey: privateKey[count].privKey },
     repo: `${repoPath}${String(uuidv1())}`,
-    config: newConfig
+    config,
+    libp2p
+
   }
   const newOptions = { ...options, ...opt }
+  console.log(newOptions)
+  parseParams(newOptions)
 
-  console.log(JSON.stringify(newOptions))
+  console.log(newOptions.libp2p.modules.transport)
 
   const node = new IPFS(newOptions)
   node.on('ready', () => {
