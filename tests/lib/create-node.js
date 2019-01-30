@@ -17,6 +17,7 @@ const conf = { tmpPath: os.tmpdir() }
 const { repoPath } = require('../package.json').config
 const ipfsClient = require('ipfs-http-client')
 const IPFSFactory = require('ipfsd-ctl')
+const uuidv1 = require('uuid/v1')
 const { once } = require('stream-iterators-utils')
 const puppeteer = require('puppeteer')
 const initRepo = async (path) => {
@@ -34,17 +35,18 @@ const initRepo = async (path) => {
   return init
 }
 
-const CreateNodeJs = async (config, init, IPFS, count) => {
-  const node = new IPFS({
-    repo: `${repoPath}${Math.random()
-      .toString()
-      .substring(2, 8)}`,
-    config: config || defaultConfig[count],
-    init: init || { privateKey: privateKey[count].privKey },
-    EXPERIMENTAL: {
-      pubsub: true
-    }
-  })
+const CreateNodeJs = async (opt, IPFS, count) => {
+  const newConfig = defaultConfig[count]
+  const options = {
+    init: { privateKey: privateKey[count].privKey },
+    repo: `${repoPath}${String(uuidv1())}`,
+    config: newConfig
+  }
+  const newOptions = { ...options, ...opt }
+
+  console.log(JSON.stringify(newOptions))
+
+  const node = new IPFS(newOptions)
   node.on('ready', () => {
     console.log('Node ready')
   })
