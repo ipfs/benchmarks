@@ -20,7 +20,7 @@ async function unixFsAdd (node, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: 'Add file to local repo using unixFS engine',
+    description: `Add file (${strategy})`,
     file_set: fileSet,
     duration: {
       s: end[0],

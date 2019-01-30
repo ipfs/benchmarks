@@ -19,7 +19,7 @@ async function unixFsAddBrowser (node, name, warmup, fileSet, version) {
     warmup: 'off',
     file: filePath,
     meta: { version: version },
-    description: 'Add file to local repo using unixFS engine for browser',
+    description: 'Add file (balanced)',
     file_set: fileSet,
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }

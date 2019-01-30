@@ -98,10 +98,10 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Add small file (balanced)                | [🍏](local-add.js)         | n/a        | [🍏](local-add.go.js)         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add many small files (balanced)          | [🍏](add-multi-kb.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add large file (balanced)                | [🍏](local-add.js)         | n/a        | [🍏](local-add.go.js)         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add small file (trickle)                 | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add many small files (trickle)           | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add large file (trickle)                 | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Cat small file (local)                   | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add small file (trickle)                 | [🍏](local-add.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add many small files (trickle)           | [🍏](add-multi-kb.js)          | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add large file (trickle)                 | [🍏](local-add.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Cat small file (local)                   | [🍏](local-extract.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (tcp, mplex)              | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat small file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
@@ -114,7 +114,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Cat small file (tcp, spdy, secio)        | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (websocket, spdy, secio)  | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (webrtc, spdy, secio)     | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat large file (local)                   | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Cat large file (local)                   | [🍏](local-extract.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat large file (tcp, mplex)              | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat large file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍏         | 🍏         | 🍎             | 🍎             |
 | Cat large file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
@@ -139,22 +139,22 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | MFS mv a file                            | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | MFS rm a file                            | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | MFS stat a file                          | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Pubsub publish & receive a message       | n/a        | 🍏         | n/a        | 🍎         | 🍎          | 🍎         | n/a            | n/a            |
+| Pubsub publish & receive a message       | n/a        | [🍏](pubsub-message.js)         | n/a        | 🍎         | 🍎          | 🍎         | n/a            | n/a            |
 | Pubsub publish & receive 1k messages     | n/a        | 🍎         | n/a        | 🍎         | 🍎          | 🍎         | n/a            | n/a            |
 
 ### Browser
 
 | Test                                     | js0 -> js0 | js0 -> js1 | go0 -> go0 | go0 -> go1 | js0 -> go0 | go0 -> js0 | js01234 -> js5 | go01234 -> go5 |
 |------------------------------------------|------------|------------|------------|------------|------------|------------|----------------|----------------|
-| Node initialization                      | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add small file (balanced)                | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add many small files (balanced)          | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Add large file (balanced)                | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Node initialization                      | [🍏](init-node.browser.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add small file (balanced)                | [🍏](local-add.browser.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add many small files (balanced)          | [🍏](add-multi-kb.browser.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Add large file (balanced)                | [🍏](local-add.browser.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add small file (trickle)                 | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add many small files (trickle)           | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Add large file (trickle)                 | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Cat small file (local)                   | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Cat small file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat small file (local)                   | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Cat small file (websocket, mplex)        | n/a        | [🍏](peer-transfer.browser.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat small file (websocket, mplex, secio) | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (webrtc, mplex, secio)    | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
@@ -162,8 +162,8 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Cat small file (webrtc, spdy)            | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat small file (websocket, spdy, secio)  | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat small file (webrtc, spdy, secio)     | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat large file (local)                   | 🍏         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
-| Cat large file (websocket, mplex)        | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat large file (local)                   | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
+| Cat large file (websocket, mplex)        | n/a        | [🍏](peer-transfer.browser.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat large file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat large file (websocket, mplex, secio) | n/a        | 🍎         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
 | Cat large file (webrtc, mplex, secio)    | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |

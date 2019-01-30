@@ -27,7 +27,7 @@ async function localExtract (node, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: 'Get file to local repo',
+    description: 'Cat file (local)',
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }

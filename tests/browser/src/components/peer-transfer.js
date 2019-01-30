@@ -8,6 +8,8 @@ import fileReaderStream from 'filereader-stream'
 import getId from './getId'
 import localState from './localState'
 import TestRow from './test-row'
+import WS from 'libp2p-websockets'
+import MPLEX from 'libp2p-mplex'
 class PeerTransfer extends React.Component {
   constructor (props) {
     super(props)
@@ -19,21 +21,35 @@ class PeerTransfer extends React.Component {
     const fileArray = [...e.target.files]
     // Create the IPFS node instance
     const node = new IPFS({ repo: String(uuidv1()),
-      config: {
-        Addresses: {
-          Swarm: [
-            `/dnsaddr/${server}/tcp/9090/ws/p2p-websocket-star/`
-          ]
+      config: { 'libp2p': {
+        'modules': {
+          transport: [WS],
+          streamMuxer: [MPLEX],
+          connEncryption: [],
+          'peerDiscovery': []
         }
+      },
+      Addresses: {
+        Swarm: [
+          `/dnsaddr/${server}/tcp/9090/ws/p2p-websocket-star/`
+        ]
+      }
       }
     })
     const node2 = new IPFS({ repo: String(uuidv1()),
-      config: {
-        Addresses: {
-          Swarm: [
-            `/dnsaddr/${server}/tcp/9090/ws/p2p-websocket-star/`
-          ]
+      config: { 'libp2p': {
+        'modules': {
+          transport: [WS],
+          streamMuxer: [MPLEX],
+          connEncryption: [],
+          'peerDiscovery': []
         }
+      },
+      Addresses: {
+        Swarm: [
+          `/dnsaddr/${server}/tcp/9090/ws/p2p-websocket-star/`
+        ]
+      }
       }
     })
     node.on('ready', () => {})
