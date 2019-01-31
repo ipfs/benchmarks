@@ -52,14 +52,14 @@ const run = (shell, name) => {
           }
         })
         retrieveStream.on('error', (err) => {
-          retrieveLogger.error('error', err)
+          retrieveLogger.error(err, 'Retrievestream error')
         })
       } else {
         resolve(cmdOutput)
       }
     })
     mainStream.on('error', (err) => {
-      commandLogger.error('error', err)
+      commandLogger.error(err, 'Mainstream error')
     })
   })
 }
