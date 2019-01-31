@@ -239,7 +239,7 @@ const config = {
     ]
   },
   benchmarks: {
-    clinic: runClinic(),
+    clinic: runClinic,
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
     key: process.env.BENCHMARK_KEY || keyfile,
