@@ -32,7 +32,8 @@ const writePoints = (data) => {
         repo: point.meta.version.repo || 'tbd',
         guid: point.meta.guid || 'tbd',
         sha: point.meta.sha || 'tbd',
-        branch: point.meta.branch || 'tbd'
+        branch: point.meta.branch || 'tbd',
+        nightly: point.meta.nightly || false
       },
       fields: { duration: parseDuration(point.duration), ipfs_sha: point.meta.sha || 'no upload' },
 

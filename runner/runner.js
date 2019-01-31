@@ -22,7 +22,17 @@ const runCommand = (command, name) => {
   }
 }
 
+const enrichResultsMetas = (arrOfResultObjects, props) => {
+  arrOfResultObjects.map((obj) => {
+    if (Object.keys(props).length) {
+      Object.assign(obj.meta, props)
+    }
+    return obj
+  })
+}
+
 const run = async (params) => {
+  console.log(params)
   config.stage = params.remote ? 'remote' : 'local'
   let results = []
   const now = Date.now()
@@ -45,13 +55,16 @@ const run = async (params) => {
     // first run the benchmark straight up
     try {
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
-      let result = await runCommand(test.benchmark, test.name)
+      let arrResult = await runCommand(test.benchmark, test.name)
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
-      await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result, null, 2))
-      if (Object.keys(result).length) {
-        results.push(result)
+      await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(arrResult, null, 2))
+      if (arrResult.length) {
+        if (params.nightly) {
+          enrichResultsMetas(arrResult, {nightly: true})
+        }
+        results.push(arrResult)
       } else {
-        config.log.info(`Skipping empty result: ${result}`)
+        config.log.info(`Skipping empty result array: ${arrResult}`)
       }
     } catch (e) {
       config.log.error(e)
@@ -93,7 +106,8 @@ const run = async (params) => {
     results.map((arrOfResultObjects) => {
       arrOfResultObjects.map((obj) => {
         // add the sha to each measurement
-        obj.meta.sha = (typeof sha !== 'undefined' && sha) ? sha : 'none'
+        const _sha = (typeof sha !== 'undefined' && sha) ? sha : 'none'
+        enrichResultsMetas(arrOfResultObjects, {sha: _sha})
         return obj
       })
     })

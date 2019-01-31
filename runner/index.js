@@ -26,7 +26,8 @@ schedule.scheduleJob('0 0 * * *', function () {
   queue.add({
     commit: '',
     clinic: true,
-    remote: true
+    remote: true,
+    nightly: true
   })
 })
 
@@ -45,7 +46,8 @@ fastify.route({
     let task = queue.add({
       commit: request.body.commit,
       clinic: request.body.clinic,
-      remote: true
+      remote: true,
+      nightly: true
     })
     return task
   }

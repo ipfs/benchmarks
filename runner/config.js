@@ -5,7 +5,10 @@ const os = require('os')
 const path = require('path')
 const YAML = require('yaml')
 const Influx = require('influx')
-const pinoms = require('pino-multi-stream')
+const Pino = require('pino')
+const PinoPretty = require('pino-pretty')
+const pinoms = require('pino-multi-stream').multistream
+const PinoGetPrettyStream = require('pino/lib/tools').getPrettyStream
 const uuidv1 = require('uuid/v1')
 const util = require('util')
 const mkDir = util.promisify(fs.mkdir)
@@ -34,23 +37,31 @@ const logFile = `${logDir}/stdout.log`
 
 mkDir(`${logDir}`, { recursive: true })
 
-const stdoutStream = {
-  level: (process.env.LOGLEVEL ? process.env.LOGLEVEL : 'info'),
-  stream: process.stdout
-}
-const fileStream = {
-  level: 'debug', stream: fs.createWriteStream(logFile)
-}
-
 // pretty logs in local
 if (process.env.NODE_ENV === 'test') {
-  pino = pinoms({
+  pino = Pino({
     enabled: false
   })
 } else {
-  pino = pinoms({
-    streams: [ stdoutStream, fileStream ]
-  })
+  let streams
+  if (process.env.LOG_PRETTY && process.env.LOG_PRETTY === 'true') {
+    let prettyStream = PinoGetPrettyStream({
+      levelFirst: false,
+      translateTime: true,
+      colorize: true
+    }, PinoPretty, process.stdout)
+
+    streams = [
+      { stream: fs.createWriteStream(logFile) },
+      { stream: prettyStream }
+    ]
+  } else {
+    streams = [
+      { stream: fs.createWriteStream(logFile) },
+      { stream: process.stdout }
+    ]
+  }
+  pino = Pino({ name: 'runner' }, pinoms(streams))
 }
 pino.info(`logFile: ${logFile}`)
 
@@ -110,70 +121,70 @@ const testAbstracts = [
     name: 'localTransfer',
     file: 'local-transfer.js'
   },
-  {
-    name: 'unixFsAdd',
-    file: 'local-add.js'
-  },
-  {
-    name: 'unixFsAddTrickle',
-    file: 'local-add.js trickle'
-  },
-  {
-    name: 'localExtract',
-    file: 'local-extract.js'
-  },
-  {
-    name: 'multiPeerTransfer',
-    file: 'multi-peer-transfer.js'
-  },
-  {
-    name: 'addMultiKb',
-    file: 'add-multi-kb.js'
-  },
-  {
-    name: 'addMultiKbTrickle',
-    file: 'add-multi-kb.js trickle'
-  },
-  {
-    name: 'initializeNodeBrowser',
-    file: 'init-node.browser.js'
-  },
-  {
-    name: 'unixFsAddBrowser',
-    file: 'local-add.browser.js'
-  },
-  {
-    name: 'addMultiKbBrowser',
-    file: 'add-multi-kb.browser.js'
-  },
-  {
-    name: 'unixFsAddGo',
-    file: 'local-add.go.js'
-  },
-  {
-    name: 'extractJs2Go',
-    file: 'extract-js2.go.js'
-  },
-  {
-    name: 'extractGo2JsWs',
-    file: 'extract-go2.js ws'
-  },
-  {
-    name: 'extractJs2GoWs',
-    file: 'extract-js2.go.js ws'
-  },
-  {
-    name: 'extractGo2Js',
-    file: 'extract-go2.js'
-  },
-  {
-    name: 'peerTransferBrowser',
-    file: 'peer-transfer.browser.js'
-  },
-  {
-    name: 'pubsubMessage',
-    file: 'pubsub-message.js'
-  }
+  // {
+  //   name: 'unixFsAdd',
+  //   file: 'local-add.js'
+  // },
+  // {
+  //   name: 'unixFsAddTrickle',
+  //   file: 'local-add.js trickle'
+  // },
+  // {
+  //   name: 'localExtract',
+  //   file: 'local-extract.js'
+  // },
+  // {
+  //   name: 'multiPeerTransfer',
+  //   file: 'multi-peer-transfer.js'
+  // },
+  // {
+  //   name: 'addMultiKb',
+  //   file: 'add-multi-kb.js'
+  // },
+  // {
+  //   name: 'addMultiKbTrickle',
+  //   file: 'add-multi-kb.js trickle'
+  // },
+  // {
+  //   name: 'initializeNodeBrowser',
+  //   file: 'init-node.browser.js'
+  // },
+  // {
+  //   name: 'unixFsAddBrowser',
+  //   file: 'local-add.browser.js'
+  // },
+  // {
+  //   name: 'addMultiKbBrowser',
+  //   file: 'add-multi-kb.browser.js'
+  // },
+  // {
+  //   name: 'unixFsAddGo',
+  //   file: 'local-add.go.js'
+  // },
+  // {
+  //   name: 'extractJs2Go',
+  //   file: 'extract-js2.go.js'
+  // },
+  // {
+  //   name: 'extractGo2JsWs',
+  //   file: 'extract-go2.js ws'
+  // },
+  // {
+  //   name: 'extractJs2GoWs',
+  //   file: 'extract-js2.go.js ws'
+  // },
+  // {
+  //   name: 'extractGo2Js',
+  //   file: 'extract-go2.js'
+  // },
+  // {
+  //   name: 'peerTransferBrowser',
+  //   file: 'peer-transfer.browser.js'
+  // },
+  // {
+  //   name: 'pubsubMessage',
+  //   file: 'pubsub-message.js'
+  // }
 ]
 
 for (let test of testAbstracts) {
@@ -226,7 +237,8 @@ const config = {
           'guid',
           'version',
           'repo',
-          'sha'
+          'sha',
+          'nightly'
         ]
       }
     ]
