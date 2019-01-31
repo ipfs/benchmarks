@@ -96,8 +96,40 @@ const testDefaults = {
 
 const testAbstracts = [
   {
-    name: 'localTransfer',
-    file: 'local-transfer.js'
+    name: 'localTransfer_tcp_mplex',
+    file: 'local-transfer.js -t tcp -m mplex'
+  },
+  {
+    name: 'localTransfer_ws_mplex',
+    file: 'local-transfer.js -t ws -m mplex'
+  },
+  {
+    name: 'localTransfer_ws_mplex',
+    file: 'local-transfer.js -t ws -m mplex'
+  },
+  {
+    name: 'localTransfer_tcp_mplex_secio',
+    file: 'local-transfer.js -t tcp -m mplex -e secio'
+  },
+  {
+    name: 'localTransfer_ws_mplex_secio',
+    file: 'local-transfer.js -t ws -m mplex -e secio'
+  },
+  {
+    name: 'localTransfer_tcp_spdy',
+    file: 'local-transfer.js -t tcp -m spdy'
+  },
+  {
+    name: 'localTransfer_ws_spdy',
+    file: 'local-transfer.js -t ws -m spdy'
+  },
+  {
+    name: 'localTransfer_tcp_spdy_secio ',
+    file: 'local-transfer.js -t tcp -m spdy -e secio'
+  },
+  {
+    name: 'localTransfer_ws_spdy_secio ',
+    file: 'local-transfer.js -t ws -m spdy -e secio'
   },
   {
     name: 'unixFsAdd',

@@ -5,6 +5,7 @@ const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 const { once } = require('stream-iterators-utils')
+const { description } = require('./config').parseParams()
 
 const localTransfer = async (peer, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
@@ -31,7 +32,7 @@ const localTransfer = async (peer, name, warmup, fileSet, version) => {
     file_set: fileSet,
     file: filePath,
     meta: { version: version },
-    description: 'Cat file (tcp, mplex, secio) ',
+    description: `Cat file ${description}`,
     duration: {
       s: end[0],
       ms: end[1] / 1000000

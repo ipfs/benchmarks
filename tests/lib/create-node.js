@@ -47,7 +47,7 @@ const parseParams = (options) => {
   } else {
     options.libp2p.modules.transport.push(TCP)
   }
-  if (argv.m === 'spyd') {
+  if (argv.m === 'spdy') {
     options.libp2p.modules.streamMuxer.push(SPDY)
   } else {
     options.libp2p.modules.streamMuxer.push(MPLEX)
@@ -57,7 +57,6 @@ const parseParams = (options) => {
   }
 }
 const CreateNodeJs = async (opt, IPFS, count) => {
-  console.log(argv)
   const config = defaultConfig[count].config
   const libp2p = defaultConfig[count].libp2p
   const options = {
@@ -68,11 +67,7 @@ const CreateNodeJs = async (opt, IPFS, count) => {
 
   }
   const newOptions = { ...options, ...opt }
-  console.log(newOptions)
   parseParams(newOptions)
-
-  console.log(newOptions.libp2p.modules.transport)
-
   const node = new IPFS(newOptions)
   node.on('ready', () => {
     console.log('Node ready')
