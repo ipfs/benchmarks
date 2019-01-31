@@ -14,9 +14,9 @@ const localTransfer = async (peer, name, warmup, fileSet, version) => {
   const peerB = peer[1]
   const peerAId = await peerA.id()
   peerB.swarm.connect(peerAId.addresses[0])
-  const inserted = peerA.add ? await peerA.add(fileStream) : await peerA.files.add(fileStream)
+  const inserted = await peerA.add(fileStream)
   const start = process.hrtime()
-  let stream = peerB.catReadableStream ? peerB.catReadableStream(inserted[0].hash) : peerB.files.catReadableStream(inserted[0].hash)
+  let stream = peerB.catReadableStream(inserted[0].hash)
   // endof steam
   stream.resume()
 

@@ -177,11 +177,11 @@ const testAbstracts = [
   },
   {
     name: 'extractGo2JsWs',
-    file: 'extract-go2.js ws'
+    file: 'extract-go2.js -t ws'
   },
   {
     name: 'extractJs2GoWs',
-    file: 'extract-js2.go.js ws'
+    file: 'extract-js2.go.js -t ws'
   },
   {
     name: 'extractGo2Js',

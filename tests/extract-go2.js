@@ -9,6 +9,7 @@ const NodeFactory = require('./lib/node-factory')
 const util = require('util')
 const execute = util.promisify(util.promisify(require('child_process').exec))
 const conf = { tmpPath: os.tmpdir() }
+const { description } = require('./config').parseParams()
 
 async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
   // Runner rtunrs the NodeJS ipfs but we need to create the Go ipfs
@@ -39,7 +40,7 @@ async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: 'Extract files from GO to JS IPFS peers',
+    description: `Cat file ${description)`,
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }

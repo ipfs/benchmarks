@@ -9,6 +9,8 @@ const NodeFactory = require('./lib/node-factory')
 const util = require('util')
 const execute = util.promisify(util.promisify(require('child_process').exec))
 const conf = { tmpPath: os.tmpdir() }
+const { description } = require('./config').parseParams()
+const argv = require('minimist')(process.argv.slice(2))
 
 async function extractJs2Go (ipfs, name, warmup, fileSet, version) {
   console.log(fileSet)
@@ -21,7 +23,7 @@ async function extractJs2Go (ipfs, name, warmup, fileSet, version) {
   const inserted = await peer.add(fileStream)
 
   const peerId = await peer.id()
-  const protocal = process.argv[2] === 'ws' ? 'ws' : 'tcp'
+  const protocal = argv.t === 'ws' ? 'ws' : 'tcp'
   // output file and dashboard name will match trategy.  default is balanced
   name = protocal === 'ws' ? `${name}Ws` : name
   const id = protocal === 'ws' ? 2 : 0
@@ -38,7 +40,7 @@ async function extractJs2Go (ipfs, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: 'Extract files from JS to Go IPFS peers',
+    description: `Cat file ${description}`,
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }
