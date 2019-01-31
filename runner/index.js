@@ -25,7 +25,7 @@ const queue = new Queue(stopFn, runner)
 schedule.scheduleJob('0 0 * * *', function () {
   queue.add({
     commit: '',
-    doctor: true,
+    clinic: true,
     remote: true
   })
 })
@@ -44,7 +44,7 @@ fastify.route({
   handler: async (request, reply) => {
     let task = queue.add({
       commit: request.body.commit,
-      doctor: request.body.doctor,
+      clinic: request.body.clinic,
       remote: true
     })
     return task

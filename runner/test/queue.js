@@ -22,17 +22,17 @@ const Queue = require('../queue.js')
 
 const task1 = {
   commit: 'abcdef',
-  doctor: 'off',
+  clinic: 'off',
   remote: true
 }
 const task2 = {
   commit: '12345',
-  doctor: 'on',
+  clinic: 'on',
   remote: true
 }
 const task3 = {
   commit: '987654',
-  doctor: 'on',
+  clinic: 'on',
   remote: true
 }
 

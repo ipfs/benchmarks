@@ -16,7 +16,7 @@ const addBody = {
   type: 'object',
   properties: {
     commit: { type: 'string' },
-    doctor: { type: 'string', default: 'on' }
+    clinic: { type: 'boolean', default: true }
   },
   required: ['commit']
 }

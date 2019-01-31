@@ -35,8 +35,7 @@ const run = (shell, name) => {
       }
     })
     cmdInstance.on('error', (err) => {
-      commandLogger.error('error', err)
-      reject(new Error(err))
+      commandLogger.error(err, 'Local command error')
     })
   })
 }

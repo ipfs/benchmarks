@@ -12,6 +12,7 @@ const os = require('os')
 const util = require('util')
 const fs = require('fs')
 const writeFile = util.promisify(fs.writeFile)
+const fsRename = util.promisify(fs.rename)
 const mkDir = util.promisify(fs.mkdir)
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
@@ -26,7 +27,13 @@ const run = async (params) => {
   let results = []
   const now = Date.now()
   const targetDir = `${os.tmpdir()}/${now}`
-  await mkDir(targetDir, { recursive: true })
+  config.log.info(`Target Directory: ${targetDir}`)
+  try {
+    await mkDir(`${targetDir}`, { recursive: true })
+    config.log.info('tmpDir:', targetDir)
+  } catch (e) {
+    throw (e)
+  }
   if (config.stage !== 'local') {
     try {
       await provision.ensure(params.commit)
@@ -37,19 +44,21 @@ const run = async (params) => {
   for (let test of config.benchmarks.tests) {
     // first run the benchmark straight up
     try {
-      let result = await runCommand(test.benchmark, test.name)
-      config.log.debug(result)
-      config.log.debug(`Creating ${targetDir}/${test.name}`)
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
+      let result = await runCommand(test.benchmark, test.name)
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(result, null, 2))
-      results.push(result)
+      if (Object.keys(result).length) {
+        results.push(result)
+      } else {
+        config.log.info(`Skipping empty result: ${result}`)
+      }
     } catch (e) {
       config.log.error(e)
       // TODO:  maybe trigger an alert here ??
     }
-    if (config.benchmarks.doctor) { // then run it with each of the clinic tools
-      config.log.debug('running Doctor')
+    if (config.benchmarks.clinic || params.clinic) { // then run it with each of the clinic tools
+      config.log.info(`Running clinic: default [${config.benchmarks.clinic}] param [${params.clinic}]`)
       try {
         for (let op of ['doctor', 'flame', 'bubbleProf']) {
           for (let run of test[op]) {
@@ -65,10 +74,16 @@ const run = async (params) => {
         config.log.error(e)
       }
     } else {
-      config.log.info(`not running doctor: ${config.benchmarks.doctor}`)
+      config.log.info(`not running clinic: default [${config.benchmarks.clinic}] param [${params.clinic}]`)
     }
   }
   try {
+    config.log.info(`Moving ${config.logFile} to ${targetDir}/stdout.log`)
+    try {
+      await fsRename(config.logFile, `${targetDir}/stdout.log`)
+    } catch (err) {
+      config.log.error(err)
+    }
     config.log.info(`Uploading ${targetDir} to IPFS network`)
     const storeOutput = await ipfs.store(targetDir)
     // config.log.debug(storeOutput)
@@ -83,7 +98,7 @@ const run = async (params) => {
       })
     })
   } catch (e) {
-    config.log.error(`Error storing on IPFS network: ${e.message}`)
+    config.log.error({ e }, 'Error storing on IPFS network')
   }
   try {
     config.log.debug(`Persisting results in DB`)

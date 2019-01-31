@@ -24,7 +24,7 @@
             "work":
             {
               "commit":"b6a7ab63",
-              "doctor":"on",
+              "clinic":"on",
               "remote":true
             },
             "status":"started",

@@ -1,11 +1,14 @@
 'use strict'
 
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 const YAML = require('yaml')
 const Influx = require('influx')
-const Pino = require('pino')
+const pinoms = require('pino-multi-stream')
 const uuidv1 = require('uuid/v1')
+const util = require('util')
+const mkDir = util.promisify(fs.mkdir)
 
 let pino
 
@@ -15,7 +18,7 @@ const remoteTestsPath = process.env.REMOTE_FOLDER || '~/ipfs/tests/'
 const remoteIpfsPath = process.env.REMOTE_FOLDER || '~/ipfs/'
 const tmpOut = '/tmp/out'
 const params = `OUT_FOLDER=${tmpOut} REMOTE=true GUID=${uuidv1()} `
-const remotePreNode = `killall node 2>/dev/null; source ~/.nvm/nvm.sh && `
+const remotePreNode = `killall node 2>/dev/null; killall ipfs 2>/dev/null; source ~/.nvm/nvm.sh && `
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 const tests = []
@@ -25,23 +28,31 @@ const clinicOperations = ['doctor', 'flame', 'bubbleProf']
 const ipfsAddress = process.env.IPFS_ADDRESS || '/dnsaddr/cluster.ipfs.io'
 const ipfsUser = process.env.IPFS_USER || 'ipfsbenchmarks'
 const ipfsPassword = process.env.IPFS_PASSWORD || false
+const now = Date.now()
+const logDir = `${os.tmpdir()}/${now}`
+const logFile = `${logDir}/stdout.log`
+
+mkDir(`${logDir}`, { recursive: true })
+
+const stdoutStream = {
+  level: (process.env.LOGLEVEL ? process.env.LOGLEVEL : 'info'),
+  stream: process.stdout
+}
+const fileStream = {
+  level: 'debug', stream: fs.createWriteStream(logFile)
+}
 
 // pretty logs in local
 if (process.env.NODE_ENV === 'test') {
-  pino = Pino({
+  pino = pinoms({
     enabled: false
   })
-} else if (process.env.LOG_PRETTY === 'true') {
-  pino = Pino({
-    prettyPrint: {
-      levelFirst: true
-    },
-    prettifier: require('pino-pretty'),
-    level: (process.env.LOGLEVEL ? process.env.LOGLEVEL : 'info')
-  })
 } else {
-  pino = Pino()
+  pino = pinoms({
+    streams: [ stdoutStream, fileStream ]
+  })
 }
+pino.info(`logFile: ${logFile}`)
 
 const getInventory = () => {
   return YAML.parse(fs.readFileSync(inventoryPath, 'utf8'))
@@ -179,6 +190,8 @@ for (let test of testAbstracts) {
   })
 }
 
+const runClinic = (process.env.CLINIC && (process.env.CLINIC === 'ON' || process.env.CLINIC === true)) || false
+
 const config = {
   provison: {
     command: `ansible-playbook -i ${inventoryPath} --key-file ${keyfile} ${playbookPath}`
@@ -187,6 +200,8 @@ const config = {
   stage: process.env.STAGE || 'local',
   outFolder: process.env.OUT_FOLDER || tmpOut,
   dataDir: process.env.DATADIR || './data/',
+  logFile: logFile, // where we store all the stuff that is to be sent to IPFS
+  now: now,
   db: 'ipfs-db',
   server: {
     port: 9000,
@@ -217,7 +232,7 @@ const config = {
     ]
   },
   benchmarks: {
-    doctor: process.env.DOCTOR || true,
+    clinic: runClinic,
     host: getBenchmarkHostname(),
     user: process.env.BENCHMARK_USER || 'elexy',
     key: process.env.BENCHMARK_KEY || keyfile,

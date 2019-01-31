@@ -6,12 +6,12 @@ const sshConf = {
   user: config.benchmarks.user,
   host: config.benchmarks.host,
   key: config.benchmarks.key,
-  timeout: 1000*60*10
+  timeout: 1000 * 60 * 3
 }
 
-const run = (shell, name, isClinic) => {
+const run = (shell, name) => {
   config.log.info(`Running [${shell}] on host [${config.benchmarks.host}] for user [${config.benchmarks.user}] using [${config.benchmarks.key}]`)
-  const commandLogger = config.log.child({command: shell})
+  const commandLogger = config.log.child({command: name || shell})
   return new Promise((resolve, reject) => {
     let mainStream = remoteExec(shell, sshConf)
     let cmdOutput = ''
@@ -52,15 +52,14 @@ const run = (shell, name, isClinic) => {
           }
         })
         retrieveStream.on('error', (err) => {
-          retrieveLogger.error('error', err)
-          resolve(err)
+          retrieveLogger.error(err, 'Retrievestream error')
         })
       } else {
         resolve(cmdOutput)
       }
     })
     mainStream.on('error', (err) => {
-      commandLogger.error('error', err)
+      commandLogger.error(err, 'Mainstream error')
     })
   })
 }
