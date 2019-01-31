@@ -12,6 +12,7 @@ const os = require('os')
 const util = require('util')
 const fs = require('fs')
 const writeFile = util.promisify(fs.writeFile)
+const fsRename = util.promisify(fs.rename)
 const mkDir = util.promisify(fs.mkdir)
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
@@ -78,9 +79,11 @@ const run = async (params) => {
   }
   try {
     config.log.info(`Moving ${config.logFile} to ${targetDir}/stdout.log`)
-    fs.rename(config.logFile, `${targetDir}/stdout.log`, (err) => {
+    try {
+      await fsRename(config.logFile, `${targetDir}/stdout.log`)
+    } catch (err) {
       config.log.error(err)
-    })
+    }
     config.log.info(`Uploading ${targetDir} to IPFS network`)
     const storeOutput = await ipfs.store(targetDir)
     // config.log.debug(storeOutput)
