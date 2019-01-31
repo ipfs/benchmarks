@@ -32,14 +32,7 @@ const now = Date.now()
 const logDir = `${os.tmpdir()}/${now}`
 const logFile = `${logDir}/stdout.log`
 
-const mkWorkDir = async () => {
-  try {
-    await mkDir(`${logDir}`, { recursive: true })
-  } catch (e) {
-    throw (e)
-  }
-}
-mkWorkDir()
+mkDir(`${logDir}`, { recursive: true })
 
 const stdoutStream = {
   level: (process.env.LOGLEVEL ? process.env.LOGLEVEL : 'info'),
