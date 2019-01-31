@@ -120,11 +120,11 @@ const run = async (params) => {
       config.log.debug(`DB store: ${JSON.stringify(result)}`)
       await persistence.store(result)
     }
-    // cleanup tmpout
-    rmfr(targetDir)
   } catch (e) {
     throw e
   }
+  // cleanup tmpout
+  rmfr(targetDir)
 }
 
 module.exports = run
