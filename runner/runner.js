@@ -127,7 +127,12 @@ const run = async (params) => {
     throw e
   }
   // cleanup tmpout
-  rmfr(targetDir)
+  try {
+    // cleanup tmpout
+    await rmfr(targetDir)
+  } catch (e) {
+    throw e
+  }
 }
 
 module.exports = run
