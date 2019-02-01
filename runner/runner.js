@@ -12,7 +12,8 @@ const os = require('os')
 const util = require('util')
 const fs = require('fs')
 const writeFile = util.promisify(fs.writeFile)
-const fsRename = util.promisify(fs.rename)
+const fsReadfile = util.promisify(fs.readFile)
+const fsTruncate = util.promisify(fs.truncate)
 const mkDir = util.promisify(fs.mkdir)
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
@@ -31,8 +32,15 @@ const enrichResultsMetas = (arrOfResultObjects, props) => {
   })
 }
 
+const clearFile = async (path) => {
+  const fd = fs.openSync(config.logFile, 'r+')
+  await fsTruncate(fd)
+}
+
 const run = async (params) => {
-  console.log(params)
+  // start with a clean logfile
+  config.log.info(`Clearing logs at ${config.logFile}`)
+  await clearFile()
   config.stage = params.remote ? 'remote' : 'local'
   let results = []
   const now = Date.now()
@@ -91,9 +99,10 @@ const run = async (params) => {
     }
   }
   try {
-    config.log.info(`Moving ${config.logFile} to ${targetDir}/stdout.log`)
     try {
-      await fsRename(config.logFile, `${targetDir}/stdout.log`)
+      config.log.info(`Copying logs from ${config.logFile} to ${targetDir}/stdout.log`)
+      const logs = await fsReadfile(config.logFile)
+      await writeFile(`${targetDir}/stdout.log`, logs)
     } catch (err) {
       config.log.error(err)
     }
