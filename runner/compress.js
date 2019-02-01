@@ -38,7 +38,7 @@ const clinicFiles = async (path) => {
     }
   } catch (e) {
     config.log.error(e)
-    return Error(`Error reading path: ${path}`)
+    throw e
   }
 }
 
