@@ -58,7 +58,7 @@ tap.test('compress clinic files', async (t) => {
   t.done()
 })
 
-tap.test('silently fails if missing', async (t) => {
+tap.test('fails if missing', async (t) => {
   try {
     await compress.clinicFiles(tmpDir)
   } catch (e) {
