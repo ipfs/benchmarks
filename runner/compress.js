@@ -1,12 +1,9 @@
 'use strict'
 
 const fs = require('fs')
-const os = require('os')
 const util = require('util')
 const _ = require('lodash')
 const rmfr = require('rmfr')
-const mkDir = util.promisify(fs.mkdir)
-const writeFile = util.promisify(fs.writeFile)
 const stat = util.promisify(fs.stat)
 const readDir = util.promisify(fs.readdir)
 const compressing = require('compressing')
@@ -26,15 +23,19 @@ const clinicFiles = async (path) => {
   try {
     let contents = await readDir(path)
     // find the dir
-    let clinicDir = _.find(contents, async (node) => {
+    let clinicDir
+    for (let node of contents) {
       let stats = await stat(`${path}/${node}`)
-      if (stats.isDirectory()) return node
-    })
+      if (stats.isDirectory()) {
+        clinicDir = node
+        break
+      }
+    }
     if (clinicDir) {
       await _tgzDir(`${path}/${clinicDir}`, `${path}/${clinicDir}.tar.gz`)
       await rmfr(`${path}/${clinicDir}`)
     } else {
-      config.log.error(`No clinic files found in ${path}`)
+      config.log.error(`No clinic directory found in ${path}`)
     }
   } catch (e) {
     config.log.error(e)
