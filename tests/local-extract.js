@@ -10,9 +10,9 @@ async function localExtract (node, name, warmup, fileSet, version) {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
   const peer = node[0]
-  const inserted = peer.add ? await peer.add(fileStream) : await peer.files.add(fileStream)
+  const inserted = await peer.add(fileStream)
   const start = process.hrtime()
-  let stream = peer.catReadableStream ? peer.catReadableStream(inserted[0].hash) : peer.files.catReadableStream(inserted[0].hash)
+  let stream = peer.catReadableStream(inserted[0].hash)
   // endof steam
   stream.resume()
 
@@ -27,7 +27,7 @@ async function localExtract (node, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: 'Get file to local repo',
+    description: 'Cat file (local)',
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }

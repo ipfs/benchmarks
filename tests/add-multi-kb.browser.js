@@ -19,7 +19,7 @@ async function addMultiKbBrowser (node, name, warmup, fileSet, version) {
     warmup: 'off',
     file: filePath,
     meta: { version: version },
-    description: 'Add 100 1 KB files to local browser',
+    description: 'Add many files (balanced)',
     file_set: fileSet,
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }

@@ -20,7 +20,7 @@ async function peerTransferBrowser (node, name, warmup, fileSet, version) {
     warmup: 'off',
     file: filePath,
     meta: { version: version },
-    description: 'Transfer file between peers in the browser',
+    description: 'Cat file (websocket, mplex)',
     file_set: fileSet,
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }

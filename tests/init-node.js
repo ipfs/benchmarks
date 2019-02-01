@@ -25,7 +25,7 @@ async function initializeNode (node, name, warmup, fileSet, version) {
     wamrup: warmup,
     file: 'none',
     meta: { version: version },
-    description: 'Initialize node without pre-generated key',
+    description: 'Node initialization',
     file_set: 'none',
     duration: { s: end[0],
       ms: end[1] / 1000000 }

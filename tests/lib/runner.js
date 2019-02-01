@@ -4,7 +4,7 @@ const config = require('../config')
 const clean = require('./clean')
 const { store } = require('./output')
 const genTests = require('../util/create-files')
-
+const { name } = require('../config').parseParams()
 async function runner (test, nodeCount = 1, type = 'nodejs', options) {
   if (!config.verify) {
     await genTests()
@@ -13,16 +13,16 @@ async function runner (test, nodeCount = 1, type = 'nodejs', options) {
   const nodeFactory = new NodeFactory()
   const node = []
   for (let i = 0; i < nodeCount; i++) {
-    node.push(await nodeFactory.add(type, options))
+    node.push(await nodeFactory.add(type, options, i))
   }
   const version = await node[0].version()
   try {
     for (let subTest of config.test[test.name]) {
       if (config.fileSetParam) {
-        arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), config.fileSetParam, version))
+        arrResults.push(await test(node, `${test.name}${name}`, subTest.warmup.toLowerCase(), config.fileSetParam, version))
       } else {
         for (let fileSet of subTest.fileSet) {
-          arrResults.push(await test(node, test.name, subTest.warmup.toLowerCase(), fileSet, version))
+          arrResults.push(await test(node, `${test.name}${name}`, subTest.warmup.toLowerCase(), fileSet, version))
         }
       }
     }

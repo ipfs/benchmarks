@@ -11,6 +11,8 @@
     "filereader-stream": "^2.0.0",
     "ipfs": "file:../../js-ipfs",
     "ipfs-css": "^0.12.0",
+    "libp2p": "^0.24.4",
+    "libp2p-websockets": "^0.12.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",

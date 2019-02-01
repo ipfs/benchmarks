@@ -20,6 +20,13 @@ const IPFSFactory = require('ipfsd-ctl')
 const uuidv1 = require('uuid/v1')
 const { once } = require('stream-iterators-utils')
 const puppeteer = require('puppeteer')
+const WS = require('libp2p-websockets')
+const MPLEX = require('libp2p-mplex')
+const TCP = require('libp2p-tcp')
+const SPDY = require('libp2p-spdy')
+const SECIO = require('libp2p-secio')
+const argv = require('minimist')(process.argv.slice(2))
+
 const initRepo = async (path) => {
   let init = spawn('ipfs', ['init'], { env: Object.assign(process.env, { IPFS_PATH: path }) })
   init.stdout.on('data', (data) => {
@@ -34,18 +41,33 @@ const initRepo = async (path) => {
   await once(init, 'close')
   return init
 }
-
+const parseParams = (options) => {
+  if (argv.t === 'ws') {
+    options.libp2p.modules.transport.push(WS)
+  } else {
+    options.libp2p.modules.transport.push(TCP)
+  }
+  if (argv.m === 'spdy') {
+    options.libp2p.modules.streamMuxer.push(SPDY)
+  } else {
+    options.libp2p.modules.streamMuxer.push(MPLEX)
+  }
+  if (argv.e === 'secio') {
+    options.libp2p.modules.streamMuxer.push(SECIO)
+  }
+}
 const CreateNodeJs = async (opt, IPFS, count) => {
-  const newConfig = defaultConfig[count]
+  const config = defaultConfig[count].config
+  const libp2p = defaultConfig[count].libp2p
   const options = {
     init: { privateKey: privateKey[count].privKey },
     repo: `${repoPath}${String(uuidv1())}`,
-    config: newConfig
+    config,
+    libp2p
+
   }
   const newOptions = { ...options, ...opt }
-
-  console.log(JSON.stringify(newOptions))
-
+  parseParams(newOptions)
   const node = new IPFS(newOptions)
   node.on('ready', () => {
     console.log('Node ready')
@@ -60,7 +82,7 @@ const CreateNodeJs = async (opt, IPFS, count) => {
   return node
 }
 
-const CreateBrowser = async (config, init, IPFS, count) => {
+const CreateBrowser = async (opt, IPFS, count) => {
   const testPath = path.join(__dirname, `../browser/build/index.html`)
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
@@ -68,7 +90,7 @@ const CreateBrowser = async (config, init, IPFS, count) => {
   return { page: page, browser: browser, version: () => { return '1' } }
 }
 
-const CreateHttp = async (config, init, IPFS, count) => {
+const CreateHttp = async (opt, IPFS, count) => {
   let client
   const factory = IPFSFactory.create()
   const spawn = util.promisify(factory.spawn).bind(factory)
@@ -77,7 +99,7 @@ const CreateHttp = async (config, init, IPFS, count) => {
   return client
 }
 
-const CreateGo = async (config, init, IPFS, count) => {
+const CreateGo = async (opt, IPFS, count = 0) => {
   const peerDir = `${conf.tmpPath}/ipfs${count}`
   const peerSpecificConf = goConfigs[count]
   const peerConf = Object.assign({}, defaultConfigGo, peerSpecificConf)

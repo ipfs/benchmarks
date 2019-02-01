@@ -15,7 +15,7 @@ async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
     warmup: 'off',
     file: '',
     meta: { version: version },
-    description: 'Initialize node in browser without pre-generated key',
+    description: 'Node initialization',
     file_set: 'none',
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }

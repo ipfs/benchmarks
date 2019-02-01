@@ -1,8 +1,12 @@
 [ {"libp2p": {
     "modules": {
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
     "peerDiscovery": []
     }
   },
+  "config":{
   "Addresses": {
     "API": "/ip4/127.0.0.1/tcp/5012",
     "Gateway": "/ip4/127.0.0.1/tcp/9091",
@@ -12,12 +16,17 @@
     ]
   },
   "Bootstrap": []
-},
-{"libp2p": {
-  "modules": {
-  "peerDiscovery": []
   }
 },
+ {"libp2p": {
+  "modules": {
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
+  }
+},
+"config":{
   "Addresses": {
     "API": "/ip4/127.0.0.1/tcp/5013",
     "Gateway": "/ip4/127.0.0.1/tcp/9092",
@@ -27,12 +36,17 @@
     ]
   },
   "Bootstrap": []
+}
 },
 {"libp2p": {
   "modules": {
-  "peerDiscovery": []
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
   }
 },
+"config":{
   "Addresses": {
     "API": "/ip4/127.0.0.1/tcp/5014",
     "Gateway": "/ip4/127.0.0.1/tcp/9093",
@@ -42,10 +56,14 @@
     ]
   },
   "Bootstrap": []
+}
 },
 {"libp2p": {
   "modules": {
-  "peerDiscovery": []
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
   }
 },
   "Addresses": {
@@ -60,7 +78,10 @@
 },
 {"libp2p": {
   "modules": {
-  "peerDiscovery": []
+    "transport": [],
+    "streamMuxer": [],
+    "connEncryption": [],
+    "peerDiscovery": []
   }
 },
   "Addresses": {

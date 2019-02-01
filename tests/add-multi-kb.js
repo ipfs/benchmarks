@@ -25,7 +25,7 @@ async function addMultiKb (node, name, warmup, fileSet, version) {
     warmup: warmup,
     file: fileSet,
     meta: { version: version },
-    description: `Add ${fileArr.length} 1 KB files to local`,
+    description: `Add many files (${strategy})`,
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }
