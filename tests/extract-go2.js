@@ -10,23 +10,42 @@ const util = require('util')
 const execute = util.promisify(util.promisify(require('child_process').exec))
 const conf = { tmpPath: os.tmpdir() }
 const { description } = require('./config').parseParams()
+const argv = require('minimist')(process.argv.slice(2))
 
 async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
   // Runner rtunrs the NodeJS ipfs but we need to create the Go ipfs
   const nodeFactory = new NodeFactory()
-  await nodeFactory.add('go')
+  try {
+    await nodeFactory.add('go')
+  } catch (e) {
+    console.log(e)
+    retur
+  }
   const filePath = await file(fileSet)
   const peer = ipfs[0]
 
   const peerId = await peer.id()
-  const protocal = process.argv[2] === 'ws' ? 'ws' : 'tcp'
+  const protocal = argv.t === 'ws' ? 'ws' : 'tcp'
   // output file and dashboard name will match trategy.  default is balanced
   name = protocal === 'ws' ? `${name}Ws` : name
   const id = protocal === 'ws' ? 2 : 0
   let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[id]} > /dev/null`
-  await execute(command)
+  try {
+    await execute(command)
+  } catch (e) {
+    console.log(e)
+    await nodeFactory.stop('go')
+    return
+  }
   // redirect stderr to dev/null due to the progress of file being processed is sent to stderr causing maxBuffer error
   const addCommand = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs add ${filePath} 2> /dev/null`
+  try {
+    await execute(command)
+  } catch (e) {
+    console.log(e)
+    await nodeFactory.stop('go')
+    return
+  }
   const { stdout } = await execute(addCommand)
   const start = process.hrtime()
   let stream = peer.catReadableStream(stdout.split(' ')[1])
@@ -40,7 +59,7 @@ async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: `Cat file ${description)`,
+    description: `Cat file ${description}`,
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }

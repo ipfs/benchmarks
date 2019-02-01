@@ -82,7 +82,7 @@ const CreateNodeJs = async (opt, IPFS, count) => {
   return node
 }
 
-const CreateBrowser = async (config, init, IPFS, count) => {
+const CreateBrowser = async (opt, IPFS, count) => {
   const testPath = path.join(__dirname, `../browser/build/index.html`)
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
@@ -90,7 +90,7 @@ const CreateBrowser = async (config, init, IPFS, count) => {
   return { page: page, browser: browser, version: () => { return '1' } }
 }
 
-const CreateHttp = async (config, init, IPFS, count) => {
+const CreateHttp = async (opt, IPFS, count) => {
   let client
   const factory = IPFSFactory.create()
   const spawn = util.promisify(factory.spawn).bind(factory)
@@ -99,7 +99,7 @@ const CreateHttp = async (config, init, IPFS, count) => {
   return client
 }
 
-const CreateGo = async (config, init, IPFS, count) => {
+const CreateGo = async (opt, IPFS, count = 0) => {
   const peerDir = `${conf.tmpPath}/ipfs${count}`
   const peerSpecificConf = goConfigs[count]
   const peerConf = Object.assign({}, defaultConfigGo, peerSpecificConf)

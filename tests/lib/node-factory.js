@@ -9,13 +9,13 @@ class NodeFactory {
     this._nodes = []
   }
 
-  async add (type, options) {
+  async add (type, options, counter = 0) {
     if (type === 'go') {
-      const node = await this.addGo(options)
+      const node = await this.addGo(options, counter)
       return node
     }
     if (type === 'nodejs') {
-      const node = await this.addNodeJs(options)
+      const node = await this.addNodeJs(options, counter)
       return node
     }
     if (type === 'http') {
@@ -23,27 +23,27 @@ class NodeFactory {
       return node
     }
     if (type === 'browser') {
-      const node = await this.addBrowser(options)
+      const node = await this.addBrowser(options, counter)
       return node
     }
   }
-  async addGo (config) {
-    const node = await CreateGo(config, this._ipfs, this._nodes.length)
+  async addGo (config, counter) {
+    const node = await CreateGo(config, this._ipfs, counter)
     this._nodes.push(node)
     return node
   }
-  async addNodeJs (options) {
-    const node = await CreateNodeJs(options, this._ipfs, this._nodes.length)
+  async addNodeJs (options, counter) {
+    const node = await CreateNodeJs(options, this._ipfs, counter)
     this._nodes.push(node)
     return node
   }
-  async addHttp (config) {
-    const node = await CreateHttp(config, this._ipfs, this._nodes.length)
+  async addHttp (config, counter) {
+    const node = await CreateHttp(config, this._ipfs, counter)
     this._nodes.push(node)
     return node
   }
-  async addBrowser (config) {
-    const node = await CreateBrowser(config, this._ipfs, this._nodes.length)
+  async addBrowser (config, counter) {
+    const node = await CreateBrowser(config, this._ipfs, counter)
     this._nodes.push(node)
     return node
   }

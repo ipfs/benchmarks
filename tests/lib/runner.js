@@ -13,7 +13,7 @@ async function runner (test, nodeCount = 1, type = 'nodejs', options) {
   const nodeFactory = new NodeFactory()
   const node = []
   for (let i = 0; i < nodeCount; i++) {
-    node.push(await nodeFactory.add(type, options))
+    node.push(await nodeFactory.add(type, options, i))
   }
   const version = await node[0].version()
   try {
