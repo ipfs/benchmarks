@@ -5,6 +5,7 @@ const remote = require('./remote.js')
 const local = require('./local.js')
 const provision = require('./provision')
 const persistence = require('./persistence')
+const compress = require('./compress')
 const retrieve = require('./retrieve')
 const ipfs = require('./ipfs')
 const rmfr = require('rmfr')
@@ -78,9 +79,11 @@ const run = async (params) => {
             config.log.debug(`${run.benchmarkName}`)
             await runCommand(run.command)
             // retrieve the clinic files
-            await retrieve(config, run, targetDir)
+            const clinicOperationPath = await retrieve(config, run, targetDir)
             // cleanup clinic files remotely
             await runCommand(config.benchmarks.cleanup)
+            // compress the clinic files
+            await compress.clinicFiles(clinicOperationPath)
           }
         }
       } catch (e) {
@@ -120,8 +123,13 @@ const run = async (params) => {
       config.log.debug(`DB store: ${JSON.stringify(result)}`)
       await persistence.store(result)
     }
+  } catch (e) {
+    throw e
+  }
+  // cleanup tmpout
+  try {
     // cleanup tmpout
-    rmfr(targetDir)
+    await rmfr(targetDir)
   } catch (e) {
     throw e
   }
