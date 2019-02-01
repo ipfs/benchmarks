@@ -59,7 +59,11 @@ tap.test('compress clinic files', async (t) => {
 })
 
 tap.test('silently fails if missing', async (t) => {
-  await compress.clinicFiles(tmpDir)
+  try {
+    await compress.clinicFiles(tmpDir)
+  } catch (e) {
+    tap.match(e.message, 'no such file or directory')
+  }
   try {
     await stat(`${tmpDir}/${clinicFile}`)
   } catch (e) {
