@@ -2,7 +2,6 @@
 
 const fs = require('fs')
 const util = require('util')
-const _ = require('lodash')
 const rmfr = require('rmfr')
 const stat = util.promisify(fs.stat)
 const readDir = util.promisify(fs.readdir)
