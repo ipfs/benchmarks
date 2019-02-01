@@ -5,7 +5,7 @@ const levelup = require('levelup')
 const memdown = require('memdown')
 
 const stopFn = () => {
-  console.log('test/quueue.js ->', 'stopping')
+  console.log('test/queue.js ->', 'stopping')
 }
 
 const runner = (id, params, cb) => {
