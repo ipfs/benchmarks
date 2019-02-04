@@ -50,25 +50,37 @@ const tests = { 'unixFsAdd': [{
 }
 const parseParams = () => {
   let name = '_'
+  console.log(argv)
   let desc = '('
-  if (argv.t === 'ws') {
-    name = `${name}ws_`
-    desc = `${desc}websocket, `
+  if (argv.s) {
+    if (argv.s === 'trickle') {
+      name = `${name}Trickle`
+      desc = `${desc}trickle`
+    } else {
+      name = `${name}`
+      desc = `${desc}balanced`
+    }
   } else {
-    name = `${name}tcp_`
-    desc = `${desc}tcp, `
+    if (argv.t === 'ws') {
+      name = `${name}ws_`
+      desc = `${desc}websocket, `
+    } else {
+      name = `${name}tcp_`
+      desc = `${desc}tcp, `
+    }
+    if (argv.m === 'spdy') {
+      name = `${name}spdy`
+      desc = `${desc}spdy`
+    } else {
+      name = `${name}mplex`
+      desc = `${desc}mplex`
+    }
+    if (argv.e === 'secio') {
+      name = `${name}_secio`
+      desc = `${desc}, secio`
+    }
   }
-  if (argv.m === 'spdy') {
-    name = `${name}spdy`
-    desc = `${desc}spdy`
-  } else {
-    name = `${name}mplex`
-    desc = `${desc}mplex`
-  }
-  if (argv.e === 'secio') {
-    name = `${name}_secio`
-    desc = `${desc}, secio`
-  }
+ 
   desc = `${desc})`
   return { name: name, description: desc }
 }

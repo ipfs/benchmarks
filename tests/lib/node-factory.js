@@ -9,12 +9,14 @@ class NodeFactory {
     this._nodes = []
   }
 
-  async add (type, options, counter = 0) {
+  async add (type, options, counter) {
+    console.log(type)
     if (type === 'go') {
       const node = await this.addGo(options, counter)
       return node
     }
     if (type === 'nodejs') {
+
       const node = await this.addNodeJs(options, counter)
       return node
     }
@@ -33,9 +35,14 @@ class NodeFactory {
     return node
   }
   async addNodeJs (options, counter) {
+    try {
     const node = await CreateNodeJs(options, this._ipfs, counter)
+    console.log(node.libp2p.modules.transport)
     this._nodes.push(node)
     return node
+  } catch (e){
+    console.log(e)
+  }
   }
   async addHttp (config, counter) {
     const node = await CreateHttp(config, this._ipfs, counter)
