@@ -27,6 +27,7 @@ const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 const tests = []
 const locations = ['local', 'remote']
 const clinicOperations = ['doctor', 'flame', 'bubbleProf']
+const memorySuffix = '_memory'
 
 const ipfsAddress = process.env.IPFS_ADDRESS || '/dnsaddr/cluster.ipfs.io'
 const ipfsUser = process.env.IPFS_USER || 'ipfsbenchmarks'
@@ -117,106 +118,106 @@ const testDefaults = {
 }
 
 const testAbstracts = [
-  {
-    name: 'localTransfer_tcp_mplex',
-    file: 'local-transfer.js -t tcp -m mplex'
-  },
-  {
-    name: 'localTransfer_ws_mplex',
-    file: 'local-transfer.js -t ws -m mplex'
-  },
-  {
-    name: 'localTransfer_ws_mplex',
-    file: 'local-transfer.js -t ws -m mplex'
-  },
-  {
-    name: 'localTransfer_tcp_mplex_secio',
-    file: 'local-transfer.js -t tcp -m mplex -e secio'
-  },
-  {
-    name: 'localTransfer_ws_mplex_secio',
-    file: 'local-transfer.js -t ws -m mplex -e secio'
-  },
-  {
-    name: 'localTransfer_tcp_spdy',
-    file: 'local-transfer.js -t tcp -m spdy'
-  },
-  {
-    name: 'localTransfer_ws_spdy',
-    file: 'local-transfer.js -t ws -m spdy'
-  },
-  {
-    name: 'localTransfer_tcp_spdy_secio',
-    file: 'local-transfer.js -t tcp -m spdy -e secio'
-  },
+  // {
+  //   name: 'localTransfer_tcp_mplex',
+  //   file: 'local-transfer.js -t tcp -m mplex'
+  // },
+  // {
+  //   name: 'localTransfer_ws_mplex',
+  //   file: 'local-transfer.js -t ws -m mplex'
+  // },
+  // {
+  //   name: 'localTransfer_ws_mplex',
+  //   file: 'local-transfer.js -t ws -m mplex'
+  // },
+  // {
+  //   name: 'localTransfer_tcp_mplex_secio',
+  //   file: 'local-transfer.js -t tcp -m mplex -e secio'
+  // },
+  // {
+  //   name: 'localTransfer_ws_mplex_secio',
+  //   file: 'local-transfer.js -t ws -m mplex -e secio'
+  // },
+  // {
+  //   name: 'localTransfer_tcp_spdy',
+  //   file: 'local-transfer.js -t tcp -m spdy'
+  // },
+  // {
+  //   name: 'localTransfer_ws_spdy',
+  //   file: 'local-transfer.js -t ws -m spdy'
+  // },
+  // {
+  //   name: 'localTransfer_tcp_spdy_secio',
+  //   file: 'local-transfer.js -t tcp -m spdy -e secio'
+  // },
   {
     name: 'localTransfer_ws_spdy_secio',
     file: 'local-transfer.js -t ws -m spdy -e secio'
   },
-  {
-    name: 'unixFsAdd',
-    file: 'local-add.js'
-  },
-  {
-    name: 'unixFsAddTrickle',
-    file: 'local-add.js trickle'
-  },
-  {
-    name: 'localExtract',
-    file: 'local-extract.js'
-  },
-  {
-    name: 'multiPeerTransfer',
-    file: 'multi-peer-transfer.js'
-  },
-  {
-    name: 'addMultiKb',
-    file: 'add-multi-kb.js'
-  },
-  {
-    name: 'addMultiKbTrickle',
-    file: 'add-multi-kb.js trickle'
-  },
-  {
-    name: 'initializeNodeBrowser',
-    file: 'init-node.browser.js'
-  },
-  {
-    name: 'unixFsAddBrowser',
-    file: 'local-add.browser.js'
-  },
-  {
-    name: 'addMultiKbBrowser',
-    file: 'add-multi-kb.browser.js'
-  },
-  {
-    name: 'unixFsAddGo',
-    file: 'local-add.go.js'
-  },
-  {
-    name: 'extractJs2Go',
-    file: 'extract-js2.go.js'
-  },
-  {
-    name: 'extractGo2JsWs',
-    file: 'extract-go2.js -t ws'
-  },
-  {
-    name: 'extractJs2GoWs',
-    file: 'extract-js2.go.js -t ws'
-  },
-  {
-    name: 'extractGo2Js',
-    file: 'extract-go2.js'
-  },
-  {
-    name: 'peerTransferBrowser',
-    file: 'peer-transfer.browser.js'
-  },
-  {
-    name: 'pubsubMessage',
-    file: 'pubsub-message.js'
-  }
+  // {
+  //   name: 'unixFsAdd',
+  //   file: 'local-add.js'
+  // },
+  // {
+  //   name: 'unixFsAddTrickle',
+  //   file: 'local-add.js trickle'
+  // },
+  // {
+  //   name: 'localExtract',
+  //   file: 'local-extract.js'
+  // },
+  // {
+  //   name: 'multiPeerTransfer',
+  //   file: 'multi-peer-transfer.js'
+  // },
+  // {
+  //   name: 'addMultiKb',
+  //   file: 'add-multi-kb.js'
+  // },
+  // {
+  //   name: 'addMultiKbTrickle',
+  //   file: 'add-multi-kb.js trickle'
+  // },
+  // {
+  //   name: 'initializeNodeBrowser',
+  //   file: 'init-node.browser.js'
+  // },
+  // {
+  //   name: 'unixFsAddBrowser',
+  //   file: 'local-add.browser.js'
+  // },
+  // {
+  //   name: 'addMultiKbBrowser',
+  //   file: 'add-multi-kb.browser.js'
+  // },
+  // {
+  //   name: 'unixFsAddGo',
+  //   file: 'local-add.go.js'
+  // },
+  // {
+  //   name: 'extractJs2Go',
+  //   file: 'extract-js2.go.js'
+  // },
+  // {
+  //   name: 'extractGo2JsWs',
+  //   file: 'extract-go2.js -t ws'
+  // },
+  // {
+  //   name: 'extractJs2GoWs',
+  //   file: 'extract-js2.go.js -t ws'
+  // },
+  // {
+  //   name: 'extractGo2Js',
+  //   file: 'extract-go2.js'
+  // },
+  // {
+  //   name: 'peerTransferBrowser',
+  //   file: 'peer-transfer.browser.js'
+  // },
+  // {
+  //   name: 'pubsubMessage',
+  //   file: 'pubsub-message.js'
+  // }
 ]
 
 for (let test of testAbstracts) {
@@ -272,6 +273,25 @@ const config = {
           'sha',
           'nightly'
         ]
+      },
+      {
+        measurement: `${tests[0].measurement}${memorySuffix}`,
+        fields: {
+          memory: Influx.FieldType.INTEGER,
+          ipfs_sha: Influx.FieldType.STRING
+        },
+        tags: [
+          'warmup',
+          'commit',
+          'project',
+          'file_set',
+          'branch',
+          'guid',
+          'version',
+          'repo',
+          'sha',
+          'nightly'
+        ]
       }
     ]
   },
@@ -283,7 +303,10 @@ const config = {
     path: path.join(__dirname, '../tests'),
     remotePath: remoteTestsPath,
     tests: tests,
-    cleanup: `rm -Rf ${tmpOut}/*`
+    cleanup: `rm -Rf ${tmpOut}/*`,
+    measurements: {
+      memory: memorySuffix
+    }
   },
   ipfs: {
     path: remoteIpfsPath,
