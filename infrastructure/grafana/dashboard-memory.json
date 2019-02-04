@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1549286648780,
+  "id": 6,
+  "iteration": 1549286552940,
   "links": [],
   "panels": [
     {
@@ -64,7 +64,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "",
+          "alias": "$m",
           "groupBy": [
             {
               "params": [
@@ -88,7 +88,7 @@
             [
               {
                 "params": [
-                  "duration"
+                  "memory"
                 ],
                 "type": "field"
               },
@@ -406,7 +406,7 @@
     ]
   },
   "timezone": "utc",
-  "title": "IPFS benchmarks",
-  "uid": "HCaaM78mk",
-  "version": 13
+  "title": "IPFS benchmarks Memory",
+  "uid": "wGblme_mz",
+  "version": 2
 }
