@@ -19,9 +19,10 @@ const writePoints = (data) => {
   if (!Array.isArray(data)) {
     data = [data]
   }
+  const timeStamp = moment().toDate()
   let payload = []
   for (let point of data) {
-    config.log.info('data point: ', point)
+    config.log.info(`${point.name} data point: `, point)
     payload.push({
       measurement: point.name,
       tags: { warmup: point.warmup || 'tbd',
@@ -36,8 +37,23 @@ const writePoints = (data) => {
         nightly: point.meta.nightly || false
       },
       fields: { duration: parseDuration(point.duration), ipfs_sha: point.meta.sha || 'no upload' },
-
-      timestamp: moment().toDate()
+      timestamp: timeStamp
+    })
+    payload.push({
+      measurement: `${point.name}${config.benchmarks.measurements.memory}`,
+      tags: { warmup: point.warmup || 'tbd',
+        commit: point.meta.commit || 'tbd',
+        project: point.meta.project || 'tbd',
+        file_set: point.file_set || 'tbd',
+        version: point.meta.version.version || 'tbd',
+        repo: point.meta.version.repo || 'tbd',
+        guid: point.meta.guid || 'tbd',
+        sha: point.meta.sha || 'tbd',
+        branch: point.meta.branch || 'tbd',
+        nightly: point.meta.nightly || false
+      },
+      fields: { memory: point.memory, ipfs_sha: point.meta.sha || 'no upload' },
+      timestamp: timeStamp
     })
   }
   influx.writePoints(payload)
