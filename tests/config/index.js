@@ -54,10 +54,10 @@ const parseParams = () => {
   let desc = '('
   if (argv.s) {
     if (argv.s === 'trickle') {
-      name = `${name}Trickle`
+      name = `${name}trickle`
       desc = `${desc}trickle`
     } else {
-      name = `${name}`
+      name = `${name}balanced`
       desc = `${desc}balanced`
     }
   } else {

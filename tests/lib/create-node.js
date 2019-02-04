@@ -78,12 +78,7 @@ const CreateNodeJs = async (opt, IPFS, count) => {
   node.on('stop', () => {
     console.log('Node stopped')
   })
-  try{
   await once(node, 'ready')
-  } catch (e){
-    console.log(e)
-  }
-  console.log(node)
   return node
 }
 

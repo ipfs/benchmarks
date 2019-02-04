@@ -11,7 +11,6 @@ async function unixFsAdd (node, name, warmup, fileSet, version) {
   const fileStream = fs.createReadStream(filePath)
   const start = process.hrtime()
   const peer = node[0]
-  console.log(" add file")
   // output file and dashboard name will match trategy.  default is balanced
   await peer.add(fileStream, { strategy: 'balanced' })
   const end = process.hrtime(start)

@@ -155,12 +155,12 @@ const testAbstracts = [
     file: 'local-transfer.js -t ws -m spdy -e secio'
   },
   {
-    name: 'unixFsAdd',
-    file: 'local-add.js'
+    name: 'unixFsAdd_balanced',
+    file: 'local-add.js -s balanced'
   },
   {
-    name: 'unixFsAddTrickle',
-    file: 'local-add.js trickle'
+    name: 'unixFsAdd_trickle',
+    file: 'local-add.js -s trickle'
   },
   {
     name: 'localExtract',

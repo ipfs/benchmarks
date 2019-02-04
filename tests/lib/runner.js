@@ -12,18 +12,14 @@ async function runner (test, nodeCount = 2, type = 'nodejs', options) {
   const arrResults = []
   const nodeFactory = new NodeFactory()
   const node = []
-  console.log(nodeCount)
   for (let i = 0; i < nodeCount; i++) {
-    console.log("here")
-    try{
-    await nodeFactory.add(type, options, i)
-    } catch( e ){
+    try {
+      node.push(await nodeFactory.add(type, options, i))
+    } catch (e) {
       console.log(e)
     }
   }
-console.log(node)
   const version = await node[0].version()
-  console.log(version)
   try {
     for (let subTest of config.test[test.name]) {
       if (config.fileSetParam) {
