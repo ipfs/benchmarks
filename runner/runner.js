@@ -32,6 +32,7 @@ const enrichResultsMetas = (arrOfResultObjects, props) => {
   })
 }
 
+// clear the log file
 const clearFile = async (path) => {
   const fd = fs.openSync(config.logFile, 'r+')
   await fsTruncate(fd)
