@@ -146,11 +146,11 @@ const testAbstracts = [
     file: 'local-transfer.js -t ws -m spdy'
   },
   {
-    name: 'localTransfer_tcp_spdy_secio ',
+    name: 'localTransfer_tcp_spdy_secio',
     file: 'local-transfer.js -t tcp -m spdy -e secio'
   },
   {
-    name: 'localTransfer_ws_spdy_secio ',
+    name: 'localTransfer_ws_spdy_secio',
     file: 'local-transfer.js -t ws -m spdy -e secio'
   },
   {
