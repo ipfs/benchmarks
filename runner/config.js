@@ -172,22 +172,6 @@ const testAbstracts = [
     file: 'local-add.go.js'
   },
   {
-    name: 'extractJs2Go',
-    file: 'extract-js2.go.js'
-  },
-  {
-    name: 'extractGo2JsWs',
-    file: 'extract-go2.js -t ws'
-  },
-  {
-    name: 'extractJs2GoWs',
-    file: 'extract-js2.go.js -t ws'
-  },
-  {
-    name: 'extractGo2Js',
-    file: 'extract-go2.js'
-  },
-  {
     name: 'peerTransferBrowser',
     file: 'peer-transfer.browser.js'
   },
