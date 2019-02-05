@@ -45,6 +45,13 @@ To Test it:
 ```bash
 > node *test-name*
 ```
+## FLAGS
+
+Below is a list of optional flags used by the tests to run a specific strategy or transport module in Libp2p.
+- `-s` DAG strategy (balanced | trickle)
+- `-t` Transport (tcp | ws)
+- `-m` Multiplex (mplex, spdy)
+- `-e` Connection encryption (secio)
 
 ## Use case coverage
 
