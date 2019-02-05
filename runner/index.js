@@ -52,6 +52,7 @@ fastify.route({
     let task = queue.add({
       commit: request.body.commit,
       clinic: request.body.clinic,
+      benchmarks: request.body.benchmarks,
       remote: true,
       nightly: true
     })

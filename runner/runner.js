@@ -1,13 +1,5 @@
 'use strict'
 
-const config = require('./config')
-const remote = require('./remote.js')
-const local = require('./local.js')
-const provision = require('./provision')
-const persistence = require('./persistence')
-const compress = require('./compress')
-const retrieve = require('./retrieve')
-const ipfs = require('./ipfs')
 const rmfr = require('rmfr')
 const os = require('os')
 const util = require('util')
@@ -16,6 +8,16 @@ const writeFile = util.promisify(fs.writeFile)
 const fsReadfile = util.promisify(fs.readFile)
 const fsTruncate = util.promisify(fs.truncate)
 const mkDir = util.promisify(fs.mkdir)
+
+const config = require('./config')
+const remote = require('./remote.js')
+const local = require('./local.js')
+const provision = require('./provision')
+const persistence = require('./persistence')
+const compress = require('./compress')
+const retrieve = require('./retrieve')
+const ipfs = require('./ipfs')
+const configBenchmarks = require('./lib/configBenchmarks')
 const runCommand = (command, name) => {
   if (config.stage === 'local') {
     return local.run(command, name)
@@ -40,7 +42,12 @@ const clearFile = async (path) => {
   fs.closeSync(fd)
 }
 
+const matchBenchmark = (benchmarkNames, loc) => {
+  return configBenchmarks.constructTest(benchmarkNames, loc)
+}
+
 const run = async (params) => {
+  config.log.debug(params)
   // start with a clean logfile
   config.log.info(`Clearing logs at ${config.logFile}`)
   await clearFile()
@@ -62,7 +69,16 @@ const run = async (params) => {
       config.log.error(e)
     }
   }
-  for (let test of config.benchmarks.tests) {
+  let benchmarks
+  if (params.benchmarks && params.benchmarks.tests && params.benchmarks.tests.length) {
+    config.log.info(`Running benchmarks from parameters: ${JSON.stringify(params.benchmarks.tests)}`)
+    benchmarks = configBenchmarks.constructTests(params.benchmarks.tests, config.stage, params.clinic)
+    console.log(benchmarks)
+  } else {
+    config.log.info('Running default benchmarks')
+    benchmarks = config.benchmarks.tests
+  }
+  for (let test of benchmarks) {
     // first run the benchmark straight up
     try {
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
