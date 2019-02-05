@@ -16,7 +16,19 @@ const addBody = {
   type: 'object',
   properties: {
     commit: { type: 'string' },
-    clinic: { type: 'boolean', default: true }
+    benchmarks: {
+      type: 'object',
+      properties: {
+        tests: { type: 'array' }
+      }
+    },
+    clinic: {
+      type: 'object',
+      properties: {
+        enabled: { type: 'boolean', default: false },
+        tests: { type: 'array' }
+      }
+    }
   },
   required: ['commit']
 }

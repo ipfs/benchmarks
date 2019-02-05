@@ -27,6 +27,7 @@ const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 const tests = []
 const locations = ['local', 'remote']
 const clinicOperations = ['doctor', 'flame', 'bubbleProf']
+const clinicFilesets = ['One4MBFile', 'One64MBFile']
 const memorySuffix = '_memory'
 
 const ipfsAddress = process.env.IPFS_ADDRESS || '/dnsaddr/cluster.ipfs.io'
@@ -249,7 +250,16 @@ const config = {
   db: 'ipfs-db',
   server: {
     port: 9000,
-    apikey: process.env.API_KEY || 'supersecret'
+    apikey: process.env.API_KEY || 'supersecret',
+    api: {
+      clinic: {
+        operations: clinicOperations,
+        filesets: clinicFilesets
+      },
+      benchmarks: {
+        tests: testAbstracts
+      }
+    }
   },
   influxdb: {
     host: process.env.INFLUX_HOST || 'localhost',
