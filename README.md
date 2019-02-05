@@ -97,7 +97,7 @@ Create a pre-generated key:
 ```
 
 ### FILESET:
-Use env variable TESTCLASS to run test just against that class.  Options of TestClass are define in the config.
+Use env variable FILESET to run test just against that specific set of file(s).  Options of FILESET are define in the config.
 ```bash
 > FILESET="One64MBFile" node local-add
 ```
@@ -105,7 +105,7 @@ Use env variable TESTCLASS to run test just against that class.  Options of Test
 ### VERIFYOFF
 Use env variable VERIFYOFF=true to skip the pre-generation of test files.
 ```js
->VERIFYOFF=true node local-add
+> VERIFYOFF=true node local-add
 ```
 ### Run tests locally on a js-ipfs branch
 Inside the benchmark/tests dir is a script to pull down master branch and install:
@@ -126,6 +126,13 @@ Run tests against branch
 > cd benchamrks/tests
 > STAGE=local REMOTE=true node local-add
 ```
+### FLAGS
+
+Below is a list of optional flags used by the tests to run a specific strategy or transport module in Libp2p.
+- `-s` DAG strategy (balanced | trickle)
+- `-t` Transport (tcp | ws)
+- `-m` Stream muxer (mplex, spdy)
+- `-e` Connection encryption (secio)
 
 ### Adding new tests
 

@@ -27,6 +27,7 @@ const ipfsPassword = process.env.IPFS_PASSWORD || false
 const now = Date.now()
 const logDir = `${os.tmpdir()}/${now}`
 const logFile = `${logDir}/stdout.log`
+const logLevel = process.env.LOGLEVEL || 'info'
 
 mkDir(`${logDir}`, { recursive: true })
 
@@ -46,15 +47,15 @@ if (process.env.NODE_ENV === 'test') {
 
     streams = [
       { stream: fs.createWriteStream(logFile) },
-      { stream: prettyStream }
+      { level: logLevel, stream: prettyStream }
     ]
   } else {
     streams = [
       { stream: fs.createWriteStream(logFile) },
-      { stream: process.stdout }
+      { level: logLevel, stream: process.stdout }
     ]
   }
-  pino = Pino({ name: 'runner' }, pinoms(streams))
+  pino = Pino({ name: 'runner', level: 'debug' }, pinoms(streams))
 }
 pino.info(`logFile: ${logFile}`)
 

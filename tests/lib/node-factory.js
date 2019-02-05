@@ -9,7 +9,7 @@ class NodeFactory {
     this._nodes = []
   }
 
-  async add (type, options, counter = 0) {
+  async add (type, options, counter) {
     if (type === 'go') {
       const node = await this.addGo(options, counter)
       return node

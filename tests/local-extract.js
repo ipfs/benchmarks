@@ -23,7 +23,7 @@ async function localExtract (node, name, warmup, fileSet, version) {
 
   const end = process.hrtime(start)
   return build({
-    name: name,
+    name: 'localExtract',
     warmup: warmup,
     file: filePath,
     meta: { version: version },

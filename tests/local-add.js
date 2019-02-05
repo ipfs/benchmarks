@@ -4,15 +4,27 @@ const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
 const { build } = require('./schema/results')
 const fs = require('fs')
+const { description, strategy } = require('./config').parseParams()
 
-async function unixFsAdd (node, name, warmup, fileSet, version) {
+/**
+ * Add file benchmark using IPFS api add.
+ *
+ * @async
+ * @function unixFsAdd
+ * @param {array} peerArray - An array of IPFS peers used during the test.
+ * @param {string} name - Name of the test used as sending results to the file with same name and data point in dashboard.
+ * @param {boolean} warmup - Not implemented.
+ * @param {string} fileSet - Describes file or list of files used for the test.
+ * @param {string} version - Version of IPFS used in benchmark.
+ * @return {Promise<Object>} The data from the benchamrk
+ */
+async function unixFsAdd (peerArray, name, warmup, fileSet, version) {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
+  console.log(` Adding files using strategy ${strategy}`)
   const start = process.hrtime()
-  const peer = node[0]
-  const strategy = process.argv[2] === 'trickle' ? 'trickle' : 'balanced'
-  // output file and dashboard name will match trategy.  default is balanced
-  name = strategy === 'trickle' ? `${name}Trickle` : name
+  const peer = peerArray[0]
+  // output file and dashboard name will match strategy.  default is balanced
   await peer.add(fileStream, { strategy: strategy })
   const end = process.hrtime(start)
   return build({
@@ -20,7 +32,7 @@ async function unixFsAdd (node, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: `Add file (${strategy})`,
+    description: `Add file ${description}`,
     file_set: fileSet,
     duration: {
       s: end[0],
@@ -28,4 +40,5 @@ async function unixFsAdd (node, name, warmup, fileSet, version) {
     }
   })
 }
+
 run(unixFsAdd)

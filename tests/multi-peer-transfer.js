@@ -5,7 +5,7 @@ const { file } = require('./lib/fixtures.js')
 const { build } = require('./schema/results')
 const { once } = require('stream-iterators-utils')
 const run = require('./lib/runner')
-
+const { description } = require('./config').parseParams()
 const multiPeerTransfer = async (node, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
@@ -18,16 +18,16 @@ const multiPeerTransfer = async (node, name, warmup, fileSet, version) => {
   const peerBId = await peerB.id()
   const peerCId = await peerC.id()
   const peerDId = await peerD.id()
-  const inserted = peerA.add ? await peerA.add(fileStream) : await peerA.files.add(fileStream)
-  peerB.add ? await peerB.add(fileStream) : await peerB.files.add(fileStream)
-  peerC.add ? await peerC.add(fileStream) : await peerC.files.add(fileStream)
-  peerD.add ? await peerD.add(fileStream) : await peerD.files.add(fileStream)
+  const inserted = await peerA.add(fileStream)
+  await peerB.add(fileStream)
+  await peerC.add(fileStream)
+  await peerD.add(fileStream)
   peerE.swarm.connect(peerAId.addresses[0])
   peerE.swarm.connect(peerBId.addresses[0])
   peerE.swarm.connect(peerCId.addresses[0])
   peerE.swarm.connect(peerDId.addresses[0])
   const start = process.hrtime()
-  let stream = peerE.catReadableStream ? peerE.catReadableStream(inserted[0].hash) : peerE.files.catReadableStream(inserted[0].hash)
+  let stream = peerE.catReadableStream(inserted[0].hash)
   // endof steam
   stream.resume()
 
@@ -42,7 +42,7 @@ const multiPeerTransfer = async (node, name, warmup, fileSet, version) => {
     warmup: warmup,
     file_set: fileSet,
     file: filePath,
-    description: 'Retrieve file from one of 4 peers',
+    description: `Cat file ${description} js01234 -> js5`,
     meta: { version: version },
     duration: {
       s: end[0],

@@ -51,26 +51,38 @@ const tests = { 'unixFsAdd': [{
 const parseParams = () => {
   let name = '_'
   let desc = '('
-  if (argv.t === 'ws') {
-    name = `${name}ws_`
-    desc = `${desc}websocket, `
+  let strategy = 'balanced'
+  if (argv.s) {
+    if (argv.s === 'trickle') {
+      name = `${name}trickle`
+      desc = `${desc}trickle`
+      strategy = 'trickle'
+    } else {
+      name = `${name}balanced`
+      desc = `${desc}balanced`
+    }
   } else {
-    name = `${name}tcp_`
-    desc = `${desc}tcp, `
-  }
-  if (argv.m === 'spdy') {
-    name = `${name}spdy`
-    desc = `${desc}spdy`
-  } else {
-    name = `${name}mplex`
-    desc = `${desc}mplex`
-  }
-  if (argv.e === 'secio') {
-    name = `${name}_secio`
-    desc = `${desc}, secio`
+    if (argv.t === 'ws') {
+      name = `${name}ws_`
+      desc = `${desc}websocket, `
+    } else {
+      name = `${name}tcp_`
+      desc = `${desc}tcp, `
+    }
+    if (argv.m === 'spdy') {
+      name = `${name}spdy`
+      desc = `${desc}spdy`
+    } else {
+      name = `${name}mplex`
+      desc = `${desc}mplex`
+    }
+    if (argv.e === 'secio') {
+      name = `${name}_secio`
+      desc = `${desc}, secio`
+    }
   }
   desc = `${desc})`
-  return { name: name, description: desc }
+  return { name: name, description: desc, strategy: strategy }
 }
 const config = {
   test: tests,
