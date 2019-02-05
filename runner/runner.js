@@ -42,10 +42,6 @@ const clearFile = async (path) => {
   fs.closeSync(fd)
 }
 
-const matchBenchmark = (benchmarkNames, loc) => {
-  return configBenchmarks.constructTest(benchmarkNames, loc)
-}
-
 const run = async (params) => {
   config.log.debug(params)
   // start with a clean logfile
@@ -72,10 +68,10 @@ const run = async (params) => {
   let benchmarks
   if (params.benchmarks && params.benchmarks.tests && params.benchmarks.tests.length) {
     config.log.info(`Running benchmarks from parameters: ${JSON.stringify(params.benchmarks.tests)}`)
-    benchmarks = configBenchmarks.constructTests(params.benchmarks.tests, config.stage, params.clinic)
+    benchmarks = configBenchmarks.constructTests(config.stage, params.clinic.enabled, params.benchmarks.tests)
     console.log(benchmarks)
   } else {
-    config.log.info('Running default benchmarks')
+    config.log.info('Running ALL default benchmarks')
     benchmarks = config.benchmarks.tests
   }
   for (let test of benchmarks) {
@@ -97,8 +93,8 @@ const run = async (params) => {
       config.log.error(e)
       // TODO:  maybe trigger an alert here ??
     }
-    if (config.benchmarks.clinic || params.clinic) { // then run it with each of the clinic tools
-      config.log.info(`Running clinic: default [${config.benchmarks.clinic}] param [${params.clinic}]`)
+    if (config.benchmarks.clinic || params.clinic.enabled) { // then run it with each of the clinic tools
+      config.log.info(`Running clinic: default [${config.benchmarks.clinic}] param [${params.clinic.enabled}]`)
       try {
         for (let op of ['doctor', 'flame', 'bubbleProf']) {
           for (let run of test[op]) {
@@ -116,7 +112,7 @@ const run = async (params) => {
         config.log.error(e)
       }
     } else {
-      config.log.info(`not running clinic: default [${config.benchmarks.clinic}] param [${params.clinic}]`)
+      config.log.info(`not running clinic: default [${config.benchmarks.clinic}] param [${params.clinic.enabled}]`)
     }
   }
   try {
