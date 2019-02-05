@@ -50,7 +50,7 @@ To Test it:
 Below is a list of optional flags used by the tests to run a specific strategy or transport module in Libp2p.
 - `-s` DAG strategy (balanced | trickle)
 - `-t` Transport (tcp | ws)
-- `-m` Multiplex (mplex, spdy)
+- `-m` Stream Muxer (mplex, spdy)
 - `-e` Connection encryption (secio)
 
 ## Use case coverage
@@ -105,7 +105,7 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Add large file (trickle)                 | [🍏](local-add.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (local)                   | [🍏](local-extract.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat small file (tcp, mplex)              | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | [🍏](extract-js2.go.js)          | [🍏](extract-go2.js)          | 🍎             | 🍎             |
-| Cat small file (websocket, mplex)        | n/a        | [🍏](local-transfer.js)          | n/a        | 🍎         | 🍏](extract-js2.go.js)         | 🍏](extract-go2.js)         | 🍎             | 🍎             |
+| Cat small file (websocket, mplex)        | n/a        | [🍏](local-transfer.js)          | n/a        | 🍎         | [🍏](extract-js2.go.js)         | [🍏](extract-go2.js)         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat small file (webrtc, mplex)           | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat small file (tcp, mplex, secio)       | n/a        | [🍏](local-transfer.js)          | n/a        | 🍎         | 🍎         | 🍎         | 🍏             | 🍎             |
 | Cat small file (websocket, mplex, secio) | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |

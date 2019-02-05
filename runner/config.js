@@ -167,8 +167,8 @@ const testAbstracts = [
     file: 'local-extract.js'
   },
   {
-    name: 'multiPeerTransfer',
-    file: 'multi-peer-transfer.js'
+    name: 'multiPeerTransfer_tcp_mplex',
+    file: 'multi-peer-transfer.js -t tcp -m mplex'
   },
   {
     name: 'addMultiKb',

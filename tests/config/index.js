@@ -50,7 +50,6 @@ const tests = { 'unixFsAdd': [{
 }
 const parseParams = () => {
   let name = '_'
-  console.log(argv)
   let desc = '('
   let strategy = 'balanced'
   if (argv.s) {
