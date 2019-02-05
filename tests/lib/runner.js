@@ -5,7 +5,7 @@ const clean = require('./clean')
 const { store } = require('./output')
 const genTests = require('../util/create-files')
 const { name } = require('../config').parseParams()
-async function runner (test, nodeCount = 1, type = 'nodejs', options) {
+async function runner (test, nodeCount = 2, type = 'nodejs', options) {
   if (!config.verify) {
     await genTests()
   }
@@ -13,7 +13,11 @@ async function runner (test, nodeCount = 1, type = 'nodejs', options) {
   const nodeFactory = new NodeFactory()
   const node = []
   for (let i = 0; i < nodeCount; i++) {
-    node.push(await nodeFactory.add(type, options, i))
+    try {
+      node.push(await nodeFactory.add(type, options, i))
+    } catch (e) {
+      console.log(e)
+    }
   }
   const version = await node[0].version()
   try {

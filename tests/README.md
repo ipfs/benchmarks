@@ -4,11 +4,6 @@
 
 Each test uses a small file ( 200 bytes ) and large file ( 1.2 MB ) and actions on empty repo vs populated repo.
 
-### local-add:
-The time it takes to add a file using unixFS.
-```js
-repo.files.add(fileStream)
-```
 ### local-extract
 The total time to get a file from a repo.
 ```js
@@ -50,6 +45,13 @@ To Test it:
 ```bash
 > node *test-name*
 ```
+## FLAGS
+
+Below is a list of optional flags used by the tests to run a specific strategy or transport module in Libp2p.
+- `-s` DAG strategy (balanced | trickle)
+- `-t` Transport (tcp | ws)
+- `-m` Multiplex (mplex, spdy)
+- `-e` Connection encryption (secio)
 
 ## Use case coverage
 
