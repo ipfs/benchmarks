@@ -189,6 +189,7 @@ module.exports = {
   constructTests,
   tmpOut,
   remoteIpfsPath,
+  remoteTestsPath,
   clinicOperations,
   clinicFilesets
 }
