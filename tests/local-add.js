@@ -21,10 +21,10 @@ const { description, strategy } = require('./config').parseParams()
 async function unixFsAdd (peerArray, name, warmup, fileSet, version) {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
+  console.log(` Adding files using strategy ${strategy}`)
   const start = process.hrtime()
   const peer = peerArray[0]
-  console.log(` Adding files using strategy ${strategy}`)
-  // output file and dashboard name will match trategy.  default is balanced
+  // output file and dashboard name will match strategy.  default is balanced
   await peer.add(fileStream, { strategy: strategy })
   const end = process.hrtime(start)
   return build({
