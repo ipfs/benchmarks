@@ -175,6 +175,14 @@ const testAbstracts = [
     file: 'multi-peer-transfer.js -t ws -m mplex'
   },
   {
+    name: 'multiPeerTransfer_ws_mplex',
+    file: 'multi-peer-transfer.js -t ws -m mplex'
+  },
+  {
+    name: 'multiPeerTransfer_tcp_mplex_secio',
+    file: 'multi-peer-transfer.js -t tcp -m mplex -e secio'
+  },
+  {
     name: 'addMultiKb',
     file: 'add-multi-kb.js'
   },
