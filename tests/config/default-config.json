@@ -66,6 +66,7 @@
     "peerDiscovery": []
   }
 },
+"config":{
   "Addresses": {
     "API": "/ip4/127.0.0.1/tcp/5015",
     "Gateway": "/ip4/127.0.0.1/tcp/9094",
@@ -75,6 +76,7 @@
     ]
   },
   "Bootstrap": []
+}
 },
 {"libp2p": {
   "modules": {
@@ -84,6 +86,7 @@
     "peerDiscovery": []
   }
 },
+"config":{
   "Addresses": {
     "API": "/ip4/127.0.0.1/tcp/5016",
     "Gateway": "/ip4/127.0.0.1/tcp/9095",
@@ -93,5 +96,6 @@
     ]
   },
   "Bootstrap": []
+}
 }
 ]

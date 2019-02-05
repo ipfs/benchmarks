@@ -167,8 +167,36 @@ const testAbstracts = [
     file: 'local-extract.js'
   },
   {
-    name: 'multiPeerTransfer',
-    file: 'multi-peer-transfer.js'
+    name: 'multiPeerTransfer_tcp_mplex',
+    file: 'multi-peer-transfer.js -t tcp -m mplex'
+  },
+  {
+    name: 'multiPeerTransfer_ws_mplex',
+    file: 'multi-peer-transfer.js -t ws -m mplex'
+  },
+  {
+    name: 'multiPeerTransfer_tcp_mplex_secio',
+    file: 'multi-peer-transfer.js -t tcp -m mplex -e secio'
+  },
+  {
+    name: 'multiPeerTransfer_ws_mplex_secio',
+    file: 'multi-peer-transfer.js -t ws -m mplex -e secio'
+  },
+  {
+    name: 'multiPeerTransfer_tcp_spdy',
+    file: 'multi-peer-transfer.js -t tcp -m spdy'
+  },
+  {
+    name: 'multiPeerTransfer_ws_spdy',
+    file: 'multi-peer-transfer.js -t ws -m spdy'
+  },
+  {
+    name: 'multiPeerTransfer_tcp_spdy_secio',
+    file: 'multi-peer-transfer.js -t tcp -m spdy -e secio'
+  },
+  {
+    name: 'multiPeerTransfer_ws_spdy_secio',
+    file: 'multi-peer-transfer.js -t ws -m spdy -e secio'
   },
   {
     name: 'addMultiKb',
