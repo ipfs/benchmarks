@@ -4,7 +4,7 @@ const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
 const { build } = require('./schema/results')
 const fs = require('fs')
-const { description } = require('./config').parseParams()
+const { description, strategy } = require('./config').parseParams()
 
 /**
  * Add file benchmark using IPFS api add.
@@ -23,8 +23,9 @@ async function unixFsAdd (peerArray, name, warmup, fileSet, version) {
   const fileStream = fs.createReadStream(filePath)
   const start = process.hrtime()
   const peer = peerArray[0]
+  console.log(` Adding files using strategy ${strategy}`)
   // output file and dashboard name will match trategy.  default is balanced
-  await peer.add(fileStream, { strategy: 'balanced' })
+  await peer.add(fileStream, { strategy: strategy })
   const end = process.hrtime(start)
   return build({
     name: name,

@@ -52,10 +52,12 @@ const parseParams = () => {
   let name = '_'
   console.log(argv)
   let desc = '('
+  let strategy = 'balanced'
   if (argv.s) {
     if (argv.s === 'trickle') {
       name = `${name}trickle`
       desc = `${desc}trickle`
+      strategy = 'trickle'
     } else {
       name = `${name}balanced`
       desc = `${desc}balanced`
@@ -80,9 +82,8 @@ const parseParams = () => {
       desc = `${desc}, secio`
     }
   }
- 
   desc = `${desc})`
-  return { name: name, description: desc }
+  return { name: name, description: desc, strategy: strategy }
 }
 const config = {
   test: tests,
