@@ -11,6 +11,7 @@ x-ipfs-benchmarks-api-key
 
 ### Methods
 * GET / - [show tasks](API_SHOW.md)
+* GET /docs - [show test information](API_DOCS.md)
 * POST / - [add task](API_ADD.md)
 * POST /drain - [drain the queue](API_DRAIN.md)
 * POST /restart - [schedule a restart of the runner](API_RESTART.md)

@@ -13,7 +13,10 @@
 * **Data Params**
 
   * **commit**: Commit SHA from [js-ipfs](https://github.com/ipfs/js-ipfs)
-  * **clinic**: 'on' or 'off' controls whether clinic tools are included in the run.
+  * **clinic**:
+    * **enabled**: 'on' or 'off' controls whether clinic tools are included in the run.
+  * **benchmarks**:
+    * **tests**: Array of benchmark names retrievable from `/docs`
 
 * **Success Response:**
 
@@ -22,7 +25,12 @@
 ```json
         {
           "commit":"b6a7ab63",
-          "clinic":"on",
+          "clinic": {
+            "enabled"; true
+          },
+          "benchmarks": {
+            "tests": ["localTransfer_tcp_mplex", "unixFsAdd"]
+          }
           "remote":true,
           "id":1584093487785384
         }
@@ -41,5 +49,5 @@
 * **Sample Call:**
 
   ```bash
-    curl -XPOST -d '{"commit":"b6a7ab63", "clinic": "on"}' -H "Content-Type: application/json" -H "x-ipfs-benchmarks-api-key: somesecret" -k https://benchmarks.ipfs.team/runner
+    curl -XPOST -d '{"commit":"", "clinic": { "enabled": false },  "benchmarks": { "tests": ["localTransfer_tcp_mplex", "unixFsAdd"]}}' -H "Content-Type: application/json" -H "x-ipfs-benchmarks-api-key: somesecret" -k https://benchmarks.ipfs.team/runner
   ```

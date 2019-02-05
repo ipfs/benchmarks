@@ -8,6 +8,12 @@ const schema = require('./schema')
 const config = require('./config')
 const runner = require('./runner')
 const Queue = require('./queue')
+const docs = {
+  benchmarks: config.server.api.benchmarks,
+  clinic: config.server.api.clinic
+}
+docs.benchmarks.txt = `Benchmarks run with their own set of files mandated by the type of test.`
+docs.clinic.txt = `For clinic runs you can request to run wit a specific fileset.`
 
 // This function exits the main process, relying on process manager to restart
 // so that a new version of the runner can be applied on next startup
@@ -46,6 +52,7 @@ fastify.route({
     let task = queue.add({
       commit: request.body.commit,
       clinic: request.body.clinic,
+      benchmarks: request.body.benchmarks,
       remote: true,
       nightly: true
     })
@@ -61,6 +68,16 @@ fastify.route({
     let status = queue.getStatus()
     fastify.log.info('getting queue status', status)
     return status
+  }
+})
+
+// list
+fastify.route({
+  method: 'GET',
+  url: '/docs',
+  handler: async (request, reply) => {
+    fastify.log.info('getting API docs')
+    return docs
   }
 })
 
