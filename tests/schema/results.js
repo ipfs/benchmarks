@@ -89,7 +89,7 @@ const resultsDTO = {
 }
 async function build (props, type = 'nodejs') {
   const results = { ...resultsDTO, ...props }
-  results.cpu = os.cpus()
+  results.cpu = getCpu()
   results.loadAvg = os.loadavg()
   results.memory = os.totalmem() - os.freemem()
   results.date = new Date()
@@ -100,6 +100,24 @@ async function build (props, type = 'nodejs') {
   }
   results.meta.guid = config.guid
   return results
+}
+const getCpu = () => {
+  var cpus = os.cpus()
+  let idle = 0
+  for (let i = 0, len = cpus.length; i < len; i++) {
+    let cpu = cpus[i]
+    let total = 0
+    for (let type in cpu.times) {
+      total += cpu.times[type]
+    }
+    for (let type in cpu.times) {
+      if (type === 'idle') {
+        idle += Math.round(100 * cpu.times[type] / total)
+      }
+    }
+  }
+  console.log(`process time:${100 - (idle / cpus.length)} % of CPU(s)`)
+  return 100 - (idle / cpus.length)
 }
 
 function validate (data) {
