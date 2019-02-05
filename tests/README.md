@@ -14,11 +14,6 @@ The total time it takes to transfer a fie from repo A to repo B
 ```js
 repoB.files.cat(inserted[0].hash)
 ```
-### multi-peer-transfer
-With the same file inserted into 4 peers, this test captures the time for a 5th peer to retrieve file from swarm
-```js
-peerE.files.cat(inserted[0].hash)
-```
 
 ### init-node
 Test the time to spin up a node without using pre-generated key

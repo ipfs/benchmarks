@@ -6,6 +6,19 @@ const { build } = require('./schema/results')
 const { once } = require('stream-iterators-utils')
 const run = require('./lib/runner')
 const { description } = require('./config').parseParams()
+
+/**
+ * With the same file inserted into 4 peers, this test captures the time for a 5th peer to retrieve file from swarm using catReadableStream.
+ *
+ * @async
+ * @function multiPeerTransfer
+ * @param {array} peerArray - An array of IPFS peers used during the test.
+ * @param {string} name - Name of the test used as sending results to the file with same name and data point in dashboard.
+ * @param {boolean} warmup - Not implemented.
+ * @param {string} fileSet - Describes file or list of files used for the test.
+ * @param {string} version - Version of IPFS used in benchmark.
+ * @return {Promise<Object>} The data from the benchamrk
+ */
 const multiPeerTransfer = async (node, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
   const fileStream = fs.createReadStream(filePath)
