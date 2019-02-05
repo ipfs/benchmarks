@@ -110,11 +110,11 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Cat small file (tcp, mplex, secio)       | n/a        | [🍏](local-transfer.js)          | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat small file (websocket, mplex, secio) | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat small file (webrtc, mplex, secio)    | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat small file (tcp, spdy)               | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
-| Cat small file (websocket, spdy)         | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat small file (tcp, spdy)               | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
+| Cat small file (websocket, spdy)         | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat small file (webrtc, spdy)            | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat small file (tcp, spdy, secio)        | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
-| Cat small file (websocket, spdy, secio)  | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat small file (tcp, spdy, secio)        | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
+| Cat small file (websocket, spdy, secio)  | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat small file (webrtc, spdy, secio)     | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | Cat large file (local)                   | [🍏](local-extract.js)         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | Cat large file (tcp, mplex)              | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | [🍏](extract-js2.go.js)         | [🍏](extract-go2.js)         | [🍏](multi-peer-transfer.js)             | 🍎             |
@@ -123,11 +123,11 @@ For connecting peers you'll need to use the `ipfs.swarm.connect` API.
 | Cat large file (tcp, mplex, secio)       | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat large file (websocket, mplex, secio) | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat large file (webrtc, mplex, secio)    | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat large file (tcp, spdy)               | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
-| Cat large file (websocket, spdy)         | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat large file (tcp, spdy)               | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
+| Cat large file (websocket, spdy)         | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat large file (webrtc, spdy)            | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
-| Cat large file (tcp, spdy, secio)        | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
-| Cat large file (websocket, spdy, secio)  | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | 🍎             | 🍎             |
+| Cat large file (tcp, spdy, secio)        | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
+| Cat large file (websocket, spdy, secio)  | n/a        | [🍏](local-transfer.js)         | n/a        | 🍎         | 🍎         | 🍎         | [🍏](multi-peer-transfer.js)             | 🍎             |
 | Cat large file (webrtc, spdy, secio)     | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a        | 🍎             | n/a            |
 | MFS write small file                     | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
 | MFS write many small files (10k+)        | 🍎         | n/a        | 🍎         | n/a        | n/a        | n/a        | n/a            | n/a            |
