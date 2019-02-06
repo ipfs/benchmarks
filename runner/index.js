@@ -4,7 +4,10 @@ const schedule = require('node-schedule')
 const fastify = require('fastify')({
   logger: true
 })
-const schema = require('./schema')
+const headerSchema = require('./lib/schema/header')
+const addSchema = require('./lib/schema/add')
+const getSchema = require('./lib/schema/get')
+const restartSchema = require('./lib/schema/restart')
 const config = require('./config')
 const runner = require('./runner')
 const Queue = require('./queue')
@@ -39,16 +42,35 @@ schedule.scheduleJob('0 0 * * *', function () {
   })
 })
 
-fastify.addSchema(schema.addBody)
-fastify.addSchema(schema.headers)
+fastify.register(require('fastify-swagger'), {
+  routePrefix: '/docs',
+  swagger: {
+    info: {
+      title: 'IPFS Runner API',
+      description: 'Running benchmkarks for IPFS projects. For more documentation see https://github.com/ipfs/benchmarks',
+      version: '1.0.0'
+    },
+    host: config.server.hostname,
+    schemes: ['http'],
+    consumes: ['application/json'],
+    produces: ['application/json']
+  },
+  exposeRoute: true
+})
+
+fastify.addSchema(headerSchema.headers)
+fastify.addSchema(addSchema.addBody)
+fastify.addSchema(addSchema.addResponse)
 
 // add a new task to the queue
 fastify.route({
   method: 'POST',
   url: '/',
   schema: {
+    description: 'Add a job run to the queue.',
     body: 'addBody#',
-    headers: 'protect#'
+    headers: 'protect#',
+    response: 'addResponse#'
   },
   handler: async (request, reply) => {
     let task = queue.add({
@@ -62,24 +84,20 @@ fastify.route({
   }
 })
 
+fastify.addSchema(getSchema.getResponse)
+
 // list tasks
 fastify.route({
   method: 'GET',
   url: '/',
+  schema: {
+    description: 'List all jobs in the Queue',
+    response: 'getResponse#'
+  },
   handler: async (request, reply) => {
     let status = queue.getStatus()
     fastify.log.info('getting queue status', status)
     return status
-  }
-})
-
-// list
-fastify.route({
-  method: 'GET',
-  url: '/docs',
-  handler: async (request, reply) => {
-    fastify.log.info('getting API docs')
-    return docs
   }
 })
 
@@ -88,19 +106,25 @@ fastify.route({
   method: 'POST',
   url: '/drain',
   schema: {
-    headers: 'protect#'
+    description: 'Drain all non active jobs from the queue and return the queue status',
+    headers: 'protect#',
+    response: 'getResponse#'
   },
   handler: async (request, reply) => {
     return queue.drain()
   }
 })
 
+fastify.addSchema(restartSchema.restartResponse)
+
 // after CD deployed new code we queue a restart of the runner
 fastify.route({
   method: 'POST',
   url: '/restart',
   schema: {
-    headers: 'protect#'
+    description: 'Schedule a restart in the queu and return the scheduled job',
+    headers: 'protect#',
+    response: 'restartResponse#'
   },
   handler: async (request, reply) => {
     let task = queue.add({
@@ -114,7 +138,6 @@ fastify.route({
 const start = async () => {
   try {
     await fastify.listen(config.server.port, '0.0.0.0')
-    fastify.server.timeout = 96000
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
   } catch (err) {
     fastify.log.error(err)

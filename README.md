@@ -27,7 +27,7 @@ submitting code to the community.
 * The [dashboard](infrastructure/grafana/README.md) documentation
 * [Architecture](infrastructure/README.md) of the `js-ipfs` benchmark system
 * Reference on how this [Repository](CONTRIBUTING.md) is organized
-* Using the [Runner](runner/README.md) to manage benchmark runs remotely, which includes an [API](runner/API.md) available [here](https://benchmarks.ipfs.team/runner)
+* Using the [Runner](runner/README.md) to manage benchmark runs remotely, which includes an [API](https://benchmarks.ipfs.team/runner/docs) available [here](https://benchmarks.ipfs.team/runner)
 * Description of [tests](tests/README.md)
 * Convenience [scripts](scripts/README.md) for the docker-compose [deployment](infrastructure/deploy/README.md)
 * Overview [video](https://cloudflare-ipfs.com/ipfs/QmSZgcL7dyjcifZ5uJYmBDCCACfzQD5Ve2RFSoB4RdYATp) hosted on the IPFS network.

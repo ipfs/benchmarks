@@ -28,6 +28,7 @@ const now = Date.now()
 const logDir = `${os.tmpdir()}/${now}`
 const logFile = `${logDir}/stdout.log`
 const logLevel = process.env.LOGLEVEL || 'info'
+const hostname = process.env.HOSTNAME || 'localhost'
 
 mkDir(`${logDir}`, { recursive: true })
 
@@ -89,6 +90,7 @@ const config = {
   server: {
     port: 9000,
     apikey: process.env.API_KEY || 'supersecret',
+    hostname: hostname,
     api: {
       clinic: {
         operations: configBenchmarks.clinicOperations,
