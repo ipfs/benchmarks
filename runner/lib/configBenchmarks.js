@@ -106,12 +106,12 @@ const testAbstracts = [
     file: 'init-node.browser.js'
   },
   {
-    name: 'unixFsAddBrowser',
-    file: 'local-add.browser.js'
+    name: 'unixFsAddBrowser_balanced',
+    file: 'local-add.browser.js -s balanced'
   },
   {
-    name: 'addMultiKbBrowser',
-    file: 'add-multi-kb.browser.js'
+    name: 'addMultiKbBrowser_balanced',
+    file: 'add-multi-kb.browser.js -s balanced'
   },
   {
     name: 'unixFsAddGo',
