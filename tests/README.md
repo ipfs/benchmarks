@@ -1,32 +1,5 @@
 # IPFS Benchmarks
 
-## Test descriptions
-
-Each test uses a small file ( 200 bytes ) and large file ( 1.2 MB ) and actions on empty repo vs populated repo.
-
-### local-extract
-The total time to get a file from a repo.
-```js
-repo.files.get(validCID)
-```
-### local-transfer
-The total time it takes to transfer a fie from repo A to repo B
-```js
-repoB.files.cat(inserted[0].hash)
-```
-
-### init-node
-Test the time to spin up a node without using pre-generated key
-```js
-new IPFS({
-      repo: `${repoPath}${Math.random()
-        .toString()
-        .substring(2, 8)}`,
-      config: config,
-      init: init 
-    })
-```
-
 ### Adding new tests
 
 - Copy test.template and give the file the name of the test
@@ -47,6 +20,24 @@ Below is a list of optional flags used by the tests to run a specific strategy o
 - `-t` Transport (tcp | ws)
 - `-m` Stream Muxer (mplex, spdy)
 - `-e` Connection encryption (secio)
+
+Example:
+```bash
+> node local-transfer.js -t ws -m spdy -e secio
+```
+## ENVIROMENT VARIABLES:
+
+### FILESET:
+Use env variable FILESET to run test just against that specific set of file(s).  Options of FILESET are define in the config.
+```bash
+> FILESET="One64MBFile" node local-add
+```
+
+### VERIFYOFF
+Use env variable VERIFYOFF=true to skip the pre-generation of test files.
+```js
+> VERIFYOFF=true node local-add
+```
 
 ## Use case coverage
 
