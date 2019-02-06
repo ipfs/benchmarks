@@ -18,6 +18,7 @@
     "ajv": "^6.5.5",
     "compressing": "^1.4.0",
     "fastify": "^1.13.0",
+    "fastify-swagger": "^1.1.1",
     "folder-hash": "^2.1.2",
     "influx": "^5.0.7",
     "level-jobs": "^2.1.0",
