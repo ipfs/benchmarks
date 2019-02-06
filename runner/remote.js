@@ -48,6 +48,7 @@ const run = (shell, name) => {
             resolve(objResults)
           } catch (e) {
             retrieveLogger.error(e)
+            retrieveLogger.error(jsonResponse)
             resolve(e)
           }
         })
