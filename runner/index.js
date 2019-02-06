@@ -31,7 +31,9 @@ const queue = new Queue(stopFn, runner)
 schedule.scheduleJob('0 0 * * *', function () {
   queue.add({
     commit: '',
-    clinic: true,
+    clinic: {
+      enabled: true
+    },
     remote: true,
     nightly: true
   })
