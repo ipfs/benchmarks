@@ -39,6 +39,22 @@ schedule.scheduleJob('0 0 * * *', function () {
   })
 })
 
+fastify.register(require('fastify-swagger'), {
+  routePrefix: '/docs',
+  swagger: {
+    info: {
+      title: 'IPFS Runner API',
+      description: 'Running benchmkarks for IPFS projects',
+      version: '0.1.0'
+    },
+    host: 'localhost',
+    schemes: ['http'],
+    consumes: ['application/json'],
+    produces: ['application/json']
+  },
+  exposeRoute: true
+})
+
 fastify.addSchema(schema.addBody)
 fastify.addSchema(schema.headers)
 
@@ -47,8 +63,18 @@ fastify.route({
   method: 'POST',
   url: '/',
   schema: {
+    description: 'Add a job run to the queue.',
     body: 'addBody#',
-    headers: 'protect#'
+    headers: 'protect#',
+    response: {
+      201: {
+        description: 'Succesful response',
+        type: 'object',
+        properties: {
+          hello: { type: 'string' }
+        }
+      }
+    }
   },
   handler: async (request, reply) => {
     let task = queue.add({
@@ -70,16 +96,6 @@ fastify.route({
     let status = queue.getStatus()
     fastify.log.info('getting queue status', status)
     return status
-  }
-})
-
-// list
-fastify.route({
-  method: 'GET',
-  url: '/docs',
-  handler: async (request, reply) => {
-    fastify.log.info('getting API docs')
-    return docs
   }
 })
 
@@ -110,11 +126,48 @@ fastify.route({
   }
 })
 
+fastify.put('/some-route/:id', {
+  schema: {
+    description: 'post some data',
+    tags: ['user', 'code'],
+    summary: 'qwerty',
+    params: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+          description: 'user id'
+        }
+      }
+    },
+    body: {
+      type: 'object',
+      properties: {
+        hello: { type: 'string' },
+        obj: {
+          type: 'object',
+          properties: {
+            some: { type: 'string' }
+          }
+        }
+      }
+    },
+    response: {
+      201: {
+        description: 'Succesful response',
+        type: 'object',
+        properties: {
+          hello: { type: 'string' }
+        }
+      }
+    }
+  }
+}, (req, reply) => {})
+
 // Run the server!
 const start = async () => {
   try {
     await fastify.listen(config.server.port, '0.0.0.0')
-    fastify.server.timeout = 96000
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
   } catch (err) {
     fastify.log.error(err)

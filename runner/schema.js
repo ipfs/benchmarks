@@ -15,18 +15,32 @@ const addBody = {
   $id: 'addBody',
   type: 'object',
   properties: {
-    commit: { type: 'string' },
+    commit: {
+      type: 'string',
+      description: 'Commit of the js-IPFS library'
+    },
     benchmarks: {
       type: 'object',
       properties: {
-        tests: { type: 'array' }
+        tests: {
+          type: 'array',
+          items: {
+            type: 'string'
+          },
+          description: 'Names of benchmark tests to be run'
+        }
       }
     },
     clinic: {
       type: 'object',
       properties: {
         enabled: { type: 'boolean', default: false },
-        tests: { type: 'array' }
+        tests: {
+          type: 'array',
+          items: {
+            type: 'string'
+          }
+        },
       }
     }
   },
