@@ -7,6 +7,7 @@ const fastify = require('fastify')({
 const headerSchema = require('./lib/schema/header')
 const addSchema = require('./lib/schema/add')
 const getSchema = require('./lib/schema/get')
+const benchmarkSchema = require('./lib/schema/benchmark')
 const restartSchema = require('./lib/schema/restart')
 const config = require('./config')
 const runner = require('./runner')
@@ -86,7 +87,7 @@ fastify.route({
 
 fastify.addSchema(getSchema.getResponse)
 
-// list tasks
+// list jobs in the queue
 fastify.route({
   method: 'GET',
   url: '/',
@@ -98,6 +99,21 @@ fastify.route({
     let status = queue.getStatus()
     fastify.log.info('getting queue status', status)
     return status
+  }
+})
+
+fastify.addSchema(benchmarkSchema.benchmarkResponse)
+
+// list available benchmarks
+fastify.route({
+  method: 'GET',
+  url: '/benchmarks',
+  schema: {
+    description: 'List all available benchmarks',
+    response: 'benchmarkResponse#'
+  },
+  handler: async (request, reply) => {
+    return config.benchmarks.tests
   }
 })
 
