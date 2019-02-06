@@ -118,8 +118,8 @@ const testAbstracts = [
     file: 'local-add.go.js'
   },
   {
-    name: 'peerTransferBrowser',
-    file: 'peer-transfer.browser.js'
+    name: 'peerTransferBrowser_ws_mplex',
+    file: 'peer-transfer.browser.js -t ws -m mplex'
   },
   {
     name: 'pubsubMessage',
