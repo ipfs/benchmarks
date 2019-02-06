@@ -72,7 +72,7 @@ if (process.env.STAGE === 'local') {
   loc = 'local'
 }
 
-const runClinic = (process.env.CLINIC && (process.env.CLINIC === 'ON' || process.env.CLINIC === true)) || false
+const runClinic = (process.env.CLINIC && (process.env.CLINIC === 'ON' || process.env.CLINIC === 'true' || process.env.CLINIC === true)) || false
 const tests = configBenchmarks.constructTests(loc, runClinic)
 
 const config = {
