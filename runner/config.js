@@ -71,9 +71,9 @@ let loc = 'remote'
 if (process.env.STAGE === 'local') {
   loc = 'local'
 }
-const tests = configBenchmarks.constructTests(loc)
 
 const runClinic = (process.env.CLINIC && (process.env.CLINIC === 'ON' || process.env.CLINIC === true)) || false
+const tests = configBenchmarks.constructTests(loc, runClinic)
 
 const config = {
   provison: {
