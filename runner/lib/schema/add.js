@@ -1,16 +1,5 @@
 'use strict'
 
-const config = require('./config')
-
-const headers = {
-  $id: 'protect',
-  type: 'object',
-  properties: {
-    'x-ipfs-benchmarks-api-key': { const: config.server.apikey }
-  },
-  required: ['x-ipfs-benchmarks-api-key']
-}
-
 const addBody = {
   $id: 'addBody',
   type: 'object',
@@ -40,14 +29,43 @@ const addBody = {
           items: {
             type: 'string'
           }
-        },
+        }
       }
     }
   },
   required: ['commit']
 }
 
+const addResponse = {
+  $id: 'addResponse',
+  200: {
+    description: 'Succesful response',
+    type: 'object',
+    properties: {
+      commit: { type: 'string' },
+      clinic: {
+        type: 'object',
+        properties: {
+          enabled: { type: 'boolean' }
+        }
+      },
+      benchmarks: {
+        type: 'object',
+        properties: {
+          tests: {
+            type: 'array',
+            items: { type: 'string' }
+          }
+        }
+      },
+      remote: { type: 'boolean' },
+      nightly: { type: 'boolean' },
+      id: { type: 'integer' }
+    }
+  }
+}
+
 module.exports = {
   addBody,
-  headers
+  addResponse
 }
