@@ -3,7 +3,20 @@
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 const { file } = require('./lib/fixtures')
+const { description } = require('./config').parseParams()
 
+/**
+ * Retrive file between peers in the browser
+ *
+ * @async
+ * @function peerTransferBrowser
+ * @param {array} browser - An array of headless browsers that contain IPFS tests.
+ * @param {string} name - Name of the test used as sending results to the file with same name and data point in dashboard.
+ * @param {boolean} warmup - Not implemented.
+ * @param {string} fileSet - Describes file or list of files used for the test.
+ * @param {string} version - Version of IPFS used in benchmark.
+ * @return {Promise<Object>} The data from the benchamrk
+ */
 async function peerTransferBrowser (node, name, warmup, fileSet, version) {
   const filePath = await file(fileSet)
   const page = node[0].page
@@ -20,7 +33,7 @@ async function peerTransferBrowser (node, name, warmup, fileSet, version) {
     warmup: 'off',
     file: filePath,
     meta: { version: version },
-    description: 'Cat file (websocket, mplex)',
+    description: `Cat file ${description}`,
     file_set: fileSet,
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }
