@@ -20,7 +20,7 @@ const playbookPath = path.join(__dirname, '../infrastructure/playbooks/benchmark
 const HOME = process.env.HOME || process.env.USERPROFILE
 const keyfile = path.join(HOME, '.ssh', 'id_rsa')
 const memorySuffix = '_memory'
-
+const cpuSuffix = '_cpu'
 const ipfsAddress = process.env.IPFS_ADDRESS || '/dnsaddr/cluster.ipfs.io'
 const ipfsUser = process.env.IPFS_USER || 'ipfsbenchmarks'
 const ipfsPassword = process.env.IPFS_PASSWORD || false
@@ -140,6 +140,25 @@ const config = {
           'sha',
           'nightly'
         ]
+      },
+      {
+        measurement: `${tests[0].measurement}${cpuSuffix}`,
+        fields: {
+          cpu: Influx.FieldType.INTEGER,
+          ipfs_sha: Influx.FieldType.STRING
+        },
+        tags: [
+          'warmup',
+          'commit',
+          'project',
+          'file_set',
+          'branch',
+          'guid',
+          'version',
+          'repo',
+          'sha',
+          'nightly'
+        ]
       }
     ]
   },
@@ -153,7 +172,8 @@ const config = {
     tests: tests,
     cleanup: `rm -Rf ${configBenchmarks.tmpOut}/*`,
     measurements: {
-      memory: memorySuffix
+      memory: memorySuffix,
+      cpu: cpuSuffix
     }
   },
   ipfs: {

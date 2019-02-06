@@ -55,6 +55,22 @@ const writePoints = (data) => {
       fields: { memory: point.memory, ipfs_sha: point.meta.sha || 'no upload' },
       timestamp: timeStamp
     })
+    payload.push({
+      measurement: `${point.name}${config.benchmarks.measurements.cpu}`,
+      tags: { warmup: point.warmup || 'tbd',
+        commit: point.meta.commit || 'tbd',
+        project: point.meta.project || 'tbd',
+        file_set: point.file_set || 'tbd',
+        version: point.meta.version.version || 'tbd',
+        repo: point.meta.version.repo || 'tbd',
+        guid: point.meta.guid || 'tbd',
+        sha: point.meta.sha || 'tbd',
+        branch: point.meta.branch || 'tbd',
+        nightly: point.meta.nightly || false
+      },
+      fields: { cpu: point.cpu, ipfs_sha: point.meta.sha || 'no upload' },
+      timestamp: timeStamp
+    })
   }
   influx.writePoints(payload)
 }
