@@ -50,28 +50,56 @@ const testAbstracts = [
     file: 'local-transfer.js -t ws -m spdy -e secio'
   },
   {
-    name: 'unixFsAdd',
-    file: 'local-add.js'
+    name: 'unixFsAdd_balanced',
+    file: 'local-add.js -s balanced'
   },
   {
-    name: 'unixFsAddTrickle',
-    file: 'local-add.js trickle'
+    name: 'unixFsAdd_trickle',
+    file: 'local-add.js -s trickle'
   },
   {
     name: 'localExtract',
     file: 'local-extract.js'
   },
   {
-    name: 'multiPeerTransfer',
-    file: 'multi-peer-transfer.js'
+    name: 'multiPeerTransfer_tcp_mplex',
+    file: 'multi-peer-transfer.js -t tcp -m mplex'
   },
   {
-    name: 'addMultiKb',
-    file: 'add-multi-kb.js'
+    name: 'multiPeerTransfer_ws_mplex',
+    file: 'multi-peer-transfer.js -t ws -m mplex'
   },
   {
-    name: 'addMultiKbTrickle',
-    file: 'add-multi-kb.js trickle'
+    name: 'multiPeerTransfer_tcp_mplex_secio',
+    file: 'multi-peer-transfer.js -t tcp -m mplex -e secio'
+  },
+  {
+    name: 'multiPeerTransfer_ws_mplex_secio',
+    file: 'multi-peer-transfer.js -t ws -m mplex -e secio'
+  },
+  {
+    name: 'multiPeerTransfer_tcp_spdy',
+    file: 'multi-peer-transfer.js -t tcp -m spdy'
+  },
+  {
+    name: 'multiPeerTransfer_ws_spdy',
+    file: 'multi-peer-transfer.js -t ws -m spdy'
+  },
+  {
+    name: 'multiPeerTransfer_tcp_spdy_secio',
+    file: 'multi-peer-transfer.js -t tcp -m spdy -e secio'
+  },
+  {
+    name: 'multiPeerTransfer_ws_spdy_secio',
+    file: 'multi-peer-transfer.js -t ws -m spdy -e secio'
+  },
+  {
+    name: 'addMultiKb_balanced',
+    file: 'add-multi-kb -s balanced'
+  },
+  {
+    name: 'addMultiKb_trickle',
+    file: 'add-multi-kb.js -s trickle'
   },
   {
     name: 'initializeNodeBrowser',
@@ -88,22 +116,6 @@ const testAbstracts = [
   {
     name: 'unixFsAddGo',
     file: 'local-add.go.js'
-  },
-  {
-    name: 'extractJs2Go',
-    file: 'extract-js2.go.js'
-  },
-  {
-    name: 'extractGo2JsWs',
-    file: 'extract-go2.js -t ws'
-  },
-  {
-    name: 'extractJs2GoWs',
-    file: 'extract-js2.go.js -t ws'
-  },
-  {
-    name: 'extractGo2Js',
-    file: 'extract-go2.js'
   },
   {
     name: 'peerTransferBrowser',

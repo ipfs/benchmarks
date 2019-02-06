@@ -4,14 +4,28 @@ const fs = require('fs')
 const { build } = require('./schema/results')
 const { file } = require('./lib/fixtures')
 const run = require('./lib/runner')
+const { description, strategy } = require('./config').parseParams()
 
+/**
+ * Add many small files benchmark using IPFS api add.
+ *
+ * @async
+ * @function addMultiKb
+ * @param {array} peerArray - An array of IPFS peers used during the test.
+ * @param {string} name - Name of the test used as sending results to the file with same name and data point in dashboard.
+ * @param {boolean} warmup - Not implemented.
+ * @param {string} fileSet - Describes file or list of files used for the test.
+ * @param {string} version - Version of IPFS used in benchmark.
+ * @return {Promise<Object>} The data from the benchamrk
+ */
 async function addMultiKb (node, name, warmup, fileSet, version) {
   const fileArr = await file(fileSet)
+  console.log(` Adding files using strategy ${strategy}`)
   const start = process.hrtime()
   const peer = node[0]
-  const strategy = process.argv[2] === 'trickle' ? 'trickle' : 'balanced'
+
   // output file and dashboard name will match trategy.  default is balanced
-  name = strategy === 'trickle' ? `${name}Trickle` : name
+
   for (var i = 0, len = fileArr.length; i < len; i++) {
     const fileStream = fs.createReadStream(fileArr[i])
     await peer.add(fileStream, { strategy: strategy })
@@ -25,7 +39,7 @@ async function addMultiKb (node, name, warmup, fileSet, version) {
     warmup: warmup,
     file: fileSet,
     meta: { version: version },
-    description: `Add many files (${strategy})`,
+    description: `Add many small files ${description}`,
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }
