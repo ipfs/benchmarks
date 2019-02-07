@@ -113,7 +113,7 @@
     "FilestoreEnabled": false,
     "UrlstoreEnabled": false,
     "ShardingEnabled": false,
-    "Libp2pStreamMounting": false,
+    "Libp2pStreamMounting": true,
     "P2pHttpProxy": false,
     "QUIC": false
   }

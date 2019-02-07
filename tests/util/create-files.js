@@ -2,6 +2,13 @@
 
 const { generateFiles, verifyTestFiles } = require('../lib/fixtures')
 
+/**
+ * This utlilty will verify or create files needed for the tests.
+ * The config is at ../lib/fixtures.file
+ *
+ * @async
+ * @function verifyAndCreateFiles
+ */
 const verifyAndCreateFiles = async () => {
   const valid = await verifyTestFiles()
   if (!valid) {
