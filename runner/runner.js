@@ -82,9 +82,14 @@ const run = async (params) => {
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(arrResult, null, 2))
       if (arrResult.length) {
+        let objMeta = {}
         if (params.nightly) {
-          enrichResultsMetas(arrResult, {nightly: true})
+          objMeta.nightly = true
         }
+        if (params.tag) {
+          objMeta.tag = params.tag
+        }
+        enrichResultsMetas(arrResult, objMeta)
         results.push(arrResult)
       } else {
         config.log.info(`Skipping empty result array: ${arrResult}`)
