@@ -114,8 +114,8 @@ const testAbstracts = [
     file: 'add-multi-kb.browser.js -s balanced'
   },
   {
-    name: 'unixFsAddGo',
-    file: 'local-add.go.js'
+    name: 'unixFsAddGo_balanced',
+    file: 'local-add.go.js -s balanced'
   },
   {
     name: 'peerTransferBrowser_ws_mplex',

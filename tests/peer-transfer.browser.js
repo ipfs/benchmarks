@@ -6,8 +6,8 @@ const { file } = require('./lib/fixtures')
 const { description } = require('./config').parseParams()
 
 /**
- * Retrive file between peers in the browser
- *
+ * Retrive file between two peers in the browser.
+ * js0 -> js1 - A test between two JS IPFS node
  * @async
  * @function peerTransferBrowser
  * @param {array} browser - An array of headless browsers that contain IPFS tests.
@@ -33,7 +33,7 @@ async function peerTransferBrowser (browser, name, warmup, fileSet, version) {
     warmup: 'off',
     file: filePath,
     meta: { version: version },
-    description: `Cat file ${description}`,
+    description: `Cat file ${description} js0 -> js1`,
     file_set: fileSet,
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }
