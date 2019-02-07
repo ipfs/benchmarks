@@ -19,7 +19,6 @@ async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
     await nodeFactory.add('go')
   } catch (e) {
     console.log(e)
-    retur
   }
   const filePath = await file(fileSet)
   const peer = ipfs[0]
@@ -28,8 +27,8 @@ async function extractGo2Js (ipfs, name, warmup, fileSet, version) {
   const protocal = argv.t === 'ws' ? 'ws' : 'tcp'
   // output file and dashboard name will match trategy.  default is balanced
   name = protocal === 'ws' ? `${name}Ws` : name
-  const id = protocal === 'ws' ? 2 : 0
-  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[id]} > /dev/null`
+  console.log(peerId)
+  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[0]} > /dev/null`
   try {
     await execute(command)
   } catch (e) {

@@ -13,6 +13,14 @@
       "NoAnnounce": [],
       "API": "/ip4/127.0.0.1/tcp/5002",
       "Gateway": "/ip4/127.0.0.1/tcp/8081"
+    },
+    "Experimental": {
+      "FilestoreEnabled": false,
+      "UrlstoreEnabled": false,
+      "ShardingEnabled": false,
+      "Libp2pStreamMounting": true,
+      "P2pHttpProxy": false,
+      "QUIC": false
     }
   },
   {

@@ -33,12 +33,14 @@ async function runner (test, nodeCount = 2, type = 'nodejs', options) {
   } catch (err) {
     if (err.code === 'ENOENT') {
       console.log('ERROR -- Run "npm run generateFiles" then run test again.')
-      nodeFactory.stop()
+      await nodeFactory.stop(type)
       clean.peerRepos()
       process.exit(1)
     }
     console.log(err)
     console.log(err.message)
+    await nodeFactory.stop(type)
+    clean.peerRepos()
     process.exit(1)
   }
   store(arrResults)
