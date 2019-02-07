@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1549558408845,
+  "id": 8,
+  "iteration": 1549558529330,
   "links": [],
   "panels": [
     {
@@ -65,7 +65,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "",
+          "alias": "$m",
           "groupBy": [
             {
               "params": [
@@ -335,8 +335,8 @@
         "allValue": "",
         "current": {
           "tags": [],
-          "text": "true",
-          "value": "true"
+          "text": "All",
+          "value": "$__all"
         },
         "hide": 0,
         "includeAll": true,
@@ -345,12 +345,12 @@
         "name": "nightly",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "All",
             "value": "$__all"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "true",
             "value": "true"
           },
@@ -367,6 +367,7 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "All",
           "value": [
             "$__all"
@@ -460,7 +461,6 @@
       {
         "allValue": "*",
         "current": {
-          "tags": [],
           "text": "All",
           "value": [
             "$__all"
@@ -518,5 +518,5 @@
   "timezone": "utc",
   "title": "IPFS benchmarks",
   "uid": "HCaaM78mk",
-  "version": 11
+  "version": 2
 }
