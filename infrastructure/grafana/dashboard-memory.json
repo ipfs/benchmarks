@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 6,
-  "iteration": 1549286552940,
+  "iteration": 1549528974393,
   "links": [],
   "panels": [
     {
@@ -115,6 +115,12 @@
               "key": "commit",
               "operator": "=~",
               "value": "/$commit/"
+            },
+            {
+              "condition": "AND",
+              "key": "nightly",
+              "operator": "=~",
+              "value": "/^$nightly$/"
             }
           ]
         }
@@ -285,6 +291,39 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "nightly",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "true",
+            "value": "true"
+          },
+          {
+            "selected": false,
+            "text": "false",
+            "value": "false"
+          }
+        ],
+        "query": "true,false",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
           "text": "All",
           "value": [
             "$__all"
@@ -335,8 +374,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "OneMBFile",
-          "value": "OneMBFile"
+          "text": "One64MBFile",
+          "value": "One64MBFile"
         },
         "datasource": "influxdb",
         "hide": 0,
@@ -408,5 +447,5 @@
   "timezone": "utc",
   "title": "IPFS benchmarks Memory",
   "uid": "wGblme_mz",
-  "version": 2
+  "version": 3
 }
