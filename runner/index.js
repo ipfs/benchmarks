@@ -51,7 +51,7 @@ fastify.register(require('fastify-swagger'), {
       description: 'Running benchmkarks for IPFS projects. For more documentation see https://github.com/ipfs/benchmarks',
       version: '1.0.0'
     },
-    host: config.server.hostname,
+    host: `${config.server.hostname}:${config.server.port}${config.server.hostname === 'localhost' ? '' : '/runner'}`,
     schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json']
