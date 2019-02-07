@@ -3,6 +3,18 @@
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
 
+/**
+ * Initialize an IPFS peer benchmark test in the browser.
+ * js0 -> js0 - A local test from one JS IPFS node to the same node
+ * @async
+ * @function unixFsAddBrowser
+ * @param {array} browser - An array of headless browsers that contain IPFS tests.
+ * @param {string} name - Name of the test used as sending results to the file with same name and data point in dashboard.
+ * @param {boolean} warmup - Not implemented.
+ * @param {string} fileSet - Describes file or list of files used for the test.
+ * @param {string} version - Version of IPFS used in benchmark.
+ * @return {Promise<Object>} The data from the benchamrk
+ */
 async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
   const page = node[0].page
   await page.click('.initializeNode')
@@ -15,7 +27,7 @@ async function initializeNodeBrowser (node, name, warmup, fileSet, version) {
     warmup: 'off',
     file: '',
     meta: { version: version },
-    description: 'Node initialization',
+    description: 'Node initialization (local) js0 -> js0',
     file_set: 'none',
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }

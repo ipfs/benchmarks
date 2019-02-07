@@ -7,7 +7,7 @@ const { description, strategy } = require('./config').parseParams()
 
 /**
  * Add file benchmark using IPFS api add in the browser.
- *
+ * js0 -> js0 - A local test from one JS IPFS node to the same node
  * @async
  * @function unixFsAddBrowser
  * @param {array} browser - An array of headless browsers that contain IPFS tests.
@@ -33,7 +33,7 @@ async function unixFsAddBrowser (browser, name, warmup, fileSet, version) {
     warmup: 'off',
     file: filePath,
     meta: { version: version },
-    description: `Add file ${description}`,
+    description: `Add file ${description} js0 -> js0`,
     file_set: fileSet,
     duration: { s: parseInt(timeS.split(':')[1]),
       ms: parseInt(timeMs.split(':')[1]) / 1000000 }

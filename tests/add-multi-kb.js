@@ -8,7 +8,7 @@ const { description, strategy } = require('./config').parseParams()
 
 /**
  * Add many small files benchmark using IPFS api add.
- *
+ * js0 -> js0 - A local test from one JS IPFS node to the same node
  * @async
  * @function addMultiKb
  * @param {array} peerArray - An array of IPFS peers used during the test.
@@ -39,7 +39,7 @@ async function addMultiKb (node, name, warmup, fileSet, version) {
     warmup: warmup,
     file: fileSet,
     meta: { version: version },
-    description: `Add many small files ${description}`,
+    description: `Add many small files ${description} js0 -> js0`,
     file_set: fileSet,
     duration: { s: end[0],
       ms: end[1] / 1000000 }

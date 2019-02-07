@@ -9,7 +9,7 @@ const { description } = require('./config').parseParams()
 
 /**
  * With the same file inserted into 4 peers, this test captures the time for a 5th peer to retrieve file from swarm using catReadableStream.
- *
+ * js01234 -> js5 - A test from multiple JS IPFS nodes to a single JS IPFS node
  * @async
  * @function multiPeerTransfer
  * @param {array} peerArray - An array of IPFS peers used during the test.

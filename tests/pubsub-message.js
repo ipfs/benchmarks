@@ -2,13 +2,24 @@
 
 const { build } = require('./schema/results')
 const run = require('./lib/runner')
-
 const promiseRetry = require('promise-retry')
 
-async function pubsubMessage (node, name, warmup, fileSet, version) {
+/**
+ * Pubsub publish & receive a message
+ * js0 -> js1 - A test between two JS IPFS node
+ * @async
+ * @function pubsubMessage
+ * @param {array} peerArray - An array of IPFS peers used during the test.
+ * @param {string} name - Name of the test used as sending results to the file with same name and data point in dashboard.
+ * @param {boolean} warmup - Not implemented.
+ * @param {string} fileSet - Describes file or list of files used for the test.
+ * @param {string} version - Version of IPFS used in benchmark.
+ * @return {Promise<Object>} The data from the benchamrk
+ */
+async function pubsubMessage (peerArray, name, warmup, fileSet, version) {
   const topic = 'ipfs-benchmark'
-  const peerA = node[0]
-  const peerB = node[1]
+  const peerA = peerArray[0]
+  const peerB = peerArray[1]
 
   // connect peers
   const peerAId = await peerA.id()
@@ -23,11 +34,11 @@ async function pubsubMessage (node, name, warmup, fileSet, version) {
     peerB.pubsub.subscribe(topic, () => {
       const end = process.hrtime(start)
       resolve(build({
-        name: name,
+        name: 'pubsubMessage',
         warmup: warmup,
         file: 'none',
         meta: { version: version },
-        description: 'Pubsub publish & receive a message',
+        description: 'Pubsub publish & receive a message.  js0 -> js1',
         file_set: 'none',
         duration: {
           s: end[0],

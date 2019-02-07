@@ -8,7 +8,20 @@ const { build } = require('./schema/results')
 const run = require('./lib/runner')
 const conf = { tmpPath: os.tmpdir() }
 
-const unixFsAddGo = async (node, name, warmup, fileSet, version) => {
+/**
+ * Add file benchmark using IPFS api add using the go daemon.
+ * go0 -> go0 - A local test from one JS IPFS node to the same nod
+ * @async
+ * @function unixFsAdd
+ * @param {array} peerArray - An array of IPFS peers used during the test.
+ * @param {string} name - Name of the test used as sending results to the file with same name and data point in dashboard.
+ * @param {boolean} warmup - Not implemented.
+ * @param {string} fileSet - Describes file or list of files used for the test.
+ * @param {string} version - Version of IPFS used in benchmark.
+ * @return {Promise<Object>} The data from the benchamrk
+ */
+
+const unixFsAddGo = async (peerArray, name, warmup, fileSet, version) => {
   const filePath = await file(fileSet)
   const start = process.hrtime()
   let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs add ${filePath} > /dev/null`
@@ -20,7 +33,7 @@ const unixFsAddGo = async (node, name, warmup, fileSet, version) => {
     file_set: fileSet,
     file: filePath,
     meta: { version: version, project: 'go-ipfs' },
-    description: 'Add files to go node',
+    description: 'Add files (balanced). go0 -> go0',
     duration: {
       s: end[0],
       ms: end[1] / 1000000

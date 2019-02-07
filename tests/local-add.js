@@ -8,7 +8,7 @@ const { description, strategy } = require('./config').parseParams()
 
 /**
  * Add file benchmark using IPFS api add.
- *
+ * js0 -> js0 - A local test from one JS IPFS node to the same nod
  * @async
  * @function unixFsAdd
  * @param {array} peerArray - An array of IPFS peers used during the test.
@@ -32,7 +32,7 @@ async function unixFsAdd (peerArray, name, warmup, fileSet, version) {
     warmup: warmup,
     file: filePath,
     meta: { version: version },
-    description: `Add file ${description}`,
+    description: `Add file ${description} js0 -> js0`,
     file_set: fileSet,
     duration: {
       s: end[0],
