@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1549529277467,
+  "id": 4,
+  "iteration": 1549529113205,
   "links": [],
   "panels": [
     {
@@ -88,7 +88,7 @@
             [
               {
                 "params": [
-                  "cpu"
+                  "duration"
                 ],
                 "type": "field"
               },
@@ -289,10 +289,11 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
+        "allValue": "",
         "current": {
-          "text": "true",
-          "value": "true"
+          "tags": [],
+          "text": "All",
+          "value": "$__all"
         },
         "hide": 0,
         "includeAll": true,
@@ -301,12 +302,12 @@
         "name": "nightly",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "All",
             "value": "$__all"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "true",
             "value": "true"
           },
@@ -415,7 +416,7 @@
     ]
   },
   "time": {
-    "from": "now-30d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -444,7 +445,7 @@
     ]
   },
   "timezone": "utc",
-  "title": "IPFS benchmarks CPU",
-  "uid": "wGblme_cp",
-  "version": 3
+  "title": "IPFS benchmarks",
+  "uid": "HCaaM78mk",
+  "version": 17
 }

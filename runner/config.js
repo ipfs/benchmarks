@@ -91,6 +91,7 @@ const config = {
     port: 9000,
     apikey: process.env.API_KEY || 'supersecret',
     hostname: hostname,
+    schedule: process.env.RUN_NIGHTLY || true,
     api: {
       clinic: {
         operations: configBenchmarks.clinicOperations,
@@ -121,7 +122,8 @@ const config = {
           'version',
           'repo',
           'sha',
-          'nightly'
+          'nightly',
+          'tag'
         ]
       },
       {
@@ -140,7 +142,8 @@ const config = {
           'version',
           'repo',
           'sha',
-          'nightly'
+          'nightly',
+          'tag'
         ]
       },
       {
