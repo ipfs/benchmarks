@@ -8,6 +8,15 @@ const addBody = {
       type: 'string',
       description: 'Commit of the js-IPFS library'
     },
+    nightly: {
+      type: 'boolean',
+      default: false,
+      description: 'Set the "nightly" flag in meta data'
+    },
+    tag: {
+      type: 'string',
+      description: 'arbitrary metsdata that gets propagated to the metrics DB as "tag"'
+    },
     benchmarks: {
       type: 'object',
       properties: {
@@ -60,6 +69,7 @@ const addResponse = {
       },
       remote: { type: 'boolean' },
       nightly: { type: 'boolean' },
+      tag: { type: 'string' },
       id: { type: 'integer' }
     }
   }

@@ -31,17 +31,23 @@ const stopFn = (cb) => {
 
 const queue = new Queue(stopFn, runner)
 
-// run this every day at midnight, at least
-schedule.scheduleJob('0 0 * * *', function () {
-  queue.add({
-    commit: '',
-    clinic: {
-      enabled: true
-    },
-    remote: true,
-    nightly: true
+if (config.server.schedule) {
+  // run this every day at midnight, at least
+  const cron = '0 0 * * *'
+  config.log.info(`installing scheduled run with this schema: [${cron}]`)
+  schedule.scheduleJob(cron, function () {
+    queue.add({
+      commit: '',
+      clinic: {
+        enabled: true
+      },
+      remote: true,
+      nightly: true
+    })
   })
-})
+} else {
+  config.log.info(`NOT installing scheduled run`)
+}
 
 fastify.register(require('fastify-swagger'), {
   routePrefix: '/docs',
@@ -79,7 +85,8 @@ fastify.route({
       clinic: request.body.clinic,
       benchmarks: request.body.benchmarks,
       remote: true,
-      nightly: true
+      nightly: request.body.nightly,
+      tag: request.body.tag
     })
     return task
   }
