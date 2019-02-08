@@ -103,7 +103,7 @@ fastify.route({
     response: 'getResponse#'
   },
   handler: async (request, reply) => {
-    let status = queue.getStatus()
+    let status = Object.values(queue.getStatus())
     fastify.log.info('getting queue status', status)
     return status
   }
