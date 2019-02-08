@@ -21,6 +21,7 @@
   - { path: '/data/influxdb' }
   - { path: '/data/grafana', uid: 472, guid: docker }
   - { path: '/data/ipfs-db' }
+  - { path: '/data/tmp' }
 - name: install ansible
   pip:
     name: ansible
