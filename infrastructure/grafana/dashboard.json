@@ -12,11 +12,12 @@
       }
     ]
   },
+  "description": "Show duration, memory use or cpu use for all benchmarks",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1549286648780,
+  "id": 8,
+  "iteration": 1549558529330,
   "links": [],
   "panels": [
     {
@@ -64,7 +65,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "",
+          "alias": "$m",
           "groupBy": [
             {
               "params": [
@@ -79,22 +80,25 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "/^$Measurement$/",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT distinct(\"duration\") FROM /^$Measurement$/ WHERE (\"file_set\" =~ /^$FileSet$/ AND \"warmup\" =~ /^$Warmup$/ AND \"commit\" =~ /$commit/ AND \"nightly\" =~ /^$nightly$/) AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "duration"
+                  "$Metric"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "mean"
               }
             ]
           ],
@@ -115,6 +119,18 @@
               "key": "commit",
               "operator": "=~",
               "value": "/$commit/"
+            },
+            {
+              "condition": "AND",
+              "key": "nightly",
+              "operator": "=~",
+              "value": "/^$nightly$/"
+            },
+            {
+              "condition": "AND",
+              "key": "tag",
+              "operator": "=~",
+              "value": "/^$tag$/"
             }
           ]
         }
@@ -285,6 +301,73 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
+          "text": "duration",
+          "value": "duration"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "Metric",
+        "options": [
+          {
+            "selected": true,
+            "text": "duration",
+            "value": "duration"
+          },
+          {
+            "selected": false,
+            "text": "cpu",
+            "value": "cpu"
+          },
+          {
+            "selected": false,
+            "text": "memory",
+            "value": "memory"
+          }
+        ],
+        "query": "duration,cpu,memory",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "nightly",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "true",
+            "value": "true"
+          },
+          {
+            "selected": false,
+            "text": "false",
+            "value": "false"
+          }
+        ],
+        "query": "true,false",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
           "text": "All",
           "value": [
             "$__all"
@@ -366,6 +449,7 @@
         "name": "commit",
         "options": [
           {
+            "selected": true,
             "text": "",
             "value": ""
           }
@@ -373,6 +457,32 @@
         "query": "",
         "skipUrlSync": false,
         "type": "textbox"
+      },
+      {
+        "allValue": "*",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "tag",
+        "options": [],
+        "query": "show TAG values WITH KEY = \"tag\"",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -408,5 +518,5 @@
   "timezone": "utc",
   "title": "IPFS benchmarks",
   "uid": "HCaaM78mk",
-  "version": 13
+  "version": 2
 }
