@@ -50,11 +50,11 @@ const run = async (params) => {
   config.stage = params.remote ? 'remote' : 'local'
   let results = []
   const now = Date.now()
-  const targetDir = `${os.tmpdir()}/${now}`
+  const targetDir = `${config.dataDir}/${now}`
   config.log.info(`Target Directory: ${targetDir}`)
   try {
     await mkDir(`${targetDir}`, { recursive: true })
-    config.log.info('tmpDir:', targetDir)
+    config.log.info('targetDir:', targetDir)
   } catch (e) {
     throw (e)
   }
@@ -120,18 +120,20 @@ const run = async (params) => {
       config.log.info(`not running clinic: default [${config.benchmarks.clinic}] param [${params.clinic.enabled}]`)
     }
   }
+  let isUploaded = false
+  let sha
   try {
     try {
       config.log.info(`Copying logs from ${config.logFile} to ${targetDir}/stdout.log`)
       const logs = await fsReadfile(config.logFile)
       await writeFile(`${targetDir}/stdout.log`, logs)
     } catch (err) {
-      config.log.error(err)
+      config.log.error(err, 'Error copying logs')
     }
     config.log.info(`Uploading ${targetDir} to IPFS network`)
     const storeOutput = await ipfs.store(targetDir)
     // config.log.debug(storeOutput)
-    const sha = ipfs.parse(storeOutput, now)
+    sha = ipfs.parse(storeOutput, now)
     config.log.info(`sha: ${sha}`)
     // config.log.debug(results)
     results.map((arrOfResultObjects) => {
@@ -142,6 +144,7 @@ const run = async (params) => {
         return obj
       })
     })
+    isUploaded = true
   } catch (e) {
     config.log.error({ e }, 'Error storing on IPFS network')
   }
@@ -157,7 +160,12 @@ const run = async (params) => {
   // cleanup tmpout
   try {
     // cleanup tmpout
-    await rmfr(targetDir)
+    if (isUploaded) {
+      await rmfr(targetDir)
+      config.log.info(`Files are uploaded to [https://cloudflare-ipfs.com/ipfs/${sha}]`)
+    } else {
+      config.log.error(`Files haven't been uploaded, not removing them from [${targetDir}]`)
+    }
   } catch (e) {
     throw e
   }
