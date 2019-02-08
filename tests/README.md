@@ -32,12 +32,26 @@ Use env variable FILESET to run test just against that specific set of file(s). 
 ```bash
 > FILESET="One64MBFile" node local-add
 ```
+#### FILESET utility
+There is a file utility used to verify and create the files needed for the tests.  We have a default set of files that are used where the name describes the size and count of filesets.  Example, `One64MBFile` is 1 64 MB file.  There is a config in [lib/fixutres](./lib/fixtures.js) called test.  This can be modified the create a custom set of files.  Below is the schema:
+
+```
+{ size: KB, name: 'hundred1kbfile', count: 100 }
+```
+- size: size of file
+- name: describes the files set.  A fileset can be a single file or a directory of many files
+- count: optional.  If used, this will create a directory of test files used in the test.  [Here is an exanple of how a directory fileset is used](add-multi-kb.js)
+
+
+At the start of each test, `npm run generateFiles` is ran to verify the files are created or created them if missing ( unless VERIFYOFF is used.  See VERIFYOFF section below).  If a fileset used in a test and it is not created, an error with description `ERROR -- Run "npm run generateFiles" then run test again.` is thrown.  If this happens, verify the config in fixtures is complete and then run `npm run generateFiles` 
 
 ### VERIFYOFF
-Use env variable VERIFYOFF=true to skip the pre-generation of test files.
+Use env variable VERIFYOFF=true to skip the pre-generation of test files.  
 ```js
 > VERIFYOFF=true node local-add
 ```
+
+
 
 ## Use case coverage
 
