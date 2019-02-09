@@ -1,0 +1,22 @@
+---
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/runner.log
+    - /var/log/runner.error.log
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+setup.template.settings:
+  index.number_of_shards: 3
+setup.kibana:
+output.logstash:
+  hosts: ["logstash.locotorp.info:5045"]
+  ssl.certificate_authorities: ["/etc/filebeat/ca.crt"]
+processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+  - decode_json_fields:
+     fields: ["message"]
+     target: ""

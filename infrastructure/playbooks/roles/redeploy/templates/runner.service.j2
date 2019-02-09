@@ -7,12 +7,13 @@ ExecStart=/bin/bash -c "IPFS_PASSWORD=$(cat /etc/pwd.txt) /usr/bin/node {{ remot
 User={{ remote_user }}
 Restart=always
 Environment="STAGE=remote"
-Environment="LOG_PRETTY=true"
 Environment="BENCHMARK_USER={{ remote_user }}"
 Environment="LOGLEVEL=debug"
 Environment="CLINIC=true"
 Environment="HOSTNAME=benchmarks.ipfs.team"
 Environment="DATADIR=/data/tmp"
 EnvironmentFile=-/etc/environment
+StandardOutput=file:/var/log/runner.log
+StandardError=file:/var/log/runner.error.log
 [Install]
 WantedBy=multi-user.target
