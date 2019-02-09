@@ -13,6 +13,10 @@
   - setup:
   tasks:
   - import_role:
+      name: logging
+    become: yes
+    tags: ["prepare","logging"]
+  - import_role:
       name: security
     become: yes
     tags: ["prepare","security"]
