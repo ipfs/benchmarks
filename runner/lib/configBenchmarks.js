@@ -182,16 +182,18 @@ const constructTests = (loc, doClinic, testNames) => {
     if (typeof testAbstract === 'string') {
       testAbstract = _.find(testAbstracts, { name: testAbstract })
     }
-    let test = {
-      name: testAbstract.name,
-      benchmark: getCommand(testAbstract, loc)
+    if (testAbstract) {
+      let test = {
+        name: testAbstract.name,
+        benchmark: getCommand(testAbstract, loc)
+      }
+      if (doClinic) {
+        test.doctor = getClinicCommands(testAbstract, 'doctor', loc)
+        test.flame = getClinicCommands(testAbstract, 'flame', loc)
+        test.bubbleProf = getClinicCommands(testAbstract, 'bubbleProf', loc)
+      }
+      tests.push(test)
     }
-    if (doClinic) {
-      test.doctor = getClinicCommands(testAbstract, 'doctor', loc)
-      test.flame = getClinicCommands(testAbstract, 'flame', loc)
-      test.bubbleProf = getClinicCommands(testAbstract, 'bubbleProf', loc)
-    }
-    tests.push(test)
   }
   return tests
 }

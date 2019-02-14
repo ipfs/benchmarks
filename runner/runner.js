@@ -67,9 +67,13 @@ const run = async (params) => {
   }
   let benchmarks
   if (params.benchmarks && params.benchmarks.tests && params.benchmarks.tests.length) {
-    config.log.info(`Running benchmarks from parameters: ${JSON.stringify(params.benchmarks.tests)}`)
+    const testsJson = JSON.stringify(params.benchmarks.tests)
+    config.log.info(`Running benchmarks from parameters: ${testsJson}`)
     benchmarks = configBenchmarks.constructTests(config.stage, params.clinic.enabled, params.benchmarks.tests)
-    console.log(benchmarks)
+    config.log.error(`The following benchmarks were constructed ${JSON.stringify(benchmarks)}`)
+    if (!benchmarks) {
+      config.log.error(`no valid benchmarks found in ${testsJson}`)
+    }
   } else {
     config.log.info('Running ALL default benchmarks')
     benchmarks = config.benchmarks.tests
