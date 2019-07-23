@@ -1,9 +1,9 @@
  # js-ipfs Benchmarks [![CircleCI](https://circleci.com/gh/ipfs/benchmarks.svg?style=svg)](https://circleci.com/gh/ipfs/benchmarks)
 
-
 This is a set of benchmarks tests to track [js-ipfs](https://github.com/ipfs/js-ipfs) Benchmarks in a Grafana [Dashboard](https://benchmarks.ipfs.team).
 
 ## Purpose
+
 The IPFS team needs a historical view of various performance metrics around `js-ipfs`
 and how it compares to the reference implementation written in `go`. This project
 implements benchmark tests for `js-ipfs` and publishes the results in a dashboard.
@@ -34,6 +34,7 @@ submitting code to the community.
 * [Introduction to Clinic.js in the context of IPFS](https://github.com/ipfs/team-mgmt/issues/796) [Recording](https://nearform.zoom.us/recording/play/A-4Vn3jA5aeK9BCPwKCA44IfwpLZePIBlzvD1bUYF7JqTXnG2JptVaLEVcRUmQ1i)
 
 ## Benchmarks on the web
+
 The dashboard is available at [https://benchmarks.ipfs.team](https://benchmarks.ipfs.team) and can be viewed without a user account.
 A `Continuous Integration` server can trigger benchmark runs using the endpoint exposed on [https://benchmarks.ipfs.team/runner](https://benchmarks.ipfs.team/runner). A commit from the [js-ipfs](https://github.com/ipfs/js-ipfs) repository can be supplied to run the benchmarks against. An api key is also required to be able to trigger a run. Please check [Runner](runner/README.md) docs on how to configure an api key for the runner. An example invocation using curl is provided below.
 
@@ -43,11 +44,14 @@ A `Continuous Integration` server can trigger benchmark runs using the endpoint 
   -H "x-ipfs-benchmarks-api-key: <api-key>" \
   https://benchmarks.ipfs.team/runner
 ```
+
 The response provides links to the output produced by the benchmark tests:
+
 ```
 TBD
 ```
-For more details about the dashboard see the [Grafana](infrastructure/grafana/README.md) doc
+
+For more details about the dashboard see the [Grafana](infrastructure/grafana/README.md) doc.
 
 ## Quickstart
 
@@ -60,18 +64,23 @@ Clone Benchmark tests and install:
 >  cd ../tests
 >  npm install
 ```
+
 ### Generate test files
-The files are defined in (fixtures)[tests/lib/fixtures.js]
+
+The files are defined in [fixtures](tests/lib/fixtures.js).
 
 ```bash
 > npm run generateFiles
 ```
+
 ### Add test files
 
 Here is the file object for a single test:
+
 ```js
 { size: KB, name: 'OneKBFile' }
 ```
+
 To add multiple test files add a count property:
 
 ```js
@@ -80,35 +89,46 @@ To add multiple test files add a count property:
 
 ### Run tests locally
 
-From the benchmark/tests directory:
+From the `benchmarks/tests` directory:
+
 ```bash
 > node local-add
-> node loca-extract
+> node local-extract
 > node local-transfer
 ```
 
 Run all benchmarks:
+
 ```bash
 > npm run benchmark
 ```
+
 Create a pre-generated key:
+
 ```bash
 > node lib/create-privateKey
 ```
 
-### FILESET:
-Use env variable FILESET to run test just against that specific set of file(s).  Options of FILESET are define in the config.
+### FILESET
+
+Use env variable `FILESET` to run test just against that specific set of file(s).  Options of `FILESET` are defined in the config.
+
 ```bash
 > FILESET="One64MBFile" node local-add
 ```
 
 ### VERIFYOFF
-Use env variable VERIFYOFF=true to skip the pre-generation of test files.
+
+Use env variable `VERIFYOFF=true` to skip the pre-generation of test files.
+
 ```js
 > VERIFYOFF=true node local-add
 ```
+
 ### Run tests locally on a js-ipfs branch
-Inside the benchmark/tests dir is a script to pull down master branch and install:
+
+Inside the `benchmarks/tests` dir is a script to pull down master branch and install:
+
 ```bash
 > ./getIpfs.sh ../
 ```
@@ -120,12 +140,13 @@ Directory structure now :
 ├──── tests
 ```
 
-
 Run tests against branch
+
 ```bash
-> cd benchamrks/tests
+> cd benchmarks/tests
 > STAGE=local REMOTE=true node local-add
 ```
+
 ### FLAGS
 
 Below is a list of optional flags used by the tests to run a specific strategy or transport module in Libp2p.
@@ -136,11 +157,11 @@ Below is a list of optional flags used by the tests to run a specific strategy o
 
 ### Adding new tests
 
-See (README)[tests/README.md] under test
+See [README](tests/README.md).
 
 ###  Results
 
-Results will be written to out directory under /tests
+Results will be written to out directory under `benchmarks/tests`
 
 * `name`: Name of test
 * `warmup`: Flag for if we warm up db
@@ -148,14 +169,13 @@ Results will be written to out directory under /tests
 * `fileSet`: Set of files to be used in a test
 * `date`: Date of benchmark
 * `file`: Name of file used in benchmark
-* `meta`.`project`: Repo that are benchmarked
-* `meta`.`commit`: Commit used to trigger benchmark
-* `meta`.`version`: Version of js-ipfs
-* `duration`.`s`: The number of seconds for benchmark
-* `duration`.`ms`: The number of millisecs the benchmark took.
-* `cpu`: Information about cpu benchmark was run on.
-* `loadAvg`: The load average of machine.
-
+* `meta.project`: Repo that are benchmarked
+* `meta.commit`: Commit used to trigger benchmark
+* `meta.version`: Version of js-ipfs
+* `duration.s`: The number of seconds for benchmark
+* `duration.ms`: The number of millisecs the benchmark took
+* `cpu`: Information about cpu benchmark was run on
+* `loadAvg`: The load average of machine
 
 ## License
 
