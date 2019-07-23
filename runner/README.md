@@ -1,33 +1,40 @@
-## Runner
-The [runner](../runner/) is the component that kicks off the tests and stores the results in a time series database for visualization. The runner runs as a daemon but can also be run ad-hoc. See below for the differences
+# Runner
 
+The [runner](../runner/) is the component that kicks off the tests and stores the results in a time series database for visualization. The runner runs as a daemon but can also be run ad-hoc. See below for the differences.
 
-### Initial Setup Grafana InfluxDB
+## Initial Setup Grafana InfluxDB
+
 ```bash
 > ./scripts/runLocalEnv.sh up
 ```
+
 Open http://localhost:3000/ in a browser. The default username/password combination is `admin/admin`. You will be asked to change that password after initial login. Setup the datasource with type `influxDB`and use `http://influxdb:8086` as the URL. Next import the dashboard from `infrastructure/grafana/dashboard.json` by hovering over the `+` icon on the left of your screen.
 
 ![Grafana import dashboard](import-hover.png)
 
 * All of the Grafana configuration is stored in a folder adjacent to the this project's folder named `/data/grafana`.
-* The data for influxDB is stored in a folder adjacent to the this project's folder named `/data/influxdb`.
+* The data for influxDB is stored in a folder adjacent to this project's folder named `/data/influxdb`.
 
-### Run dashboard and the `runner` locally and send results to InfluxDB
+## Run dashboard and the `runner` locally and send results to InfluxDB
 
 If you're not running it yet:
+
 ```bash
 > ./scripts/runLocalEnv.sh up
 ```
 
 Keep docker running and in another tab you can start the runner in one of two ways:
-#### Start as a daemon
+
+### Start as a daemon
+
 ```bash
 > LOG_PRETTY=true node runner/index.js
 {"level":30,"time":1543488515841,"msg":"Server listening at http://127.0.0.1:9000","pid":47039,"hostname":"mbpro.local","v":1}
 {"level":30,"time":1543488515843,"msg":"server listening on 9000","pid":47039,"hostname":"mbpro.local","v":1}
 ```
+
 A run can now be triggered by sending a POST to the daemon:
+
 ```bash
 > curl -XPOST -d '{"commit":"adfy3hk"}' \
   -H "Content-Type: application/json" \
@@ -35,7 +42,7 @@ A run can now be triggered by sending a POST to the daemon:
   localhost:9000
 ```
 
-#### Add-hoc run
+### Add-hoc run
 
 ```bash
 > LOG_PRETTY=true node runner/cli.js
@@ -66,6 +73,7 @@ To view the Grafana dashboard: http://localhost:3000/
 Use the default account admin/admin to login
 
 ## Runner configuration
+
 The runner can be configured with environment variables
 
 | name | default | function |
