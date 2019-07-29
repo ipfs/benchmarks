@@ -83,7 +83,7 @@ To add multiple test files add a count property:
 From the benchmark/tests directory:
 ```bash
 > node local-add
-> node loca-extract
+> node local-extract
 > node local-transfer
 ```
 
