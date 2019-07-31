@@ -9,7 +9,7 @@ const { getIpfsCommit, getBranchName } = require('../util/get-commit')
 const schema = FluentSchema()
   .id('ipfs')
   .title('IPFS Benchmarks')
-  .description('IFPS benchmark results')
+  .description('IPFS benchmark results')
   .prop(
     'name',
     FluentSchema()
@@ -77,7 +77,7 @@ const resultsDTO = {
   'meta': {
     'project': 'js-ipfs',
     'commit': 'TBD',
-    'version': 'version of js-ifps'
+    'version': 'version of js-ipfs'
   },
   'duration': {
     's': 0,
