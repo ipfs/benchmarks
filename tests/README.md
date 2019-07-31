@@ -6,7 +6,7 @@
 - Add test for the async function 
 - Call run() with the name of your test as param
 - Add the test name and subtests to the [config/index](config/index.js).
-- Add the test to the runner config (`testAbstracts` array), in order to be available on the dashboard [runner/configBenchmarks.js](../runner/configBenchmarks.js)
+- Add the test to the runner config (`testAbstracts` array), in order to be available on the dashboard [runner/lib/configBenchmarks.js](../runner/lib/configBenchmarks.js)
 
 To Test it:
 
