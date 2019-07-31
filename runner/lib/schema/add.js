@@ -6,7 +6,12 @@ const addBody = {
   properties: {
     commit: {
       type: 'string',
-      description: 'Commit of the js-IPFS library'
+      description: 'Commit to test against'
+    },
+    project: {
+      type: 'string',
+      description: 'js-ipfs or go-ipfs',
+      enum: ['js-ipfs', 'go-ipfs']
     },
     nightly: {
       type: 'boolean',
@@ -42,7 +47,7 @@ const addBody = {
       }
     }
   },
-  required: ['commit']
+  required: ['commit', 'project']
 }
 
 const addResponse = {
