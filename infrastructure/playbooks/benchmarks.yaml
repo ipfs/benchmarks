@@ -56,10 +56,12 @@
         rm go-ipfs_{{go_ipfs_version}}_linux-386.tar.gz && \
         rm -Rf go-ipfs && \
         chmod +x /usr/local/bin/ipfs_{{go_ipfs_version}} && \
-        rm /usr/local/bin/ipfs && \
+        rm -Rf /usr/local/bin/ipfs && \
         ln -s /usr/local/bin/ipfs_{{go_ipfs_version}} /usr/local/bin/ipfs
       args:
-        creates: /usr/local/bin/ipfs_{{go_ipfs_version}}
+        creates:
+          - /usr/local/bin/ipfs_{{go_ipfs_version}}
+          - /usr/local/bin/ipfs
         warn: false
     - file:
         path: ~/ipfs
