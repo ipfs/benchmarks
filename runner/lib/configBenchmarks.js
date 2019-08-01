@@ -176,8 +176,7 @@ const constructTests = (loc, doClinic, testNames) => {
   if (testNames && testNames.length > 0) {
     testItems = testNames
   } else {
-    testItems = [ 'localTransfer_tcp_mplex_secio' ]
-    // testItems = testAbstracts // FIXME: temp hack to speed testing
+    testItems = testAbstracts
   }
   for (let testAbstract of testItems) {
     if (typeof testAbstract === 'string') {
