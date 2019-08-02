@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 2,
-  "iteration": 1564548299977,
+  "iteration": 1564711919563,
   "links": [],
   "panels": [
     {
@@ -134,9 +134,9 @@
             },
             {
               "condition": "AND",
-              "key": "project",
+              "key": "target",
               "operator": "=",
-              "value": "go-ipfs"
+              "value": "go-minion"
             }
           ]
         }
@@ -145,7 +145,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Benchmarks - go-ipfs",
+      "title": "Benchmarks - go-minion",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -525,7 +525,7 @@
     ]
   },
   "timezone": "utc",
-  "title": "IPFS benchmarks - go-ipfs",
+  "title": "IPFS benchmarks - go-minion",
   "uid": "GtGqynvZz",
-  "version": 3
+  "version": 6
 }

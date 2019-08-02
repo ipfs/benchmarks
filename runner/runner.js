@@ -83,7 +83,7 @@ const run = async (params) => {
     // first run the benchmark straight up
     try {
       await mkDir(`${targetDir}/${test.name}`, { recursive: true })
-      let arrResult = await runCommand(test.benchmark, test.name)
+      let arrResult = await runCommand(test.benchmark + ` --target=${params.target}`, test.name)
       config.log.debug(`Writing results ${targetDir}/${test.name}/results.json`)
       await writeFile(`${targetDir}/${test.name}/results.json`, JSON.stringify(arrResult, null, 2))
       if (arrResult.length) {
