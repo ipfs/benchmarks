@@ -31,7 +31,7 @@ const testAbstracts = [
   {
     name: 'localTransfer_tcp_mplex_secio',
     file: 'local-transfer.js -t tcp -m mplex -e secio',
-    defaultFor: [ 'js-minion' ]
+    defaultFor: [ 'js-minion', 'js-minion-lite' ]
   },
   {
     name: 'localTransfer_ws_mplex_secio',
@@ -61,7 +61,7 @@ const testAbstracts = [
   {
     name: 'unixFsAdd_balanced',
     file: 'local-add.js -s balanced',
-    defaultFor: [ 'js-minion' ]
+    defaultFor: [ 'js-minion', 'js-minion-lite' ]
   },
   {
     name: 'unixFsAdd_trickle',
@@ -71,7 +71,7 @@ const testAbstracts = [
   {
     name: 'localExtract',
     file: 'local-extract.js',
-    defaultFor: [ 'js-minion' ]
+    defaultFor: [ 'js-minion', 'js-minion-lite' ]
   },
   {
     name: 'multiPeerTransfer_tcp_mplex',

@@ -11,7 +11,7 @@ const addBody = {
     target: {
       type: 'string',
       description: 'currently js-minion or go-minion',
-      enum: ['js-minion', 'go-minion']
+      enum: ['js-minion', 'js-minion-lite', 'go-minion']
     },
     nightly: {
       type: 'boolean',
