@@ -38,6 +38,7 @@ if (config.server.schedule) {
   schedule.scheduleJob(cron, function () {
     queue.add({
       commit: '',
+      target: 'js-minion',
       clinic: {
         enabled: true
       },
@@ -82,6 +83,7 @@ fastify.route({
   handler: async (request, reply) => {
     let task = queue.add({
       commit: request.body.commit,
+      target: request.body.target,
       clinic: request.body.clinic,
       benchmarks: request.body.benchmarks,
       remote: true,
@@ -145,7 +147,7 @@ fastify.route({
   method: 'POST',
   url: '/restart',
   schema: {
-    description: 'Schedule a restart in the queu and return the scheduled job',
+    description: 'Schedule a restart in the queue and return the scheduled job',
     headers: 'protect#',
     response: 'restartResponse#'
   },

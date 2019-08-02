@@ -8,7 +8,7 @@ const opts = {
   url: `http://localhost:${config.server.port}/`,
   body: {
     commit: argv.commit || '',
-    project: argv.project || '',
+    target: argv.target || '',
     clinic: argv.clinic || { enabled: false }
   },
   json: true,

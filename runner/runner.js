@@ -63,6 +63,7 @@ const run = async (params) => {
       await provision.ensure(params.commit)
     } catch (e) {
       config.log.error(e)
+      throw (e)
     }
   }
   let benchmarks
@@ -75,8 +76,8 @@ const run = async (params) => {
       config.log.error(`no valid benchmarks found in ${testsJson}`)
     }
   } else {
-    config.log.info('Running ALL default benchmarks')
-    benchmarks = config.benchmarks.tests
+    config.log.info('Running ALL default benchmarks for', params.target)
+    benchmarks = configBenchmarks.constructTests(config.stage, params.clinic.enabled, null, params.target)
   }
   for (let test of benchmarks) {
     // first run the benchmark straight up

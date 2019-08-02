@@ -8,10 +8,10 @@ const addBody = {
       type: 'string',
       description: 'Commit to test against'
     },
-    project: {
+    target: {
       type: 'string',
-      description: 'js-ipfs or go-ipfs',
-      enum: ['js-ipfs', 'go-ipfs']
+      description: 'currently js-minion or go-minion',
+      enum: ['js-minion', 'go-minion']
     },
     nightly: {
       type: 'boolean',
@@ -47,7 +47,7 @@ const addBody = {
       }
     }
   },
-  required: ['commit', 'project']
+  required: ['commit', 'target']
 }
 
 const addResponse = {
