@@ -5,4 +5,4 @@ all:
         63.33.104.238
     minions:
       hosts:
-        147.75.33.155
+        ec2-54-200-167-200.us-west-2.compute.amazonaws.com
