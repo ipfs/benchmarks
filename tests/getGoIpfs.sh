@@ -26,5 +26,5 @@ else
   git config --global advice.detachedHead false
   git checkout $COMMIT 2>&1
 fi
-echo "run make install for go-ipfs"
-make install
+echo "run make build for go-ipfs"
+make build
