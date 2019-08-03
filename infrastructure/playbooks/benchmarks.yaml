@@ -4,6 +4,9 @@
   vars:
     node_version: 10.13.0
   tasks:
+    - import_role:
+        name: fubarhouse.golang
+      become: yes
     - name: Update repositories cache and install required packages
       become: yes
       apt:
@@ -81,4 +84,4 @@
     - name: generate test files
       shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && npm run generateFiles"
     - name: build-browser
-      shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && ./getIpfs.sh .. && npm run build-browser"
+      shell: /bin/bash -c "source ~/.nvm/nvm.sh && cd ~/ipfs/tests && ./getJsIpfs.sh .. && npm run build-browser"

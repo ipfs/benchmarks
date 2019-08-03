@@ -31,7 +31,7 @@ async function extractJs2Go (ipfs, name, warmup, fileSet, meta) {
   // output file and dashboard name will match trategy.  default is balanced
   name = protocal === 'ws' ? `${name}Ws` : name
   const id = protocal === 'ws' ? 2 : 0
-  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && ipfs swarm connect ${peerId.addresses[id]}`
+  let command = `export IPFS_PATH=${conf.tmpPath}/ipfs0 && /home/ubuntu/ipfs/go-ipfs/cmd/ipfs swarm connect ${peerId.addresses[id]}`
   try {
     await execute(command)
   } catch (e) {

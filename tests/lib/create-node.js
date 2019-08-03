@@ -107,7 +107,7 @@ const CreateGo = async (opt, IPFS, count = 0) => {
   await fsMakeDir(peerDir, { recursive: true })
   await initRepo(peerDir)
   await fsWriteFile(`${peerDir}/config`, JSON.stringify(peerConf))
-  let peer = spawn('ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
+  let peer = spawn('/home/ubuntu/ipfs/go-ipfs/cmd/ipfs', ['daemon'], { env: Object.assign(process.env, { IPFS_PATH: peerDir }) })
   peer.version = function () { return '1' }
   peer.addresses = ''
   peer.stdout.on('data', (data) => {
