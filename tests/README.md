@@ -3,10 +3,10 @@
 ### Adding new tests
 
 - Copy test.template and give the file the name of the test
-- Add test fo the async function 
-- Call run() with the name of you test as param
+- Add test for the async function 
+- Call run() with the name of your test as param
 - Add the test name and subtests to the [config/index](config/index.js).
-- Add the test to the runner config (`testAbstracts` array), in order to be available on the dashboard [runner/config.js](../runner/config.js)
+- Add the test to the runner config (`testAbstracts` array), in order to be available on the dashboard [runner/lib/configBenchmarks.js](../runner/lib/configBenchmarks.js)
 
 To Test it:
 
