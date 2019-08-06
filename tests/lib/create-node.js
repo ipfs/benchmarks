@@ -53,7 +53,7 @@ const parseParams = (options) => {
     options.libp2p.modules.streamMuxer.push(MPLEX)
   }
   if (argv.e === 'secio') {
-    options.libp2p.modules.streamMuxer.push(SECIO)
+    options.libp2p.modules.connEncryption.push(SECIO)
   }
 }
 const CreateNodeJs = async (opt, IPFS, count) => {
