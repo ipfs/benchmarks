@@ -106,7 +106,7 @@ Run all benchmarks:
 Create a pre-generated key:
 
 ```bash
-> node lib/create-privateKey
+> node util/create-privateKey
 ```
 
 #### FILESET

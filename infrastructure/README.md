@@ -6,7 +6,7 @@ Ansible is used as a provisioning tool for the host running as controller. The p
 
 Install the required packages for your OS:
 
-* [python3](https://realpython.com/installing-python/)]
+* [python3](https://realpython.com/installing-python/)
 * [passlib](https://passlib.readthedocs.io/en/stable/install.html)
 * [Ansible](https://www.ansible.com/)
 * Ansible roles:

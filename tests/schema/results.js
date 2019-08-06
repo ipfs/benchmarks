@@ -9,7 +9,7 @@ const { getIpfsCommit, getBranchName } = require('../util/get-commit')
 const schema = FluentSchema()
   .id('ipfs')
   .title('IPFS Benchmarks')
-  .description('IFPS benchmark results')
+  .description('IPFS benchmark results')
   .prop(
     'name',
     FluentSchema()
