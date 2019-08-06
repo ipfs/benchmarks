@@ -45,6 +45,15 @@ if (config.server.schedule) {
       remote: true,
       nightly: true
     })
+    queue.add({
+      commit: '',
+      target: 'go-minion',
+      clinic: {
+        enabled: false
+      },
+      remote: true,
+      nightly: true
+    })
   })
 } else {
   config.log.info(`NOT installing scheduled run`)
