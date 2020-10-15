@@ -5,6 +5,7 @@ WORKDIR /opt/app-root/src
 
 COPY runner runner
 USER root
+RUN npm config set user 0
 RUN cd runner && npm install
 USER 1001
 COPY infrastructure/inventory/inventory.yaml infrastructure/inventory/inventory.yaml
